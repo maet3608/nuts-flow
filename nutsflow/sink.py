@@ -81,13 +81,13 @@ Consume n elements of the iterable.
 
 """
 
-Len = nut_sink(length)
+Count = nut_sink(length)
 """
-iterable >> Len()
+iterable >> Count()
 
-Return length of input iterable.  This consumes the iterable!
+Return number elements in input iterable.  This consumes the iterable!
 
->>> [0, 1, 2] >> Len()
+>>> [0, 1, 2] >> Count()
 3
 
 :param iterable iterable: Iterable

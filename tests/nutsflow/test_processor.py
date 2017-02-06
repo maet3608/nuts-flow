@@ -165,9 +165,9 @@ def test_Skip():
 
 
 def test_Pick():
-    assert Range(100) >> Pick(1.0) >> Len() == 100
-    assert Range(100) >> Pick(0.0) >> Len() == 0
-    assert 4000 < (Range(10000) >> Pick(0.5) >> Len()) < 6000
+    assert Range(100) >> Pick(1.0) >> Count() == 100
+    assert Range(100) >> Pick(0.0) >> Count() == 0
+    assert 4000 < (Range(10000) >> Pick(0.5) >> Count()) < 6000
     assert (Range(100) >> Pick(0.3) >> Collect(set)).issubset(set(range(100)))
 
     with pytest.raises(ValueError) as ex:

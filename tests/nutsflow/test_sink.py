@@ -33,9 +33,9 @@ def test_Consume():
     assert next(it, None) is None
 
 
-def test_Len():
-    assert [] >> Len() == 0
-    assert [0, 1, 2, 3] >> Len() == 4
+def test_Count():
+    assert [] >> Count() == 0
+    assert [0, 1, 2, 3] >> Count() == 4
 
 
 def test_Unzip():
