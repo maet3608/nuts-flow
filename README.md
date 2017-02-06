@@ -3,7 +3,7 @@
 A simple dataflow framework in Python
 
 API documentation and tutorials can be found here:  
-https://pages.github.ibm.com/aur/nuts-flow/
+https://maet3608.github.io/nuts-flow/
 
 
 Nuts-flow is a thin wrapper around Python’s itertools that allows
@@ -69,7 +69,7 @@ source vnuts/bin/activate
 2) Clone git repo
 ```
 cd vnuts
-git clone git@github.ibm.com:aur/nuts-flow.git
+git clone https://github.com/maet3608/nuts-flow
 ```
 
 3) Install package with dependencies and run unit tests
@@ -84,7 +84,7 @@ pytest
 python
 >>> import nutsflow
 >>> nutsflow.__version__
-'1.0.1'
+'1.0.0'
 exit()
 ```
 
