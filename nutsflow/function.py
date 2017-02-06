@@ -68,7 +68,8 @@ def Get(x, start, end=None, step=None):
     """
     iterable >> Get(start, end, step)
 
-    Extract elements from x. Equivalent to Python slicing [start:end:step].
+    Extract elements from x. Equivalent to Python slicing [start:end:step]
+    but per element of the iterable.
 
     >>> [(1, 2, 3), (4, 5, 6)] >> Get(1) >> Collect()
     [2, 5]
@@ -79,7 +80,7 @@ def Get(x, start, end=None, step=None):
     >>> [(1, 2, 3), (4, 5, 6)] >> Get(0, 3, 2) >> Collect()
     [(1, 3), (4, 6)]
 
-    :param indexable container x: Any indexable input
+    :param indexable x: Any indexable input
     :param int start: Start index for columns to extract from x
     :param int end: End index (not inclusive)
     :param int step: Step index (same as slicing)
