@@ -236,12 +236,12 @@ def test_Shuffle():
     assert shuffled1 == shuffled2
 
 
-def test_ColMap():
+def test_MapCol():
     neg = lambda x: -x
     data = [(1, 2), (3, 4)]
-    assert data >> ColMap(0, neg) >> Collect() == [[-1, 2], [-3, 4]]
-    assert data >> ColMap(1, neg) >> Collect() == [[1, -2], [3, -4]]
-    assert data >> ColMap((0, 1), neg) >> Collect() == [[-1, -2], [-3, -4]]
+    assert data >> MapCol(0, neg) >> Collect() == [[-1, 2], [-3, 4]]
+    assert data >> MapCol(1, neg) >> Collect() == [[1, -2], [3, -4]]
+    assert data >> MapCol((0, 1), neg) >> Collect() == [[-1, -2], [-3, -4]]
 
 
 def test_MultiMap():

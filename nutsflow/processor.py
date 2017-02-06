@@ -525,17 +525,17 @@ def Shuffle(iterable, buffersize, rand=rnd.Random()):
 
 
 @nut_processor
-def ColMap(iterable, columns, func):
+def MapCol(iterable, columns, func):
     """
-    iterable >> ColMap(columns, func)
+    iterable >> MapCol(columns, func)
 
     Apply given function to given columns of elements in iterable.
 
     >>> neg = lambda x: -x
-    >>> [(1, 2), (3, 4)] >> ColMap(0, neg) >> Collect()
+    >>> [(1, 2), (3, 4)] >> MapCol(0, neg) >> Collect()
     [[-1, 2], [-3, 4]]
 
-    >>> [(1, 2), (3, 4)] >> ColMap(1, neg) >> Collect()
+    >>> [(1, 2), (3, 4)] >> MapCol(1, neg) >> Collect()
     [[1, -2], [3, -4]]
 
     >>> [(1, 2), (3, 4)] >> ColMap((0, 1), neg) >> Collect()
