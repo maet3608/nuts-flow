@@ -244,17 +244,17 @@ def test_MapCol():
     assert data >> MapCol((0, 1), neg) >> Collect() == [[-1, -2], [-3, -4]]
 
 
-def test_MultiMap():
+def test_MapMulti():
     nums, twos, greater2 = [1, 2, 3] >> MapMulti(_, _ * 2, _ > 2)
     assert nums >> Collect() == [1, 2, 3]
     assert twos >> Collect() == [2, 4, 6]
     assert greater2 >> Collect() == [False, False, True]
 
 
-def test_ParMap():
-    assert [-1, -2, -3] >> ParMap(abs) >> Collect() == [1, 2, 3]
+def test_MapPar():
+    assert [-1, -2, -3] >> MapPar(abs) >> Collect() == [1, 2, 3]
     data = range(1000)
-    assert data >> ParMap(_) >> ParMap(_) >> Collect() == data
+    assert data >> MapPar(_) >> MapPar(_) >> Collect() == data
 
 
 def test_Prefetch():

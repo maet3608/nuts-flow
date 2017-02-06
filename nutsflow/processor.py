@@ -581,10 +581,10 @@ def MapMulti(iterable, *funcs):
 # Don't use @nut_processor here. Creating Pool is expensive!
 # ParMap is of limited use since 'func' must be pickable many objects are not :(
 # pathos.multiprocesssing might be an alternative
-class ParMap(Nut):
+class MapPar(Nut):
     def __init__(self, func, chunksize=mp.cpu_count()):
         """
-        iterable >> ParMap(func, chunksize=mp.cpu_count())
+        iterable >> MapPar(func, chunksize=mp.cpu_count())
 
         Map function in parallel. Order of iterable is preserved.
         Note that ParMap is of limited use since 'func' must be pickable
@@ -592,7 +592,7 @@ class ParMap(Nut):
         https://docs.python.org/2/library/pickle.html
 
         >>> from nutsflow import Collect
-        >>> [-1, -2, -3] >> ParMap(abs) >> Collect()
+        >>> [-1, -2, -3] >> MapPar(abs) >> Collect()
         [1, 2, 3]
 
         :param iterable iterable: Any iterable
