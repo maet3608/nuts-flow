@@ -25,15 +25,9 @@ var/
 
 # Sphinx
 sphinx/
-!sphinx/make.bat
-!sphinx/make_html.bat
-!sphinx/Makefile
-!sphinx/source/conf.py
-!sphinx/source/index.rst
-
-# Documentation
-doc/doctrees/
-doc/coverage/
+doctrees/
+_sources
+_modules
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
