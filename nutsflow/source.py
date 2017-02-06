@@ -13,14 +13,14 @@ from factory import nut_source
 
 Steps = nut_source(itt.count)
 """
-Steps()
+Steps(start, step)
 
 Return increasing integers. See itertools.count
 
 >>> Steps() >> Take(3) >> Collect()
 [0, 1, 2]
 
->>> Steps(1,2) >> Take(3) >> Collect()
+>>> Steps(1, 2) >> Take(3) >> Collect()
 [1, 3, 5]
 
 :param int start: Start of integer sequence
