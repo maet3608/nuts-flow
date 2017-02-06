@@ -423,7 +423,7 @@ def GroupBy(iterable, keycol=lambda x: x, nokey=False):
     the function value of keycol for the element.
     Note that elements of iterable do not need to be sorted.
     GroupBy will store all elements in memory!
-    If the iterable is sorted use SortedGroupBy() instead.
+    If the iterable is sorted use GroupBySorted() instead.
 
     >>> [1, 2, 1, 1, 3] >> GroupBy() >> Collect()
     [(1, [1, 1, 1]), (2, [2]), (3, [3])]
@@ -450,9 +450,9 @@ def GroupBy(iterable, keycol=lambda x: x, nokey=False):
 
 
 @nut_processor
-def SortedGroupBy(iterable, keycol=lambda x: x, nokey=False):
+def GroupBySorted(iterable, keycol=lambda x: x, nokey=False):
     """
-    iterable >> SortedGroupBy(prob, keycol=lambda x: x, nokey=False)
+    iterable >> GroupBySorted(prob, keycol=lambda x: x, nokey=False)
 
     Group elements of iterable based on a column value of the element or
     the function value of key_or_col for the element.
@@ -465,10 +465,10 @@ def SortedGroupBy(iterable, keycol=lambda x: x, nokey=False):
     ... def ViewResult(iterable):
     ...     return iterable >> Map(lambda (k, es): (k, list(es))) >> Collect()
 
-    >>> [1,1, 1, 2, 3] >> SortedGroupBy() >> ViewResult()
+    >>> [1,1, 1, 2, 3] >> GroupBySorted() >> ViewResult()
     [(1, [1, 1, 1]), (2, [2]), (3, [3])]
 
-    >>> ['--', '**', '+++'] >> SortedGroupBy(len) >> ViewResult()
+    >>> ['--', '**', '+++'] >> GroupBySorted(len) >> ViewResult()
     [(2, ['--', '**']), (3, ['+++'])]
 
     :param iterable iterable: Any iterable

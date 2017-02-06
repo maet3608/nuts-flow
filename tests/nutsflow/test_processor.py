@@ -196,7 +196,7 @@ def test_GroupBy():
     assert [(1, 1), (1, 2), (2, 2)] >> GroupBy(1) >> Collect() == expected
 
 
-def test_SortedGroupBy():
+def test_GroupBySorted():
     @nut_sink
     def KV2List(iterable):
         return iterable >> Map(lambda (k, es): (k, list(es))) >> Collect()
@@ -206,19 +206,19 @@ def test_SortedGroupBy():
         return iterable >> Map(lambda es: list(es)) >> Collect()
 
     expected = [(1, [1, 1, 1]), (2, [2]), (3, [3])]
-    assert [1, 1, 1, 2, 3] >> SortedGroupBy() >> KV2List() == expected
+    assert [1, 1, 1, 2, 3] >> GroupBySorted() >> KV2List() == expected
 
     expected = [[1, 1, 1], [2], [3]]
-    assert [1, 1, 1, 2, 3] >> SortedGroupBy(nokey=True) >> V2List() == expected
+    assert [1, 1, 1, 2, 3] >> GroupBySorted(nokey=True) >> V2List() == expected
 
     expected = [(2, ['--', '**']), (3, ['+++'])]
-    assert ['--', '**', '+++'] >> SortedGroupBy(len) >> KV2List() == expected
+    assert ['--', '**', '+++'] >> GroupBySorted(len) >> KV2List() == expected
 
     expected = [(1, [(1, 1), (1, 2)]), (2, [(2, 2)])]
-    assert [(1, 1), (1, 2), (2, 2)] >> SortedGroupBy(0) >> KV2List() == expected
+    assert [(1, 1), (1, 2), (2, 2)] >> GroupBySorted(0) >> KV2List() == expected
 
     expected = [(1, [(1, 1)]), (2, [(1, 2), (2, 2)])]
-    assert [(1, 1), (1, 2), (2, 2)] >> SortedGroupBy(1) >> KV2List() == expected
+    assert [(1, 1), (1, 2), (2, 2)] >> GroupBySorted(1) >> KV2List() == expected
 
 
 def test_Shuffle():
