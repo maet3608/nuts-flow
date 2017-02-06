@@ -127,13 +127,13 @@ if iterable is long and many elements are unique!
 :rtype: Iterator
 """
 
-Chunked = nut_processor(itf.chunked)
+Chunk = nut_processor(itf.chunked)
 """
-iterable >> Chunked(n)
+iterable >> Chunk(n)
 
 Split iterable in chunks of size n, where each chunk is also an iterator.
 
->>> for chunk in Range(5) >> Chunked(2):
+>>> for chunk in Range(5) >> Chunk(2):
 >>> ... print list(chunk)
 [0, 1]
 [2, 3]

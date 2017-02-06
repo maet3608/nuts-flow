@@ -51,10 +51,10 @@ def test_Cycle():
     assert [1, 2] >> Cycle() >> Take(5) >> Collect() == [1, 2, 1, 2, 1]
 
 
-def test_Chunked():
-    assert [] >> Chunked(2) >> Collect() == []
+def test_Chunk():
+    assert [] >> Chunk(2) >> Collect() == []
     expected = [(0, 1), (2, 3), (4, 5), (6,)]
-    assert Range(7) >> Chunked(2) >> Map(tuple) >> Collect() == expected
+    assert Range(7) >> Chunk(2) >> Map(tuple) >> Collect() == expected
 
 
 def test_Flatten():
