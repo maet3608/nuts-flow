@@ -117,24 +117,24 @@ def GetCols(x, *columns):
     return tuple(x[i] for i in columns)
 
 
-class Count(NutFunction):
+class Increment(NutFunction):
     """
-    Count elements in iterable. This function has a side-effects but is
-    thread-safe.
+    Increment counter depending on elements in iterable.
+    This function has side-effects but is thread-safe.
     """
 
     def __init__(self, value=0, func=lambda x: True):
         """
-        count = Count()
-        iterable >> count
+        counter = Increment()
+        iterable >> counter
 
         >>> from nutsflow import Consume
-        >>> count = Count(value=1, func=lambda x: x < 3)
-        >>> xrange(10) >> count >> Consume()
-        >>> count.value
+        >>> counter = Increment(value=1, func=lambda x: x < 3)
+        >>> xrange(10) >> counter >> Consume()
+        >>> counter.value
         4
 
-        :param value: Inital value
+        :param value: Initial value
         :param func: Filter function. Count only elements where func is true.
         """
         self.value = value
@@ -161,7 +161,7 @@ class Count(NutFunction):
 
     def __call__(self, x):
         """
-        Increment counter
+        Increment counter.
 
         :param x: Element in iterable
         :return: Unchanged element
