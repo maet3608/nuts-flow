@@ -67,38 +67,38 @@ def test_Collect():
     assert [('one', 1), ('two', 2)] >> Collect(dict) == {'one': 1, 'two': 2}
 
 
-def test_CSVWriter():
+def test_WriteCSV():
     filepath = 'tests/data/data_out.csv'
     data = [[1, 2], [3, 4]]
 
-    with CSVWriter(filepath) as writer:
+    with WriteCSV(filepath) as writer:
         data >> writer
     assert_equal_text(open(filepath).read(), '1,2\n3,4\n')
 
-    with CSVWriter(filepath, columns=(1,)) as writer:
+    with WriteCSV(filepath, columns=(1,)) as writer:
         data >> writer
     assert_equal_text(open(filepath).read(), '2\n4\n')
 
-    with CSVWriter(filepath, fmtfunc=lambda x: x + 1) as writer:
+    with WriteCSV(filepath, fmtfunc=lambda x: x + 1) as writer:
         data >> writer
     assert_equal_text(open(filepath).read(), '2,3\n4,5\n')
 
-    with CSVWriter(filepath, skipheader=1) as writer:
+    with WriteCSV(filepath, skipheader=1) as writer:
         data >> writer
     assert_equal_text(open(filepath).read(), '3,4\n')
 
-    with CSVWriter(filepath) as writer:
+    with WriteCSV(filepath) as writer:
         [1, 2, 3] >> writer
     assert_equal_text(open(filepath).read(), '1\n2\n3\n')
 
     os.remove(filepath)
 
 
-def test_CSVWriter_tsv():
+def test_WriteCSV_tsv():
     filepath = 'tests/data/data_out.tsv'
     data = [[1, 2], [3, 4]]
 
-    with CSVWriter(filepath, delimiter='\t') as writer:
+    with WriteCSV(filepath, delimiter='\t') as writer:
         data >> writer
     assert_equal_text(open(filepath).read(), '1\t2\n3\t4\n')
 

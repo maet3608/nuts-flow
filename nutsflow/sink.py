@@ -217,7 +217,7 @@ def Collect(iterable, container=list):
     return container(iterable)
 
 
-class CSVWriter(NutSink):
+class WriteCSV(NutSink):
     """
     Write data to a CSV file using Python's CSV writer.
     See: https://docs.python.org/2/library/csv.html
@@ -239,16 +239,16 @@ class CSVWriter(NutSink):
 
         >>> import os
         >>> filepath = 'tests/data/temp_out.csv'
-        >>> with CSVWriter(filepath) as writer:
+        >>> with WriteCSV(filepath) as writer:
         ...     xrange(10) >> writer
         >>> os.remove(filepath)
 
-        >>> with CSVWriter(filepath, columns=(1,0)) as writer:
+        >>> with WriteCSV(filepath, columns=(1,0)) as writer:
         ...     [(1,2), (3,4)] >> writer
         >>> os.remove(filepath)
 
         >>> filepath = 'tests/data/temp_out.tsv'
-        >>> with CSVWriter(filepath, delimiter='\\t') as writer:
+        >>> with WriteCSV(filepath, delimiter='\\t') as writer:
         ...     [[1,2], [3,4]] >> writer
         >>> os.remove(filepath)
 
