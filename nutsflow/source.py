@@ -83,7 +83,7 @@ def Range(*args, **kwargs):
     """
     Range(start [,end [, step]])
 
-    Return range of integers. Same a xrange()
+    Return range of integers.
 
     >>> Range(4) >> Collect()
     [0, 1, 2, 3]

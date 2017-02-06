@@ -330,7 +330,7 @@ amounts of memory if iterable is large and tee's are not processed in
 parallel.
 See https://docs.python.org/2/library/itertools.html#itertools.tee
 
->>> it1, it2  = [1, 2, 3] >> Tee(2) >> Collect()
+>>> it1, it2  = [1, 2, 3] >> Tee(2)
 >>> it1 >> Collect()
 [1, 2, 3]
 >>> it2 >> Collect()
@@ -618,7 +618,7 @@ class MapPar(Nut):
 class Cache(Nut):
     """
     A very naive implementation of a disk cache. Pickles elements of iterable
-    to file system and loads them the next time istead of recomputing.
+    to file system and loads them the next time instead of recomputing.
     """
 
     def __init__(self, storage='disk'):

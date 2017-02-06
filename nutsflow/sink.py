@@ -39,7 +39,7 @@ See https://docs.python.org/2/library/functions.html#reduce
 >>> [2] >> Reduce(lambda a,b: a*b, 1)
 2
 
-:param iterable iterable: Iterable
+:param iterable iterable: Any iterable
 :param function func: Reduction function
 :return: Result of reduction
 :rtype: any
@@ -54,7 +54,7 @@ Return n-th element of iterable. This consumes the iterable!
 >>> 'test' >> Nth(2)
 s
 
-:param iterable iterable: Iterable
+:param iterable iterable: Any iterable
 :param int nth: Index of element in iterable to return
 :return: n-th element
 :rtype: any
@@ -90,7 +90,7 @@ Return number elements in input iterable.  This consumes the iterable!
 >>> [0, 1, 2] >> Count()
 3
 
-:param iterable iterable: Iterable
+:param iterable iterable: Any iterable
 :return: Number elements in interable
 :rtype: int
 """
@@ -169,7 +169,7 @@ def CountValues(iterable, relative=False):
 
     :param iterable iterable: Any iterable, e.g. list, xrange, ...
     :param bool relative: True: return relative counts otherwise absolute counts
-    :return: Dictionary with counts for elements in iterable.
+    :return: Dictionary with (relative) counts for elements in iterable.
     :rtype: dict
     """
     cnts = dict(cl.Counter(iterable))

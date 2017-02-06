@@ -20,6 +20,7 @@ def Identity(x):
     >>> [1, 2, 3] >> Identity() >> Collect()
     [1, 2, 3]
 
+    :param iterable iterable: Any iterable
     :param any x: Any input
     :return: Returns input unaltered
     :rtype: any
@@ -37,6 +38,7 @@ def Square(x):
     >>> [1, 2, 3] >> Square() >> Collect()
     [1, 4, 9]
 
+    :param iterable iterable: Any iterable over numbers
     :param number x: Any number
     :return: Squared number
     :rtype: number
@@ -55,8 +57,9 @@ def NOP(x, *args):  # *args is needed!
     >>> [1, 2, 3] >> NOP(Square()) >> Collect()
     [1, 2, 3]
 
-    :param number x: Any number
-    :param any *args: Additional args are ignored.
+    :param iterable iterable: Any iterable
+    :param object x: Any object
+    :param args args: Additional args are ignored.
     :return: Squared number
     :rtype: number
     """
@@ -80,6 +83,7 @@ def Get(x, start, end=None, step=None):
     >>> [(1, 2, 3), (4, 5, 6)] >> Get(0, 3, 2) >> Collect()
     [(1, 3), (4, 6)]
 
+    :param iterable iterable: Any iterable
     :param indexable x: Any indexable input
     :param int start: Start index for columns to extract from x
     :param int end: End index (not inclusive)
@@ -110,6 +114,7 @@ def GetCols(x, *columns):
     >>> [(1, 2, 3), (4, 5, 6)] >> GetCols(1, 1) >> Collect()
     [(2, 2), (5, 5)]
 
+    :param iterable iterable: Any iterable
     :param indexable container x: Any indexable input
     :param int|tuple columns: Indicies of elements/columns in x to extract
     :return: Extracted elements
@@ -184,6 +189,7 @@ def Sleep(x, duration=1):
     >>> [1, 2, 3] >> Sleep(0.1) >> Collect()
     [1, 2, 3]
 
+    :param iterable iterable: Any iterable
     :param any x: Any input
     :param float duration: Sleeping time in seconds.
     :return: Returns input unaltered
