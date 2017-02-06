@@ -40,7 +40,7 @@ class PyTest(TestCommand):
 setup(
     name='nutsflow',
     version=nutsflow.__version__,
-    url='https://github.ibm.com/aur/nuts-flow',
+    url='https://github.com/maet3608/nuts-flow',
     license='Apache Software License (http://www.apache.org/licenses/LICENSE-2.0)',
     author='Stefan Maetschke',
     author_email='stefanrm@au1.ibm.com',
@@ -57,7 +57,6 @@ setup(
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Programming Language :: Python :: 2.7',
-        'Programming Language :: Python :: 2 :: Only',
         'Natural Language :: English',
         'Intended Audience :: Developers',
         'Intended Audience :: Science/Research',
