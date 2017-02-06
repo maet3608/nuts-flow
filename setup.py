@@ -44,7 +44,7 @@ setup(
     license='Apache Software License (http://www.apache.org/licenses/LICENSE-2.0)',
     author='Stefan Maetschke',
     author_email='stefanrm@au1.ibm.com',
-    description='Dataflow framework based on iterators',
+    description='A simple data-flow framework based on iterator chaining',
     install_requires=['pytest >= 3.0.3'],
     tests_require=['pytest >= 3.0.3'],
     packages=find_packages(exclude=['setup']),
