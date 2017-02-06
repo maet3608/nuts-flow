@@ -2,14 +2,10 @@
 
 A simple dataflow framework in Python
 
-API documentation and tutorials can be found here:  
-https://maet3608.github.io/nuts-flow/
-
-
-Nuts-flow is a thin wrapper around Python’s itertools that allows
-the chaining of operations on iterables using the ‘>>’ operator.
+**nuts-flow** is largely a thin wrapper around Python’s itertools that allows
+the chaining of iterators using the ‘>>’ operator.
 The aim is a more explict flow of data. The following examples show
-a simple data flow using Python’s itertools versus Nuts-flow:
+a simple data processing pipeline using Python’s itertools versus **nuts-flow**:
 
 ```
 >>> from itertools import islice, ifilter  
@@ -24,75 +20,9 @@ a simple data flow using Python’s itertools versus Nuts-flow:
 ```
 
 Both examples are equivalent and extract the first three numbers
-within range [0, 9] that are greater than five. The Nuts example, 
-however, is easier to read than the nested itertools code.
+within range [0, 9] that are greater than five. The **nuts-flow** pipeline, 
+however, is easier to understand than the nested itertools code.
 
+Installation guide, API documentation and tutorials can be found at 
+https://maet3608.github.io/nuts-flow/
 
-For more information on Pythons' itertools see  
-https://docs.python.org/2/library/itertools.html  
-http://pythonhosted.org/more-itertools/api.html  
-
-
-# Installation
-
-## Virtual environment
-
-```
-$ pip install virtualenv
-$ cd my_projects
-$ virtualenv vnuts
-```
-
-### Activate/Deactivate virtual environment
-
-Linux, Mac:  
-```
-$ source vnuts/bin/activate
-$ deactivate
-```
-
-Windows:  
-```
-> vnuts\Scripts\activate.bat
-> vnuts\Scripts\deactivate.bat
-```
-
-
-## Nuts-flow
-
-1) Activate virtual environment (if not already active)
-```
-cd my_projects
-source vnuts/bin/activate
-```
-
-2) Clone git repo
-```
-cd vnuts
-git clone https://github.com/maet3608/nuts-flow
-```
-
-3) Install package with dependencies and run unit tests
-```
-cd nuts-flow
-python setup.py install
-pytest
-```
-
-4) Run Python interpreter and import ```nutsflow``` 
-```
-python
->>> import nutsflow
->>> nutsflow.__version__
-'1.0.0'
-exit()
-```
-
-5) Try tiny example
-```
-python
->>> from nutsflow import *
->>> Range(5) >> Square() >> Collect()
-[0, 1, 4, 9, 16]
-exit()
-```
