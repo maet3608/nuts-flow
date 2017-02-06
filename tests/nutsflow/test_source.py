@@ -6,9 +6,9 @@
 from nutsflow import *
 
 
-def test_Steps():
-    assert Steps() >> Take(3) >> Collect() == [0, 1, 2]
-    assert Steps(1, 2) >> Take(3) >> Collect() == [1, 3, 5]
+def test_Enumerate():
+    assert Enumerate() >> Take(3) >> Collect() == [0, 1, 2]
+    assert Enumerate(1, 2) >> Take(3) >> Collect() == [1, 3, 5]
 
 
 def test_Repeat():
