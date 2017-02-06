@@ -58,8 +58,8 @@ def test_GetCols():
     assert data >> GetCols(1, 1) >> Collect() == [(2, 2), (5, 5)]
 
 
-def test_Increment():
-    counter = Increment()
+def test_Counter():
+    counter = Counter()
     assert counter.value == 0
 
     xrange(10) >> counter >> Consume()
@@ -69,7 +69,7 @@ def test_Increment():
     counter.reset()
     assert counter.value == 0
 
-    counter = Increment(value=1, func=lambda x: x < 3)
+    counter = Counter(value=1, func=lambda x: x < 3)
     xrange(10) >> counter >> Consume()
     assert counter.value == 4
 

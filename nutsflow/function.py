@@ -123,19 +123,20 @@ def GetCols(x, *columns):
     return tuple(x[i] for i in columns)
 
 
-class Increment(NutFunction):
+class Counter(NutFunction):
     """
     Increment counter depending on elements in iterable.
-    This function has side-effects but is thread-safe.
+    Intended mostly for debugging and monitoring. Avoid for standard
+    processing of data. The function has side-effects but is thread-safe.
     """
 
     def __init__(self, value=0, func=lambda x: True):
         """
-        counter = Increment()
+        counter = Counter()
         iterable >> counter
 
         >>> from nutsflow import Consume
-        >>> counter = Increment(value=1, func=lambda x: x < 3)
+        >>> counter = Counter(value=1, func=lambda x: x < 3)
         >>> xrange(10) >> counter >> Consume()
         >>> counter.value
         4
