@@ -104,21 +104,21 @@ And https://docs.python.org/2/library/itertools.html#itertools.izip_longest
 :rtype: iterator
 """
 
-Unique = nut_processor(itf.unique)
+Dedupe = nut_processor(itf.unique)
 """
-iterable >> Unique([key])
+iterable >> Dedupe([key])
 
 Return only unique elements in iterable. Can have very high memory consumption
 if iterable is long and many elements are unique!
 
->>> [2,3,1,1,2,4] >> Unique() >> Collect()
+>>> [2,3,1,1,2,4] >> Dedupe() >> Collect()
 [2, 3, 1, 4]
 
 >>> data = [(1,'a'), (2,'a'), (3,'b')]
->>> data >> Unique(key=lambda (x,y): y) >> Collect()
+>>> data >> Dedupe(key=lambda (x,y): y) >> Collect()
 [(1, 'a'), (3, 'b')]
 
->> data >> Unique(_[1]) >> Collect()
+>> data >> Dedupe(_[1]) >> Collect()
 [(1, 'a'), (3, 'b')]
 
 :param iterable iterable: Any iterable, e.g. list, xrange, ...

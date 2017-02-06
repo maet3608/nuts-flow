@@ -81,7 +81,7 @@ def run(datapath):
 
     print 'abc' >> Cycle() >> Take(5) >> Collect()
 
-    print 'aabacddeaf' >> Unique(_ < 'c') >> Collect()
+    print 'aabacddeaf' >> Dedupe(_ < 'c') >> Collect()
 
     print xrange(10) >> Zip('abcd') >> Collect()
 

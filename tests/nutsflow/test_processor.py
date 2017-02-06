@@ -36,14 +36,14 @@ def test_Zip():
     assert '12' >> Zip('abcd', '+-') >> Collect() == expected
 
 
-def test_Unique():
-    assert [] >> Unique() >> Collect() == []
-    assert [2, 3, 1, 1, 2, 4] >> Unique() >> Collect() == [2, 3, 1, 4]
+def test_Dedupe():
+    assert [] >> Dedupe() >> Collect() == []
+    assert [2, 3, 1, 1, 2, 4] >> Dedupe() >> Collect() == [2, 3, 1, 4]
 
     data = [(1, 'a'), (2, 'a'), (3, 'b')]
     expected = [(1, 'a'), (3, 'b')]
-    assert data >> Unique(key=lambda (x, y): y) >> Collect() == expected
-    assert data >> Unique(_[1]) >> Collect() == expected
+    assert data >> Dedupe(key=lambda (x, y): y) >> Collect() == expected
+    assert data >> Dedupe(_[1]) >> Collect() == expected
 
 
 def test_Cycle():
