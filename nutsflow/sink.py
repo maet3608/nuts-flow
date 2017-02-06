@@ -154,39 +154,27 @@ def Tail(iterable, n, container=list):
 
 
 @nut_sink
-def Counts(iterable):
+def CountValues(iterable, relative=False):
     """
-    iterable >> Counts()
+    iterable >> CountValues(relative=False)
 
-    Return dictionary with counts of the elements in the input iterable.
+    Return dictionary with (relative) counts of the values
+    in the input iterable.
 
-    >>> 'abaacc' >> Counts()
+    >>> 'abaacc' >> CountValues()
     {'a':3, 'b':1, 'c':2}
 
-    :param iterable iterable: Any iterable, e.g. list, xrange, ...
-    :return: Dictionary with counts for elements in iterable.
-    :rtype: dict
-    """
-    return dict(cl.Counter(iterable))
-
-
-@nut_sink
-def Frequencies(iterable):
-    """
-    iterable >> Frequencies()
-
-    Return dictionary with frequencies of the elements in the input iterable.
-
-    >>> 'aabaab' >> Frequencies()
+    >>> 'aabaab' >> CountValues(True)
     {'a': 1.0, 'b': 0.5}
 
     :param iterable iterable: Any iterable, e.g. list, xrange, ...
-    :return: Dictionary with frequencies for elements in iterable.
+    :param bool relative: True: return relative counts otherwise absolute counts
+    :return: Dictionary with counts for elements in iterable.
     :rtype: dict
     """
     cnts = dict(cl.Counter(iterable))
-    if not cnts.values():
-        return dict()
+    if not relative or not cnts.values():
+        return cnts
     max_cnt = max(cnts.values())
     n = float(max_cnt) if max_cnt else 1.0
     return {k: v / n for k, v in cnts.iteritems()}

@@ -59,7 +59,7 @@ def run(datapath):
 
     print Range(10) >> Skip(3) >> Collect()
 
-    print [1, 2, 2, 3, 3, 3] >> Counts()
+    print [1, 2, 2, 3, 3, 3] >> CountValues()
 
     print Product([1, 2], ['a', 'b']) >> Collect()
 

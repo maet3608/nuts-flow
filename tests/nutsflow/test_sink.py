@@ -49,15 +49,13 @@ def test_Unzip():
     assert iter(input) >> Unzip(True) == expected
 
 
-def test_Counts():
-    assert [] >> Counts() == dict()
-    assert 'abaacc' >> Counts() == {'a': 3, 'b': 1, 'c': 2}
+def test_CountValues():
+    assert [] >> CountValues() == dict()
+    assert 'abaacc' >> CountValues() == {'a': 3, 'b': 1, 'c': 2}
 
-
-def test_Frequencies():
-    assert [] >> Frequencies() == dict()
-    assert [2] >> Frequencies() == {2: 1.0}
-    assert 'aabaab' >> Frequencies() == {'a': 1.0, 'b': 0.5}
+    assert [] >> CountValues(True) == dict()
+    assert [2] >> CountValues(True) == {2: 1.0}
+    assert 'aabaab' >> CountValues(True) == {'a': 1.0, 'b': 0.5}
 
 
 def test_Collect():
