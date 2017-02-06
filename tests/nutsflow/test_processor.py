@@ -245,7 +245,7 @@ def test_MapCol():
 
 
 def test_MultiMap():
-    nums, twos, greater2 = [1, 2, 3] >> MultiMap(_, _ * 2, _ > 2)
+    nums, twos, greater2 = [1, 2, 3] >> MapMulti(_, _ * 2, _ > 2)
     assert nums >> Collect() == [1, 2, 3]
     assert twos >> Collect() == [2, 4, 6]
     assert greater2 >> Collect() == [False, False, True]

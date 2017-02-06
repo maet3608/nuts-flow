@@ -101,7 +101,7 @@ def run(datapath):
     with open(datapath + 'numbers.txt') as f:
         print 'numbers.txt:', f >> Collect()
 
-    nums, twos, greater5 = Range(10) >> MultiMap(_, _ * 2, _ > 5)
+    nums, twos, greater5 = Range(10) >> MapMulti(_, _ * 2, _ > 5)
     nums >> Zip(twos, greater5) >> Print() >> Consume()
 
     debug = False

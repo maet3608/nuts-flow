@@ -553,15 +553,15 @@ def MapCol(iterable, columns, func):
 
 
 @nut_processor
-def MultiMap(iterable, *funcs):
+def MapMulti(iterable, *funcs):
     """
-    iterable >> MultiMap(*funcs)
+    iterable >> MapMulti(*funcs)
 
     Map multiple functions on iterable. For each function a separate iterable
     is returned. Can consume large amounts of memory when iterables are
     processed sequentially!
 
-    >>> nums, twos, greater2 = [1, 2, 3] >> MultiMap(_, _ * 2, _ > 2)
+    >>> nums, twos, greater2 = [1, 2, 3] >> MapMulti(_, _ * 2, _ > 2)
     >>> nums >> Collect()
     [1, 2, 3]
     >>> twos >> Collect()
