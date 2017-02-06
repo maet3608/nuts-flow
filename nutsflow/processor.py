@@ -389,26 +389,26 @@ def Skip(iterable, n):
 
 
 @nut_processor
-def Choice(iterable, prob):
+def Pick(iterable, prob):
     """
-    iterable >> Choice(prob)
+    iterable >> Pick(prob)
 
-    Randomly sample elements from iterable with given probability.
+    Randomly pick elements from iterable with given probability.
     Sampling is with no replacement.
 
-    >>> [1, 2, 3] >> Choice(0.0) >> Collect()
+    >>> [1, 2, 3] >> Pick(0.0) >> Collect()
     []
 
-    >>> [1, 2, 3] >> Choice(1.0) >> Collect()
+    >>> [1, 2, 3] >> Pick(1.0) >> Collect()
     [1, 2, 3]
 
     :param iterable iterable: Any iterable
-    :param float prob: Probability [0,1]
-    :return: Iterator over randomly sampled elements.
+    :param float prob: Probability [0, 1]
+    :return: Iterator over randomly picked elements.
     :rtype: iterator
     """
     if not 0 <= prob <= 1:
-        raise ValueError('Probability must be in [0,1]: ' + str(prob))
+        raise ValueError('Probability must be in [0, 1]: ' + str(prob))
     for e in iterable:
         if rnd.random() <= prob:
             yield e

@@ -68,7 +68,7 @@ def nut_processor(func, iterpos=0):
     Decorator for Nut processors.
 
     @nut_processor
-    def Choice(iterable, p):
+    def Pick(iterable, p):
         for e in iterable:
             if random() > p:
                 yield e

@@ -164,19 +164,19 @@ def test_Skip():
     assert [1, 2, 3, 4] >> Skip(2) >> Collect() == [3, 4]
 
 
-def test_Choice():
-    assert Range(100) >> Choice(1.0) >> Len() == 100
-    assert Range(100) >> Choice(0.0) >> Len() == 0
-    assert 4000 < (Range(10000) >> Choice(0.5) >> Len()) < 6000
-    assert (Range(100) >> Choice(0.3) >> Collect(set)).issubset(set(range(100)))
+def test_Pick():
+    assert Range(100) >> Pick(1.0) >> Len() == 100
+    assert Range(100) >> Pick(0.0) >> Len() == 0
+    assert 4000 < (Range(10000) >> Pick(0.5) >> Len()) < 6000
+    assert (Range(100) >> Pick(0.3) >> Collect(set)).issubset(set(range(100)))
 
     with pytest.raises(ValueError) as ex:
-        [1, 2, 3] >> Choice(1.1) >> Consume()
-    assert str(ex.value).startswith('Probability must be in [0,1]')
+        [1, 2, 3] >> Pick(1.1) >> Consume()
+    assert str(ex.value).startswith('Probability must be in [0, 1]')
 
     with pytest.raises(ValueError) as ex:
-        [1, 2, 3] >> Choice(-0.1) >> Consume()
-    assert str(ex.value).startswith('Probability must be in [0,1]')
+        [1, 2, 3] >> Pick(-0.1) >> Consume()
+    assert str(ex.value).startswith('Probability must be in [0, 1]')
 
 
 def test_GroupBy():
