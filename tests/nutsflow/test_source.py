@@ -30,24 +30,24 @@ def test_Range():
     assert Range(1, 5) >> Collect() == [1, 2, 3, 4]
 
 
-def test_CSVReader():
+def test_ReadCSV():
     filepath = 'tests/data/data.csv'
-    with CSVReader(filepath) as reader:
+    with ReadCSV(filepath) as reader:
         assert reader >> Collect() == [('a', ' ', 'c'),
                                        ('1', '2', '3'),
                                        ('4', '5', '6')]
-    with CSVReader(filepath, skipheader=1, fmtfunc=int) as reader:
+    with ReadCSV(filepath, skipheader=1, fmtfunc=int) as reader:
         assert reader >> Collect() == [(1, 2, 3), (4, 5, 6)]
-    with CSVReader(filepath, columns=(2, 1)) as reader:
+    with ReadCSV(filepath, columns=(2, 1)) as reader:
         assert reader >> Collect() == [('c', ' '), ('3', '2'), ('6', '5')]
 
 
-def test_CSVReader_tsv():
+def test_ReadCSV_tsv():
     filepath = 'tests/data/data.tsv'
-    with CSVReader(filepath, delimiter='\t') as reader:
+    with ReadCSV(filepath, delimiter='\t') as reader:
         assert reader >> Collect() == [('a', ' ', 'c'),
                                        ('1', '2', '3'),
                                        ('4', '5', '6')]
-    with CSVReader(filepath, skipheader=1, fmtfunc=int,
+    with ReadCSV(filepath, skipheader=1, fmtfunc=int,
                    delimiter='\t') as reader:
         assert reader >> Collect() == [(1, 2, 3), (4, 5, 6)]

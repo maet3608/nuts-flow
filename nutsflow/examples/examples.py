@@ -95,7 +95,7 @@ def run(datapath):
 
     print xrange(20) >> Prefetch() >> Collect()
 
-    with CSVReader(datapath + 'data.csv') as reader:
+    with ReadCSV(datapath + 'data.csv') as reader:
         print 'data.csv:', reader >> Collect()
 
     with open(datapath + 'numbers.txt') as f:

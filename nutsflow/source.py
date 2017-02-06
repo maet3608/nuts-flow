@@ -100,7 +100,7 @@ def Range(*args, **kwargs):
     return iter(xrange(*args, **kwargs))
 
 
-class CSVReader(NutSource):
+class ReadCSV(NutSource):
     """
     Read data from a CSV file using Python's CSV reader.
     See: https://docs.python.org/2/library/csv.html
@@ -109,7 +109,7 @@ class CSVReader(NutSource):
     def __init__(self, filepath, columns=None, skipheader=0,
                  fmtfunc=lambda x: x, **kwargs):
         """
-        CSVReader(filepath, columns, skipheader, fmtfunc, **kwargs)
+        ReadCSV(filepath, columns, skipheader, fmtfunc, **kwargs)
 
         Read data in Comma Separated Format (CSV) from file.
         See also CSVWriter.
@@ -119,16 +119,16 @@ class CSVReader(NutSource):
 
         >>> from nutsflow import Collect
         >>> filepath = 'tests/data/data.csv'
-        >>> with CSVReader(filepath, skipheader=1, fmtfunc=int) as reader:
+        >>> with ReadCSV(filepath, skipheader=1, fmtfunc=int) as reader:
         ...     reader >> Collect()
         [(1, 2, 3), (4, 5, 6)]
 
-        >>> with CSVReader(filepath, (2, 1), 1, int) as reader:
+        >>> with ReadCSV(filepath, (2, 1), 1, int) as reader:
         ...     reader >> Collect()
         [(3, 2), (6, 5)]
 
         >>> filepath = 'tests/data/data.tsv'
-        >>> with CSVReader(filepath, skipheader=1, fmtfunc=int,
+        >>> with ReadCSV(filepath, skipheader=1, fmtfunc=int,
         ...                delimiter='\\t') as reader:
         ...     reader >> Collect()
         [(1, 2, 3), (4, 5, 6)]
