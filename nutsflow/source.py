@@ -77,27 +77,34 @@ def Empty():
     """
     return iter(())
 
-
-@nut_source
-def Range(*args, **kwargs):
+class Range(NutSource):
     """
-    Range(start [,end [, step]])
-
-    Return range of integers.
-
-    >>> Range(4) >> Collect()
-    [0, 1, 2, 3]
-
-    >>> Range(1,5) >> Collect()
-    [1, 2, 3, 4]
-
-    :param int start: Start of range.
-    :param int end: End of range. Not inclusive. Optional.
-    :param int step: Step size. Optional.
-    :return: Range of integers.
-    :rtype: iterable over int
+    Range of numbers. Similar to xrange() but returns iterator that depletes.
     """
-    return (x for x in xrange(*args, **kwargs))
+
+    def __init__(self, *args, **kwargs):
+        """
+        Range(start [,end [, step]])
+
+        Return range of integers.
+
+        >>> Range(4) >> Collect()
+        [0, 1, 2, 3]
+
+        >>> Range(1, 5) >> Collect()
+        [1, 2, 3, 4]
+
+        :param int start: Start of range.
+        :param int end: End of range. Not inclusive. Optional.
+        :param int step: Step size. Optional.
+        :return: Range of integers.
+        :rtype: iterable over int
+        """
+        self.iter = iter(xrange(*args, **kwargs))
+
+    def __iter__(self):
+        """Return iterator over numbers."""
+        return self.iter
 
 
 class ReadCSV(NutSource):
