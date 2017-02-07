@@ -389,29 +389,40 @@ def Skip(iterable, n):
 
 
 @nut_processor
-def Pick(iterable, prob):
+def Pick(iterable, p_n, rand=rnd.Random()):
     """
-    iterable >> Pick(prob)
+    iterable >> Pick(p_n)
 
-    Randomly pick elements from iterable with given probability.
-    Sampling is with no replacement.
+    Pick every p_n-th element from the iterable if p_n is an integer,
+    otherwise pick randomly with probability p_n.
 
-    >>> [1, 2, 3] >> Pick(0.0) >> Collect()
+    >>> [1, 2, 3, 4] >> Pick(0.0) >> Collect()
     []
 
-    >>> [1, 2, 3] >> Pick(1.0) >> Collect()
-    [1, 2, 3]
+    >>> [1, 2, 3, 4] >> Pick(1.0) >> Collect()
+    [1, 2, 3, 4]
+
+    >>> import random as rnd
+    >>> Range(10) >> Pick(0.5, rnd.Random(0)) >> Collect()
+    [2, 3, 5, 7, 8]
+
+    >>> [1, 2, 3, 4] >> Pick(2) >> Collect()
+    [1, 3]
 
     :param iterable iterable: Any iterable
-    :param float prob: Probability [0, 1]
-    :return: Iterator over randomly picked elements.
+    :param float|int p_n: Probability p in [0, 1] or
+        integer n for every n-th element
+    :param Random rand: Random number generator to be used.
+    :return: Iterator over picked elements.
     :rtype: iterator
     """
-    if not 0 <= prob <= 1:
-        raise ValueError('Probability must be in [0, 1]: ' + str(prob))
-    for e in iterable:
-        if rnd.random() <= prob:
-            yield e
+    if isinstance(p_n, int):
+        if p_n < 0:
+            raise ValueError('p_n must not be negative ' + str(p_n))
+        return itt.islice(iterable, 0, None, p_n)
+    if not 0 <= p_n <= 1:
+        raise ValueError('Probability must be in [0, 1]: ' + str(p_n))
+    return iter(e for e in iterable if rand.uniform(0, 1) <= p_n)
 
 
 @nut_processor
@@ -481,7 +492,7 @@ def GroupBySorted(iterable, keycol=lambda x: x, nokey=False):
     isfunc = hasattr(keycol, '__call__')
     key = keycol if isfunc else lambda x: x[keycol]
     groupiter = itt.groupby(iterable, key)
-    return itt.imap(lambda (k,v): v, groupiter) if nokey else groupiter
+    return itt.imap(lambda (k, v): v, groupiter) if nokey else groupiter
 
 
 @nut_processor

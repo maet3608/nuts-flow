@@ -5,6 +5,8 @@
 
 import pytest
 
+import random as rnd
+
 from nutsflow import *
 from nutsflow import _
 from nutsflow.common import Redirect
@@ -165,9 +167,18 @@ def test_Skip():
 
 
 def test_Pick():
-    assert Range(100) >> Pick(1.0) >> Count() == 100
-    assert Range(100) >> Pick(0.0) >> Count() == 0
-    assert 4000 < (Range(10000) >> Pick(0.5) >> Count()) < 6000
+    assert Range(5) >> Pick(1) >> Collect() == [0, 1, 2, 3, 4]
+    assert Range(5) >> Pick(2) >> Collect() == [0, 2, 4]
+
+    with pytest.raises(ValueError) as ex:
+        [1, 2, 3] >> Pick(-1) >> Consume()
+    assert str(ex.value).startswith('p_n must not be negative')
+
+    assert Range(5) >> Pick(0.5, rnd.Random(0)) >> Collect() == [2, 3]
+    assert Range(5) >> Pick(0.7, rnd.Random(0)) >> Collect() == [2, 3, 4]
+
+    assert Range(10) >> Pick(1.0) >> Count() == 10
+    assert Range(10) >> Pick(0.0) >> Count() == 0
     assert (Range(100) >> Pick(0.3) >> Collect(set)).issubset(set(range(100)))
 
     with pytest.raises(ValueError) as ex:
