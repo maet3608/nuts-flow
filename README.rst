@@ -1,7 +1,7 @@
 nuts-flow
 =========
 
-**nuts-flow** is largely a thin wrapper around Python’s itertools that allows
+**nuts-flow** is largely a thin wrapper around *itertools* that allows
 the chaining of iterators using the ``>>`` operator.
 The aim is a more explict flow of data. The following examples show
 a simple data processing pipeline using Python’s itertools versus **nuts-flow**:
@@ -17,7 +17,7 @@ a simple data processing pipeline using Python’s itertools versus **nuts-flow*
 
 Both examples extract the first three numbers within range [0, 9]
 that are greater than five. However, the **nuts-flow** pipeline
-is easier to understand than the nested itertools code.
+is easier to understand than the nested *itertools* code.
 
 Installation guide, API documentation and tutorials can be found
 `here <https://maet3608.github.io/nuts-flow/>`_
