@@ -88,6 +88,7 @@ class Range(NutSource):
 
         Return range of integers.
 
+        >>> from nutsflow import Collect
         >>> Range(4) >> Collect()
         [0, 1, 2, 3]
 
