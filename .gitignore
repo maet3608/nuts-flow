@@ -26,7 +26,6 @@ var/
 *.tar.gz
 
 # Sphinx
-sphinx/
 doctrees/
 _sources
 _modules
