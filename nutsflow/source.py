@@ -97,7 +97,7 @@ def Range(*args, **kwargs):
     :return: Range of integers.
     :rtype: iterable over int
     """
-    return iter(xrange(*args, **kwargs))
+    return (x for x in xrange(*args, **kwargs))
 
 
 class ReadCSV(NutSource):

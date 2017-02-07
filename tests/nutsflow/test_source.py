@@ -26,6 +26,11 @@ def test_Empty():
 
 
 def test_Range():
+    numbers = Range(3)
+    assert numbers >> Take(2) >> Collect() == [0, 1]
+    assert numbers >> Take(2) >> Collect() == [2]
+    assert numbers >> Take(2) >> Collect() == []
+
     assert Range(4) >> Collect() == [0, 1, 2, 3]
     assert Range(1, 5) >> Collect() == [1, 2, 3, 4]
 
