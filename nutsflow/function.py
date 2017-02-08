@@ -130,7 +130,7 @@ class Counter(NutFunction):
     processing of data. The function has side-effects but is thread-safe.
     """
 
-    def __init__(self, value=0, func=lambda x: True):
+    def __init__(self, value=0, filterfunc=lambda x: True):
         """
         counter = Counter()
         iterable >> counter
@@ -141,21 +141,30 @@ class Counter(NutFunction):
         >>> counter.value
         4
 
-        :param value: Initial value
-        :param func: Filter function. Count only elements where func is true.
+        :param int value: Initial value
+        :param func filterfunc: Filter function.
+           Count only elements where func returns True.
         """
         self.value = value
-        self.func = func
+        self.filterfunc = filterfunc
         self.lock = threading.Lock()
 
     def reset(self, value=0):
         """
         Reset counter to given value.
 
-        :param value: Reset value
+        :param int value: Reset value
         """
         with self.lock:
             self.value = value
+
+    def __repr__(self):
+        """
+        Return counter value as string.
+        :return: Counter value
+        :rtype: str
+        """
+        return self.__str__()
 
     def __str__(self):
         """
@@ -170,12 +179,12 @@ class Counter(NutFunction):
         """
         Increment counter.
 
-        :param x: Element in iterable
+        :param object x: Element in iterable
         :return: Unchanged element
         :rtype: Any
         """
         with self.lock:
-            if self.func(x):
+            if self.filterfunc(x):
                 self.value += 1
         return x
 
@@ -191,7 +200,7 @@ def Sleep(x, duration=1):
     [1, 2, 3]
 
     :param iterable iterable: Any iterable
-    :param any x: Any input
+    :param object x: Any input
     :param float duration: Sleeping time in seconds.
     :return: Returns input unaltered
     :rtype: any
@@ -236,7 +245,7 @@ class Print(NutFunction):
         char=A
         char=B
 
-        :param any x: Any input
+        :param object x: Any input
 
         :param string|function fmtfunc: Format string or function.
                 fmtfunc is a standard Python str.format() string,

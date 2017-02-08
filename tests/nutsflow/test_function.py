@@ -69,7 +69,7 @@ def test_Counter():
     counter.reset()
     assert counter.value == 0
 
-    counter = Counter(value=1, func=lambda x: x < 3)
+    counter = Counter(value=1, filterfunc=lambda x: x < 3)
     xrange(10) >> counter >> Consume()
     assert counter.value == 4
 
