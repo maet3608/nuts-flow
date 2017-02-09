@@ -61,6 +61,25 @@ See https://docs.python.org/2/library/itertools.html#itertools.islice
 :rtype: iterator
 """
 
+Concat = nut_processor(itt.chain)
+"""
+iterable >> Concat(*iterables)
+
+Concatenate iterables.
+
+>>> Range(5) >> Concat('abc') >> Collect()
+[0, 1, 2, 3, 4, 'a', 'b', 'c']
+
+>>> '12' >> Concat('abcd', '+-') >> Collect()
+['1', '2', 'a', 'b', 'c', 'd', '+', '-']
+
+
+:param iterable iterable: Any iterable
+:param iterable iterables: Iterables to concatenate
+:return: Concatenated iterators
+:rtype: iterator
+"""
+
 Interleave = nut_processor(itf.interleave)
 """
 iterable >> Interleave(*iterables)
@@ -78,7 +97,7 @@ determines length of interleaved iterator.
 
 :param iterable iterable: Any iterable
 :param iterable iterables: Iterables to interleave
-:return: Interleaved elements from iterables.
+:return: Iterator over interleaved elements.
 :rtype: iterator
 """
 

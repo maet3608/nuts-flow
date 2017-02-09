@@ -13,6 +13,8 @@ from nutsflow.common import Redirect
 
 
 def test_Take():
+    assert [] >> Take(0) >> Collect() == []
+    assert [] >> Take(2) >> Collect() == []
     assert [1, 2, 3, 4] >> Take(0) >> Collect() == []
     assert [1, 2, 3, 4] >> Take(2) >> Collect() == [1, 2]
 
@@ -24,13 +26,24 @@ def test_Slice():
     assert [1, 2, 3, 4] >> Slice(0, 4, 2) >> Collect() == [1, 3]
 
 
+def test_Concat():
+    assert [] >> Concat([]) >> Collect() == []
+    assert [1, 2] >> Concat([]) >> Collect() == [1, 2]
+    expected = ['1', '2', 'a', 'b', 'c', 'd', '+', '-']
+    assert '12' >> Concat('abcd', '+-') >> Collect() == expected
+
+
+
 def test_Interleave():
+    assert [] >> Interleave([]) >> Collect() == []
+    assert [1, 2] >> Interleave([]) >> Collect() == [1, 2]
     expected = ['1', 'a', '+', '2', 'b', '-', 'c', 'd']
     assert '12' >> Interleave('abcd', '+-') >> Collect() == expected
-    assert [1, 2] >> Interleave([]) >> Collect() == [1, 2]
 
 
 def test_Zip():
+    assert [] >> Zip([]) >> Collect() == []
+
     expected = [(0, 'a'), (1, 'b'), (2, 'c')]
     assert [0, 1, 2] >> Zip('abc') >> Collect() == expected
 
