@@ -26,6 +26,60 @@ Return sum over inputs.
 :rtype: number
 """
 
+@nut_sink
+def Max(iterable, key=lambda x: x, default=None):
+    try:
+        return max(iterable, key=key)
+    except ValueError:
+        return default
+"""
+iterable >> Max(key=func, default=None)
+
+Return maximum of inputs.
+
+>>> [1, 2, 3, 2] >> Max()
+3
+
+>>> ['1', '123', '12'] >> Max(key=len)
+'123'
+
+>>> [] >> Max(default=0)
+0
+
+:param iterable iterable: Iterable over numbers
+:param func key: Function maximum is based on
+:param object default: Value returned if iterable is empty.
+:return: largest element according to key function
+:rtype: object
+"""
+
+@nut_sink
+def Min(iterable, key=lambda x: x, default=None):
+    try:
+        return min(iterable, key=key)
+    except ValueError:
+        return default
+"""
+iterable >> Max(key=func, default=None)
+
+Return minimum of inputs.
+
+>>> [1, 2, 3, 2] >> Min()
+1
+
+>>> ['1', '123', '12'] >> Min(key=len)
+'1'
+
+>>> [] >> Min(default=0)
+0
+
+:param iterable iterable: Iterable over numbers
+:param func key: Function minimum is based on
+:param object default: Value returned if iterable is empty.
+:return: smallest element according to key function
+:rtype: object
+"""
+
 Reduce = nut_sink(reduce, 1)
 """
 iterable >> Reduce(func [,initiaizer])

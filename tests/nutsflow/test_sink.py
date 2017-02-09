@@ -17,6 +17,18 @@ def test_Sum():
     assert [0, 1, 2] >> Sum() == 3
 
 
+def test_Max():
+    assert [] >> Max(default=0) == 0
+    assert [0, 3, 2] >> Max() == 3
+    assert ['1', '123', '12'] >> Max(key=len) == '123'
+
+
+def test_Min():
+    assert [] >> Min(default=0) == 0
+    assert [3, 1, 2] >> Min() == 1
+    assert ['123', '1', '12'] >> Min(key=len) == '1'
+
+
 def test_Reduce():
     assert [] >> Reduce(lambda a, b: a + b, None) == None
     assert [0, 1, 2] >> Reduce(lambda a, b: a + b) == 3
