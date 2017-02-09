@@ -801,7 +801,7 @@ class PrintProgress(Nut):
         For long running computations and Estimated time of arrival (eta) is
         printed as well
 
-        xrange(10) >> PrintProgress(numbers, 0) >> Consume()
+        xrange(10) >> PrintProgress(10, 0) >> Consume()
 
         :param iterable iterable: Any iterable
         :param int data: Number of elements in iterable or realized iterable.
