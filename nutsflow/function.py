@@ -136,7 +136,7 @@ class Counter(NutFunction):
         iterable >> counter
 
         >>> from nutsflow import Consume
-        >>> counter = Counter(value=1, func=lambda x: x < 3)
+        >>> counter = Counter(value=1, filterfunc=lambda x: x < 3)
         >>> xrange(10) >> counter >> Consume()
         >>> counter.value
         4
