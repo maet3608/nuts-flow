@@ -305,6 +305,29 @@ See https://docs.python.org/2/library/itertools.html#itertools.takewhile
 :rtype: Iterator
 """
 
+
+@nut_processor
+def SkipWhile(iterable, func):
+    """
+    iterable >> SkipWhile(func)
+
+    Skip elements in iterable while predicate function is True.
+
+    >>>[0, 1, 2, 3, 0] >> SkipWhile(_ < 2) >> Collect()
+    [2, 3, 0]
+
+    :param iterable iterable: Any iterable
+    :param function func: Predicate function.
+    :return: Iterable
+    :rtype: Iterator
+    """
+    emit = False
+    for e in iterable:
+        emit = emit or not func(e)
+        if emit:
+            yield e
+
+
 Permutate = nut_processor(itt.permutations)
 """
 iterable >> Permutate([,r])

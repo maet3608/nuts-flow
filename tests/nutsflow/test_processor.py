@@ -33,7 +33,6 @@ def test_Concat():
     assert '12' >> Concat('abcd', '+-') >> Collect() == expected
 
 
-
 def test_Interleave():
     assert [] >> Interleave([]) >> Collect() == []
     assert [1, 2] >> Interleave([]) >> Collect() == [1, 2]
@@ -127,6 +126,11 @@ def test_Partition():
 def test_TakeWhile():
     assert [] >> TakeWhile(_ < 2) >> Collect() == []
     assert [0, 1, 2, 3, 0] >> TakeWhile(_ < 2) >> Collect() == [0, 1]
+
+
+def test_SkipWhile():
+    assert [] >> SkipWhile(_ < 2) >> Collect() == []
+    assert [0, 1, 2, 3, 0] >> SkipWhile(_ < 2) >> Collect() == [2, 3, 0]
 
 
 def test_Permutate():
