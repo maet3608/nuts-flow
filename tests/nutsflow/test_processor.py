@@ -267,9 +267,9 @@ def test_Shuffle():
 def test_MapCol():
     neg = lambda x: -x
     data = [(1, 2), (3, 4)]
-    assert data >> MapCol(0, neg) >> Collect() == [[-1, 2], [-3, 4]]
-    assert data >> MapCol(1, neg) >> Collect() == [[1, -2], [3, -4]]
-    assert data >> MapCol((0, 1), neg) >> Collect() == [[-1, -2], [-3, -4]]
+    assert data >> MapCol(0, neg) >> Collect() == [(-1, 2), (-3, 4)]
+    assert data >> MapCol(1, neg) >> Collect() == [(1, -2), (3, -4)]
+    assert data >> MapCol((0, 1), neg) >> Collect() == [(-1, -2), (-3, -4)]
 
 
 def test_MapMulti():
