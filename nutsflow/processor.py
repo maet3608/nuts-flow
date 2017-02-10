@@ -586,13 +586,13 @@ def MapCol(iterable, columns, func):
 
     >>> neg = lambda x: -x
     >>> [(1, 2), (3, 4)] >> MapCol(0, neg) >> Collect()
-    [[-1, 2], [-3, 4]]
+    [(-1, 2), (-3, 4)]
 
     >>> [(1, 2), (3, 4)] >> MapCol(1, neg) >> Collect()
     [[1, -2], [3, -4]]
 
-    >>> [(1, 2), (3, 4)] >> ColMap((0, 1), neg) >> Collect()
-    [[-1, -2], [-3, -4]]
+    >>> [(1, 2), (3, 4)] >> MapCol((0, 1), neg) >> Collect()
+    [(-1, -2), (-3, -4)]
 
     :param iterable of iterables iterable: Any iterable that contains iterables
     :param int|tuple of ints columns: Column index or tuple of indexes
@@ -601,8 +601,8 @@ def MapCol(iterable, columns, func):
     :rtype: iterator of list
     """
     colset = {columns} if isinstance(columns, int) else set(columns)
-    for elements in iterable:
-        yield [func(e) if i in colset else e for i, e in enumerate(elements)]
+    for es in iterable:
+        yield tuple(func(e) if i in colset else e for i, e in enumerate(es))
 
 
 @nut_processor
