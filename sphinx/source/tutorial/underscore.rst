@@ -1,3 +1,5 @@
+.. _underscore:
+
 Underscore syntax
 =================
 

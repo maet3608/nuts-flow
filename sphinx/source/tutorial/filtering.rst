@@ -1,24 +1,36 @@
-Filtering data
-==============
+.. _filtering:
+
+Data filtering
+=============
+
+Apart from :ref:`reading <sources>` and :ref:`writing <sinks>`, 
+:ref:`filtering <filtering>` and :ref:`transforming <transforming>`
+are the most common operations within data flows. This
+sections presents various nuts used to filter, partition
+or group data.
 
 
 Filter
 ------
 
 A common task is to remove elements from a data flow. **nuts-flow**
-provides ``Filter`` and ``FilterFalse`` for this purpose:
+provides ``Filter`` and ``FilterFalse`` for this purpose. In the
+following example all number greater than five are extracted:
 
   >>> from nutsflow import *
   
   >>> Range(10) >> Filter(lambda x: x > 5) >> Collect()
   [6, 7, 8, 9]
   
+``FilterFalse`` is simply the negation of ``Filter`` and extracts
+number smaller or equal to five:  
+  
   >>> Range(10) >> FilterFalse(lambda x: x > 5) >> Collect()
   [0, 1, 2, 3, 4, 5]
 
 ``Filter`` and ``FilterFalse`` take a predicate (Lambda) function that
 must return a boolean value. If the predicate function is very simple
-it can be written shorter using the :ref:`Underscore syntax`
+it can be written shorter using :ref:`underscore syntax <underscore>`:
   
   >>> from nutsflow import _
   

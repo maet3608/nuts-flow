@@ -28,7 +28,7 @@ works just fine and does not generate 10 million integers in memory.
 Sources and Sinks
 -----------------
   
-Every data flow starts with a *source*, which can be any
+Every data flow starts with a :ref:`source <sources>`, which can be any
 *iterable* such as iterators, generators, iterable nuts or 
 plain Python data structures (string, lists, sets, dictionaries, ...): 
 
@@ -46,7 +46,7 @@ Apart from a source, every data flow needs a *sink* at the end that
   <itertools.imap object at ...>
 
 simply returns an iterator object but does neither create any ranged numbers 
-nor computes the square. *Sinks* take iterables as input and return a 
+nor computes the square. :ref:`Sinks <sinks>` take iterables as input and return a 
 result of any type or even nothing
 
   >>> Range(5) >> Collect()

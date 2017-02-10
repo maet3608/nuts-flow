@@ -1,0 +1,256 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Printing and Debugging &#8212; nutsflow 1.0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="nutsflow 1.0.1 documentation" href="../index.html" />
+    <link rel="up" title="Tutorial" href="introduction.html" />
+    <link rel="next" title="Filtering data" href="filtering.html" />
+    <link rel="prev" title="Nuts basics" href="nuts_basics.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="printing-and-debugging">
+<h1>Printing and Debugging<a class="headerlink" href="#printing-and-debugging" title="Permalink to this headline">¶</a></h1>
+<p>When creating longer, more complex data flows printing and debugging
+is often necessary. <strong>nuts-flow</strong> provides methods for this purpose.</p>
+<div class="section" id="print">
+<h2>Print<a class="headerlink" href="#print" title="Permalink to this headline">¶</a></h2>
+<p>Typical data flows are largely composed of pure functions without
+side-effects and only the final result is accessible.
+To display intermediate results the <code class="docutils literal"><span class="pre">Print</span></code> nut can be used:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nutsflow</span> <span class="k">import</span> <span class="o">*</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Print</span><span class="p">()</span> <span class="o">&gt;&gt;</span> <span class="n">Consume</span><span class="p">()</span>
+<span class="go">0</span>
+<span class="go">1</span>
+<span class="go">2</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">Print</span></code> takes a format parameter (either a
+<a class="reference external" href="https://docs.python.org/2/library/string.html#formatstrings">format string</a>
+or a function) that allows to tailor its output</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Print</span><span class="p">(</span><span class="s1">&#39;number: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Consume</span><span class="p">()</span>
+<span class="go">number: 0</span>
+<span class="go">number: 1</span>
+<span class="go">number: 2</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Print</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="s1">&#39;odd : </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">bool</span><span class="p">(</span><span class="n">x</span> <span class="o">%</span> <span class="mi">2</span><span class="p">))</span> <span class="o">&gt;&gt;</span> <span class="n">Consume</span><span class="p">()</span>
+<span class="go">odd : False</span>
+<span class="go">odd : True</span>
+<span class="go">odd : False</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">Print</span></code> furthermore supports to print every <em>n-ths</em> element, print at
+certain time intervals, or filter for the elements to be displayed:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Print</span><span class="p">(</span><span class="n">every_n</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Consume</span><span class="p">()</span>
+<span class="go">1</span>
+<span class="go">3</span>
+<span class="go">5</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Sleep</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Print</span><span class="p">(</span><span class="n">every_sec</span><span class="o">=</span><span class="mf">1.5</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Consume</span><span class="p">()</span>
+<span class="go">1</span>
+<span class="go">3</span>
+<span class="go">5</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Print</span><span class="p">(</span><span class="n">filterfunc</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Consume</span><span class="p">()</span>
+<span class="go">3</span>
+<span class="go">4</span>
+<span class="go">5</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">Sleep()</span></code> waits for the given time in seconds and allows to slow
+down the processing.</p>
+<p>For long running flows printing progress information can be displayed
+by inserting a <code class="docutils literal"><span class="pre">PrintProgress</span></code> nut. It, however, requires that the
+number of elements to be processed is known beforehand.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">n</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">PrintProgress</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">update</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Consume</span><span class="p">()</span> 
+<span class="go">progress: 100%</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="limit-data">
+<h2>Limit data<a class="headerlink" href="#limit-data" title="Permalink to this headline">¶</a></h2>
+<p>Instead of printing intermediate results the size of data flow
+can be limited by processing only a portion of the data. The
+<code class="docutils literal"><span class="pre">Take(n)</span></code> nut takes the first <em>n</em> elements only:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Take</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
+<span class="go">[0, 1, 2]</span>
+</pre></div>
+</div>
+<p>Alternatively the <code class="docutils literal"><span class="pre">Head(n)</span></code> nut can be used that takes <em>n</em>
+elements and collects them:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Head</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="go">[0, 1, 2]</span>
+</pre></div>
+</div>
+<p>The last elements of a flow can be captured by <code class="docutils literal"><span class="pre">Tail</span></code> but note
+that the entire flow is consumed:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Tail</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="go">[997, 998, 999]</span>
+</pre></div>
+</div>
+<p>Finally, <code class="docutils literal"><span class="pre">Pick(n)</span></code> allows to pick every <em>n-th</em> element:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Pick</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
+<span class="go">[0, 100, 200, 300, 400, 500, 600, 700, 800, 900]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="no-operation">
+<h2>No Operation<a class="headerlink" href="#no-operation" title="Permalink to this headline">¶</a></h2>
+<p><strong>nuts-flow</strong> provides a <code class="docutils literal"><span class="pre">NOP(nut)</span></code> nut that can be used to quickly
+and temporarily disable the evaluation of a nut in a flow.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Square</span><span class="p">()</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>  <span class="c1"># compute squares</span>
+<span class="go">[0, 1, 4, 9, 16]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">NOP</span><span class="p">(</span><span class="n">Square</span><span class="p">())</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>  <span class="c1"># Square disabled</span>
+<span class="go">[0, 1, 2, 3, 4]</span>
+</pre></div>
+</div>
+<p>This is often more convenient that commenting-out or temporarily
+removing a nut for debugging purposes. Note that only single nuts
+can be disabled with this method.</p>
+</div>
+<div class="section" id="conditional">
+<h2>Conditional<a class="headerlink" href="#conditional" title="Permalink to this headline">¶</a></h2>
+<p>Individual nuts in a flow can also be disabled/enabled or replaced
+depending on a boolean flag using the <code class="docutils literal"><span class="pre">If(cond,</span> <span class="pre">if_nut,</span> <span class="pre">else_nut)</span></code> nut:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">If</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">Square</span><span class="p">())</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
+<span class="go">[1, 4, 9]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">If</span><span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="n">Square</span><span class="p">())</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
+<span class="go">[1, 2, 3]</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">If</span><span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="n">Square</span><span class="p">(),</span> <span class="n">Take</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
+<span class="go">[1]</span>
+</pre></div>
+</div>
+<p>Again this is largely of interest for debugging and limited to
+operate on single nuts.</p>
+</div>
+<div class="section" id="counter">
+<h2>Counter<a class="headerlink" href="#counter" title="Permalink to this headline">¶</a></h2>
+<p>Sometimes only the number of elements processed at a certain stage
+is of interest. <code class="docutils literal"><span class="pre">Counter</span></code> is a nut with the needed side-effect:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">count</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">count</span> <span class="o">&gt;&gt;</span> <span class="n">Square</span><span class="p">()</span> <span class="o">&gt;&gt;</span> <span class="n">Sum</span><span class="p">()</span>
+<span class="go">285</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">count</span><span class="o">.</span><span class="n">value</span>
+<span class="go">10</span>
+</pre></div>
+</div>
+<p>Note that <code class="docutils literal"><span class="pre">Counter</span></code> does not modify the data flow. <code class="docutils literal"><span class="pre">Counter</span></code> also
+has a filter function to count only certain elements:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">greater5</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="n">filterfunc</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">5</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Square</span><span class="p">()</span> <span class="o">&gt;&gt;</span> <span class="n">greater5</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
+<span class="go">[0, 1, 4, 9, 16, 25, 36, 49, 64, 81]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">greater5</span>
+<span class="go">7</span>
+</pre></div>
+</div>
+<p>Note that the actual value of the counter is stored in <code class="docutils literal"><span class="pre">value</span></code> but
+for conveniency <code class="docutils literal"><span class="pre">print</span> <span class="pre">greater5</span></code> directly prints <code class="docutils literal"><span class="pre">greater5.value</span></code>
+as well.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Printing and Debugging</a><ul>
+<li><a class="reference internal" href="#print">Print</a></li>
+<li><a class="reference internal" href="#limit-data">Limit data</a></li>
+<li><a class="reference internal" href="#no-operation">No Operation</a></li>
+<li><a class="reference internal" href="#conditional">Conditional</a></li>
+<li><a class="reference internal" href="#counter">Counter</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="introduction.html">Tutorial</a><ul>
+      <li>Previous: <a href="nuts_basics.html" title="previous chapter">Nuts basics</a></li>
+      <li>Next: <a href="filtering.html" title="next chapter">Filtering data</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/tutorial/debugging.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, IBM.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+      |
+      <a href="../_sources/tutorial/debugging.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

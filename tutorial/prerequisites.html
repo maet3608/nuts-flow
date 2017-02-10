@@ -1,0 +1,236 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Prerequisites &#8212; nutsflow 1.0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="nutsflow 1.0.1 documentation" href="../index.html" />
+    <link rel="up" title="Tutorial" href="introduction.html" />
+    <link rel="next" title="Nuts basics" href="nuts_basics.html" />
+    <link rel="prev" title="Tutorial" href="introduction.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="prerequisites">
+<h1>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this headline">¶</a></h1>
+<p><strong>nuts-flow</strong> is based on <em>iterators</em> and makes frequent use of <em>lambda</em> functions.
+If you are already familiar with these concepts go ahead and skip this section.</p>
+<div class="section" id="lambda-functions">
+<h2>Lambda functions<a class="headerlink" href="#lambda-functions" title="Permalink to this headline">¶</a></h2>
+<p>Commonly functions are defined via the <code class="docutils literal"><span class="pre">def</span></code> keyword and a function name,
+e.g.:</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+</pre></div>
+</div>
+<p><em>Lambda</em> functions or so called <em>anonymous</em> functions are an alternative method
+to define very short functions (without a name) that are typically used only once.
+For instance, the <code class="docutils literal"><span class="pre">add</span></code> function above can be written as follows</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="k">lambda</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+</pre></div>
+</div>
+<p>Since functions are first class citizens in Python they can be assigned
+to variables and called by name as well</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">add</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">add</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="go">3</span>
+</pre></div>
+</div>
+<p>The most common use case, however, is as a anonymous function for other
+functions such as <code class="docutils literal"><span class="pre">sorted</span></code>, <code class="docutils literal"><span class="pre">max</span></code> or <code class="docutils literal"><span class="pre">filter</span></code>.  For example,
+to extract numbers greater than 2 from a list we could write</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">numbers</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">,</span> <span class="n">numbers</span><span class="p">)</span>
+<span class="go">[3, 4]</span>
+</pre></div>
+</div>
+<p><strong>nuts-flow</strong> has a special notation for even shorter function definitions,
+following the <em>underscore notation</em> from <a class="reference external" href="https://www.scala-lang.org/">Scala</a>.
+Using the underscore, the above filtering can be expressed
+even more succinctly as</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nutsflow</span> <span class="k">import</span> <span class="n">_</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">filter</span><span class="p">(</span><span class="n">_</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">,</span> <span class="n">numbers</span><span class="p">)</span>
+<span class="go">[3, 4]</span>
+</pre></div>
+</div>
+<p>The underscore essentially serves as a place holder for the numbers of the list.
+Note that the underscore notation in <strong>nuts-flow</strong> is very limited and only
+simple expression (e.g. <code class="docutils literal"><span class="pre">_</span> <span class="pre">+</span> <span class="pre">1</span></code>, <code class="docutils literal"><span class="pre">_</span> <span class="pre">&lt;=</span> <span class="pre">3</span></code>, ...) are supported. More details
+can be found in Section <a class="reference internal" href="underscore.html#underscore-syntax"><span class="std std-ref">Underscore syntax</span></a> .</p>
+</div>
+<div class="section" id="iterators">
+<h2>Iterators<a class="headerlink" href="#iterators" title="Permalink to this headline">¶</a></h2>
+<p>Iterators are needed to process data that doesn&#8217;t fit in memory, e.g. lines of a
+very large file, permutations of a string, ..., or even infinitely large data such
+as counters or random numbers.</p>
+<p>A Python <a class="reference external" href="https://wiki.python.org/moin/Iterator">Iterator</a> is any object that
+provides a <code class="docutils literal"><span class="pre">next</span></code> method, which returns elements when called and raises a
+<code class="docutils literal"><span class="pre">StopIteration</span></code> exception when depleted. Here an iterator that returns
+even numbers up to a given maximum</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">Even</span><span class="p">():</span>
+<span class="gp">... </span>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">maximum</span><span class="p">):</span>
+<span class="gp">... </span>        <span class="bp">self</span><span class="o">.</span><span class="n">counter</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="gp">... </span>        <span class="bp">self</span><span class="o">.</span><span class="n">maximum</span> <span class="o">=</span> <span class="n">maximum</span>
+<span class="gp">...</span>
+<span class="gp">... </span>    <span class="k">def</span> <span class="nf">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="gp">... </span>        <span class="k">return</span> <span class="bp">self</span>
+<span class="gp">...</span>
+<span class="gp">... </span>    <span class="k">def</span> <span class="nf">next</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="gp">... </span>        <span class="bp">self</span><span class="o">.</span><span class="n">counter</span> <span class="o">+=</span> <span class="mi">2</span>
+<span class="gp">... </span>        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">counter</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">maximum</span><span class="p">:</span>
+<span class="gp">... </span>            <span class="k">raise</span> <span class="ne">StopIteration</span>
+<span class="gp">... </span>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">counter</span>
+<span class="gp">...</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal"><span class="pre">__iter__</span></code> method make the iterator <em>iterable</em> and enables
+its usage in <code class="docutils literal"><span class="pre">for</span></code> loops, list comprehensions or functions
+that take iterables</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">even</span> <span class="o">=</span> <span class="n">Even</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">even</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="nb">print</span> <span class="n">e</span>
+<span class="go">2</span>
+<span class="go">4</span>
+<span class="go">6</span>
+</pre></div>
+</div>
+<p>There are three important properties of iterators to keep in mind.
+Firstly, an iterator is lazy. It doesn&#8217;t produce anything until ask.
+There needs to be a consumer.
+For instance, <code class="docutils literal"><span class="pre">even</span> <span class="pre">=</span> <span class="pre">Even(100000)</span></code> creates the iterator but does not
+create any numbers.</p>
+<p>Secondly, an iterator has state and subsequent calls will advance its state.
+Thirdly, once an iterator is depleted it needs to be recreated to be used
+again</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">even</span> <span class="o">=</span> <span class="n">Even</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="n">e</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">even</span><span class="p">]</span>
+<span class="go">[2, 4, 6, 8, 10]</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="n">e</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">even</span><span class="p">]</span>
+<span class="go">[]</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">even</span> <span class="o">=</span> <span class="n">Even</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="n">e</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">even</span><span class="p">]</span>
+<span class="go">[2, 4, 6, 8, 10]</span>
+</pre></div>
+</div>
+<p>Iterators can be chained to build complex data processing pipelines
+that consume very little memory. Python&#8217;s
+<a class="reference external" href="https://docs.python.org/2/library/itertools.html">itertools</a>
+library provides many functions for this purpose. The following toy
+example uses itertools to extract the first three integers greater
+than five in the interval [0..8[</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">itertools</span> <span class="k">import</span> <span class="n">islice</span><span class="p">,</span> <span class="n">ifilter</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">islice</span><span class="p">(</span><span class="n">ifilter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">5</span><span class="p">,</span> <span class="n">xrange</span><span class="p">(</span><span class="mi">8</span><span class="p">)),</span> <span class="mi">3</span><span class="p">))</span>
+<span class="go">[6, 7]</span>
+</pre></div>
+</div>
+<p><strong>nuts-flow</strong> is largely based on Python’s itertools but aims to
+make the data flow more explict and readable by introducing
+the  <code class="docutils literal"><span class="pre">&gt;&gt;</span></code> operator for chaining</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nutsflow</span> <span class="k">import</span> <span class="n">Range</span><span class="p">,</span> <span class="n">Filter</span><span class="p">,</span> <span class="n">Take</span><span class="p">,</span> <span class="n">Collect</span><span class="p">,</span> <span class="n">_</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Filter</span><span class="p">(</span><span class="n">_</span> <span class="o">&gt;</span> <span class="mi">5</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Take</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
+<span class="go">[6, 7]</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Prerequisites</a><ul>
+<li><a class="reference internal" href="#lambda-functions">Lambda functions</a></li>
+<li><a class="reference internal" href="#iterators">Iterators</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="introduction.html">Tutorial</a><ul>
+      <li>Previous: <a href="introduction.html" title="previous chapter">Tutorial</a></li>
+      <li>Next: <a href="nuts_basics.html" title="next chapter">Nuts basics</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/tutorial/prerequisites.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, IBM.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+      |
+      <a href="../_sources/tutorial/prerequisites.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
