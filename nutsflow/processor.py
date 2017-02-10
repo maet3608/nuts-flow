@@ -180,20 +180,28 @@ large!
 :rtype: Iterator over iterators
 """
 
-Flatten = nut_processor(itt.chain.from_iterable)
-"""
-iterable >> Flatten()
 
-Flatten the iterables within the iterable. Only one level deep flattening.
-See https://docs.python.org/2/library/itertools.html#itertools.chain.from_iterable
+@nut_processor
+def Flatten(iterable):
+    """
+    iterable >> Flatten()
 
->>> [(1,2), (3,4,5)] >> Flatten() >> Collect()
-[1, 2, 3, 4, 5]
+    Flatten the iterables within the iterable and non-iterables are passed
+    through. Only one level is flattened.
 
-:param iterable iterable: Any iterable that contains iterables.
-:return: Flattened iterable
-:rtype: Iterator
-"""
+    >>> [(1,2), (3,4,5), 6] >> Flatten() >> Collect()
+
+    :param iterable iterable: Any iterable.
+    :return: Flattened iterable
+    :rtype: Iterator
+    """
+    for it in iterable:
+        if hasattr(it, '__iter__'):
+            for element in it:
+                yield element
+        else:
+            yield it
+
 
 FlatMap = nut_processor(itf.flatmap, 1)
 """
