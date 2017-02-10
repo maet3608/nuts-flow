@@ -1,0 +1,93 @@
+nutsflow package
+================
+
+Subpackages
+-----------
+
+.. toctree::
+
+    nutsflow.examples
+
+Submodules
+----------
+
+nutsflow.base module
+--------------------
+
+.. automodule:: nutsflow.base
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+nutsflow.common module
+----------------------
+
+.. automodule:: nutsflow.common
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+nutsflow.factory module
+-----------------------
+
+.. automodule:: nutsflow.factory
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+nutsflow.function module
+------------------------
+
+.. automodule:: nutsflow.function
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+nutsflow.iterfunction module
+----------------------------
+
+.. automodule:: nutsflow.iterfunction
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+nutsflow.processor module
+-------------------------
+
+.. automodule:: nutsflow.processor
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+nutsflow.sink module
+--------------------
+
+.. automodule:: nutsflow.sink
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+nutsflow.source module
+----------------------
+
+.. automodule:: nutsflow.source
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+nutsflow.underscore module
+--------------------------
+
+.. automodule:: nutsflow.underscore
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: nutsflow
+    :members:
+    :undoc-members:
+    :show-inheritance:
