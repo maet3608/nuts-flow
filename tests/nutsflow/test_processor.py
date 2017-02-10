@@ -73,7 +73,8 @@ def test_Chunk():
 
 def test_Flatten():
     assert [] >> Flatten() >> Collect() == []
-    assert [[],[]] >> Flatten() >> Collect() == []
+    assert [[], []] >> Flatten() >> Collect() == []
+    assert [1, 2, 3] >> Flatten() >> Collect() == [1, 2, 3]
     assert [(1,), (2, 3), 4] >> Flatten() >> Collect() == [1, 2, 3, 4]
     assert [(1,), ((2, 3), 4)] >> Flatten() >> Collect() == [1, (2, 3), 4]
 
