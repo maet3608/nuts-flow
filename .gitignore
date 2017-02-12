@@ -26,10 +26,7 @@ var/
 *.tar.gz
 
 # Sphinx
-docs
-doctrees/
-_sources
-_modules
+docs/doctrees/
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
