@@ -1,0 +1,29 @@
+.. _sinks:
+
+Writing to Sinks
+================
+
+Iterables
+---------
+
+All Python functions that accept iterators/iterables can
+serves as sinks, e.g.
+
+list, set, dictionary, file.writelines, sum, min, max
+
+
+
+.. code::
+
+  with open(filepath) as f:
+    f.writelines(Range(5) >> Square() >> Map(str))
+
+
+Sink nuts
+---------    
+
+Collect, Consume, WriteCSV
+
+Head, Tail, CountValues, 
+
+Min, Max, Sum, Count
