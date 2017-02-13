@@ -25,14 +25,30 @@ to ``stop`` index (excluded) are extracted:
   >>> [1, 2, 3, 4] >> Slice(1, 3) >> Collect()
   [2, 3]
 
-Finally the third parameter allows to specify a ``stride``:
+Finally the third parameter allows to specify a ``stride``. In this example
+every second element in the slice starting at index 0 and ending at index 4
+(exclusive) is extracted:
 
   >>> [1, 2, 3, 4] >> Slice(0, 4, 2) >> Collect()
   [1, 3]
+
+
+Chunk
+-----
+
+``Chunk(n)`` is a nut to group data in chunks of size ``n``:
+
+  >>> for chunk in Range(5) >> Chunk(2):
+  >>> ... print chunk >> Collect()
+  [0, 1]
+  [2, 3]
+  [4]
+
+Note that each chunk is an iterator over the elements in the chunk.
 
 
 
 TODO
 -----
 
-  Chunk, Cycle, Dedupe, Permutate, Combine
+  Cycle, Dedupe, Permutate, Combine

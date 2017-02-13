@@ -63,16 +63,30 @@ to <code class="docutils literal"><span class="pre">stop</span></code> index (ex
 <span class="go">[2, 3]</span>
 </pre></div>
 </div>
-<p>Finally the third parameter allows to specify a <code class="docutils literal"><span class="pre">stride</span></code>:</p>
+<p>Finally the third parameter allows to specify a <code class="docutils literal"><span class="pre">stride</span></code>. In this example
+every second element in the slice starting at index 0 and ending at index 4
+(exclusive) is extracted:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">Slice</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
 <span class="go">[1, 3]</span>
 </pre></div>
 </div>
 </div>
+<div class="section" id="chunk">
+<h2>Chunk<a class="headerlink" href="#chunk" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal"><span class="pre">Chunk(n)</span></code> is a nut to group data in chunks of size <code class="docutils literal"><span class="pre">n</span></code>:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">Range</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Chunk</span><span class="p">(</span><span class="mi">2</span><span class="p">):</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="o">...</span> <span class="nb">print</span> <span class="n">chunk</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
+<span class="go">[0, 1]</span>
+<span class="go">[2, 3]</span>
+<span class="go">[4]</span>
+</pre></div>
+</div>
+<p>Note that each chunk is an iterator over the elements in the chunk.</p>
+</div>
 <div class="section" id="todo">
 <h2>TODO<a class="headerlink" href="#todo" title="Permalink to this headline">¶</a></h2>
 <blockquote>
-<div>Chunk, Cycle, Dedupe, Permutate, Combine</div></blockquote>
+<div>Cycle, Dedupe, Permutate, Combine</div></blockquote>
 </div>
 </div>
 
@@ -86,6 +100,7 @@ to <code class="docutils literal"><span class="pre">stop</span></code> index (ex
   <ul>
 <li><a class="reference internal" href="#">Rearranging data</a><ul>
 <li><a class="reference internal" href="#slice">Slice</a></li>
+<li><a class="reference internal" href="#chunk">Chunk</a></li>
 <li><a class="reference internal" href="#todo">TODO</a></li>
 </ul>
 </li>
