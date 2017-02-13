@@ -16,6 +16,8 @@ data. Similar to Python's
 operation it extracts a section of the data. If not ``start`` or ``stride``
 are provided, ``Slice`` extracts the first ``stop`` elements:
 
+  >>> from nutsflow import *
+
   >>> [1, 2, 3, 4] >> Slice(2) >> Collect()
   [1, 2]
 
@@ -38,13 +40,16 @@ Chunk
 
 ``Chunk(n)`` is a nut to group data in chunks of size ``n``:
 
-  >>> for chunk in Range(5) >> Chunk(2):
-  >>> ... print chunk >> Collect()
-  [0, 1]
-  [2, 3]
-  [4]
+  >>> Range(5) >> Chunk(2) >> Map(list) >> Collect()
+  [[0, 1], [2, 3], [4]]
 
-Note that each chunk is an iterator over the elements in the chunk.
+
+Note that each chunk is an iterator over the elements in the chunk,
+which is why ``Map(list)`` is required to print the chunks. A more interesting
+example might be the sum of the elements within each chunk:
+
+  >>> Range(5) >> Chunk(2) >> Map(sum) >> Collect()
+  [1, 5, 4]
 
 
 
