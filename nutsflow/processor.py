@@ -350,7 +350,7 @@ See https://docs.python.org/2/library/itertools.html#itertools.permutations
               If r is not specified or is None, then r defaults
               to the length of the iterable and all possible full-length
               permutations are generated.
-:return: Iterable
+:return: Iterable over permutations
 :rtype: Iterator
 """
 
@@ -369,7 +369,7 @@ See https://docs.python.org/2/library/itertools.html#itertools.combinations
 
 :param iterable iterable: Any iterable
 :param int r: Length of combinations
-:return: Iterable
+:return: Iterable over combinations
 :rtype: Iterator
 """
 
