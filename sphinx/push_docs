@@ -1,26 +1,33 @@
 #!/usr/bin/env bash
 
+# Run this script within 'sphinx' folder!
+
 # build the docs
 make clean
 make html
 
+# back to root folder
 cd ..
 
 # commit and push
 git add -A
-git commit -m "building and pushing docs"
+git commit -m "documentation updated"
 git push origin master
 
-# switch branches and pull the data we want
+# switch to gh-pages branch and pull docs
 git checkout gh-pages
-rm -rf .
-touch .nojekyll
-git checkout master docs/build/html
-mv ./docs/build/html/* ./
 rm -rf ./docs
+touch .nojekyll
+git checkout master docs/html
+
+# move docs to root and delete docs
+mv ./docs/html/* ./
+rm -rf ./docs
+
+# push updated gh-pages
 git add -A
-git commit -m "publishing updated docs..."
+git commit -m "documentation updated"
 git push origin gh-pages
 
-# switch back
+# switch back to master
 git checkout master
