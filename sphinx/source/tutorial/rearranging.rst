@@ -45,11 +45,13 @@ Chunk
 
 
 Note that each chunk is an iterator over the elements in the chunk,
-which is why ``Map(list)`` is required to print the chunks. A more interesting
-example might be the sum of the elements within each chunk:
+which is why ``Map(list)`` is required to convert the chunks to printable lists.
+A more interesting example might be the sum of the elements within each chunk:
 
   >>> Range(5) >> Chunk(2) >> Map(sum) >> Collect()
   [1, 5, 4]
+
+
 
 
 
