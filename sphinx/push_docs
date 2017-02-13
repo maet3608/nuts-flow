@@ -18,6 +18,8 @@ git push origin master
 # switch to gh-pages branch and pull docs
 git checkout gh-pages
 rm -rf ./docs
+rm -rf ./tutorial
+rm -rf _*
 touch .nojekyll
 git checkout master docs/html
 
