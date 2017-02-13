@@ -33,7 +33,7 @@ Repeat = nut_source(itt.repeat)
 """
 Repeat(object)
 
-Return given object repeatly. See itertools.repeat
+Return given object repeatedly. See itertools.repeat
 
 >>> Repeat(1, 3) >> Collect()
 [1, 1, 1]
