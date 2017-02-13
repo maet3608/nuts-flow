@@ -53,8 +53,6 @@ A more interesting example might be the sum of the elements within each chunk:
 
 
 
-
-
 TODO
 -----
 
