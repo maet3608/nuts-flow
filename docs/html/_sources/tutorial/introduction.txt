@@ -11,6 +11,8 @@ provides examples of its usage.
    debugging
    filtering
    transforming
+   restructuring
+   split_combine
    sources
    sinks   
    custom_nuts

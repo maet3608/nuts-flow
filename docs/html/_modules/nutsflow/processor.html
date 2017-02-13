@@ -214,13 +214,12 @@
 <span class="sd">Cycle through iterable indefinitely. Large memory consumption if iterable is</span>
 <span class="sd">large!</span>
 
-<span class="sd">&gt;&gt;&gt; [1,2] &gt;&gt; Cycle() &gt;&gt; Take(5) &gt;&gt; Collect()</span>
+<span class="sd">&gt;&gt;&gt; [1, 2] &gt;&gt; Cycle() &gt;&gt; Take(5) &gt;&gt; Collect()</span>
 <span class="sd">[1, 2, 1, 2, 1]</span>
 
 <span class="sd">:param iterable iterable: Any iterable, e.g. list, xrange, ...</span>
-<span class="sd">:param n: Chunk size</span>
-<span class="sd">:return: Chunked iterable</span>
-<span class="sd">:rtype: Iterator over iterators</span>
+<span class="sd">:return: Cycled input iterable</span>
+<span class="sd">:rtype: Iterator</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
 
@@ -232,7 +231,7 @@
 <span class="sd">    Flatten the iterables within the iterable and non-iterables are passed</span>
 <span class="sd">    through. Only one level is flattened.</span>
 
-<span class="sd">    &gt;&gt;&gt; [(1,2), (3,4,5), 6] &gt;&gt; Flatten() &gt;&gt; Collect()</span>
+<span class="sd">    &gt;&gt;&gt; [(1, 2), (3, 4, 5), 6] &gt;&gt; Flatten() &gt;&gt; Collect()</span>
 
 <span class="sd">    :param iterable iterable: Any iterable.</span>
 <span class="sd">    :return: Flattened iterable</span>
@@ -394,7 +393,7 @@
 <span class="sd">              If r is not specified or is None, then r defaults</span>
 <span class="sd">              to the length of the iterable and all possible full-length</span>
 <span class="sd">              permutations are generated.</span>
-<span class="sd">:return: Iterable</span>
+<span class="sd">:return: Iterable over permutations</span>
 <span class="sd">:rtype: Iterator</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
@@ -408,9 +407,12 @@
 <span class="sd">&gt;&gt;&gt; &#39;ABC&#39; &gt;&gt; Combine(2) &gt;&gt; Collect()</span>
 <span class="sd">[(&#39;A&#39;, &#39;B&#39;), (&#39;A&#39;, &#39;C&#39;), (&#39;B&#39;, &#39;C&#39;)]</span>
 
+<span class="sd">&gt;&gt;&gt; [1, 2, 3, 4] &gt;&gt; Combine(3) &gt;&gt; Collect()</span>
+<span class="sd">[(1, 2, 3), (1, 2, 4), (1, 3, 4), (2, 3, 4)]</span>
+
 <span class="sd">:param iterable iterable: Any iterable</span>
 <span class="sd">:param int r: Length of combinations</span>
-<span class="sd">:return: Iterable</span>
+<span class="sd">:return: Iterable over combinations</span>
 <span class="sd">:rtype: Iterator</span>
 <span class="sd">&quot;&quot;&quot;</span>
 

@@ -4,9 +4,9 @@ Data transformation
 ===================
 
 
-The transformation of data is, together with :ref:`filtering <filtering>`,  
-at the very core of data flows and **nuts-flow** provides various nuts 
-for this purpose.
+The (element-wise) transformation of data is, together with
+:ref:`filtering <filtering>`, at the very core of data flows and
+**nuts-flow** provides various nuts for this purpose.
 
 
 Elementwise transformations
@@ -219,12 +219,4 @@ examples to dublicate all numbers in a list of numbers:
 
   >>> [0, 1, 2] >> FlatMap(dup) >> Collect()
   [0, 0, 1, 1, 2, 2]
-
-
-
-TODO
------
-
-  Chunk => spit_combine?)
-  Slice, Cycle ?
 
