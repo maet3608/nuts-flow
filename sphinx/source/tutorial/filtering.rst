@@ -1,7 +1,7 @@
 .. _filtering:
 
-Data filtering
-=============
+Filtering
+=========
 
 Apart from :ref:`reading <sources>` and :ref:`writing <sinks>`, 
 :ref:`filtering <filtering>` and :ref:`transforming <transforming>`

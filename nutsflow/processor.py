@@ -39,7 +39,7 @@ Return first n elements of iterable
 
 Slice = nut_processor(itt.islice)
 """
-iterable >> Slice(start, stop[, step])
+iterable >> Slice([start,] stop[, stride])
 
 Return slice of elements from iterable.
 See https://docs.python.org/2/library/itertools.html#itertools.islice

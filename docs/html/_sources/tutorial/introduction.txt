@@ -11,7 +11,7 @@ provides examples of its usage.
    debugging
    filtering
    transforming
-   restructuring
+   rearranging
    split_combine
    sources
    sinks   
