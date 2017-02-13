@@ -175,9 +175,8 @@ large!
 [1, 2, 1, 2, 1]
 
 :param iterable iterable: Any iterable, e.g. list, xrange, ...
-:param n: Chunk size
-:return: Chunked iterable
-:rtype: Iterator over iterators
+:return: Cycled input iterable
+:rtype: Iterator
 """
 
 
