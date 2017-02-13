@@ -364,6 +364,9 @@ See https://docs.python.org/2/library/itertools.html#itertools.combinations
 >>> 'ABC' >> Combine(2) >> Collect()
 [('A', 'B'), ('A', 'C'), ('B', 'C')]
 
+>>> [1, 2, 3, 4] >> Combine(3) >> Collect()
+[(1, 2, 3), (1, 2, 4), (1, 3, 4), (2, 3, 4)]
+
 :param iterable iterable: Any iterable
 :param int r: Length of combinations
 :return: Iterable
