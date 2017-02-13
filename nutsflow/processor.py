@@ -171,7 +171,7 @@ iterable >> Cycle()
 Cycle through iterable indefinitely. Large memory consumption if iterable is
 large!
 
->>> [1,2] >> Cycle() >> Take(5) >> Collect()
+>>> [1, 2] >> Cycle() >> Take(5) >> Collect()
 [1, 2, 1, 2, 1]
 
 :param iterable iterable: Any iterable, e.g. list, xrange, ...
@@ -189,7 +189,7 @@ def Flatten(iterable):
     Flatten the iterables within the iterable and non-iterables are passed
     through. Only one level is flattened.
 
-    >>> [(1,2), (3,4,5), 6] >> Flatten() >> Collect()
+    >>> [(1, 2), (3, 4, 5), 6] >> Flatten() >> Collect()
 
     :param iterable iterable: Any iterable.
     :return: Flattened iterable
