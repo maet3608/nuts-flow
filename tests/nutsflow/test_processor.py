@@ -131,9 +131,9 @@ def test_TakeWhile():
     assert [0, 1, 2, 3, 0] >> TakeWhile(_ < 2) >> Collect() == [0, 1]
 
 
-def test_SkipWhile():
-    assert [] >> SkipWhile(_ < 2) >> Collect() == []
-    assert [0, 1, 2, 3, 0] >> SkipWhile(_ < 2) >> Collect() == [2, 3, 0]
+def test_DropWhile():
+    assert [] >> DropWhile(_ < 2) >> Collect() == []
+    assert [0, 1, 2, 3, 0] >> DropWhile(_ < 2) >> Collect() == [2, 3, 0]
 
 
 def test_Permutate():
@@ -179,11 +179,11 @@ def test_Tail():
     assert [1, 2, 3, 4] >> Tail(0) == []
 
 
-def test_Skip():
-    assert [] >> Skip(2) >> Collect() == []
-    assert [1, 2] >> Skip(2) >> Collect() == []
-    assert [1, 2, 3] >> Skip(2) >> Collect() == [3]
-    assert [1, 2, 3, 4] >> Skip(2) >> Collect() == [3, 4]
+def test_Drop():
+    assert [] >> Drop(2) >> Collect() == []
+    assert [1, 2] >> Drop(2) >> Collect() == []
+    assert [1, 2, 3] >> Drop(2) >> Collect() == [3]
+    assert [1, 2, 3, 4] >> Drop(2) >> Collect() == [3, 4]
 
 
 def test_Pick():

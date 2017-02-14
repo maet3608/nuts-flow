@@ -90,7 +90,7 @@ by 3 simply call
 If the data is sorted ``GroupBySorted`` can be used instead.
 
 
-TakeWhile and SkipWhile
+TakeWhile and DropWhile
 -----------------------
 
 Occasionally, it is necessary to run a data flow until a certain
@@ -102,10 +102,10 @@ the **first** negative number is encountered:
    >>> [2, 1, -1, 3, 4, -1] >> TakeWhile(_ > 0) >> Collect()
    [2, 1]
    
-Similarily, ``SkipWhile(func)`` skips all elements while the predicate function
+Similarily, ``DropWhile(func)`` skips all elements while the predicate function
 is true and returns the remainder of the iterable:
 
-   >>> [2, 1, -1, 3, 4, -1] >> SkipWhile(_ > 0) >> Collect()
+   >>> [2, 1, -1, 3, 4, -1] >> DropWhile(_ > 0) >> Collect()
    [-1, 3, 4, -1]
 
 

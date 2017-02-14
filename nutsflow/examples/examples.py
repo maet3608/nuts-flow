@@ -57,7 +57,7 @@ def run(datapath):
 
     print Range(10) >> Tail(5)
 
-    print Range(10) >> Skip(3) >> Collect()
+    print Range(10) >> Drop(3) >> Collect()
 
     print [1, 2, 2, 3, 3, 3] >> CountValues()
 

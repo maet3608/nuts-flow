@@ -314,13 +314,13 @@ See https://docs.python.org/2/library/itertools.html#itertools.takewhile
 
 
 @nut_processor
-def SkipWhile(iterable, func):
+def DropWhile(iterable, func):
     """
-    iterable >> SkipWhile(func)
+    iterable >> DropWhile(func)
 
     Skip elements in iterable while predicate function is True.
 
-    >>>[0, 1, 2, 3, 0] >> SkipWhile(_ < 2) >> Collect()
+    >>>[0, 1, 2, 3, 0] >> DropWhile(_ < 2) >> Collect()
     [2, 3, 0]
 
     :param iterable iterable: Any iterable
@@ -328,11 +328,8 @@ def SkipWhile(iterable, func):
     :return: Iterable
     :rtype: Iterator
     """
-    emit = False
-    for e in iterable:
-        emit = emit or not func(e)
-        if emit:
-            yield e
+    return itt.dropwhile(func, iterable)
+
 
 
 Permutate = nut_processor(itt.permutations)
@@ -420,19 +417,19 @@ def If(iterable, cond, if_nut, else_nut=Identity()):
 
 
 @nut_processor
-def Skip(iterable, n):
+def Drop(iterable, n):
     """
-    iterable >> Skip(n)
+    iterable >> Drop(n)
 
-    Skip n elements in iterable.
+    Drop first n elements in iterable.
 
-    >>> [1, 2, 3, 4] >> Skip(2) >> Collect()
+    >>> [1, 2, 3, 4] >> Drop(2) >> Collect()
     [3, 4]
 
 
     :param iterable iterable: Any iterable
-    :param int n: Number of elements to skip
-    :return: Iterator without skipped elements
+    :param int n: Number of elements to drop
+    :return: Iterator without dropped elements
     :rtype: iterator
     """
     it = iter(iterable)
