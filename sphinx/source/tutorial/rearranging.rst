@@ -97,8 +97,8 @@ input iterable.
   >>> [1, 2, 3] >> Combine(2) >> Collect()
   [(1, 2), (1, 3), (2, 3)]
 
-Note that ``Combine(r)`` returns a subset of ``Permutate(r)`` where the order
-of the elements (as given in the input iterable) does not change.
+Note that ``Combine(r)`` returns a subset of ``Permutate(r)`` with permutations
+where the order of the elements (as given in the input iterable) is preserved.
 
 
 
