@@ -137,7 +137,7 @@ if iterable is long and many elements are unique!
 >>> data >> Dedupe(key=lambda (x,y): y) >> Collect()
 [(1, 'a'), (3, 'b')]
 
->> data >> Dedupe(_[1]) >> Collect()
+>>> data >> Dedupe(_[1]) >> Collect()
 [(1, 'a'), (3, 'b')]
 
 :param iterable iterable: Any iterable, e.g. list, xrange, ...
