@@ -43,7 +43,6 @@ it can be written shorter using :ref:`underscore syntax <underscore>`:
   
 Partition  
 ---------
-.. _Partition:
 
 If both 'sides' of a filter, the elements accepted **and** the elements 
 rejected, are wanted the ``Partition`` nut can be used:

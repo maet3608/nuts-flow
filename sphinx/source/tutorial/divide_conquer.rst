@@ -41,8 +41,6 @@ And https://docs.python.org/2/library/itertools.html#itertools.izip_longest
   [('1', 'a', '+'), ('2', 'b', '-')]
 
 
-
-
 Interleave
 ^^^^^^^^^^
 
