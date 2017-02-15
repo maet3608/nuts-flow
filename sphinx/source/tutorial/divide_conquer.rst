@@ -9,8 +9,6 @@ purpose. In this context the :ref:`Partition` and the :ref:`MapMulti` nuts
 might be of interest as well.
 
 
-[TODO: Make Concat/Zip/Interleave sources? Concat(*iterables)]
-
 Unzip
 ^^^^^
 
