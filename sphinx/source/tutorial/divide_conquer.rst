@@ -5,7 +5,7 @@ Divide and conquer
 
 It is frequently necessary to either split a data flow into multiple flows
 or combine data flows. The following nuts are specifically designed for this
-purpose. In this context the :ref:`Partition` and the :ref:`MultiMap` nuts
+purpose. In this context the :ref:`Partition` and the :ref:`MapMulti` nuts
 might be of interest as well.
 
 
