@@ -12,7 +12,7 @@ provides examples of its usage.
    filtering
    transforming
    rearranging
-   split_combine
+   divide_conquer
    sources
    sinks   
    custom_nuts
