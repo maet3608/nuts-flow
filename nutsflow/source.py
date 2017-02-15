@@ -47,19 +47,31 @@ Return given object repeatedly. See itertools.repeat
 :rtype: iterable over object
 """
 
-Product = nut_source(itt.product)
-"""
-Product(*iterables)
 
-Return cartesian product of iterables. See itertools.product
+@nut_source
+def Product(*args, **kwds):
+    """
+    Product(*iterables [, repeat])
 
->>> Product('ab', xrange(3)) >> Collect()
-[('a', 0), ('a', 1), ('a', 2), ('b', 0), ('b', 1), ('b', 2)]
+    Return cartesian product of input iterables.
 
-:param iterables iterables: Iterables
-:return: Iterator over cartesian product
-:rtype: iterable over object
-"""
+    >>> Product([1, 2], [3, 4]) >> Collect()
+    [(1, 3), (1, 4), (2, 3), (2, 4)]
+
+    >>> Product('ab', xrange(3)) >> Collect()
+    [('a', 0), ('a', 1), ('a', 2), ('b', 0), ('b', 1), ('b', 2)]
+
+    >>> Product([1, 2, 3], repeat=2) >> Collect()
+    [(1, 1), (1, 2), (1, 3), (2, 1), (2, 2), (2, 3), (3, 1), (3, 2), (3, 3)]
+
+    :param iterables iterables: Collections of iterables to create cartesian
+            product from.
+    :param int repeat: Repeat a single iterable 'repeat' times, e.g.
+            Procuct([1,2], [1,2]) is equal to Product([1,2], repeat=2)
+    :return: cartesian product
+    :rtype: iterator over tuples
+    """
+    return itt.product(*args, **kwds)
 
 
 @nut_source
@@ -76,6 +88,7 @@ def Empty():
     :rtype: iterator
     """
     return iter(())
+
 
 class Range(NutSource):
     """

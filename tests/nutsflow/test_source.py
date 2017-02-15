@@ -17,8 +17,13 @@ def test_Repeat():
 
 
 def test_Product():
+    assert Product([]) >> Collect() == []
+
     result = [('a', 0), ('a', 1), ('a', 2), ('b', 0), ('b', 1), ('b', 2)]
     assert Product('ab', xrange(3)) >> Collect() == result
+
+    result = [(1, 1), (1, 2), (2, 1), (2, 2)]
+    assert Product([1, 2], repeat=2) >> Collect() == result
 
 
 def test_Empty():
@@ -54,5 +59,5 @@ def test_ReadCSV_tsv():
                                        ('1', '2', '3'),
                                        ('4', '5', '6')]
     with ReadCSV(filepath, skipheader=1, fmtfunc=int,
-                   delimiter='\t') as reader:
+                 delimiter='\t') as reader:
         assert reader >> Collect() == [(1, 2, 3), (4, 5, 6)]
