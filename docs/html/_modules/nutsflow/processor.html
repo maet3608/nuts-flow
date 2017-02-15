@@ -358,13 +358,13 @@
 
 
 <span class="nd">@nut_processor</span>
-<span class="k">def</span> <span class="nf">SkipWhile</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">func</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">DropWhile</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">func</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    iterable &gt;&gt; SkipWhile(func)</span>
+<span class="sd">    iterable &gt;&gt; DropWhile(func)</span>
 
 <span class="sd">    Skip elements in iterable while predicate function is True.</span>
 
-<span class="sd">    &gt;&gt;&gt;[0, 1, 2, 3, 0] &gt;&gt; SkipWhile(_ &lt; 2) &gt;&gt; Collect()</span>
+<span class="sd">    &gt;&gt;&gt;[0, 1, 2, 3, 0] &gt;&gt; DropWhile(_ &lt; 2) &gt;&gt; Collect()</span>
 <span class="sd">    [2, 3, 0]</span>
 
 <span class="sd">    :param iterable iterable: Any iterable</span>
@@ -372,11 +372,8 @@
 <span class="sd">    :return: Iterable</span>
 <span class="sd">    :rtype: Iterator</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">emit</span> <span class="o">=</span> <span class="kc">False</span>
-    <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">iterable</span><span class="p">:</span>
-        <span class="n">emit</span> <span class="o">=</span> <span class="n">emit</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">func</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">emit</span><span class="p">:</span>
-            <span class="k">yield</span> <span class="n">e</span>
+    <span class="k">return</span> <span class="n">itt</span><span class="o">.</span><span class="n">dropwhile</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">iterable</span><span class="p">)</span>
+
 
 
 <span class="n">Permutate</span> <span class="o">=</span> <span class="n">nut_processor</span><span class="p">(</span><span class="n">itt</span><span class="o">.</span><span class="n">permutations</span><span class="p">)</span>
@@ -464,19 +461,19 @@
 
 
 <span class="nd">@nut_processor</span>
-<span class="k">def</span> <span class="nf">Skip</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">Drop</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    iterable &gt;&gt; Skip(n)</span>
+<span class="sd">    iterable &gt;&gt; Drop(n)</span>
 
-<span class="sd">    Skip n elements in iterable.</span>
+<span class="sd">    Drop first n elements in iterable.</span>
 
-<span class="sd">    &gt;&gt;&gt; [1, 2, 3, 4] &gt;&gt; Skip(2) &gt;&gt; Collect()</span>
+<span class="sd">    &gt;&gt;&gt; [1, 2, 3, 4] &gt;&gt; Drop(2) &gt;&gt; Collect()</span>
 <span class="sd">    [3, 4]</span>
 
 
 <span class="sd">    :param iterable iterable: Any iterable</span>
-<span class="sd">    :param int n: Number of elements to skip</span>
-<span class="sd">    :return: Iterator without skipped elements</span>
+<span class="sd">    :param int n: Number of elements to drop</span>
+<span class="sd">    :return: Iterator without dropped elements</span>
 <span class="sd">    :rtype: iterator</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">it</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">iterable</span><span class="p">)</span>

@@ -85,7 +85,7 @@ it can be written shorter using <a class="reference internal" href="underscore.h
 </div>
 <div class="section" id="partition">
 <h2>Partition<a class="headerlink" href="#partition" title="Permalink to this headline">¶</a></h2>
-<p>If both &#8216;sides&#8217; of a filter, the elements accepted <strong>and</strong> the elements
+<p id="id2">If both &#8216;sides&#8217; of a filter, the elements accepted <strong>and</strong> the elements
 rejected, are wanted the <code class="docutils literal"><span class="pre">Partition</span></code> nut can be used:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">greater</span><span class="p">,</span> <span class="n">smaller</span> <span class="o">=</span> <span class="n">Range</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Partition</span><span class="p">(</span><span class="n">_</span> <span class="o">&gt;</span> <span class="mi">5</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">greater</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
@@ -129,8 +129,8 @@ by 3 simply call</p>
 <p><code class="docutils literal"><span class="pre">GroupBy</span></code> loads all data in memory and should be avoided for large data sets.
 If the data is sorted <code class="docutils literal"><span class="pre">GroupBySorted</span></code> can be used instead.</p>
 </div>
-<div class="section" id="takewhile-and-skipwhile">
-<h2>TakeWhile and SkipWhile<a class="headerlink" href="#takewhile-and-skipwhile" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="takewhile-and-dropwhile">
+<h2>TakeWhile and DropWhile<a class="headerlink" href="#takewhile-and-dropwhile" title="Permalink to this headline">¶</a></h2>
 <p>Occasionally, it is necessary to run a data flow until a certain
 condition is met. <code class="docutils literal"><span class="pre">TakeWhile(func)</span></code> takes elements from the
 iterable as long as the predicate function is true.
@@ -140,9 +140,9 @@ the <strong>first</strong> negative number is encountered:</p>
 <span class="go">[2, 1]</span>
 </pre></div>
 </div>
-<p>Similarily, <code class="docutils literal"><span class="pre">SkipWhile(func)</span></code> skips all elements while the predicate function
+<p>Similarily, <code class="docutils literal"><span class="pre">DropWhile(func)</span></code> skips all elements while the predicate function
 is true and returns the remainder of the iterable:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">SkipWhile</span><span class="p">(</span><span class="n">_</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">DropWhile</span><span class="p">(</span><span class="n">_</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
 <span class="go">[-1, 3, 4, -1]</span>
 </pre></div>
 </div>
@@ -161,7 +161,7 @@ is true and returns the remainder of the iterable:</p>
 <li><a class="reference internal" href="#filter">Filter</a></li>
 <li><a class="reference internal" href="#partition">Partition</a></li>
 <li><a class="reference internal" href="#groupby">GroupBy</a></li>
-<li><a class="reference internal" href="#takewhile-and-skipwhile">TakeWhile and SkipWhile</a></li>
+<li><a class="reference internal" href="#takewhile-and-dropwhile">TakeWhile and DropWhile</a></li>
 </ul>
 </li>
 </ul>
