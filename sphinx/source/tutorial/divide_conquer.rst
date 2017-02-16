@@ -1,7 +1,7 @@
 .. _divide_conquer:
 
 Divide and conquer
-===================
+==================
 
 It is frequently necessary to either split a data flow into multiple flows
 or combine data flows. The following nuts are specifically designed for this
@@ -9,9 +9,8 @@ purpose. In this context the :ref:`Partition` and the :ref:`MapMulti` nuts
 might be of interest as well.
 
 
-
 Zip
-^^^^
+^^^
 
 ``Zip(*iterables)`` combines two or more iterables like a *zipper* taking at
 every step an element from each iterable and outputting a tuple of the
@@ -67,52 +66,70 @@ This equivalent to ``Unzip() >> Map(list) >> Collect()`` but shorter.
 Interleave
 ^^^^^^^^^^
 
-Works like :ref:`Zip` but does not group zipped results in tuples but
-iterleaves them in a flat output instead.
+``Interleave`` works like :ref:`Zip` but does not group zipped results in
+tuples. Instead an iterator over a flat sequence of interleaved elements
+is returned:
 
-iterable >> Interleave(*iterables)
+  >>> numbers = [0, 1, 2]
+  >>> letters = ['a', 'b', 'c']
+  >>> numbers >> Interleave(letters) >> Collect()
+  [(0, 'a'), (1, 'b'), (2, 'c')]
+  [0, 'a', 1, 'b', 2, 'c', 3]
 
-Interleave elements of iterable with elements of given iterables.
-Similar to iterable >> Zip(*iterables) >> Flatten() but longest iterable
-determines length of interleaved iterator.
+Also in contrast to ``Zip``, ``Interleave`` does not stop when the shortest
+input iterable is depleted. Elements are returned until all inputs are
+depleted:
 
-  >>> Range(5) >> Interleave('abc') >> Collect()
-  [0, 'a', 1, 'b', 2, 'c', 3, 4]
-
-  >>> '12' >> Interleave('abcd', '+-') >> Collect()
-  ['1', 'a', '+', '2', 'b', '-', 'c', 'd']
-
-
-Tee
-^^^^
-
-iterable >> Tee([n=2])
-
-Return n independent iterators from a single iterable. Can consume large
-amounts of memory if iterable is large and tee's are not processed in
-parallel.
-See https://docs.python.org/2/library/itertools.html#itertools.tee
-
-  >>> it1, it2  = [1, 2, 3] >> Tee(2)
-  >>> it1 >> Collect()
-  [1, 2, 3]
-
-  >>> it2 >> Collect()
-  [1, 2, 3]
+  >>> Range(10) >> Interleave('abc') >> Collect()
+  [0, 'a', 1, 'b', 2, 'c', 3, 4, 5, 6, 7, 8, 9]
 
 
 Concat
 ^^^^^^
 
-iterable >> Concat(*iterables)
-
-Concatenate iterables.
+Apart from zipping or interleaving iterators, they can also be concatenated
+using ``Concat``:
 
   >>> Range(5) >> Concat('abc') >> Collect()
   [0, 1, 2, 3, 4, 'a', 'b', 'c']
 
-  >>> '12' >> Concat('abcd', '+-') >> Collect()
-  ['1', '2', 'a', 'b', 'c', 'd', '+', '-']
+  >>> '12' >> Concat('abcd', [3, 4, 5]) >> Collect()
+  ['1', '2', 'a', 'b', 'c', 'd', 3, 4, 5]
+
+Note that ``Concat`` is memory efficient and does not materialze any of the
+input iterables or the concatenated result in memory; e.g. in contrast to the
+following code:
+
+  >>> list(Range(5)) + list('abc')
+  [0, 1, 2, 3, 4, 'a', 'b', 'c']
 
 
+Tee
+^^^
+
+``Tee([n=2])`` creates multiple independent iterators from a single iterable.
+
+  >>> numbers1, numbers2  = Range(5) >> Tee(2)
+  >>> numbers1 >> Collect()
+  [0, 1, 2, 3, 4]
+
+  >>> numbers2 >> Collect()
+  [0, 1, 2, 3, 4]
+
+``Tee`` is only useful if the returned iterators are advanced largely
+synchronously. Otherwise the memory consumption is identical to simply
+materializing the input iterable and referencing it, e.g.
+
+  >>> numbers1 = Range(5) >> Collect()
+  >>> numbers2 = numbers1
+
+A simple example where ``Tee`` is useful would be to add each number in the
+input iterable to its predecessor:
+
+  >>> numbers1, numbers2  = Range(5) >> Tee(2)
+  >>> numbers1 >> Drop(1) >> Map(lambda a,b: a+b, numbers2) >> Collect()
+  [1, 3, 5, 7]
+
+Iterators, in contrast to streams, do not allow to go back and ``Tee`` provides
+a way to overcome this limitation.
 
