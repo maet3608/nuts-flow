@@ -151,21 +151,23 @@ Return number elements in input iterable.  This consumes the iterable!
 
 
 @nut_sink
-def Unzip(iterable, noiter=False):
+def Unzip(iterable, container=None):
     """
-    iterable >> Unzip()
+    iterable >> Unzip(container=None)
 
-    Same as zip(*iterable) but returns iterators for noiter=False.
+    Same as izip(*iterable) but returns iterators for container=None
 
-    >>> [(1, 2, 3), (4, 5, 6)] >> Unzip() >> Map(tuple) >> Collect()
+    >>> [(1, 2, 3), (4, 5, 6)] >> Unzip(tuple) >> Collect()
     [(1, 4), (2, 5), (3, 6)]
 
     :param iterable iterable:  Any iterable, e.g. list, xrange, ...
-    :param bool noiter:  If true, does not return iterator
+    :param container container: If not none, unzipped results are collected
+       in the provided container, eg. list, tuple, set
     :return: Unzip iterable.
     :rtype: iterator over iterators
     """
-    return zip(*iterable) if noiter else itt.izip(*iterable)
+    unzipped = itt.izip(*iterable)
+    return itt.imap(container, unzipped) if container else unzipped
 
 
 @nut_sink

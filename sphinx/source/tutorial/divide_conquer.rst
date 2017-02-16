@@ -9,34 +9,59 @@ purpose. In this context the :ref:`Partition` and the :ref:`MapMulti` nuts
 might be of interest as well.
 
 
-Unzip
-^^^^^
-
-iterable >> Unzip()
-
-Same as zip(*iterable) but returns iterators for noiter=False.
-
-  >>> from nutsflow import *
-
-  >>> [(1, 2, 3), (4, 5, 6)] >> Unzip() >> Map(tuple) >> Collect()
-  [(1, 4), (2, 5), (3, 6)]
-
 
 Zip
 ^^^
 
-iterable >> Zip(*iterables)
+``Zip(*iterables)`` combines two or more iterables like a *zipper* taking at
+every step an element from each iterable and outputting a tuple of the
+grouped elements. Here an example
 
-Zip elements of iterable with elements of given iterables
-Zip finishes when shortest iterable is exhausted.
-See https://docs.python.org/2/library/itertools.html#itertools.izip
-And https://docs.python.org/2/library/itertools.html#itertools.izip_longest
+  >>> from nutsflow import *
 
-  >>> [0, 1, 2] >> Zip('abc') >> Collect()
+  >>> numbers = [0, 1, 2]
+  >>> letters = ['a', 'b', 'c']
+  >>> numbers >> Zip(letters) >> Collect()
   [(0, 'a'), (1, 'b'), (2, 'c')]
 
-  >>> '12' >> Zip('abcd', '+-') >> Collect()
+``Zip`` finishes when shortest iterable is exhausted. See
+
+  >>> Range(100) >> Zip('abc') >> Collect()
+  [(0, 'a'), (1, 'b'), (2, 'c')]
+
+Note that ``Zip`` can zip more than two iterables:
+
+  >>> '12' >> Zip('ab', '+-') >> Collect()
   [('1', 'a', '+'), ('2', 'b', '-')]
+
+If the output of ``Zip`` is required to be flat ``Flatten`` can be called
+
+  >>> [0, 1, 2] >> Zip('abc') >> Flatten() >> Collect()
+  [0, 'a', 1, 'b', 2, 'c']
+
+but using :ref:`Interleave` is simpler in this case.
+
+
+Unzip
+^^^^^
+
+``Unzip(container=None)`` reverses a ``Zip`` operation:
+
+  >>> numbers, letters = [0, 1, 2] >> Zip('abc') >> Unzip()
+  >>> list(numbers)
+  [0, 1, 2]
+  >>> list(letters)
+  ['a', 'b', 'c']
+
+Per default ``Unzip`` returns iterators but often the results are required
+as lists or other collections (see above). ``Unzip`` allows to provide a
+container to collect the results:
+
+  >>> [0, 1, 2] >> Zip('abc') >> Unzip(list) >> Collect()
+  [[0, 1, 2], ['a', 'b', 'c']]
+
+This equivalent to ``Unzip() >> Map(list) >> Collect()`` but shorter.
+
 
 
 Interleave

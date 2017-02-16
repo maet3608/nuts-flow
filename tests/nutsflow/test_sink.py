@@ -57,8 +57,8 @@ def test_Unzip():
     assert [] >> Unzip() >> Map(tuple) >> Collect() == []
     assert iter(input) >> Unzip() >> Map(tuple) >> Collect() == expected
 
-    assert [] >> Unzip(True) == []
-    assert iter(input) >> Unzip(True) == expected
+    assert [] >> Unzip(tuple) >> Collect() == []
+    assert iter(input) >> Unzip(tuple) >> Collect() == expected
 
 
 def test_CountValues():
