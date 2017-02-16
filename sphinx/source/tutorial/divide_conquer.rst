@@ -11,7 +11,7 @@ might be of interest as well.
 
 
 Zip
-^^^
+^^^^
 
 ``Zip(*iterables)`` combines two or more iterables like a *zipper* taking at
 every step an element from each iterable and outputting a tuple of the
@@ -45,7 +45,7 @@ but using :ref:`Interleave` is simpler in this case.
 Unzip
 ^^^^^
 
-``Unzip(container=None)`` reverses a ``Zip`` operation:
+``Unzip(container=None)`` reverses a :ref:`Zip` operation:
 
   >>> numbers, letters = [0, 1, 2] >> Zip('abc') >> Unzip()
   >>> list(numbers)
@@ -67,6 +67,9 @@ This equivalent to ``Unzip() >> Map(list) >> Collect()`` but shorter.
 Interleave
 ^^^^^^^^^^
 
+Works like :ref:`Zip` but does not group zipped results in tuples but
+iterleaves them in a flat output instead.
+
 iterable >> Interleave(*iterables)
 
 Interleave elements of iterable with elements of given iterables.
@@ -81,7 +84,7 @@ determines length of interleaved iterator.
 
 
 Tee
-^^^
+^^^^
 
 iterable >> Tee([n=2])
 
