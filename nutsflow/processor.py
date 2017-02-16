@@ -123,6 +123,28 @@ And https://docs.python.org/2/library/itertools.html#itertools.izip_longest
 :rtype: iterator over tuples
 """
 
+
+@nut_processor
+def ZipWith(iterable, f, *iterables):
+    """
+    iterable >> ZipWith(f, *iterables)
+
+    Zips the given iterables, unpacks them and applies the given function.
+
+    >>> add = lambda a, b: a + b
+    >>> [1, 2, 3] >> ZipWith(add, [2, 3, 4]) >> Collect()
+    [3, 5, 7]
+
+    :param iterable iterable: Any iterable
+    :param iterable iterables: Any iterables
+    :param function f: Function to apply to zipped input iterables
+    :return: iterator of result of f() applied to zipped iterables
+    :rtype: iterator
+    """
+    iterables = [iterable] + list(iterables)
+    return itt.starmap(f, itt.izip(*iterables))
+
+
 Dedupe = nut_processor(itf.unique)
 """
 iterable >> Dedupe([key])
@@ -329,7 +351,6 @@ def DropWhile(iterable, func):
     :rtype: Iterator
     """
     return itt.dropwhile(func, iterable)
-
 
 
 Permutate = nut_processor(itt.permutations)

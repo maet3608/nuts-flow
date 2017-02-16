@@ -50,6 +50,15 @@ def test_Zip():
     assert '12' >> Zip('abcd', '+-') >> Collect() == expected
 
 
+def test_ZipWith():
+    add2 = lambda a, b: a + b
+    add3 = lambda a, b, c: a + b + c
+
+    assert [] >> ZipWith(add2, []) >> Collect() == []
+    assert [1, 2, 3] >> ZipWith(add2, [2, 3, 4]) >> Collect() == [3, 5, 7]
+    assert [1, 2] >> ZipWith(add3, [2, 3], [4, 5]) >> Collect() == [7, 10]
+
+
 def test_Dedupe():
     assert [] >> Dedupe() >> Collect() == []
     assert [2, 3, 1, 1, 2, 4] >> Dedupe() >> Collect() == [2, 3, 1, 4]
