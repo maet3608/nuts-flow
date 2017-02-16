@@ -118,9 +118,9 @@ And https://docs.python.org/2/library/itertools.html#itertools.izip_longest
 
 
 :param iterable iterable: Any iterable
-:param iterable iterables: Iterables to interleave
-:return: Interleaved elements from iterables.
-:rtype: iterator
+:param iterable iterables: Iterables to zip
+:return: Zipped elements from iterables.
+:rtype: iterator over tuples
 """
 
 Dedupe = nut_processor(itf.unique)
@@ -238,7 +238,7 @@ See https://docs.python.org/2/library/itertools.html#itertools.imap
 [32, 9, 1000]
 
 :param iterable iterable: Any iterable
-:param iterable iterables: Any iterable.
+:param iterables iterables: Any iterables.
 :param function func: Mapping function.
 :return: Mapped iterable
 :rtype: Iterator
