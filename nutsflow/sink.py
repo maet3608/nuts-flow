@@ -26,12 +26,15 @@ Return sum over inputs.
 :rtype: number
 """
 
+
 @nut_sink
 def Max(iterable, key=lambda x: x, default=None):
     try:
         return max(iterable, key=key)
     except ValueError:
         return default
+
+
 """
 iterable >> Max(key=func, default=None)
 
@@ -53,12 +56,15 @@ Return maximum of inputs.
 :rtype: object
 """
 
+
 @nut_sink
 def Min(iterable, key=lambda x: x, default=None):
     try:
         return min(iterable, key=key)
     except ValueError:
         return default
+
+
 """
 iterable >> Max(key=func, default=None)
 
@@ -259,6 +265,24 @@ def Collect(iterable, container=list):
     :rtype: container
     """
     return container(iterable)
+
+
+@nut_sink
+def Join(iterable, separator=''):
+    """
+    iterable >> Join(separator='')
+
+    Same as Python's sep.join(iterable). Concatenates the elements in
+    the iterable to a string using the given separator. In addition to
+    Python's sep.join(iterable) it also automatically converts elements
+    to strings.
+
+    :param iterable iterable: Any iterable
+    :param string separator: Seperator string between elements.
+    :return: String of with concatenated elements of iterable.
+    :rtype: str
+    """
+    return separator.join(itt.imap(str, iterable))
 
 
 class WriteCSV(NutSink):

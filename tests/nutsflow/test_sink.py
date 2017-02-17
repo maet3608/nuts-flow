@@ -77,6 +77,12 @@ def test_Collect():
     assert [('one', 1), ('two', 2)] >> Collect(dict) == {'one': 1, 'two': 2}
 
 
+def test_Join():
+    assert [] >> Join() == ''
+    assert xrange(5) >> Join() == '01234'
+    assert xrange(5) >> Join(',') == '0,1,2,3,4'
+
+
 def test_WriteCSV():
     filepath = 'tests/data/data_out.csv'
     data = [[1, 2], [3, 4]]
