@@ -31,9 +31,9 @@ Return increasing integers. See itertools.count
 
 Repeat = nut_source(itt.repeat)
 """
-Repeat(object)
+Repeat(value [, times])
 
-Return given object repeatedly. See itertools.repeat
+Return given value repeatedly. See itertools.repeat
 
 >>> Repeat(1, 3) >> Collect()
 [1, 1, 1]
@@ -41,7 +41,7 @@ Return given object repeatedly. See itertools.repeat
 >>> Repeat(1) >> Take(4) >> Collect()
 [1, 1, 1, 1]
 
-:param object object: Object to repeat
+:param object value: Value to repeat
 :param int times: Optional parameter. Object is repeated 'times' times.
 :return: Iterator of repeated objects
 :rtype: iterable over object
