@@ -45,7 +45,40 @@
             
   <div class="section" id="underscore-syntax">
 <span id="underscore"></span><h1>Underscore syntax<a class="headerlink" href="#underscore-syntax" title="Permalink to this headline">¶</a></h1>
-<p>TODO</p>
+<p><a class="reference internal" href="filtering.html#filter"><span class="std std-ref">Filter</span></a>, <a class="reference internal" href="transforming.html#map"><span class="std std-ref">Map</span></a> and other nuts that take a function as argument
+often use only very simple expressions. For instance, the following code
+extracts all number greater than five within range zero to nine:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nutsflow</span> <span class="k">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">5</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
+<span class="go">[6, 7, 8, 9]</span>
+</pre></div>
+</div>
+<p>For such simple expressions <strong>nuts-flow</strong> provides a special
+<em>underscore notation</em>, borrowed from <a class="reference external" href="https://www.scala-lang.org/">Scala</a>,
+which results in shorter, more readable code</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nutsflow</span> <span class="k">import</span> <span class="n">_</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Filter</span><span class="p">(</span><span class="n">_</span> <span class="o">&gt;</span> <span class="mi">5</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
+<span class="go">[6, 7, 8, 9]</span>
+</pre></div>
+</div>
+<p>This is equivalent to</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">_</span><span class="p">:</span> <span class="n">_</span> <span class="o">&gt;</span> <span class="mi">5</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
+<span class="go">[6, 7, 8, 9]</span>
+</pre></div>
+</div>
+<p>but eliminates the need for the <code class="docutils literal"><span class="pre">lambda</span></code> keyword and its arguments.
+Note that the <code class="docutils literal"><span class="pre">_</span></code> must be imported explicitly, since it is also commonly
+used in Python as a placeholder for unused variables.</p>
+<p>In contrast to <code class="docutils literal"><span class="pre">lambda</span></code> functions or Scala&#8217;s underscore the,
+underscore notation in <strong>nuts-flow</strong> is very limited and
+only supports expressions with arity one, e.g.
+<code class="docutils literal"><span class="pre">_</span> <span class="pre">+</span> <span class="pre">1</span></code>, <code class="docutils literal"><span class="pre">_</span> <span class="pre">&lt;=</span> <span class="pre">3</span></code>, <code class="docutils literal"><span class="pre">_</span> <span class="pre">==</span> <span class="pre">5</span></code>, <code class="docutils literal"><span class="pre">_[0]</span></code>, ...
+More complex or nested expressions such as <code class="docutils literal"><span class="pre">_</span> <span class="pre">+</span> <span class="pre">_</span></code>, <code class="docutils literal"><span class="pre">_</span> <span class="pre">&gt;</span> <span class="pre">5</span> <span class="pre">and</span> <span class="pre">_</span> <span class="pre">&lt;</span> <span class="pre">10</span></code>
+or <code class="docutils literal"><span class="pre">len(_)</span></code> are currently not permitted.</p>
 </div>
 
 
