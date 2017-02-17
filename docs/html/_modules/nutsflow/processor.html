@@ -162,10 +162,32 @@
 
 
 <span class="sd">:param iterable iterable: Any iterable</span>
-<span class="sd">:param iterable iterables: Iterables to interleave</span>
-<span class="sd">:return: Interleaved elements from iterables.</span>
-<span class="sd">:rtype: iterator</span>
+<span class="sd">:param iterable iterables: Iterables to zip</span>
+<span class="sd">:return: Zipped elements from iterables.</span>
+<span class="sd">:rtype: iterator over tuples</span>
 <span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="nd">@nut_processor</span>
+<span class="k">def</span> <span class="nf">ZipWith</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="o">*</span><span class="n">iterables</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    iterable &gt;&gt; ZipWith(f, *iterables)</span>
+
+<span class="sd">    Zips the given iterables, unpacks them and applies the given function.</span>
+
+<span class="sd">    &gt;&gt;&gt; add = lambda a, b: a + b</span>
+<span class="sd">    &gt;&gt;&gt; [1, 2, 3] &gt;&gt; ZipWith(add, [2, 3, 4]) &gt;&gt; Collect()</span>
+<span class="sd">    [3, 5, 7]</span>
+
+<span class="sd">    :param iterable iterable: Any iterable</span>
+<span class="sd">    :param iterable iterables: Any iterables</span>
+<span class="sd">    :param function f: Function to apply to zipped input iterables</span>
+<span class="sd">    :return: iterator of result of f() applied to zipped iterables</span>
+<span class="sd">    :rtype: iterator</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">iterables</span> <span class="o">=</span> <span class="p">[</span><span class="n">iterable</span><span class="p">]</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="n">iterables</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">itt</span><span class="o">.</span><span class="n">starmap</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">itt</span><span class="o">.</span><span class="n">izip</span><span class="p">(</span><span class="o">*</span><span class="n">iterables</span><span class="p">))</span>
+
 
 <span class="n">Dedupe</span> <span class="o">=</span> <span class="n">nut_processor</span><span class="p">(</span><span class="n">itf</span><span class="o">.</span><span class="n">unique</span><span class="p">)</span>
 <span class="sd">&quot;&quot;&quot;</span>
@@ -282,7 +304,7 @@
 <span class="sd">[32, 9, 1000]</span>
 
 <span class="sd">:param iterable iterable: Any iterable</span>
-<span class="sd">:param iterable iterables: Any iterable.</span>
+<span class="sd">:param iterables iterables: Any iterables.</span>
 <span class="sd">:param function func: Mapping function.</span>
 <span class="sd">:return: Mapped iterable</span>
 <span class="sd">:rtype: Iterator</span>
@@ -373,7 +395,6 @@
 <span class="sd">    :rtype: Iterator</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">itt</span><span class="o">.</span><span class="n">dropwhile</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">iterable</span><span class="p">)</span>
-
 
 
 <span class="n">Permutate</span> <span class="o">=</span> <span class="n">nut_processor</span><span class="p">(</span><span class="n">itt</span><span class="o">.</span><span class="n">permutations</span><span class="p">)</span>

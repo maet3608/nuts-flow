@@ -95,45 +95,56 @@ returns the coordinates of a 2x3 grid:
   >>> Product(Range(2), Range(3)) >> Collect()
   [(0, 0), (0, 1), (0, 2), (1, 0), (1, 1), (1, 2)]
 
+Each element of each an input iterable is combined with each element of the
+other input iterables.
+
 
 Repeat
 ^^^^^^
 
-Repeat(object)
+The ``Repeat(value [, times]))`` nut returns the specified value the given
+number of times or indefinitely if not specified:
 
-Return given object repeatedly. See itertools.repeat
+  >>> Repeat('a', 3) >> Collect()
+  ['a', 'a', 'a']
 
->>> Repeat(1, 3) >> Collect()
-[1, 1, 1]
-
->>> Repeat(1) >> Take(4) >> Collect()
-[1, 1, 1, 1]
-
+  >>> Repeat(1) >> Take(4) >> Collect()
+  [1, 1, 1, 1]
 
 
 ReadCSV
 ^^^^^^^
 
-        ReadCSV(filepath, columns, skipheader, fmtfunc, **kwargs)
+**nuts-flow** supports reading from Comma Separated Format (CSV) files via the
+``ReadCSV(filepath, columns, skipheader, fmtfunc, **kwargs)`` nut. Given the
+correct delimiter also files in Tab Separated Format (TSV) or other column
+formats can be read. Given a CSV file with the following content
 
-        Read data in Comma Separated Format (CSV) from file.
-        See also CSVWriter.
-        Can also read Tab Separated Format (TSV) be providing the
-        corresponding delimiter. Note that in the docstring below
-        delimiter is '\\t' but in code it should be '\t'. See unit tests.
+.. code::
 
-        >>> from nutsflow import Collect
-        >>> filepath = 'tests/data/data.csv'
-        >>> with ReadCSV(filepath, skipheader=1, fmtfunc=int) as reader:
-        ...     reader >> Collect()
-        [(1, 2, 3), (4, 5, 6)]
+  a, ,c
+  1,2,3
+  4,5,6
 
-        >>> with ReadCSV(filepath, (2, 1), 1, int) as reader:
-        ...     reader >> Collect()
-        [(3, 2), (6, 5)]
+the code below reads the rows, skips the first (header) line and converts
+the elements of the row into integers (fmtfunc=int):
 
-        >>> filepath = 'tests/data/data.tsv'
-        >>> with ReadCSV(filepath, skipheader=1, fmtfunc=int,
-        ...                delimiter='\\t') as reader:
-        ...     reader >> Collect()
-        [(1, 2, 3), (4, 5, 6)]
+  >>> filepath = 'tests/data/data.csv'
+  >>> with ReadCSV(filepath, skipheader=1, fmtfunc=int) as reader:
+  ...     reader >> Print() >> Consume()
+  ...
+  (1, 2, 3)
+  (4, 5, 6)
+
+``ReadCSV`` allows to read specific columns in a given order. Here we read
+columns 2 and 1 only, don't skip the header and don't convert to integers:
+
+  >>> with ReadCSV(filepath, (2, 1)) as reader:
+  ...     reader >> Print() >> Consume()
+  ...
+  ('c', ' ')
+  ('3', '2')
+  ('6', '5')
+
+
+

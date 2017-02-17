@@ -120,7 +120,7 @@ using **nuts-flow**.
   >>> n1, n2  = 100, 1000
   >>> IsPalindrom = nut_filter(lambda p: p == p[::-1])
   >>> BuildString = nut_function(lambda (a, b): str(a * b))
-  >>> product = Product(Range(n1, n2), Range(n1, n2))
+  >>> product = Product(Range(n1, n2), repeat=2)
   >>> product >> BuildString() >> IsPalindrom() >> Max(len)
   '106601'
   
