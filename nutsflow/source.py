@@ -13,7 +13,7 @@ from factory import nut_source
 
 Enumerate = nut_source(itt.count)
 """
-Enumerate(start, step)
+Enumerate(start=0 [, step])
 
 Return increasing integers. See itertools.count
 
