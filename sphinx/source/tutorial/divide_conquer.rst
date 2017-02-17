@@ -73,8 +73,7 @@ is returned:
   >>> numbers = [0, 1, 2]
   >>> letters = ['a', 'b', 'c']
   >>> numbers >> Interleave(letters) >> Collect()
-  [(0, 'a'), (1, 'b'), (2, 'c')]
-  [0, 'a', 1, 'b', 2, 'c', 3]
+  [0, 'a', 1, 'b', 2, 'c']
 
 Also in contrast to ``Zip``, ``Interleave`` does not stop when the shortest
 input iterable is depleted. Elements are returned until all inputs are
