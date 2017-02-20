@@ -66,20 +66,20 @@ provides a ``next`` method, which returns elements when called and raises a
 ``StopIteration`` exception when depleted. Here an iterator that returns 
 even numbers up to a given maximum
 
->>> class Even():
-...     def __init__(self, maximum):
-...         self.counter = 0
-...         self.maximum = maximum
-...
-...     def __iter__(self):
-...         return self
-...
-...     def next(self):
-...         self.counter += 2
-...         if self.counter > self.maximum:
-...             raise StopIteration
-...         return self.counter
-...
+  >>> class Even():
+  ...     def __init__(self, maximum):
+  ...         self.counter = 0
+  ...         self.maximum = maximum
+  ...
+  ...     def __iter__(self):
+  ...         return self
+  ...
+  ...     def next(self):
+  ...         self.counter += 2
+  ...         if self.counter > self.maximum:
+  ...             raise StopIteration
+  ...         return self.counter
+  ...
           
 The ``__iter__`` method make the iterator *iterable* and enables 
 its usage in ``for`` loops, list comprehensions or functions 
