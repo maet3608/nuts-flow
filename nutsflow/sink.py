@@ -291,7 +291,7 @@ class WriteCSV(NutSink):
     def __init__(self, filepath, columns=None, skipheader=0,
                  fmtfunc=lambda x: x, **kwargs):
         """
-        CSVWriter(filepath, columns, skipheader, fmtfunc, **kwargs)
+        WriteCSV(filepath, columns, skipheader, fmtfunc, **kwargs)
 
         Write data in Comma Separated Values format (CSV) and other formats
         to file. Tab Separated Values (TSV) files can be written by
@@ -299,7 +299,7 @@ class WriteCSV(NutSink):
         delimiter is '\\t' but in code it should be '\t'. See unit tests.
 
         Also see https://docs.python.org/2/library/csv.html
-        and CSVReader.
+        and ReadCSV.
 
 
         >>> import os
