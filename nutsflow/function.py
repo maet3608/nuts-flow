@@ -217,7 +217,8 @@ class Print(NutFunction):
     def __init__(self, fmtfunc=None, every_sec=0, every_n=0,
                  filterfunc=lambda x: True):
         """
-        iterable >> Print(fmtfunc)
+        iterable >> Print(fmtfunc=None, every_sec=0, every_n=0,
+                          filterfunc=lambda x: True)
 
         Return same input as output but print for each element.
 
