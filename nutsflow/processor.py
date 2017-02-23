@@ -498,7 +498,7 @@ def Pick(iterable, p_n, rand=rnd.Random()):
 @nut_processor
 def GroupBy(iterable, keycol=lambda x: x, nokey=False):
     """
-    iterable >> GroupBy(prob, keycol=lambda x: x, nokey=False)
+    iterable >> GroupBy(keycol=lambda x: x, nokey=False)
 
     Group elements of iterable based on a column value of the element or
     the function value of keycol for the element.
