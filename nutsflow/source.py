@@ -10,6 +10,7 @@ import iterfunction as itf
 
 from base import NutSource
 from factory import nut_source
+from common import as_tuple
 
 Enumerate = nut_source(itt.count)
 """
@@ -148,6 +149,10 @@ class ReadCSV(NutSource):
         ...     reader >> Collect()
         [(3, 2), (6, 5)]
 
+        >>> with ReadCSV(filepath, 2, 1, int) as reader:
+        ...     reader >> Collect()
+        [3, 6]
+
         >>> filepath = 'tests/data/data.tsv'
         >>> with ReadCSV(filepath, skipheader=1, fmtfunc=int,
         ...                delimiter='\\t') as reader:
@@ -163,9 +168,10 @@ class ReadCSV(NutSource):
                               See https://docs.python.org/2/library/csv.html
         """
         self.csvfile = open(filepath, 'rb')
-        self.columns = columns
+        self.columns = columns if columns is None else as_tuple(columns)
         self.fmtfunc = fmtfunc
-        for _ in xrange(skipheader): next(self.csvfile)
+        for _ in xrange(skipheader):
+            next(self.csvfile)
         itf.take(self.csvfile, skipheader)
         stripped = (r.strip() for r in self.csvfile)
         self.reader = csv.reader(stripped, **kwargs)
@@ -188,4 +194,5 @@ class ReadCSV(NutSource):
         cols = self.columns
         for row in self.reader:
             row = [row[i] for i in cols] if cols else row
-            yield tuple(map(self.fmtfunc, row))
+            row = map(self.fmtfunc, row)
+            yield tuple(row) if len(row) > 1 else row[0]

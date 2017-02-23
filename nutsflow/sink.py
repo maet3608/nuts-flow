@@ -10,6 +10,7 @@ import collections as cl
 
 from base import NutSink
 from factory import nut_sink
+from common import as_tuple
 from iterfunction import nth, consume, length, take
 
 Sum = nut_sink(sum)
@@ -327,7 +328,7 @@ class WriteCSV(NutSink):
                               See https://docs.python.org/2/library/csv.html
         """
         self.csvfile = open(filepath, 'wb')
-        self.columns = columns
+        self.columns = columns if columns is None else as_tuple(columns)
         self.fmtfunc = fmtfunc
         self.skipheader = skipheader
         self.writer = csv.writer(self.csvfile, **kwargs)

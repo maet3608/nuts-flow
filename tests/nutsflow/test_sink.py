@@ -91,7 +91,7 @@ def test_WriteCSV():
         data >> writer
     assert_equal_text(open(filepath).read(), '1,2\n3,4\n')
 
-    with WriteCSV(filepath, columns=(1,)) as writer:
+    with WriteCSV(filepath, columns=1) as writer:
         data >> writer
     assert_equal_text(open(filepath).read(), '2\n4\n')
 
