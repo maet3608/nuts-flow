@@ -99,7 +99,7 @@ using **nuts-flow**.
 
   >>> @nut_source
   ... def Fib():
-  ...     a, b =  1, 2
+  ...     a, b =  1, 1
   ...     while True:
   ...         a, b = b, a + b
   ...         yield a
@@ -121,8 +121,8 @@ using **nuts-flow**.
   >>> IsPalindrom = nut_filter(lambda p: p == p[::-1])
   >>> BuildString = nut_function(lambda (a, b): str(a * b))
   >>> product = Product(Range(n1, n2), repeat=2)
-  >>> product >> BuildString() >> IsPalindrom() >> Max(len)
-  '106601'
+  >>> product >> BuildString() >> IsPalindrom() >> Max(int)
+  '906609'
   
   
 **P6**: Sum square difference

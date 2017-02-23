@@ -54,6 +54,7 @@
 
 <span class="kn">from</span> <span class="nn">base</span> <span class="k">import</span> <span class="n">NutSink</span>
 <span class="kn">from</span> <span class="nn">factory</span> <span class="k">import</span> <span class="n">nut_sink</span>
+<span class="kn">from</span> <span class="nn">common</span> <span class="k">import</span> <span class="n">as_tuple</span>
 <span class="kn">from</span> <span class="nn">iterfunction</span> <span class="k">import</span> <span class="n">nth</span><span class="p">,</span> <span class="n">consume</span><span class="p">,</span> <span class="n">length</span><span class="p">,</span> <span class="n">take</span>
 
 <span class="n">Sum</span> <span class="o">=</span> <span class="n">nut_sink</span><span class="p">(</span><span class="nb">sum</span><span class="p">)</span>
@@ -335,7 +336,7 @@
 <div class="viewcode-block" id="WriteCSV.__init__"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.sink.WriteCSV.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filepath</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">skipheader</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
                  <span class="n">fmtfunc</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        CSVWriter(filepath, columns, skipheader, fmtfunc, **kwargs)</span>
+<span class="sd">        WriteCSV(filepath, columns, skipheader, fmtfunc, **kwargs)</span>
 
 <span class="sd">        Write data in Comma Separated Values format (CSV) and other formats</span>
 <span class="sd">        to file. Tab Separated Values (TSV) files can be written by</span>
@@ -343,7 +344,7 @@
 <span class="sd">        delimiter is &#39;\\t&#39; but in code it should be &#39;\t&#39;. See unit tests.</span>
 
 <span class="sd">        Also see https://docs.python.org/2/library/csv.html</span>
-<span class="sd">        and CSVReader.</span>
+<span class="sd">        and ReadCSV.</span>
 
 
 <span class="sd">        &gt;&gt;&gt; import os</span>
@@ -371,7 +372,7 @@
 <span class="sd">                              See https://docs.python.org/2/library/csv.html</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">csvfile</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">columns</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">columns</span> <span class="k">if</span> <span class="n">columns</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">as_tuple</span><span class="p">(</span><span class="n">columns</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">fmtfunc</span> <span class="o">=</span> <span class="n">fmtfunc</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">skipheader</span> <span class="o">=</span> <span class="n">skipheader</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">writer</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">writer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">csvfile</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
