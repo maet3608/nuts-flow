@@ -1,2 +1,2 @@
 [run]
-omit = tests/*,*/__init__.py,*/test_*,conf.py,setup.py
+omit = tests/*,*/__init__.py,*/test_*,sphinx/source/conf.py,setup.py
