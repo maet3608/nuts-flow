@@ -55,21 +55,23 @@ def sec_to_hms(duration):
     return h, m, s
 
 
-def etastr(duration):
+def timestr(duration, fmt='{:d}:{:02d}:{:02d}'):
     """
-    Return estimated time of arrival (ETA) as string derived from duration
+    Return duration as formatted time string or empty string if no duration
 
-    >>> etastr('80')
-    '(eta: 0:01:20)'
+    >>> timestr('80')
+    '0:01:20'
 
     :param int|str duration: Duration in seconds. Can be int or string.
-    :return: ETA
+    :param str: Format for string, e.g. '{:d}:{:02d}:{:02d}'
+    :return: duration as formatted time, e.g. '0:01:20' or '' if duration
+       shorter than one second.
     :rtype: string
     """
     if not duration:
         return ''
     h, m, s = sec_to_hms(duration)
-    return '(eta: {0:d}:{1:02d}:{2:02d})'.format(h, m, s)
+    return fmt.format(h, m, s)
 
 
 class Redirect(object):

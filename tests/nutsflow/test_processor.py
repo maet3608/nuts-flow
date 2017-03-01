@@ -334,5 +334,6 @@ def test_PrintProgress():
     with Redirect() as out:
         numbers = range(3)
         numbers >> PrintProgress(numbers, 0) >> Consume()
-    expected = '\rprogress: 0%  \rprogress: 50%  \rprogress: 100% \n'
+    expected = \
+        '\rprogress: 0%  \rprogress: 50%  \rprogress: 100%  \rprogress: 100% \n'
     assert out.getvalue() == expected

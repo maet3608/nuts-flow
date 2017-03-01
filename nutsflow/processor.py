@@ -20,7 +20,7 @@ from base import Nut
 from factory import nut_processor
 from function import Identity
 from sink import Consume, Collect
-from nutsflow.common import etastr
+from nutsflow.common import timestr
 
 Take = nut_processor(itf.take)
 """
@@ -843,6 +843,8 @@ class PrintProgress(Nut):
         self.update = update
 
     def __rrshift__(self, iterable):
+        etafmt = '(eta: {:d}:{:02d}:{:02d})'
+        endfmt = '(took: {:d}:{:02d}:{:02d})'
         start_time = time.clock()
         up_time = time.clock()
         for i, e in enumerate(iterable):
@@ -851,6 +853,7 @@ class PrintProgress(Nut):
                 per_done = 100 * i / self.n
                 sec_consumed = int(time.clock() - start_time)
                 eta = sec_consumed * (self.n / float(i) - 1) if i else 0
-                print '\rprogress: %d%% %s' % (per_done, etastr(eta)),
+                print '\rprogress: %d%% %s' % (per_done, timestr(eta, etafmt)),
             yield e
-        print
+        duration = int(time.clock() - start_time)
+        print '\rprogress: 100%% %s' % timestr(duration, endfmt)
