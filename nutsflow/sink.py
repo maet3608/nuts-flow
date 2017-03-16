@@ -84,6 +84,64 @@ def Min(iterable, key=lambda x: x, default=None):
         return default
 
 
+@nut_sink
+def ArgMax(iterable, key=lambda x: x, default=(None, None)):
+    """
+    iterable >> ArgMax(key=func, default=(None, None))
+
+    Return index of first maximum element and maximum in input.
+
+    >>> [1, 2, 0, 2] >> ArgMax()
+    (1, 2)
+
+    >>> ['12', '1', '123'] >> ArgMax(key=len)
+    (2, '123')
+
+    >>> [] >> ArgMax(default=(None, 0))
+    (None, 0)
+
+    :param iterable iterable: Iterable over numbers
+    :param func key: Function maximum is based on
+    :param object default: Value returned if iterable is empty.
+    :return: tuple with index of largest element according to key function
+             and the largest element itself.
+    :rtype: tuple
+    """
+    try:
+        return max(enumerate(iterable), key=lambda (i, e): key(e))
+    except ValueError:
+        return default
+
+
+@nut_sink
+def ArgMin(iterable, key=lambda x: x, default=(None, None)):
+    """
+    iterable >> ArgMin(key=func, default=(None, None))
+
+    Return index of first minimum element and minimum in input.
+
+    >>> [1, 2, 0, 2] >> ArgMin()
+    (2, 0)
+
+    >>> ['12', '1', '123'] >> ArgMin(key=len)
+    (1, '1')
+
+    >>> [] >> ArgMin(default=(None, 0))
+    (None, 0)
+
+    :param iterable iterable: Iterable over numbers
+    :param func key: Function minimum is based on
+    :param object default: Value returned if iterable is empty.
+    :return: tuple with index of smallest element according to key function
+             and the smallest element itself.
+    :rtype: tuple
+    """
+    try:
+        return min(enumerate(iterable), key=lambda (i, e): key(e))
+    except ValueError:
+        return default
+
+
 Reduce = nut_sink(reduce, 1)
 """
 iterable >> Reduce(func [,initiaizer])
