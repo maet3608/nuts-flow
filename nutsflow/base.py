@@ -63,7 +63,7 @@ class NutFunction(Nut):
         """
         Override this method to transform the elements of an iterable.
 
-        :param element:
+        :param element: Element the function is applied to.
         :return: A transformed element
         :rtype: any
         :raise: NotImplementedError if not implemented.
@@ -76,7 +76,7 @@ class NutFunction(Nut):
         Map function onto iterable and return transformed iterable.
         Do not override!
 
-        :param iterable:
+        :param iterable: function is applied to the elements of the iterable.
         :return: transformed iterable.
         :rtype: iterable
         """
@@ -114,7 +114,10 @@ class NutSource(Nut):
 
 class NutSink(Nut):
     """
-    Sinks are nuts that do not produce an iterable output.
+    Sinks are nuts that do not guarantee to produce an iterable output.
+
+    Sinks are typically at the end of a flow and typically aggregate the flow
+    to a single output, e.g. the sum of its elements.
     Need to override __rrshift__()!
     """
 
@@ -126,3 +129,13 @@ class NutSink(Nut):
         """
         raise SyntaxError(
             'Sinks cannot be inputs: ' + str(self.__class__.__name__))
+
+    def __call__(self, iterable):
+        """
+        Sinks can serve as functions applied to iterables within a flow.
+
+        :param iterable: Sink takes iterable as input
+        :return: Output of sink
+        :rtype: any
+        """
+        return iter(iterable) >> self

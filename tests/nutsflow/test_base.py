@@ -51,3 +51,11 @@ def test_NutSink():
         for _ in sink:
             pass
     assert str(ex.value).startswith("Sinks cannot be inputs:")
+
+    class Len(NutSink):
+        def __rrshift__(self, iterable):
+            return len(list(iterable))
+
+    assert [1, 2, 3] >> Len() == 3
+    assert Len()([1, 2, 3]) == 3  # Sink can operate as function
+    assert map(Len(), ['a', 'bb', 'cc']) == [1, 2, 2]
