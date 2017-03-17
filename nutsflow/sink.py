@@ -52,7 +52,7 @@ def Max(iterable, key=lambda x: x, default=None):
     """
     try:
         return max(iterable, key=key)
-    except ValueError:
+    except Exception:
         return default
 
 
@@ -80,7 +80,7 @@ def Min(iterable, key=lambda x: x, default=None):
     """
     try:
         return min(iterable, key=key)
-    except ValueError:
+    except Exception:
         return default
 
 
@@ -118,7 +118,7 @@ def ArgMax(iterable, key=lambda x: x, default=None, retvalue=False):
     try:
         i, v = max(enumerate(iterable), key=lambda (i, e): key(e))
         return (i, v) if retvalue else i
-    except ValueError:
+    except Exception:
         return default
 
 
@@ -156,7 +156,7 @@ def ArgMin(iterable, key=lambda x: x, default=None, retvalue=False):
     try:
         i, v = min(enumerate(iterable), key=lambda (i, e): key(e))
         return (i, v) if retvalue else i
-    except ValueError:
+    except Exception:
         return default
 
 
