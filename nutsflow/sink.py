@@ -85,59 +85,77 @@ def Min(iterable, key=lambda x: x, default=None):
 
 
 @nut_sink
-def ArgMax(iterable, key=lambda x: x, default=(None, None)):
+def ArgMax(iterable, key=lambda x: x, default=None, retvalue=False):
     """
-    iterable >> ArgMax(key=func, default=(None, None))
+    iterable >> ArgMax(key=func, default=None, retvalue=False)
 
-    Return index of first maximum element and maximum in input.
+    Return index of first maximum element (and maximum) in input.
 
     >>> [1, 2, 0, 2] >> ArgMax()
-    (1, 2)
+    1
 
-    >>> ['12', '1', '123'] >> ArgMax(key=len)
+    >>> ['12', '1', '123'] >> ArgMax(key=len, retvalue=True)
     (2, '123')
 
-    >>> [] >> ArgMax(default=(None, 0))
+    >>> ['12', '1', '123'] >> ArgMax(key=len)
+    2
+
+    >>> [] >> ArgMax(default=0)
+    0
+
+    >>> [] >> ArgMax(default=(None, 0), retvalue=True)
     (None, 0)
 
     :param iterable iterable: Iterable over numbers
     :param func key: Function maximum is based on
     :param object default: Value returned if iterable is empty.
-    :return: tuple with index of largest element according to key function
-             and the largest element itself.
-    :rtype: tuple
+    :param bool retvalue: If True the index and the value of the
+           maximum element is returned.
+    :return: index of largest element according to key function
+             and the largest element itself if retvalue==True
+    :rtype: object | tuple
     """
     try:
-        return max(enumerate(iterable), key=lambda (i, e): key(e))
+        i, v = max(enumerate(iterable), key=lambda (i, e): key(e))
+        return (i, v) if retvalue else i
     except ValueError:
         return default
 
 
 @nut_sink
-def ArgMin(iterable, key=lambda x: x, default=(None, None)):
+def ArgMin(iterable, key=lambda x: x, default=None, retvalue=False):
     """
-    iterable >> ArgMin(key=func, default=(None, None))
+    iterable >> ArgMin(key=func, default=None, retvalue=True)
 
-    Return index of first minimum element and minimum in input.
+    Return index of first minimum element (and minimum) in input.
 
     >>> [1, 2, 0, 2] >> ArgMin()
-    (2, 0)
+    2
 
-    >>> ['12', '1', '123'] >> ArgMin(key=len)
+    >>> ['12', '1', '123'] >> ArgMin(key=len, retvalue=True)
     (1, '1')
 
-    >>> [] >> ArgMin(default=(None, 0))
+    >>> ['12', '1', '123'] >> ArgMin(key=len)
+    1
+
+    >>> [] >> ArgMin(default=0)
+    0
+
+    >>> [] >> ArgMin(default=(None, 0), retvalue=True)
     (None, 0)
 
     :param iterable iterable: Iterable over numbers
     :param func key: Function minimum is based on
     :param object default: Value returned if iterable is empty.
-    :return: tuple with index of smallest element according to key function
-             and the smallest element itself.
-    :rtype: tuple
+    :param bool retvalue: If True the index and the value of the
+           minimum element is returned.
+    :return: index of smallest element according to key function
+             and the smallest element itself if retvalue==True.
+    :rtype: object | tuple
     """
     try:
-        return min(enumerate(iterable), key=lambda (i, e): key(e))
+        i, v = min(enumerate(iterable), key=lambda (i, e): key(e))
+        return (i, v) if retvalue else i
     except ValueError:
         return default
 

@@ -30,15 +30,18 @@ def test_Min():
 
 
 def test_ArgMax():
+    assert [] >> ArgMax(default=0) == 0
     assert [] >> ArgMax(default=(None, 0)) == (None, 0)
-    assert [0, 3, 2] >> ArgMax() == (1, 3)
-    assert ['1', '123', '12'] >> ArgMax(key=len) == (1, '123')
+    assert [0, 3, 2] >> ArgMax() == 1
+    assert ['1', '123', '12'] >> ArgMax(key=len) == 1
+    assert ['1', '123', '12'] >> ArgMax(key=len, retvalue=True) == (1, '123')
 
 
 def test_ArgMin():
     assert [] >> ArgMin(default=(None, 0)) == (None, 0)
-    assert [3, 1, 2] >> ArgMin() == (1, 1)
-    assert ['123', '1', '12'] >> ArgMin(key=len) == (1, '1')
+    assert [3, 1, 2] >> ArgMin() == 1
+    assert ['123', '1', '12'] >> ArgMin(key=len) == 1
+    assert ['123', '1', '12'] >> ArgMin(key=len, retvalue=True) == (1, '1')
 
 
 def test_Reduce():
