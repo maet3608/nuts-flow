@@ -2,6 +2,7 @@
 .. module:: function
    :synopsis: Nuts that perform functions on single stream elements.
 """
+from __future__ import print_function
 
 import time
 import threading
@@ -290,11 +291,11 @@ class Print(NutFunction):
         if hasattr(x, 'ndim'):  # is it a numpy array?
             x = x.tolist() if x.ndim else x.item()
         if not fmtfunc:
-            print x
+            print(x)
         elif isinstance(fmtfunc, str):
-            print fmtfunc.format(*(x if hasattr(x, '__iter__') else [x]))
+            print(fmtfunc.format(*(x if hasattr(x, '__iter__') else [x])))
         elif hasattr(fmtfunc, '__call__'):
-            print fmtfunc(x)
+            print(fmtfunc(x))
         else:
             raise ValueError('Invalid format ' + str(fmtfunc))
 
