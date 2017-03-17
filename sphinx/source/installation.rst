@@ -43,7 +43,7 @@ Print version number:
   python
   >>> import nutsflow
   >>> nutsflow.__version__
-  '1.0.2'
+  '1.0.3'
   
   
   
