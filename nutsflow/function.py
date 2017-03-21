@@ -210,6 +210,28 @@ def Sleep(x, duration=1):
     return x
 
 
+@nut_function
+def Format(x, fmt):
+    """
+    iterable >> Format(fmt)
+
+    Return input as formatted string. For format definition see:
+    https://docs.python.org/2/library/string.html
+
+    >>> [1, 2, 3] >> Format('num:{}') >> Collect()
+    ['num:1', 'num:2', 'num:3']
+
+    >>> [(1, 2), (3, 4)] >> Format('{0}:{1}') >> Collect()
+    ['1:2', '3:4']
+
+    :param iterable iterable: Any iterable
+    :param string fmt: Formatting string, e.g. '{:02d}'
+    :return: Returns inputs as strings formatted as specified
+    :rtype: str
+    """
+    return fmt.format(*(x if hasattr(x, '__iter__') else [x]))
+
+
 class Print(NutFunction):
     """
     Print elements in iterable.

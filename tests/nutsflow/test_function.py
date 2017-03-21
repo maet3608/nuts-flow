@@ -8,6 +8,7 @@ import pytest
 from nutsflow import *
 from nutsflow.common import Redirect
 
+
 # Avoid importing numpy for the test of Print() only and use Fake instead.
 class FakeNumpyArray(object):
     def __init__(self, data):
@@ -79,6 +80,12 @@ def test_Sleep():
     assert xrange(10) >> Sleep(0.01) >> Collect() == range(10)
     duration = time.time() - start
     assert 0.05 < duration < 0.2
+
+
+def test_Format():
+    [] >> Format('{}') >> Collect() == []
+    [1, 2, 3] >> Format('num:{}') >> Collect() == ['num:1', 'num:2', 'num:3']
+    [(1, 2), (3, 4)] >> Format('{0}:{1}') >> Collect() == ['1:2', '3:4']
 
 
 def test_Print():
