@@ -365,7 +365,7 @@ class WriteCSV(NutSink):
     See: https://docs.python.org/2/library/csv.html
     """
 
-    def __init__(self, filepath, columns=None, skipheader=0,
+    def __init__(self, filepath, cols=None, skipheader=0,
                  fmtfunc=lambda x: x, **kwargs):
         """
         WriteCSV(filepath, columns, skipheader, fmtfunc, **kwargs)
@@ -385,7 +385,7 @@ class WriteCSV(NutSink):
         ...     xrange(10) >> writer
         >>> os.remove(filepath)
 
-        >>> with WriteCSV(filepath, columns=(1,0)) as writer:
+        >>> with WriteCSV(filepath, cols=(1,0)) as writer:
         ...     [(1,2), (3,4)] >> writer
         >>> os.remove(filepath)
 
@@ -396,15 +396,15 @@ class WriteCSV(NutSink):
 
 
         :param string filepath: Path to file in CSV format.
-        :param tuple columns: Indices of the columns to write.
-                              If None all columns are written.
+        :param tuple cols: Indices of the columns to write.
+                           If None all columns are written.
         :param int skipheader: Number of header rows to skip.
         :param function fmtfunc: Function to apply to the elements of each row.
         :param kwargs kwargs: Keyword arguments for Python's CSV writer.
                               See https://docs.python.org/2/library/csv.html
         """
         self.csvfile = open(filepath, 'wb')
-        self.columns = columns if columns is None else as_tuple(columns)
+        self.columns = cols if cols is None else as_tuple(cols)
         self.fmtfunc = fmtfunc
         self.skipheader = skipheader
         self.writer = csv.writer(self.csvfile, **kwargs)
