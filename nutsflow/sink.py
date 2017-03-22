@@ -368,7 +368,7 @@ class WriteCSV(NutSink):
     def __init__(self, filepath, cols=None, skipheader=0,
                  fmtfunc=lambda x: x, **kwargs):
         """
-        WriteCSV(filepath, columns, skipheader, fmtfunc, **kwargs)
+        WriteCSV(filepath, cols, skipheader, fmtfunc, **kwargs)
 
         Write data in Comma Separated Values format (CSV) and other formats
         to file. Tab Separated Values (TSV) files can be written by
