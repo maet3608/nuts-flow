@@ -123,7 +123,7 @@ def nut_source(func):
 
     @nut_source
     def Range(start, end):
-       return xrange(start, end)
+        return xrange(start, end)
 
     :param function func: Function to decorate
     :return: Nut source for given function
@@ -143,7 +143,7 @@ def nut_filter(func):
 
     @nut_filter
     def GreaterThan(x, threshold):
-       return x > threshold
+        return x > threshold
 
     :param function func: Function to decorate. Must return boolean value.
     :return: Nut filter for given function
@@ -158,7 +158,7 @@ def nut_filterfalse(func):
 
     @nut_filterfalse
     def NotGreaterThan(x, threshold):
-       return x > threshold
+        return x > threshold
 
     :param function func: Function to decorate
     :return: Nut filter for given function. . Must return boolean value.
