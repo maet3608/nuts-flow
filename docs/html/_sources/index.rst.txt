@@ -1,8 +1,8 @@
 .. Nutsflow documentation master file
 
 
-Welcome to Nutsflow documentation!
-=====================================
+Nuts-flow
+=========
 
 Contents:
 
@@ -14,8 +14,8 @@ Contents:
    tutorial/introduction
    nutsflow
 
-Indices and tables
-==================
+Indices
+=======
 
 * :ref:`genindex`
 * :ref:`modindex`

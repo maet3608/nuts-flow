@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>nutsflow.function &#8212; nutsflow 1.0.1 documentation</title>
+    <title>nutsflow.function &#8212; nutsflow 1.0.4 documentation</title>
     
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '1.0.1',
+        VERSION:     '1.0.4',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -46,6 +46,7 @@
 <span class="sd">.. module:: function</span>
 <span class="sd">   :synopsis: Nuts that perform functions on single stream elements.</span>
 <span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span>
 
 <span class="kn">import</span> <span class="nn">time</span>
 <span class="kn">import</span> <span class="nn">threading</span>
@@ -253,6 +254,28 @@
     <span class="k">return</span> <span class="n">x</span>
 
 
+<span class="nd">@nut_function</span>
+<span class="k">def</span> <span class="nf">Format</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">fmt</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    iterable &gt;&gt; Format(fmt)</span>
+
+<span class="sd">    Return input as formatted string. For format definition see:</span>
+<span class="sd">    https://docs.python.org/2/library/string.html</span>
+
+<span class="sd">    &gt;&gt;&gt; [1, 2, 3] &gt;&gt; Format(&#39;num:{}&#39;) &gt;&gt; Collect()</span>
+<span class="sd">    [&#39;num:1&#39;, &#39;num:2&#39;, &#39;num:3&#39;]</span>
+
+<span class="sd">    &gt;&gt;&gt; [(1, 2), (3, 4)] &gt;&gt; Format(&#39;{0}:{1}&#39;) &gt;&gt; Collect()</span>
+<span class="sd">    [&#39;1:2&#39;, &#39;3:4&#39;]</span>
+
+<span class="sd">    :param iterable iterable: Any iterable</span>
+<span class="sd">    :param string fmt: Formatting string, e.g. &#39;{:02d}&#39;</span>
+<span class="sd">    :return: Returns inputs as strings formatted as specified</span>
+<span class="sd">    :rtype: str</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">fmt</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="p">(</span><span class="n">x</span> <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s1">&#39;__iter__&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="p">[</span><span class="n">x</span><span class="p">]))</span>
+
+
 <div class="viewcode-block" id="Print"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.function.Print">[docs]</a><span class="k">class</span> <span class="nc">Print</span><span class="p">(</span><span class="n">NutFunction</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Print elements in iterable.</span>
@@ -334,11 +357,11 @@
         <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s1">&#39;ndim&#39;</span><span class="p">):</span>  <span class="c1"># is it a numpy array?</span>
             <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span> <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">ndim</span> <span class="k">else</span> <span class="n">x</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">fmtfunc</span><span class="p">:</span>
-            <span class="nb">print</span> <span class="n">x</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
         <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">fmtfunc</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-            <span class="nb">print</span> <span class="n">fmtfunc</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="p">(</span><span class="n">x</span> <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s1">&#39;__iter__&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="p">[</span><span class="n">x</span><span class="p">]))</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">fmtfunc</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="p">(</span><span class="n">x</span> <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s1">&#39;__iter__&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="p">[</span><span class="n">x</span><span class="p">])))</span>
         <span class="k">elif</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">fmtfunc</span><span class="p">,</span> <span class="s1">&#39;__call__&#39;</span><span class="p">):</span>
-            <span class="nb">print</span> <span class="n">fmtfunc</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">fmtfunc</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Invalid format &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">fmtfunc</span><span class="p">))</span>
 

@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>nutsflow.common &#8212; nutsflow 1.0.1 documentation</title>
+    <title>nutsflow.common &#8212; nutsflow 1.0.4 documentation</title>
     
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '1.0.1',
+        VERSION:     '1.0.4',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -99,21 +99,23 @@
     <span class="k">return</span> <span class="n">h</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">s</span></div>
 
 
-<div class="viewcode-block" id="etastr"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.common.etastr">[docs]</a><span class="k">def</span> <span class="nf">etastr</span><span class="p">(</span><span class="n">duration</span><span class="p">):</span>
+<div class="viewcode-block" id="timestr"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.common.timestr">[docs]</a><span class="k">def</span> <span class="nf">timestr</span><span class="p">(</span><span class="n">duration</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">{:d}</span><span class="s1">:</span><span class="si">{:02d}</span><span class="s1">:</span><span class="si">{:02d}</span><span class="s1">&#39;</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Return estimated time of arrival (ETA) as string derived from duration</span>
+<span class="sd">    Return duration as formatted time string or empty string if no duration</span>
 
-<span class="sd">    &gt;&gt;&gt; etastr(&#39;80&#39;)</span>
-<span class="sd">    &#39;(eta: 0:01:20)&#39;</span>
+<span class="sd">    &gt;&gt;&gt; timestr(&#39;80&#39;)</span>
+<span class="sd">    &#39;0:01:20&#39;</span>
 
 <span class="sd">    :param int|str duration: Duration in seconds. Can be int or string.</span>
-<span class="sd">    :return: ETA</span>
+<span class="sd">    :param str: Format for string, e.g. &#39;{:d}:{:02d}:{:02d}&#39;</span>
+<span class="sd">    :return: duration as formatted time, e.g. &#39;0:01:20&#39; or &#39;&#39; if duration</span>
+<span class="sd">       shorter than one second.</span>
 <span class="sd">    :rtype: string</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">duration</span><span class="p">:</span>
         <span class="k">return</span> <span class="s1">&#39;&#39;</span>
     <span class="n">h</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">s</span> <span class="o">=</span> <span class="n">sec_to_hms</span><span class="p">(</span><span class="n">duration</span><span class="p">)</span>
-    <span class="k">return</span> <span class="s1">&#39;(eta: </span><span class="si">{0:d}</span><span class="s1">:</span><span class="si">{1:02d}</span><span class="s1">:</span><span class="si">{2:02d}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">fmt</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="Redirect"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.common.Redirect">[docs]</a><span class="k">class</span> <span class="nc">Redirect</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>

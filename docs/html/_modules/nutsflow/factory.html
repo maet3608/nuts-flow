@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>nutsflow.factory &#8212; nutsflow 1.0.1 documentation</title>
+    <title>nutsflow.factory &#8212; nutsflow 1.0.4 documentation</title>
     
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '1.0.1',
+        VERSION:     '1.0.4',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -167,7 +167,7 @@
 
 <span class="sd">    @nut_source</span>
 <span class="sd">    def Range(start, end):</span>
-<span class="sd">       return xrange(start, end)</span>
+<span class="sd">        return xrange(start, end)</span>
 
 <span class="sd">    :param function func: Function to decorate</span>
 <span class="sd">    :return: Nut source for given function</span>
@@ -187,7 +187,7 @@
 
 <span class="sd">    @nut_filter</span>
 <span class="sd">    def GreaterThan(x, threshold):</span>
-<span class="sd">       return x &gt; threshold</span>
+<span class="sd">        return x &gt; threshold</span>
 
 <span class="sd">    :param function func: Function to decorate. Must return boolean value.</span>
 <span class="sd">    :return: Nut filter for given function</span>
@@ -202,7 +202,7 @@
 
 <span class="sd">    @nut_filterfalse</span>
 <span class="sd">    def NotGreaterThan(x, threshold):</span>
-<span class="sd">       return x &gt; threshold</span>
+<span class="sd">        return x &gt; threshold</span>
 
 <span class="sd">    :param function func: Function to decorate</span>
 <span class="sd">    :return: Nut filter for given function. . Must return boolean value.</span>

@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>nutsflow.sink &#8212; nutsflow 1.0.1 documentation</title>
+    <title>nutsflow.sink &#8212; nutsflow 1.0.4 documentation</title>
     
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '1.0.1',
+        VERSION:     '1.0.4',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -96,7 +96,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="k">return</span> <span class="nb">max</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">key</span><span class="p">)</span>
-    <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">default</span>
 
 
@@ -124,7 +124,83 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="k">return</span> <span class="nb">min</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">key</span><span class="p">)</span>
-    <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">default</span>
+
+
+<span class="nd">@nut_sink</span>
+<span class="k">def</span> <span class="nf">ArgMax</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">retvalue</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    iterable &gt;&gt; ArgMax(key=func, default=None, retvalue=False)</span>
+
+<span class="sd">    Return index of first maximum element (and maximum) in input.</span>
+
+<span class="sd">    &gt;&gt;&gt; [1, 2, 0, 2] &gt;&gt; ArgMax()</span>
+<span class="sd">    1</span>
+
+<span class="sd">    &gt;&gt;&gt; [&#39;12&#39;, &#39;1&#39;, &#39;123&#39;] &gt;&gt; ArgMax(key=len, retvalue=True)</span>
+<span class="sd">    (2, &#39;123&#39;)</span>
+
+<span class="sd">    &gt;&gt;&gt; [&#39;12&#39;, &#39;1&#39;, &#39;123&#39;] &gt;&gt; ArgMax(key=len)</span>
+<span class="sd">    2</span>
+
+<span class="sd">    &gt;&gt;&gt; [] &gt;&gt; ArgMax(default=0)</span>
+<span class="sd">    0</span>
+
+<span class="sd">    &gt;&gt;&gt; [] &gt;&gt; ArgMax(default=(None, 0), retvalue=True)</span>
+<span class="sd">    (None, 0)</span>
+
+<span class="sd">    :param iterable iterable: Iterable over numbers</span>
+<span class="sd">    :param func key: Function maximum is based on</span>
+<span class="sd">    :param object default: Value returned if iterable is empty.</span>
+<span class="sd">    :param bool retvalue: If True the index and the value of the</span>
+<span class="sd">           maximum element is returned.</span>
+<span class="sd">    :return: index of largest element according to key function</span>
+<span class="sd">             and the largest element itself if retvalue==True</span>
+<span class="sd">    :rtype: object | tuple</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">i</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">enumerate</span><span class="p">(</span><span class="n">iterable</span><span class="p">),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">e</span><span class="p">):</span> <span class="n">key</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="k">if</span> <span class="n">retvalue</span> <span class="k">else</span> <span class="n">i</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">default</span>
+
+
+<span class="nd">@nut_sink</span>
+<span class="k">def</span> <span class="nf">ArgMin</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">retvalue</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    iterable &gt;&gt; ArgMin(key=func, default=None, retvalue=True)</span>
+
+<span class="sd">    Return index of first minimum element (and minimum) in input.</span>
+
+<span class="sd">    &gt;&gt;&gt; [1, 2, 0, 2] &gt;&gt; ArgMin()</span>
+<span class="sd">    2</span>
+
+<span class="sd">    &gt;&gt;&gt; [&#39;12&#39;, &#39;1&#39;, &#39;123&#39;] &gt;&gt; ArgMin(key=len, retvalue=True)</span>
+<span class="sd">    (1, &#39;1&#39;)</span>
+
+<span class="sd">    &gt;&gt;&gt; [&#39;12&#39;, &#39;1&#39;, &#39;123&#39;] &gt;&gt; ArgMin(key=len)</span>
+<span class="sd">    1</span>
+
+<span class="sd">    &gt;&gt;&gt; [] &gt;&gt; ArgMin(default=0)</span>
+<span class="sd">    0</span>
+
+<span class="sd">    &gt;&gt;&gt; [] &gt;&gt; ArgMin(default=(None, 0), retvalue=True)</span>
+<span class="sd">    (None, 0)</span>
+
+<span class="sd">    :param iterable iterable: Iterable over numbers</span>
+<span class="sd">    :param func key: Function minimum is based on</span>
+<span class="sd">    :param object default: Value returned if iterable is empty.</span>
+<span class="sd">    :param bool retvalue: If True the index and the value of the</span>
+<span class="sd">           minimum element is returned.</span>
+<span class="sd">    :return: index of smallest element according to key function</span>
+<span class="sd">             and the smallest element itself if retvalue==True.</span>
+<span class="sd">    :rtype: object | tuple</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">i</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="nb">enumerate</span><span class="p">(</span><span class="n">iterable</span><span class="p">),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">e</span><span class="p">):</span> <span class="n">key</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="k">if</span> <span class="n">retvalue</span> <span class="k">else</span> <span class="n">i</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">default</span>
 
 
@@ -333,10 +409,10 @@
 <span class="sd">    See: https://docs.python.org/2/library/csv.html</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="WriteCSV.__init__"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.sink.WriteCSV.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filepath</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">skipheader</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+<div class="viewcode-block" id="WriteCSV.__init__"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.sink.WriteCSV.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filepath</span><span class="p">,</span> <span class="n">cols</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">skipheader</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
                  <span class="n">fmtfunc</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        WriteCSV(filepath, columns, skipheader, fmtfunc, **kwargs)</span>
+<span class="sd">        WriteCSV(filepath, cols, skipheader, fmtfunc, **kwargs)</span>
 
 <span class="sd">        Write data in Comma Separated Values format (CSV) and other formats</span>
 <span class="sd">        to file. Tab Separated Values (TSV) files can be written by</span>
@@ -353,7 +429,7 @@
 <span class="sd">        ...     xrange(10) &gt;&gt; writer</span>
 <span class="sd">        &gt;&gt;&gt; os.remove(filepath)</span>
 
-<span class="sd">        &gt;&gt;&gt; with WriteCSV(filepath, columns=(1,0)) as writer:</span>
+<span class="sd">        &gt;&gt;&gt; with WriteCSV(filepath, cols=(1,0)) as writer:</span>
 <span class="sd">        ...     [(1,2), (3,4)] &gt;&gt; writer</span>
 <span class="sd">        &gt;&gt;&gt; os.remove(filepath)</span>
 
@@ -364,15 +440,15 @@
 
 
 <span class="sd">        :param string filepath: Path to file in CSV format.</span>
-<span class="sd">        :param tuple columns: Indices of the columns to write.</span>
-<span class="sd">                              If None all columns are written.</span>
+<span class="sd">        :param tuple cols: Indices of the columns to write.</span>
+<span class="sd">                           If None all columns are written.</span>
 <span class="sd">        :param int skipheader: Number of header rows to skip.</span>
 <span class="sd">        :param function fmtfunc: Function to apply to the elements of each row.</span>
 <span class="sd">        :param kwargs kwargs: Keyword arguments for Python&#39;s CSV writer.</span>
 <span class="sd">                              See https://docs.python.org/2/library/csv.html</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">csvfile</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">columns</span> <span class="k">if</span> <span class="n">columns</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">as_tuple</span><span class="p">(</span><span class="n">columns</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">cols</span> <span class="k">if</span> <span class="n">cols</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">as_tuple</span><span class="p">(</span><span class="n">cols</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">fmtfunc</span> <span class="o">=</span> <span class="n">fmtfunc</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">skipheader</span> <span class="o">=</span> <span class="n">skipheader</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">writer</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">writer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">csvfile</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>

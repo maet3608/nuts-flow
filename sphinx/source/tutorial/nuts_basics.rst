@@ -63,7 +63,8 @@ Functions and Processors
 
 Between *sources* and *sinks* a data flow typically contains a sequence of 
 *nut functions* or *nut processors*. Nut functions read from an iterator 
-and for each processed element return a new element. ``Square`` is such a nut function.
+and for each processed element return a new element. ``Square`` is such 
+a nut function.
 
 *Nut processors*, on the other hand, can modulate the data flow and might return 
 more or less elements than read from the input. For instance, ``Pick(n)`` 
@@ -72,6 +73,12 @@ is a processor that returns only every *n-ths* element from the input iterable
   >>> from nutsflow import Range, Pick, Collect
   >>> Range(10) >> Pick(3) >> Collect()
   [0, 3, 6, 9]
+
+Note that nut functions can be used as *normal* functions as well but
+must be called with additional brackets
+
+  >>> Square()(3)
+  9
   
   
 Iterator depletion

@@ -1,8 +1,8 @@
 Common error messages
 =====================
 
-TypeError: 'Wrapper' object is not callable
--------------------------------------------
+``'Wrapper' object is not callable``
+------------------------------------------------------------------
 
 Additional brackets when calling nut:
 
@@ -20,8 +20,8 @@ Should be:
 
   
   
-TypeError: unsupported operand type(s) for >>
-----------------------------------------------
+``unsupported operand type(s) for >>``
+------------------------------------------------------------------
 
 Missing brackets when calling nut:
 
@@ -39,12 +39,8 @@ Should be:
 
   
 
-NameError: name '_' is not defined
-----------------------------------------------
-
-TypeError: 'bool' object is not callable
-----------------------------------------------
-
+``name '_' is not defined``
+------------------------------------------------------------------
 
 Typically encountered when using ``_`` without importing it.
 Example:
