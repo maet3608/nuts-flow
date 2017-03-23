@@ -45,8 +45,78 @@
             
   <div class="section" id="performance">
 <h1>Performance<a class="headerlink" href="#performance" title="Permalink to this headline">¶</a></h1>
-<p>TODO</p>
-<p>Prefetch, Cache, MapPar</p>
+<p><strong>nuts-flow</strong> does not support concurrency in general but provides
+nuts that can improve performance by caching or parallelization.</p>
+<div class="section" id="mappar">
+<h2>MapPar<a class="headerlink" href="#mappar" title="Permalink to this headline">¶</a></h2>
+<p>Applying a function concurrently to the elements of a flow can be achieved
+with the <code class="docutils literal"><span class="pre">MapPar</span></code> nut. The following toy example converts numbers to their
+<em>absolute values</em> by applying the <code class="docutils literal"><span class="pre">abs</span></code> function in parallel</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nutsflow</span> <span class="k">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">3</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">MapPar</span><span class="p">(</span><span class="nb">abs</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
+<span class="go">[1, 2, 3]</span>
+</pre></div>
+</div>
+<p>Note that the order of the elements in the iterable is preserved.
+Currently, <code class="docutils literal"><span class="pre">MapPar</span></code> is of limited use, since 1) the function applied
+must be <a class="reference external" href="https://docs.python.org/2/library/pickle.html">pickable</a>
+and 2) <code class="docutils literal"><span class="pre">MapPar</span></code> creates parallel processes, which are computationally
+expensive to start.</p>
+</div>
+<div class="section" id="cache">
+<h2>Cache<a class="headerlink" href="#cache" title="Permalink to this headline">¶</a></h2>
+<p><strong>nuts-flow</strong> supports the <em>caching</em> of results to disk. Here an
+example in pseudo code</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">Cache</span><span class="p">()</span> <span class="k">as</span> <span class="n">cache</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">&gt;&gt;</span> <span class="n">expensive_op</span> <span class="o">&gt;&gt;</span> <span class="n">cache</span> <span class="o">&gt;&gt;</span> <span class="o">...</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Note that <em>caching</em> is only useful if 1) the elements to cache are
+time-consuming to compute (can be loaded faster than recreated)
+and 2) the same data flow is executed multiple time.</p>
+<p>A common use case is <em>machine learning for vision</em>, where images
+are preprocessed and a classifier is trained by repeatedly executing
+a data flow</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">Cache</span><span class="p">()</span> <span class="k">as</span> <span class="n">cache</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="n">xrange</span><span class="p">(</span><span class="mi">100</span><span class="p">):</span>
+        <span class="n">images</span> <span class="o">&gt;&gt;</span> <span class="n">preprocess</span> <span class="o">&gt;&gt;</span> <span class="n">cache</span> <span class="o">&gt;&gt;</span> <span class="n">network</span><span class="o">.</span><span class="n">train</span><span class="p">()</span> <span class="o">&gt;&gt;</span> <span class="n">Consume</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Cached elements are pickled to a temporary folder which is deleted
+when the <code class="docutils literal"><span class="pre">with</span></code> block is exited. The cache can be cleared in between
+as follows</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">Cache</span><span class="p">()</span> <span class="k">as</span> <span class="n">cache</span><span class="p">:</span>
+    <span class="o">...</span>
+    <span class="n">cache</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="prefetch">
+<h2>Prefetch<a class="headerlink" href="#prefetch" title="Permalink to this headline">¶</a></h2>
+<p><em>Prefetching</em> is another common method employed in (GPU-based) machine learning
+to speed up a data flow. Here data is pre-fetched (and pre-processed)
+on a separate CPU thread while the GPU is performing machine learning
+on another chunk of data</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="n">images</span> <span class="o">&gt;&gt;</span> <span class="n">preprocess</span> <span class="o">&gt;&gt;</span> <span class="n">Prefetch</span><span class="p">()</span> <span class="o">&gt;&gt;</span> <span class="n">network</span><span class="o">.</span><span class="n">train</span><span class="p">()</span> <span class="o">&gt;&gt;</span> <span class="n">Consume</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The following two examples demonstrate the difference between processing
+a data flow with and without pre-fetching. First a flow <em>without pre-fetching</em>
+that takes one number and prints it</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Print</span><span class="p">()</span> <span class="o">&gt;&gt;</span> <span class="n">Take</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Consume</span><span class="p">()</span>
+<span class="go">0</span>
+</pre></div>
+</div>
+<p>now the same flow but <em>with pre-fetching</em></p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Print</span><span class="p">()</span> <span class="o">&gt;&gt;</span> <span class="n">Prefetch</span><span class="p">()</span> <span class="o">&gt;&gt;</span> <span class="n">Take</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Consume</span><span class="p">()</span>
+<span class="go">0</span>
+<span class="go">1</span>
+</pre></div>
+</div>
+</div>
 </div>
 
 
@@ -54,7 +124,17 @@
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper"><div class="relations">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Performance</a><ul>
+<li><a class="reference internal" href="#mappar">MapPar</a></li>
+<li><a class="reference internal" href="#cache">Cache</a></li>
+<li><a class="reference internal" href="#prefetch">Prefetch</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="../index.html">Documentation overview</a><ul>
