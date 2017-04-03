@@ -22,7 +22,7 @@ the input iterable. See the following examples: and
 
   >>> from nutsflow import *
   >>> from nutsflow import _
-  <BLANKLINE>  
+    
   >>> Range(5) >> Map(lambda x : x * x) >> Collect()
   [0, 1, 4, 9, 16]
   
@@ -34,7 +34,7 @@ the input iterable. See the following examples: and
   
   >>> Range(5) >> Map(str) >> Collect()
   ['0', '1', '2', '3', '4']
-
+  
 Note that ``Map`` can transform elements of the flow in arbitrary ways
 but cannot change the number of elements in the flow.
 
