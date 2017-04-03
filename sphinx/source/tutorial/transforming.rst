@@ -22,7 +22,7 @@ the input iterable. See the following examples: and
 
   >>> from nutsflow import *
   >>> from nutsflow import _
-    
+  <BLANKLINE>  
   >>> Range(5) >> Map(lambda x : x * x) >> Collect()
   [0, 1, 4, 9, 16]
   
