@@ -18,6 +18,7 @@ provides examples of its usage.
    custom_nuts
    underscore
    performance
+   recipes
    practice_problems
    error_messages
    
