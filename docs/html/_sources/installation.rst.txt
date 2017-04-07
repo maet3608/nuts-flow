@@ -9,7 +9,7 @@ Installation via ``pip`` from `PyPi <https://pypi.python.org/pypi>`_ :
 
 .. code::
   
-  pip install nuts-flow
+  pip install nutsflow
   
 
 or ``git clone`` from `GitHub <https://github.com/>`_  
