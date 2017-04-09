@@ -1,0 +1,228 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>nutsflow.base &#8212; nutsflow 1.0.6 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.0.6',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for nutsflow.base</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">.. module:: base</span>
+<span class="sd">   :synopsis: Base classes and functions.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">itertools</span> <span class="k">as</span> <span class="nn">itt</span>
+
+
+<div class="viewcode-block" id="Nut"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.base.Nut">[docs]</a><span class="k">class</span> <span class="nc">Nut</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Base class for all Nuts. Iterables or functions wrapped in Nuts can be</span>
+<span class="sd">    chained using the &#39;&gt;&gt;&#39; operator. The aim is code with an explicit</span>
+<span class="sd">    data flow. See the following example using Python iterators versus Nuts:</span>
+
+<span class="sd">    &gt;&gt;&gt; from itertools import islice, ifilter</span>
+<span class="sd">    &gt;&gt;&gt; print list(islice(ifilter(lambda x: x &gt; 5, xrange(10)), 3))</span>
+<span class="sd">    [6, 7, 8]</span>
+
+<span class="sd">    &gt;&gt;&gt; from nutsflow import Range, Filter, Take, Collect, _</span>
+<span class="sd">    &gt;&gt;&gt; print Range(10) &gt;&gt; Filter(_ &gt; 5) &gt;&gt; Take(3) &gt;&gt; Collect()</span>
+<span class="sd">    [6, 7, 8]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Nut.__init__"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.base.Nut.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Constructor. Nuts (and derived classes) can have arbitrary arguments.</span>
+
+<span class="sd">        :param args args: Positional arguments.</span>
+<span class="sd">        :param kwargs kwargs: Keyword arguments.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">args</span> <span class="o">=</span> <span class="n">args</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span> <span class="o">=</span> <span class="n">kwargs</span></div>
+
+<div class="viewcode-block" id="Nut.__rrshift__"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.base.Nut.__rrshift__">[docs]</a>    <span class="k">def</span> <span class="nf">__rrshift__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">iterable</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Chaining operator for Nuts. Needs to be overridden!</span>
+
+<span class="sd">        Takes an input iterable and produces some output iterable.</span>
+<span class="sd">        If the number of elements in the input and the output iterable</span>
+<span class="sd">        does not change consider NutFunction instead.</span>
+
+<span class="sd">        :param iterable iterable:</span>
+<span class="sd">        :return: Iterable</span>
+<span class="sd">        :rtype: iterable</span>
+<span class="sd">        :raise: NotImplementedError if not implemented.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
+            <span class="s1">&#39;Needs to implement  __rrshift__ : &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">))</span></div></div>
+
+
+<div class="viewcode-block" id="NutFunction"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.base.NutFunction">[docs]</a><span class="k">class</span> <span class="nc">NutFunction</span><span class="p">(</span><span class="n">Nut</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Nut functions are are mapped onto each element of the input iterable.</span>
+
+<span class="sd">    Example: Square is a Nut function</span>
+
+<span class="sd">    &gt;&gt;&gt; from nutsflow import Square, Collect, _</span>
+<span class="sd">    &gt;&gt;&gt; [1,2,3] &gt;&gt; Square() &gt;&gt; Collect()</span>
+<span class="sd">    [1, 4, 9]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="NutFunction.__call__"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.base.NutFunction.__call__">[docs]</a>    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Override this method to transform the elements of an iterable.</span>
+
+<span class="sd">        :param element: Element the function is applied to.</span>
+<span class="sd">        :return: A transformed element</span>
+<span class="sd">        :rtype: any</span>
+<span class="sd">        :raise: NotImplementedError if not implemented.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
+            <span class="s1">&#39;Needs to implement  __call__() : &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="NutFunction.__rrshift__"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.base.NutFunction.__rrshift__">[docs]</a>    <span class="k">def</span> <span class="nf">__rrshift__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">iterable</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Map function onto iterable and return transformed iterable.</span>
+<span class="sd">        Do not override!</span>
+
+<span class="sd">        :param iterable: function is applied to the elements of the iterable.</span>
+<span class="sd">        :return: transformed iterable.</span>
+<span class="sd">        :rtype: iterable</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">itt</span><span class="o">.</span><span class="n">imap</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">iterable</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="NutSource"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.base.NutSource">[docs]</a><span class="k">class</span> <span class="nc">NutSource</span><span class="p">(</span><span class="n">Nut</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Sources are nuts that have no input iterable but produce an output</span>
+<span class="sd">    iterable.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="NutSource.__rrshift__"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.base.NutSource.__rrshift__">[docs]</a>    <span class="k">def</span> <span class="nf">__rrshift__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">iterable</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Raises an exception when called. Sources have not input!</span>
+<span class="sd">        Do not override! Override __iter__() instead.</span>
+
+<span class="sd">        :param iterable iterable: Iterable</span>
+<span class="sd">        :raise: SyntaxError if called.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">SyntaxError</span><span class="p">(</span>
+            <span class="s2">&quot;Sources don&#39;t have inputs: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">))</span></div>
+
+    <span class="k">def</span> <span class="nf">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return iterator over some data. Needs to be overridden!</span>
+
+<span class="sd">        :return: Iterator for source data.</span>
+<span class="sd">        :rtype: iterator</span>
+<span class="sd">        :raise: NotImplementedError if not implemented.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
+            <span class="s1">&#39;Needs to implement __iter__() :&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="NutSink"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.base.NutSink">[docs]</a><span class="k">class</span> <span class="nc">NutSink</span><span class="p">(</span><span class="n">Nut</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Sinks are nuts that do not guarantee to produce an iterable output.</span>
+
+<span class="sd">    Sinks are typically at the end of a flow and typically aggregate the flow</span>
+<span class="sd">    to a single output, e.g. the sum of its elements.</span>
+<span class="sd">    Need to override __rrshift__()!</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Raises an exception when called. Sinks should not serve as sources.</span>
+
+<span class="sd">        :raise: SyntaxError if called.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">SyntaxError</span><span class="p">(</span>
+            <span class="s1">&#39;Sinks cannot be inputs: &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">))</span>
+
+<div class="viewcode-block" id="NutSink.__call__"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.base.NutSink.__call__">[docs]</a>    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">iterable</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sinks can serve as functions applied to iterables within a flow.</span>
+
+<span class="sd">        :param iterable: Sink takes iterable as input</span>
+<span class="sd">        :return: Output of sink</span>
+<span class="sd">        :rtype: any</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">iter</span><span class="p">(</span><span class="n">iterable</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="bp">self</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, IBM.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

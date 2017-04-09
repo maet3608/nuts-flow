@@ -1,0 +1,232 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Tutorial &#8212; nutsflow 1.0.6 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0.6',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Prerequisites" href="prerequisites.html" />
+    <link rel="prev" title="Installation" href="../installation.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="tutorial">
+<h1>Tutorial<a class="headerlink" href="#tutorial" title="Permalink to this headline">¶</a></h1>
+<p>This tutorial introduces the basic concepts of <strong>nuts-flow</strong> and
+provides examples of its usage.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="prerequisites.html">Prerequisites</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="prerequisites.html#lambda-functions">Lambda functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="prerequisites.html#iterators">Iterators</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="nuts_basics.html">Nuts basics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="nuts_basics.html#flows">Flows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nuts_basics.html#sources-and-sinks">Sources and Sinks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nuts_basics.html#functions-and-processors">Functions and Processors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nuts_basics.html#iterator-depletion">Iterator depletion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nuts_basics.html#new-nuts">New nuts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nuts_basics.html#line-breaks">Line breaks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nuts_basics.html#summary">Summary</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="debugging.html">Printing and Debugging</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="debugging.html#print">Print</a></li>
+<li class="toctree-l2"><a class="reference internal" href="debugging.html#limit-data">Limit data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="debugging.html#no-operation">No Operation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="debugging.html#conditional">Conditional</a></li>
+<li class="toctree-l2"><a class="reference internal" href="debugging.html#counter">Counter</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="filtering.html">Filtering</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="filtering.html#filter">Filter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="filtering.html#partition">Partition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="filtering.html#groupby">GroupBy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="filtering.html#takewhile-and-dropwhile">TakeWhile and DropWhile</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="transforming.html">Data transformation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="transforming.html#elementwise-transformations">Elementwise transformations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="transforming.html#map">Map</a></li>
+<li class="toctree-l3"><a class="reference internal" href="transforming.html#mapmulti">MapMulti</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="transforming.html#tabular-data">Tabular data</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="transforming.html#mapcol">MapCol</a></li>
+<li class="toctree-l3"><a class="reference internal" href="transforming.html#get">Get</a></li>
+<li class="toctree-l3"><a class="reference internal" href="transforming.html#getcols">GetCols</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="transforming.html#flatten-data">Flatten data</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="transforming.html#flatten">Flatten</a></li>
+<li class="toctree-l3"><a class="reference internal" href="transforming.html#flatmap">FlatMap</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="rearranging.html">Rearranging data</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="rearranging.html#slice">Slice</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rearranging.html#chunk">Chunk</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rearranging.html#cycle">Cycle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rearranging.html#permutate">Permutate</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rearranging.html#combine">Combine</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rearranging.html#dedupe">Dedupe</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="divide_conquer.html">Divide and conquer</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="divide_conquer.html#zip">Zip</a></li>
+<li class="toctree-l2"><a class="reference internal" href="divide_conquer.html#unzip">Unzip</a></li>
+<li class="toctree-l2"><a class="reference internal" href="divide_conquer.html#interleave">Interleave</a></li>
+<li class="toctree-l2"><a class="reference internal" href="divide_conquer.html#concat">Concat</a></li>
+<li class="toctree-l2"><a class="reference internal" href="divide_conquer.html#tee">Tee</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sources.html">Reading from Sources</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sources.html#iterables">Iterables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sources.html#source-nuts">Source nuts</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="sources.html#range">Range</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sources.html#enumerate">Enumerate</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sources.html#product">Product</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sources.html#repeat">Repeat</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sources.html#readcsv">ReadCSV</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sinks.html">Writing to Sinks</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sinks.html#python-functions">Python functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sinks.html#nuts">Nuts</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="sinks.html#collect">Collect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sinks.html#head-and-tail">Head and Tail</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sinks.html#common-nuts">Common nuts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sinks.html#count-and-countvalues">Count and CountValues</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sinks.html#consume">Consume</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sinks.html#writecsv">WriteCSV</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="custom_nuts.html">Custom nuts</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="custom_nuts.html#nut-types">Nut types</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="custom_nuts.html#nut-source">nut_source</a></li>
+<li class="toctree-l3"><a class="reference internal" href="custom_nuts.html#nut-sink">nut_sink</a></li>
+<li class="toctree-l3"><a class="reference internal" href="custom_nuts.html#nut-function">nut_function</a></li>
+<li class="toctree-l3"><a class="reference internal" href="custom_nuts.html#nut-processor">nut_processor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="custom_nuts.html#nut-filter">nut_filter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="custom_nuts.html#nut-filterfalse">nut_filterfalse</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="underscore.html">Underscore syntax</a></li>
+<li class="toctree-l1"><a class="reference internal" href="performance.html">Performance</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="performance.html#mappar">MapPar</a></li>
+<li class="toctree-l2"><a class="reference internal" href="performance.html#cache">Cache</a></li>
+<li class="toctree-l2"><a class="reference internal" href="performance.html#prefetch">Prefetch</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="recipes.html">Recipes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="recipes.html#load-a-mapping-file">Load a mapping file</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="practice_problems.html">Practice problems</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="practice_problems.html#problems">99 Problems</a></li>
+<li class="toctree-l2"><a class="reference internal" href="practice_problems.html#euler">Euler</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="error_messages.html">Common error messages</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="error_messages.html#wrapper-object-is-not-callable"><code class="docutils literal"><span class="pre">'Wrapper'</span> <span class="pre">object</span> <span class="pre">is</span> <span class="pre">not</span> <span class="pre">callable</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="error_messages.html#unsupported-operand-type-s-for"><code class="docutils literal"><span class="pre">unsupported</span> <span class="pre">operand</span> <span class="pre">type(s)</span> <span class="pre">for</span> <span class="pre">&gt;&gt;</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="error_messages.html#name-is-not-defined"><code class="docutils literal"><span class="pre">name</span> <span class="pre">'_'</span> <span class="pre">is</span> <span class="pre">not</span> <span class="pre">defined</span></code></a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="../installation.html" title="previous chapter">Installation</a></li>
+      <li>Next: <a href="prerequisites.html" title="next chapter">Prerequisites</a></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/tutorial/introduction.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, IBM.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="../_sources/tutorial/introduction.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

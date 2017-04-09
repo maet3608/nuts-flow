@@ -1,0 +1,946 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>nutsflow.processor &#8212; nutsflow 1.0.6 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.0.6',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for nutsflow.processor</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">.. module:: processor</span>
+<span class="sd">   :synopsis: Nuts that process iterables and return iterables.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">tempfile</span>
+<span class="kn">import</span> <span class="nn">shutil</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="kn">import</span> <span class="nn">cPickle</span> <span class="k">as</span> <span class="nn">pickle</span>
+<span class="kn">import</span> <span class="nn">os.path</span> <span class="k">as</span> <span class="nn">osp</span>
+<span class="kn">import</span> <span class="nn">itertools</span> <span class="k">as</span> <span class="nn">itt</span>
+<span class="kn">import</span> <span class="nn">iterfunction</span> <span class="k">as</span> <span class="nn">itf</span>
+<span class="kn">import</span> <span class="nn">random</span> <span class="k">as</span> <span class="nn">rnd</span>
+<span class="kn">import</span> <span class="nn">multiprocessing</span> <span class="k">as</span> <span class="nn">mp</span>
+<span class="kn">import</span> <span class="nn">collections</span> <span class="k">as</span> <span class="nn">cl</span>
+
+<span class="kn">from</span> <span class="nn">base</span> <span class="k">import</span> <span class="n">Nut</span>
+<span class="kn">from</span> <span class="nn">factory</span> <span class="k">import</span> <span class="n">nut_processor</span>
+<span class="kn">from</span> <span class="nn">function</span> <span class="k">import</span> <span class="n">Identity</span>
+<span class="kn">from</span> <span class="nn">sink</span> <span class="k">import</span> <span class="n">Consume</span><span class="p">,</span> <span class="n">Collect</span>
+<span class="kn">from</span> <span class="nn">nutsflow.common</span> <span class="k">import</span> <span class="n">timestr</span>
+
+<span class="n">Take</span> <span class="o">=</span> <span class="n">nut_processor</span><span class="p">(</span><span class="n">itf</span><span class="o">.</span><span class="n">take</span><span class="p">)</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">iterable &gt;&gt; Take(n)</span>
+
+<span class="sd">Return first n elements of iterable</span>
+
+<span class="sd">&gt;&gt;&gt; [1, 2, 3, 4] &gt;&gt; Take(2) &gt;&gt; Collect()</span>
+<span class="sd">[1, 2]</span>
+
+<span class="sd">:param iterable iterable: Any iterable</span>
+<span class="sd">:param int n: Number of elements to take</span>
+<span class="sd">:return: First n elements of iterable</span>
+<span class="sd">:rtype: iterator</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="n">Slice</span> <span class="o">=</span> <span class="n">nut_processor</span><span class="p">(</span><span class="n">itt</span><span class="o">.</span><span class="n">islice</span><span class="p">)</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">iterable &gt;&gt; Slice([start,] stop[, stride])</span>
+
+<span class="sd">Return slice of elements from iterable.</span>
+<span class="sd">See https://docs.python.org/2/library/itertools.html#itertools.islice</span>
+
+<span class="sd">&gt;&gt;&gt; [1, 2, 3, 4] &gt;&gt; Slice(2) &gt;&gt; Collect()</span>
+<span class="sd">[1, 2]</span>
+
+<span class="sd">&gt;&gt;&gt; [1, 2, 3, 4] &gt;&gt; Slice(1, 3) &gt;&gt; Collect()</span>
+<span class="sd">[2, 3]</span>
+
+<span class="sd">&gt;&gt;&gt; [1, 2, 3, 4] &gt;&gt; Slice(0, 4, 2) &gt;&gt; Collect()</span>
+<span class="sd">[1, 3]</span>
+
+<span class="sd">:param iterable iterable: Any iterable</span>
+<span class="sd">:param int start: Start index of slice.</span>
+<span class="sd">:param int stop: End index of slice.</span>
+<span class="sd">:param int step: Step size of slice.</span>
+<span class="sd">:return: Elements sliced from iterable</span>
+<span class="sd">:rtype: iterator</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="n">Concat</span> <span class="o">=</span> <span class="n">nut_processor</span><span class="p">(</span><span class="n">itt</span><span class="o">.</span><span class="n">chain</span><span class="p">)</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">iterable &gt;&gt; Concat(*iterables)</span>
+
+<span class="sd">Concatenate iterables.</span>
+
+<span class="sd">&gt;&gt;&gt; Range(5) &gt;&gt; Concat(&#39;abc&#39;) &gt;&gt; Collect()</span>
+<span class="sd">[0, 1, 2, 3, 4, &#39;a&#39;, &#39;b&#39;, &#39;c&#39;]</span>
+
+<span class="sd">&gt;&gt;&gt; &#39;12&#39; &gt;&gt; Concat(&#39;abcd&#39;, &#39;+-&#39;) &gt;&gt; Collect()</span>
+<span class="sd">[&#39;1&#39;, &#39;2&#39;, &#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;, &#39;+&#39;, &#39;-&#39;]</span>
+
+
+<span class="sd">:param iterable iterable: Any iterable</span>
+<span class="sd">:param iterable iterables: Iterables to concatenate</span>
+<span class="sd">:return: Concatenated iterators</span>
+<span class="sd">:rtype: iterator</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="n">Interleave</span> <span class="o">=</span> <span class="n">nut_processor</span><span class="p">(</span><span class="n">itf</span><span class="o">.</span><span class="n">interleave</span><span class="p">)</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">iterable &gt;&gt; Interleave(*iterables)</span>
+
+<span class="sd">Interleave elements of iterable with elements of given iterables.</span>
+<span class="sd">Similar to iterable &gt;&gt; Zip(*iterables) &gt;&gt; Flatten() but longest iterable</span>
+<span class="sd">determines length of interleaved iterator.</span>
+
+<span class="sd">&gt;&gt;&gt; Range(5) &gt;&gt; Interleave(&#39;abc&#39;) &gt;&gt; Collect()</span>
+<span class="sd">[0, &#39;a&#39;, 1, &#39;b&#39;, 2, &#39;c&#39;, 3, 4]</span>
+
+<span class="sd">&gt;&gt;&gt; &#39;12&#39; &gt;&gt; Interleave(&#39;abcd&#39;, &#39;+-&#39;) &gt;&gt; Collect()</span>
+<span class="sd">[&#39;1&#39;, &#39;a&#39;, &#39;+&#39;, &#39;2&#39;, &#39;b&#39;, &#39;-&#39;, &#39;c&#39;, &#39;d&#39;]</span>
+
+
+<span class="sd">:param iterable iterable: Any iterable</span>
+<span class="sd">:param iterable iterables: Iterables to interleave</span>
+<span class="sd">:return: Iterator over interleaved elements.</span>
+<span class="sd">:rtype: iterator</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="n">Zip</span> <span class="o">=</span> <span class="n">nut_processor</span><span class="p">(</span><span class="n">itt</span><span class="o">.</span><span class="n">izip</span><span class="p">)</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">iterable &gt;&gt; Zip(*iterables)</span>
+
+<span class="sd">Zip elements of iterable with elements of given iterables</span>
+<span class="sd">Zip finishes when shortest iterable is exhausted.</span>
+<span class="sd">See https://docs.python.org/2/library/itertools.html#itertools.izip</span>
+<span class="sd">And https://docs.python.org/2/library/itertools.html#itertools.izip_longest</span>
+
+<span class="sd">&gt;&gt;&gt; [0, 1, 2] &gt;&gt; Zip(&#39;abc&#39;) &gt;&gt; Collect()</span>
+<span class="sd">[(0, &#39;a&#39;), (1, &#39;b&#39;), (2, &#39;c&#39;)]</span>
+
+<span class="sd">&gt;&gt;&gt; &#39;12&#39; &gt;&gt; Zip(&#39;abcd&#39;, &#39;+-&#39;) &gt;&gt; Collect()</span>
+<span class="sd">[(&#39;1&#39;, &#39;a&#39;, &#39;+&#39;), (&#39;2&#39;, &#39;b&#39;, &#39;-&#39;)]</span>
+
+
+<span class="sd">:param iterable iterable: Any iterable</span>
+<span class="sd">:param iterable iterables: Iterables to zip</span>
+<span class="sd">:return: Zipped elements from iterables.</span>
+<span class="sd">:rtype: iterator over tuples</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="nd">@nut_processor</span>
+<span class="k">def</span> <span class="nf">ZipWith</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="o">*</span><span class="n">iterables</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    iterable &gt;&gt; ZipWith(f, *iterables)</span>
+
+<span class="sd">    Zips the given iterables, unpacks them and applies the given function.</span>
+
+<span class="sd">    &gt;&gt;&gt; add = lambda a, b: a + b</span>
+<span class="sd">    &gt;&gt;&gt; [1, 2, 3] &gt;&gt; ZipWith(add, [2, 3, 4]) &gt;&gt; Collect()</span>
+<span class="sd">    [3, 5, 7]</span>
+
+<span class="sd">    :param iterable iterable: Any iterable</span>
+<span class="sd">    :param iterable iterables: Any iterables</span>
+<span class="sd">    :param function f: Function to apply to zipped input iterables</span>
+<span class="sd">    :return: iterator of result of f() applied to zipped iterables</span>
+<span class="sd">    :rtype: iterator</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">iterables</span> <span class="o">=</span> <span class="p">[</span><span class="n">iterable</span><span class="p">]</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="n">iterables</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">itt</span><span class="o">.</span><span class="n">starmap</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">itt</span><span class="o">.</span><span class="n">izip</span><span class="p">(</span><span class="o">*</span><span class="n">iterables</span><span class="p">))</span>
+
+
+<span class="n">Dedupe</span> <span class="o">=</span> <span class="n">nut_processor</span><span class="p">(</span><span class="n">itf</span><span class="o">.</span><span class="n">unique</span><span class="p">)</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">iterable &gt;&gt; Dedupe([key])</span>
+
+<span class="sd">Return only unique elements in iterable. Can have very high memory consumption</span>
+<span class="sd">if iterable is long and many elements are unique!</span>
+
+<span class="sd">&gt;&gt;&gt; [2,3,1,1,2,4] &gt;&gt; Dedupe() &gt;&gt; Collect()</span>
+<span class="sd">[2, 3, 1, 4]</span>
+
+<span class="sd">&gt;&gt;&gt; data = [(1,&#39;a&#39;), (2,&#39;a&#39;), (3,&#39;b&#39;)]</span>
+<span class="sd">&gt;&gt;&gt; data &gt;&gt; Dedupe(key=lambda (x,y): y) &gt;&gt; Collect()</span>
+<span class="sd">[(1, &#39;a&#39;), (3, &#39;b&#39;)]</span>
+
+<span class="sd">&gt;&gt;&gt; data &gt;&gt; Dedupe(_[1]) &gt;&gt; Collect()</span>
+<span class="sd">[(1, &#39;a&#39;), (3, &#39;b&#39;)]</span>
+
+<span class="sd">:param iterable iterable: Any iterable, e.g. list, xrange, ...</span>
+<span class="sd">:param key: Function used to compare for equality.</span>
+<span class="sd">:return: Iterator over unique elements.</span>
+<span class="sd">:rtype: Iterator</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="n">Chunk</span> <span class="o">=</span> <span class="n">nut_processor</span><span class="p">(</span><span class="n">itf</span><span class="o">.</span><span class="n">chunked</span><span class="p">)</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">iterable &gt;&gt; Chunk(n)</span>
+
+<span class="sd">Split iterable in chunks of size n, where each chunk is also an iterator.</span>
+
+<span class="sd">&gt;&gt;&gt; for chunk in Range(5) &gt;&gt; Chunk(2):</span>
+<span class="sd">&gt;&gt;&gt; ... print list(chunk)</span>
+<span class="sd">[0, 1]</span>
+<span class="sd">[2, 3]</span>
+<span class="sd">[4]</span>
+
+<span class="sd">:param iterable iterable: Any iterable, e.g. list, xrange, ...</span>
+<span class="sd">:param n: Chunk size</span>
+<span class="sd">:return: Chunked iterable</span>
+<span class="sd">:rtype: Iterator over iterators</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="n">Cycle</span> <span class="o">=</span> <span class="n">nut_processor</span><span class="p">(</span><span class="n">itt</span><span class="o">.</span><span class="n">cycle</span><span class="p">)</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">iterable &gt;&gt; Cycle()</span>
+
+<span class="sd">Cycle through iterable indefinitely. Large memory consumption if iterable is</span>
+<span class="sd">large!</span>
+
+<span class="sd">&gt;&gt;&gt; [1, 2] &gt;&gt; Cycle() &gt;&gt; Take(5) &gt;&gt; Collect()</span>
+<span class="sd">[1, 2, 1, 2, 1]</span>
+
+<span class="sd">:param iterable iterable: Any iterable, e.g. list, xrange, ...</span>
+<span class="sd">:return: Cycled input iterable</span>
+<span class="sd">:rtype: Iterator</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="nd">@nut_processor</span>
+<span class="k">def</span> <span class="nf">Flatten</span><span class="p">(</span><span class="n">iterable</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    iterable &gt;&gt; Flatten()</span>
+
+<span class="sd">    Flatten the iterables within the iterable and non-iterables are passed</span>
+<span class="sd">    through. Only one level is flattened.</span>
+
+<span class="sd">    &gt;&gt;&gt; [(1, 2), (3, 4, 5), 6] &gt;&gt; Flatten() &gt;&gt; Collect()</span>
+
+<span class="sd">    :param iterable iterable: Any iterable.</span>
+<span class="sd">    :return: Flattened iterable</span>
+<span class="sd">    :rtype: Iterator</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">it</span> <span class="ow">in</span> <span class="n">iterable</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">it</span><span class="p">,</span> <span class="s1">&#39;__iter__&#39;</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">it</span><span class="p">:</span>
+                <span class="k">yield</span> <span class="n">element</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="n">it</span>
+
+
+<span class="n">FlatMap</span> <span class="o">=</span> <span class="n">nut_processor</span><span class="p">(</span><span class="n">itf</span><span class="o">.</span><span class="n">flatmap</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">iterable &gt;&gt; FlatMap(func)</span>
+
+<span class="sd">Map function on iterable and flatten. Equivalent to</span>
+<span class="sd">iterable &gt;&gt; Map(func) &gt;&gt; Flatten()</span>
+
+<span class="sd">&gt;&gt;&gt; [[0], [1], [2]] &gt;&gt; FlatMap(_) &gt;&gt; Collect()</span>
+<span class="sd">[0, 1, 2]</span>
+
+<span class="sd">&gt;&gt;&gt; [[0], [1], [2]] &gt;&gt; FlatMap(_ * 2) &gt;&gt; Collect()</span>
+<span class="sd">[0, 0, 1, 1, 2, 2]</span>
+
+<span class="sd">:param iterable iterable: Any iterable.</span>
+<span class="sd">:param function func: Mapping function.</span>
+<span class="sd">:return: Mapped and flattened iterable</span>
+<span class="sd">:rtype: Iterator</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="n">Map</span> <span class="o">=</span> <span class="n">nut_processor</span><span class="p">(</span><span class="n">itt</span><span class="o">.</span><span class="n">imap</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">iterable &gt;&gt; Map(func, *iterables)</span>
+
+<span class="sd">Map function on iterable.</span>
+<span class="sd">See https://docs.python.org/2/library/itertools.html#itertools.imap</span>
+
+<span class="sd">&gt;&gt;&gt; [0, 1, 2] &gt;&gt; Map(_ * 2) &gt;&gt; Collect()</span>
+<span class="sd">[0, 2, 4]</span>
+
+<span class="sd">&gt;&gt;&gt; [&#39;ab&#39;, &#39;cde&#39;] &gt;&gt; Map(len) &gt;&gt; Collect()</span>
+<span class="sd">[2, 3]</span>
+
+<span class="sd">&gt;&gt; [2, 3, 10] &gt;&gt; Map(pow, [5, 2, 3]) &gt;&gt; Collect()</span>
+<span class="sd">[32, 9, 1000]</span>
+
+<span class="sd">:param iterable iterable: Any iterable</span>
+<span class="sd">:param iterables iterables: Any iterables.</span>
+<span class="sd">:param function func: Mapping function.</span>
+<span class="sd">:return: Mapped iterable</span>
+<span class="sd">:rtype: Iterator</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="n">Filter</span> <span class="o">=</span> <span class="n">nut_processor</span><span class="p">(</span><span class="n">itt</span><span class="o">.</span><span class="n">ifilter</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">iterable &gt;&gt; Filter(func)</span>
+
+<span class="sd">Filter elements from iterable based on predicate function.</span>
+<span class="sd">See https://docs.python.org/2/library/itertools.html#itertools.ifilter</span>
+
+<span class="sd">&gt;&gt;&gt; [0, 1, 2, 3] &gt;&gt; Filter(_ &lt; 2) &gt;&gt; Collect()</span>
+<span class="sd">[0, 1]</span>
+
+<span class="sd">:param iterable iterable: Any iterable</span>
+<span class="sd">:param function func: Predicate function. Element is removed if False.</span>
+<span class="sd">:return: Filtered iterable</span>
+<span class="sd">:rtype: Iterator</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="n">FilterFalse</span> <span class="o">=</span> <span class="n">nut_processor</span><span class="p">(</span><span class="n">itt</span><span class="o">.</span><span class="n">ifilterfalse</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">iterable &gt;&gt; FilterFalse(func)</span>
+
+<span class="sd">Filter elements from iterable based on predicate function.</span>
+<span class="sd">Same as Filter but elements are removed (not kept) if predicate function</span>
+<span class="sd">returns True.</span>
+<span class="sd">See https://docs.python.org/2/library/itertools.html#itertools.ifilterfalse</span>
+
+<span class="sd">&gt;&gt;&gt; [0, 1, 2, 3] &gt;&gt; FilterFalse(_ &gt;= 2) &gt;&gt; Collect()</span>
+<span class="sd">[0, 1]</span>
+
+<span class="sd">:param iterable iterable: Any iterable</span>
+<span class="sd">:param function func: Predicate function. Element is removed if True.</span>
+<span class="sd">:return: Filtered iterable</span>
+<span class="sd">:rtype: Iterator</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="n">Partition</span> <span class="o">=</span> <span class="n">nut_processor</span><span class="p">(</span><span class="n">itf</span><span class="o">.</span><span class="n">partition</span><span class="p">)</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">partition1, partition2 = iterable &gt;&gt; Partition(func)</span>
+
+<span class="sd">Split iterable into two partitions based on predicate function</span>
+
+<span class="sd">&gt;&gt;&gt; smaller, larger = Range(5) &gt;&gt; Partition(_ &lt; 3)</span>
+<span class="sd">&gt;&gt;&gt; smaller &gt;&gt; Collect()</span>
+<span class="sd">[0, 1, 2]</span>
+<span class="sd">&gt;&gt;&gt; larger &gt;&gt; Collect()</span>
+<span class="sd">[3, 4]</span>
+
+<span class="sd">:param iterable: Any iterable, e.g. list, xrange, ...</span>
+<span class="sd">:param pred: Predicate function.</span>
+<span class="sd">:return: Partition iterators</span>
+<span class="sd">:rtype: Two iterators</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="n">TakeWhile</span> <span class="o">=</span> <span class="n">nut_processor</span><span class="p">(</span><span class="n">itt</span><span class="o">.</span><span class="n">takewhile</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">iterable &gt;&gt; TakeWhile(func)</span>
+
+<span class="sd">Take elements from iterable while predicte function is True.</span>
+<span class="sd">See https://docs.python.org/2/library/itertools.html#itertools.takewhile</span>
+
+<span class="sd">&gt;&gt;&gt; [0, 1, 2, 3, 0] &gt;&gt; TakeWhile(_ &lt; 2) &gt;&gt; Collect()</span>
+<span class="sd">[0, 1]</span>
+
+<span class="sd">:param iterable iterable: Any iterable</span>
+<span class="sd">:param function func: Predicate function.</span>
+<span class="sd">:return: Iterable</span>
+<span class="sd">:rtype: Iterator</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="nd">@nut_processor</span>
+<span class="k">def</span> <span class="nf">DropWhile</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">func</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    iterable &gt;&gt; DropWhile(func)</span>
+
+<span class="sd">    Skip elements in iterable while predicate function is True.</span>
+
+<span class="sd">    &gt;&gt;&gt;[0, 1, 2, 3, 0] &gt;&gt; DropWhile(_ &lt; 2) &gt;&gt; Collect()</span>
+<span class="sd">    [2, 3, 0]</span>
+
+<span class="sd">    :param iterable iterable: Any iterable</span>
+<span class="sd">    :param function func: Predicate function.</span>
+<span class="sd">    :return: Iterable</span>
+<span class="sd">    :rtype: Iterator</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">itt</span><span class="o">.</span><span class="n">dropwhile</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">iterable</span><span class="p">)</span>
+
+
+<span class="n">Permutate</span> <span class="o">=</span> <span class="n">nut_processor</span><span class="p">(</span><span class="n">itt</span><span class="o">.</span><span class="n">permutations</span><span class="p">)</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">iterable &gt;&gt; Permutate([,r])</span>
+
+<span class="sd">Return successive r length permutations of elements in the iterable.</span>
+<span class="sd">See https://docs.python.org/2/library/itertools.html#itertools.permutations</span>
+
+<span class="sd">&gt;&gt;&gt; &#39;ABC&#39; &gt;&gt; Permutate(2) &gt;&gt; Collect()</span>
+<span class="sd">[(&#39;A&#39;, &#39;B&#39;), (&#39;A&#39;, &#39;C&#39;), (&#39;B&#39;, &#39;A&#39;), (&#39;B&#39;, &#39;C&#39;), (&#39;C&#39;, &#39;A&#39;), (&#39;C&#39;, &#39;B&#39;)]</span>
+
+<span class="sd">:param iterable iterable: Any iterable</span>
+<span class="sd">:param int r: Permutation of length r are generated.</span>
+<span class="sd">              If r is not specified or is None, then r defaults</span>
+<span class="sd">              to the length of the iterable and all possible full-length</span>
+<span class="sd">              permutations are generated.</span>
+<span class="sd">:return: Iterable over permutations</span>
+<span class="sd">:rtype: Iterator</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="n">Combine</span> <span class="o">=</span> <span class="n">nut_processor</span><span class="p">(</span><span class="n">itt</span><span class="o">.</span><span class="n">combinations</span><span class="p">)</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">iterable &gt;&gt; Combine(r)</span>
+
+<span class="sd">Return r length subsequences of elements from the input iterable.</span>
+<span class="sd">See https://docs.python.org/2/library/itertools.html#itertools.combinations</span>
+
+<span class="sd">&gt;&gt;&gt; &#39;ABC&#39; &gt;&gt; Combine(2) &gt;&gt; Collect()</span>
+<span class="sd">[(&#39;A&#39;, &#39;B&#39;), (&#39;A&#39;, &#39;C&#39;), (&#39;B&#39;, &#39;C&#39;)]</span>
+
+<span class="sd">&gt;&gt;&gt; [1, 2, 3, 4] &gt;&gt; Combine(3) &gt;&gt; Collect()</span>
+<span class="sd">[(1, 2, 3), (1, 2, 4), (1, 3, 4), (2, 3, 4)]</span>
+
+<span class="sd">:param iterable iterable: Any iterable</span>
+<span class="sd">:param int r: Length of combinations</span>
+<span class="sd">:return: Iterable over combinations</span>
+<span class="sd">:rtype: Iterator</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="n">Tee</span> <span class="o">=</span> <span class="n">nut_processor</span><span class="p">(</span><span class="n">itt</span><span class="o">.</span><span class="n">tee</span><span class="p">)</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">iterable &gt;&gt; Tee([n=2])</span>
+
+<span class="sd">Return n independent iterators from a single iterable. Can consume large</span>
+<span class="sd">amounts of memory if iterable is large and tee&#39;s are not processed in</span>
+<span class="sd">parallel.</span>
+<span class="sd">See https://docs.python.org/2/library/itertools.html#itertools.tee</span>
+
+<span class="sd">&gt;&gt;&gt; it1, it2  = [1, 2, 3] &gt;&gt; Tee(2)</span>
+<span class="sd">&gt;&gt;&gt; it1 &gt;&gt; Collect()</span>
+<span class="sd">[1, 2, 3]</span>
+<span class="sd">&gt;&gt;&gt; it2 &gt;&gt; Collect()</span>
+<span class="sd">[1, 2, 3]</span>
+
+<span class="sd">:param iterable iterable: Any iterable</span>
+<span class="sd">:param int n: Number of iterators to return.</span>
+<span class="sd">:return: n iterators</span>
+<span class="sd">:rtype: (Iterator, ...)</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="nd">@nut_processor</span>
+<span class="k">def</span> <span class="nf">If</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">cond</span><span class="p">,</span> <span class="n">if_nut</span><span class="p">,</span> <span class="n">else_nut</span><span class="o">=</span><span class="n">Identity</span><span class="p">()):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    iterable &gt;&gt; If(cond, if_nut, [,else_nut])</span>
+
+<span class="sd">    Depending on condition cond execute if_nut or else_nut. Useful for</span>
+<span class="sd">    conditional flows.</span>
+
+<span class="sd">    &gt;&gt;&gt; [1, 2, 3] &gt;&gt; If(True, Square()) &gt;&gt; Collect()</span>
+<span class="sd">    [1, 4, 9]</span>
+
+<span class="sd">    &gt;&gt;&gt; [1, 2, 3] &gt;&gt; If(False, Square(), Take(1)) &gt;&gt; Collect()</span>
+<span class="sd">    [1]</span>
+
+<span class="sd">    :param iterable iterable: Any iterable</span>
+<span class="sd">    :param bool cond: Boolean conditional value.</span>
+<span class="sd">    :param Nut if_nut: Nut to be executed if cond == True</span>
+<span class="sd">    :param Nut else_nut: Nut to be executed if cond == False</span>
+<span class="sd">    :return: Result of if_nut or else_nut</span>
+<span class="sd">    :rtype: Any</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">iterable</span> <span class="o">&gt;&gt;</span> <span class="p">(</span><span class="n">if_nut</span> <span class="k">if</span> <span class="n">cond</span> <span class="k">else</span> <span class="n">else_nut</span><span class="p">)</span>
+
+
+<span class="nd">@nut_processor</span>
+<span class="k">def</span> <span class="nf">Drop</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    iterable &gt;&gt; Drop(n)</span>
+
+<span class="sd">    Drop first n elements in iterable.</span>
+
+<span class="sd">    &gt;&gt;&gt; [1, 2, 3, 4] &gt;&gt; Drop(2) &gt;&gt; Collect()</span>
+<span class="sd">    [3, 4]</span>
+
+
+<span class="sd">    :param iterable iterable: Any iterable</span>
+<span class="sd">    :param int n: Number of elements to drop</span>
+<span class="sd">    :return: Iterator without dropped elements</span>
+<span class="sd">    :rtype: iterator</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">it</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">iterable</span><span class="p">)</span>
+    <span class="n">it</span> <span class="o">&gt;&gt;</span> <span class="n">Take</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Consume</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">it</span>
+
+
+<span class="nd">@nut_processor</span>
+<span class="k">def</span> <span class="nf">Pick</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">p_n</span><span class="p">,</span> <span class="n">rand</span><span class="o">=</span><span class="n">rnd</span><span class="o">.</span><span class="n">Random</span><span class="p">()):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    iterable &gt;&gt; Pick(p_n)</span>
+
+<span class="sd">    Pick every p_n-th element from the iterable if p_n is an integer,</span>
+<span class="sd">    otherwise pick randomly with probability p_n.</span>
+
+<span class="sd">    &gt;&gt;&gt; [1, 2, 3, 4] &gt;&gt; Pick(0.0) &gt;&gt; Collect()</span>
+<span class="sd">    []</span>
+
+<span class="sd">    &gt;&gt;&gt; [1, 2, 3, 4] &gt;&gt; Pick(1.0) &gt;&gt; Collect()</span>
+<span class="sd">    [1, 2, 3, 4]</span>
+
+<span class="sd">    &gt;&gt;&gt; import random as rnd</span>
+<span class="sd">    &gt;&gt;&gt; Range(10) &gt;&gt; Pick(0.5, rnd.Random(0)) &gt;&gt; Collect()</span>
+<span class="sd">    [2, 3, 5, 7, 8]</span>
+
+<span class="sd">    &gt;&gt;&gt; [1, 2, 3, 4] &gt;&gt; Pick(2) &gt;&gt; Collect()</span>
+<span class="sd">    [1, 3]</span>
+
+<span class="sd">    :param iterable iterable: Any iterable</span>
+<span class="sd">    :param float|int p_n: Probability p in [0, 1] or</span>
+<span class="sd">        integer n for every n-th element</span>
+<span class="sd">    :param Random rand: Random number generator to be used.</span>
+<span class="sd">    :return: Iterator over picked elements.</span>
+<span class="sd">    :rtype: iterator</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">p_n</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">p_n</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;p_n must not be negative &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">p_n</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">itt</span><span class="o">.</span><span class="n">islice</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">p_n</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">p_n</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Probability must be in [0, 1]: &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">p_n</span><span class="p">))</span>
+    <span class="k">return</span> <span class="nb">iter</span><span class="p">(</span><span class="n">e</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">iterable</span> <span class="k">if</span> <span class="n">rand</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">p_n</span><span class="p">)</span>
+
+
+<span class="nd">@nut_processor</span>
+<span class="k">def</span> <span class="nf">GroupBy</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">keycol</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span> <span class="n">nokey</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    iterable &gt;&gt; GroupBy(keycol=lambda x: x, nokey=False)</span>
+
+<span class="sd">    Group elements of iterable based on a column value of the element or</span>
+<span class="sd">    the function value of keycol for the element.</span>
+<span class="sd">    Note that elements of iterable do not need to be sorted.</span>
+<span class="sd">    GroupBy will store all elements in memory!</span>
+<span class="sd">    If the iterable is sorted use GroupBySorted() instead.</span>
+
+<span class="sd">    &gt;&gt;&gt; [1, 2, 1, 1, 3] &gt;&gt; GroupBy() &gt;&gt; Collect()</span>
+<span class="sd">    [(1, [1, 1, 1]), (2, [2]), (3, [3])]</span>
+
+<span class="sd">    &gt;&gt;&gt; [1, 2, 1, 1, 3] &gt;&gt; GroupBy(nokey=True) &gt;&gt; Collect()</span>
+<span class="sd">    [[1, 1, 1], [2], [3]]</span>
+
+<span class="sd">    &gt;&gt;&gt; [&#39;--&#39;, &#39;+++&#39;, &#39;**&#39;] &gt;&gt; GroupBy(len) &gt;&gt; Collect()</span>
+<span class="sd">    [(2, [&#39;--&#39;, &#39;**&#39;]), (3, [&#39;+++&#39;])]</span>
+
+<span class="sd">    :param iterable iterable: Any iterable</span>
+<span class="sd">    :param int|function keycol: Column index or key function.</span>
+<span class="sd">    :param bool nokey: True: results will not contain keys for groups, only</span>
+<span class="sd">        the groups themselves.</span>
+<span class="sd">    :return: Iterator over groups.</span>
+<span class="sd">    :rtype: iterator</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">isfunc</span> <span class="o">=</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">keycol</span><span class="p">,</span> <span class="s1">&#39;__call__&#39;</span><span class="p">)</span>
+    <span class="n">groups</span> <span class="o">=</span> <span class="n">cl</span><span class="o">.</span><span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">iterable</span><span class="p">:</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="n">keycol</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="k">if</span> <span class="n">isfunc</span> <span class="k">else</span> <span class="n">e</span><span class="p">[</span><span class="n">keycol</span><span class="p">]</span>
+        <span class="n">groups</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">groups</span><span class="o">.</span><span class="n">itervalues</span><span class="p">()</span> <span class="k">if</span> <span class="n">nokey</span> <span class="k">else</span> <span class="n">groups</span><span class="o">.</span><span class="n">iteritems</span><span class="p">()</span>
+
+
+<span class="nd">@nut_processor</span>
+<span class="k">def</span> <span class="nf">GroupBySorted</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">keycol</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span> <span class="n">nokey</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    iterable &gt;&gt; GroupBySorted(prob, keycol=lambda x: x, nokey=False)</span>
+
+<span class="sd">    Group elements of iterable based on a column value of the element or</span>
+<span class="sd">    the function value of key_or_col for the element.</span>
+<span class="sd">    Iterable needs to be sorted according to keycol!</span>
+<span class="sd">    See https://docs.python.org/2/library/itertools.html#itertools.groupby</span>
+<span class="sd">    If iterable is not sorted use GroupBy but be aware that it stores all</span>
+<span class="sd">    elements of the iterable in memory!</span>
+
+<span class="sd">    &gt;&gt;&gt; @nut_sink</span>
+<span class="sd">    ... def ViewResult(iterable):</span>
+<span class="sd">    ...     return iterable &gt;&gt; Map(lambda (k, es): (k, list(es))) &gt;&gt; Collect()</span>
+
+<span class="sd">    &gt;&gt;&gt; [1,1, 1, 2, 3] &gt;&gt; GroupBySorted() &gt;&gt; ViewResult()</span>
+<span class="sd">    [(1, [1, 1, 1]), (2, [2]), (3, [3])]</span>
+
+<span class="sd">    &gt;&gt;&gt; [&#39;--&#39;, &#39;**&#39;, &#39;+++&#39;] &gt;&gt; GroupBySorted(len) &gt;&gt; ViewResult()</span>
+<span class="sd">    [(2, [&#39;--&#39;, &#39;**&#39;]), (3, [&#39;+++&#39;])]</span>
+
+<span class="sd">    :param iterable iterable: Any iterable</span>
+<span class="sd">    :param int|function keycol: Column index or key function.</span>
+<span class="sd">    :param bool nokey: True: results will not contain keys for groups, only</span>
+<span class="sd">        the groups themselves.</span>
+<span class="sd">    :return: Iterator over groups where values are iterators.</span>
+<span class="sd">    :rtype: iterator</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">isfunc</span> <span class="o">=</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">keycol</span><span class="p">,</span> <span class="s1">&#39;__call__&#39;</span><span class="p">)</span>
+    <span class="n">key</span> <span class="o">=</span> <span class="n">keycol</span> <span class="k">if</span> <span class="n">isfunc</span> <span class="k">else</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="n">keycol</span><span class="p">]</span>
+    <span class="n">groupiter</span> <span class="o">=</span> <span class="n">itt</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">itt</span><span class="o">.</span><span class="n">imap</span><span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span> <span class="n">v</span><span class="p">,</span> <span class="n">groupiter</span><span class="p">)</span> <span class="k">if</span> <span class="n">nokey</span> <span class="k">else</span> <span class="n">groupiter</span>
+
+
+<span class="nd">@nut_processor</span>
+<span class="k">def</span> <span class="nf">Shuffle</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">buffersize</span><span class="p">,</span> <span class="n">rand</span><span class="o">=</span><span class="n">rnd</span><span class="o">.</span><span class="n">Random</span><span class="p">()):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    iterable &gt;&gt; Shuffle(buffersize)</span>
+
+<span class="sd">    Perform (partial) random shuffle of the elements in the iterable.</span>
+<span class="sd">    Elements of the iterable are stored in a buffer of the given size</span>
+<span class="sd">    and shuffled within. If buffersize is smaller than the length of</span>
+<span class="sd">    the iterable the shuffle is therefore partial in the sense that the</span>
+<span class="sd">    &#39;window&#39; of the shuffle is limited to buffersize.</span>
+<span class="sd">    Note that for buffersize = 1 no shuffling occurs.</span>
+
+<span class="sd">    In the following example rand = rnd.Random(0) is used to create a fixed</span>
+<span class="sd">    shuffle. Usually, this is not what you want. Use the default</span>
+<span class="sd">    rand=rnd.Random() instead.</span>
+
+<span class="sd">    &gt;&gt;&gt; Range(10) &gt;&gt; Shuffle(5, rnd.Random(0)) &gt;&gt; Collect()</span>
+<span class="sd">    [1, 5, 3, 0, 6, 2, 8, 9, 7, 4]</span>
+
+<span class="sd">    &gt;&gt;&gt; Range(10) &gt;&gt; Shuffle(1, rnd.Random(0)) &gt;&gt; Collect()</span>
+<span class="sd">    [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]</span>
+
+<span class="sd">    :param iterable iterable: Any iterable</span>
+<span class="sd">    :param int buffersize: Number of elements stored in shuffle buffer.</span>
+<span class="sd">    :param random.Random rand: Random number generator.</span>
+<span class="sd">    :return: Iterator over shuffled elements</span>
+<span class="sd">    :rtype: iterator</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">iterable</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">iterable</span><span class="p">)</span>
+    <span class="n">buffer</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">itf</span><span class="o">.</span><span class="n">take</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">buffersize</span><span class="p">))</span>
+    <span class="n">rand</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">buffer</span><span class="p">)</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">buffer</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+    <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">iterable</span><span class="p">:</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="n">rand</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+        <span class="k">yield</span> <span class="n">buffer</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="n">buffer</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">e</span>
+    <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">buffer</span><span class="p">:</span>
+        <span class="k">yield</span> <span class="n">e</span>
+
+
+<span class="nd">@nut_processor</span>
+<span class="k">def</span> <span class="nf">MapCol</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">columns</span><span class="p">,</span> <span class="n">func</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    iterable &gt;&gt; MapCol(columns, func)</span>
+
+<span class="sd">    Apply given function to given columns of elements in iterable.</span>
+
+<span class="sd">    &gt;&gt;&gt; neg = lambda x: -x</span>
+<span class="sd">    &gt;&gt;&gt; [(1, 2), (3, 4)] &gt;&gt; MapCol(0, neg) &gt;&gt; Collect()</span>
+<span class="sd">    [(-1, 2), (-3, 4)]</span>
+
+<span class="sd">    &gt;&gt;&gt; [(1, 2), (3, 4)] &gt;&gt; MapCol(1, neg) &gt;&gt; Collect()</span>
+<span class="sd">    [(1, -2), (3, -4)]</span>
+
+<span class="sd">    &gt;&gt;&gt; [(1, 2), (3, 4)] &gt;&gt; MapCol((0, 1), neg) &gt;&gt; Collect()</span>
+<span class="sd">    [(-1, -2), (-3, -4)]</span>
+
+<span class="sd">    :param iterable of iterables iterable: Any iterable that contains iterables</span>
+<span class="sd">    :param int|tuple of ints columns: Column index or tuple of indexes</span>
+<span class="sd">    :param function func: Function to apply to elements</span>
+<span class="sd">    :return: Iterator over lists</span>
+<span class="sd">    :rtype: iterator of list</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">colset</span> <span class="o">=</span> <span class="p">{</span><span class="n">columns</span><span class="p">}</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">columns</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span> <span class="k">else</span> <span class="nb">set</span><span class="p">(</span><span class="n">columns</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">es</span> <span class="ow">in</span> <span class="n">iterable</span><span class="p">:</span>
+        <span class="k">yield</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">func</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="k">if</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">colset</span> <span class="k">else</span> <span class="n">e</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">e</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">es</span><span class="p">))</span>
+
+
+<span class="nd">@nut_processor</span>
+<span class="k">def</span> <span class="nf">MapMulti</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="o">*</span><span class="n">funcs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    iterable &gt;&gt; MapMulti(*funcs)</span>
+
+<span class="sd">    Map multiple functions on iterable. For each function a separate iterable</span>
+<span class="sd">    is returned. Can consume large amounts of memory when iterables are</span>
+<span class="sd">    processed sequentially!</span>
+
+<span class="sd">    &gt;&gt;&gt; nums, twos, greater2 = [1, 2, 3] &gt;&gt; MapMulti(_, _ * 2, _ &gt; 2)</span>
+<span class="sd">    &gt;&gt;&gt; nums &gt;&gt; Collect()</span>
+<span class="sd">    [1, 2, 3]</span>
+<span class="sd">    &gt;&gt;&gt; twos &gt;&gt; Collect()</span>
+<span class="sd">    [2, 4, 6]</span>
+<span class="sd">    &gt;&gt;&gt; greater2 &gt;&gt; Collect()</span>
+<span class="sd">    [False, False, True]</span>
+
+<span class="sd">    :param iterable iterable: Any iterable</span>
+<span class="sd">    :param functions funcs: Functions to map</span>
+<span class="sd">    :return: Iterators for each function</span>
+<span class="sd">    :rtype: (iterator, ...)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">tees</span> <span class="o">=</span> <span class="n">itt</span><span class="o">.</span><span class="n">tee</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">funcs</span><span class="p">))</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">itt</span><span class="o">.</span><span class="n">imap</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span> <span class="k">for</span> <span class="n">f</span><span class="p">,</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">funcs</span><span class="p">,</span> <span class="n">tees</span><span class="p">)]</span>
+
+
+<span class="c1"># Don&#39;t use @nut_processor here. Creating Pool is expensive!</span>
+<span class="c1"># ParMap is of limited use since &#39;func&#39; must be pickable many objects are not :(</span>
+<span class="c1"># pathos.multiprocesssing might be an alternative</span>
+<div class="viewcode-block" id="MapPar"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.processor.MapPar">[docs]</a><span class="k">class</span> <span class="nc">MapPar</span><span class="p">(</span><span class="n">Nut</span><span class="p">):</span>
+<div class="viewcode-block" id="MapPar.__init__"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.processor.MapPar.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">,</span> <span class="n">chunksize</span><span class="o">=</span><span class="n">mp</span><span class="o">.</span><span class="n">cpu_count</span><span class="p">()):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        iterable &gt;&gt; MapPar(func, chunksize=mp.cpu_count())</span>
+
+<span class="sd">        Map function in parallel. Order of iterable is preserved.</span>
+<span class="sd">        Note that ParMap is of limited use since &#39;func&#39; must be pickable</span>
+<span class="sd">        and only top level functions (not class methods) are pickable. See</span>
+<span class="sd">        https://docs.python.org/2/library/pickle.html</span>
+
+<span class="sd">        &gt;&gt;&gt; from nutsflow import Collect</span>
+<span class="sd">        &gt;&gt;&gt; [-1, -2, -3] &gt;&gt; MapPar(abs) &gt;&gt; Collect()</span>
+<span class="sd">        [1, 2, 3]</span>
+
+<span class="sd">        :param iterable iterable: Any iterable</span>
+<span class="sd">        :param function func: Function to map</span>
+<span class="sd">        :param int chunksize: Number of parallel processes to use for mapping.</span>
+<span class="sd">        :return: Iterator over mapped elements</span>
+<span class="sd">        :rtype: iterator</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pool</span> <span class="o">=</span> <span class="n">mp</span><span class="o">.</span><span class="n">Pool</span><span class="p">(</span><span class="n">processes</span><span class="o">=</span><span class="n">mp</span><span class="o">.</span><span class="n">cpu_count</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">func</span> <span class="o">=</span> <span class="n">func</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">chunksize</span> <span class="o">=</span> <span class="n">chunksize</span></div>
+
+<div class="viewcode-block" id="MapPar.__rrshift__"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.processor.MapPar.__rrshift__">[docs]</a>    <span class="k">def</span> <span class="nf">__rrshift__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">iterable</span><span class="p">):</span>
+        <span class="n">it</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">iterable</span><span class="p">)</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">while</span> <span class="n">results</span><span class="p">:</span>
+            <span class="n">sliced</span> <span class="o">=</span> <span class="n">itt</span><span class="o">.</span><span class="n">islice</span><span class="p">(</span><span class="n">it</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">chunksize</span><span class="p">)</span>
+            <span class="n">results</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pool</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">func</span><span class="p">,</span> <span class="n">sliced</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
+                <span class="k">yield</span> <span class="n">r</span></div></div>
+
+
+<div class="viewcode-block" id="Cache"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.processor.Cache">[docs]</a><span class="k">class</span> <span class="nc">Cache</span><span class="p">(</span><span class="n">Nut</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A very naive implementation of a disk cache. Pickles elements of iterable</span>
+<span class="sd">    to file system and loads them the next time instead of recomputing.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Cache.__init__"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.processor.Cache.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">storage</span><span class="o">=</span><span class="s1">&#39;disk&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        iterable &gt;&gt; Cache()</span>
+
+<span class="sd">        Cache elements of iterable to disk. Only worth it if elements of</span>
+<span class="sd">        iterable are time-consuming to produce and can be loaded faster</span>
+<span class="sd">        from disk.</span>
+
+<span class="sd">        .. code:: python</span>
+
+<span class="sd">            with Cache() as cache:</span>
+<span class="sd">                data = xrange(100)</span>
+<span class="sd">                for i in xrange(10):</span>
+<span class="sd">                    data &gt;&gt; expensive_op &gt;&gt; cache &gt;&gt; process(i) &gt;&gt; Consume()</span>
+
+
+<span class="sd">         .. code:: python</span>
+
+<span class="sd">            cache = Cache()</span>
+<span class="sd">                for _ in xrange(100)</span>
+<span class="sd">                    data &gt;&gt; expensive_op &gt;&gt; cache &gt;&gt; Collect()</span>
+<span class="sd">                cache.clear()</span>
+
+<span class="sd">        :param iterable iterable: Any iterable</span>
+<span class="sd">        :param string storage: Currently only &#39;disk&#39; mode.</span>
+<span class="sd">        :return: Iterator over elements</span>
+<span class="sd">        :rtype: iterator</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dirpath</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">storage</span> <span class="o">=</span> <span class="n">storage</span>  <span class="c1"># currently not used. Could be &#39;disk&#39;, &#39;memory&#39;</span>
+        <span class="k">if</span> <span class="n">storage</span> <span class="o">!=</span> <span class="s1">&#39;disk&#39;</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Unsupported storage: &#39;</span> <span class="o">+</span> <span class="n">storage</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Cache.clear"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.processor.Cache.clear">[docs]</a>    <span class="k">def</span> <span class="nf">clear</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Clear cache&quot;&quot;&quot;</span>
+        <span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dirpath</span><span class="p">,</span> <span class="n">ignore_errors</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dirpath</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+    <span class="k">def</span> <span class="nf">_fpath</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return filepath for object to cache for the given index.</span>
+<span class="sd">        :param int idx: Index of object in iterable</span>
+<span class="sd">        :return: Filepath to pickle file</span>
+<span class="sd">        :rtype: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">fname</span> <span class="o">=</span> <span class="s1">&#39;cache_</span><span class="si">{0:010d}</span><span class="s1">.pkl&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span>
+        <span class="n">fpath</span> <span class="o">=</span> <span class="n">osp</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dirpath</span><span class="p">,</span> <span class="n">fname</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">fpath</span>
+
+    <span class="k">def</span> <span class="nf">_cache_fpaths</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return sorted list of filepaths of cached objects.</span>
+
+<span class="sd">        :return: Filepaths to pickle files.</span>
+<span class="sd">        :rtype: list of strings</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dirpath</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dirpath</span>
+        <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">osp</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dirpath</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">dirpath</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Context manager API to support &#39;with&#39; statement.</span>
+
+<span class="sd">        :return: Cache itself.</span>
+<span class="sd">        :rtype: Cache</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span>
+
+    <span class="k">def</span> <span class="nf">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Context manager API. Clears the cache when exiting &#39;with&#39; statement.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+
+<div class="viewcode-block" id="Cache.__rrshift__"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.processor.Cache.__rrshift__">[docs]</a>    <span class="k">def</span> <span class="nf">__rrshift__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">iterable</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return elements in iterable.</span>
+
+<span class="sd">        :param iterable iterable: Any iterable</span>
+<span class="sd">        :return: Iterable over same elements as input iterable.</span>
+<span class="sd">        :rtype: iterable</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dirpath</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">fpath</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cache_fpaths</span><span class="p">():</span>
+                <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">fpath</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                    <span class="k">yield</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_dirpath</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">mkdtemp</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">e</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">iterable</span><span class="p">):</span>
+                <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_fpath</span><span class="p">(</span><span class="n">i</span><span class="p">),</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                    <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">pickle</span><span class="o">.</span><span class="n">HIGHEST_PROTOCOL</span><span class="p">)</span>
+                <span class="k">yield</span> <span class="n">e</span></div></div>
+
+
+<span class="nd">@nut_processor</span>
+<span class="k">def</span> <span class="nf">Prefetch</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">num_prefetch</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    iterable &gt;&gt; Prefetch(num_prefetch=1)</span>
+
+<span class="sd">    Prefetch elements from iterable.</span>
+<span class="sd">    Typically used to keep the CPU busy while the GPU is crunching.</span>
+
+<span class="sd">    &gt;&gt;&gt; it = iter([1, 2, 3, 4])</span>
+<span class="sd">    &gt;&gt;&gt; it &gt;&gt; Prefetch() &gt;&gt; Take(1) &gt;&gt; Collect()</span>
+<span class="sd">    [1]</span>
+<span class="sd">    &gt;&gt;&gt; next(it)</span>
+<span class="sd">    3</span>
+
+<span class="sd">    :param iterable iterable: Any iterable</span>
+<span class="sd">    :param int num_prefetch: Number of elements to prefetch.</span>
+<span class="sd">    :return: Iterator over input elements</span>
+<span class="sd">    :rtype: iterator</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">itf</span><span class="o">.</span><span class="n">PrefetchIterator</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">num_prefetch</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="PrintProgress"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.processor.PrintProgress">[docs]</a><span class="k">class</span> <span class="nc">PrintProgress</span><span class="p">(</span><span class="n">Nut</span><span class="p">):</span>
+<div class="viewcode-block" id="PrintProgress.__init__"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.processor.PrintProgress.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">update</span><span class="o">=</span><span class="mf">10.0</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        iterable &gt;&gt; PrintProgress(data, update=10.0)</span>
+
+<span class="sd">        Print progress on iterable. Requires that length of iterable is known</span>
+<span class="sd">        beforehand. Data are just passed through.</span>
+<span class="sd">        For long running computations and Estimated time of arrival (eta) is</span>
+<span class="sd">        printed as well</span>
+
+<span class="sd">        xrange(10) &gt;&gt; PrintProgress(10, 0) &gt;&gt; Consume()</span>
+
+<span class="sd">        :param iterable iterable: Any iterable</span>
+<span class="sd">        :param int data: Number of elements in iterable or realized iterable.</span>
+<span class="sd">               If data is provided it must not be an iterator since it will be</span>
+<span class="sd">               consumed!</span>
+<span class="sd">        :param float update: Progress is printed every &#39;update&#39; seconds.</span>
+<span class="sd">        :return: Iterator over input elements</span>
+<span class="sd">        :rtype: iterator</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n</span> <span class="o">=</span> <span class="p">(</span><span class="n">data</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span> <span class="k">else</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">))</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update</span> <span class="o">=</span> <span class="n">update</span></div>
+
+<div class="viewcode-block" id="PrintProgress.__rrshift__"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.processor.PrintProgress.__rrshift__">[docs]</a>    <span class="k">def</span> <span class="nf">__rrshift__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">iterable</span><span class="p">):</span>
+        <span class="n">etafmt</span> <span class="o">=</span> <span class="s1">&#39;(eta: </span><span class="si">{:d}</span><span class="s1">:</span><span class="si">{:02d}</span><span class="s1">:</span><span class="si">{:02d}</span><span class="s1">)&#39;</span>
+        <span class="n">endfmt</span> <span class="o">=</span> <span class="s1">&#39;(took: </span><span class="si">{:d}</span><span class="s1">:</span><span class="si">{:02d}</span><span class="s1">:</span><span class="si">{:02d}</span><span class="s1">)&#39;</span>
+        <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">clock</span><span class="p">()</span>
+        <span class="n">up_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">clock</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">e</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">iterable</span><span class="p">):</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">clock</span><span class="p">()</span> <span class="o">-</span> <span class="n">up_time</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">:</span>
+                <span class="n">up_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">clock</span><span class="p">()</span>
+                <span class="n">per_done</span> <span class="o">=</span> <span class="mi">100</span> <span class="o">*</span> <span class="n">i</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">n</span>
+                <span class="n">sec_consumed</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">clock</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span><span class="p">)</span>
+                <span class="n">eta</span> <span class="o">=</span> <span class="n">sec_consumed</span> <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="k">if</span> <span class="n">i</span> <span class="k">else</span> <span class="mi">0</span>
+                <span class="nb">print</span> <span class="s1">&#39;</span><span class="se">\r</span><span class="s1">progress: </span><span class="si">%d%%</span><span class="s1"> </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">per_done</span><span class="p">,</span> <span class="n">timestr</span><span class="p">(</span><span class="n">eta</span><span class="p">,</span> <span class="n">etafmt</span><span class="p">)),</span>
+            <span class="k">yield</span> <span class="n">e</span>
+        <span class="n">duration</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">clock</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span><span class="p">)</span>
+        <span class="nb">print</span> <span class="s1">&#39;</span><span class="se">\r</span><span class="s1">progress: 100</span><span class="si">%%</span><span class="s1"> </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">timestr</span><span class="p">(</span><span class="n">duration</span><span class="p">,</span> <span class="n">endfmt</span><span class="p">)</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, IBM.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

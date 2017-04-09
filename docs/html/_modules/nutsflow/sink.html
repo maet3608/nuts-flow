@@ -1,0 +1,521 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>nutsflow.sink &#8212; nutsflow 1.0.6 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.0.6',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for nutsflow.sink</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">.. module:: sink</span>
+<span class="sd">   :synopsis: Nuts that reads streams and potentially produce non-stream output.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">csv</span>
+
+<span class="kn">import</span> <span class="nn">itertools</span> <span class="k">as</span> <span class="nn">itt</span>
+<span class="kn">import</span> <span class="nn">collections</span> <span class="k">as</span> <span class="nn">cl</span>
+
+<span class="kn">from</span> <span class="nn">base</span> <span class="k">import</span> <span class="n">NutSink</span>
+<span class="kn">from</span> <span class="nn">factory</span> <span class="k">import</span> <span class="n">nut_sink</span>
+<span class="kn">from</span> <span class="nn">common</span> <span class="k">import</span> <span class="n">as_tuple</span>
+<span class="kn">from</span> <span class="nn">iterfunction</span> <span class="k">import</span> <span class="n">nth</span><span class="p">,</span> <span class="n">consume</span><span class="p">,</span> <span class="n">length</span><span class="p">,</span> <span class="n">take</span>
+
+<span class="n">Sum</span> <span class="o">=</span> <span class="n">nut_sink</span><span class="p">(</span><span class="nb">sum</span><span class="p">)</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">iterable &gt;&gt; Sum()</span>
+
+<span class="sd">Return sum over inputs.</span>
+
+<span class="sd">&gt;&gt;&gt; [1, 2, 3] &gt;&gt; Sum()</span>
+<span class="sd">6</span>
+
+<span class="sd">:param iterable iterable: Iterable over numbers</span>
+<span class="sd">:return: Sum of numbers</span>
+<span class="sd">:rtype: number</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="nd">@nut_sink</span>
+<span class="k">def</span> <span class="nf">Max</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    iterable &gt;&gt; Max(key=func, default=None)</span>
+
+<span class="sd">    Return maximum of inputs.</span>
+
+<span class="sd">    &gt;&gt;&gt; [1, 2, 3, 2] &gt;&gt; Max()</span>
+<span class="sd">    3</span>
+
+<span class="sd">    &gt;&gt;&gt; [&#39;1&#39;, &#39;123&#39;, &#39;12&#39;] &gt;&gt; Max(key=len)</span>
+<span class="sd">    &#39;123&#39;</span>
+
+<span class="sd">    &gt;&gt;&gt; [] &gt;&gt; Max(default=0)</span>
+<span class="sd">    0</span>
+
+<span class="sd">    :param iterable iterable: Iterable over numbers</span>
+<span class="sd">    :param func key: Function maximum is based on</span>
+<span class="sd">    :param object default: Value returned if iterable is empty.</span>
+<span class="sd">    :return: largest element according to key function</span>
+<span class="sd">    :rtype: object</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">max</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">key</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">default</span>
+
+
+<span class="nd">@nut_sink</span>
+<span class="k">def</span> <span class="nf">Min</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    iterable &gt;&gt; Max(key=func, default=None)</span>
+
+<span class="sd">    Return minimum of inputs.</span>
+
+<span class="sd">    &gt;&gt;&gt; [1, 2, 3, 2] &gt;&gt; Min()</span>
+<span class="sd">    1</span>
+
+<span class="sd">    &gt;&gt;&gt; [&#39;1&#39;, &#39;123&#39;, &#39;12&#39;] &gt;&gt; Min(key=len)</span>
+<span class="sd">    &#39;1&#39;</span>
+
+<span class="sd">    &gt;&gt;&gt; [] &gt;&gt; Min(default=0)</span>
+<span class="sd">    0</span>
+
+<span class="sd">    :param iterable iterable: Iterable over numbers</span>
+<span class="sd">    :param func key: Function minimum is based on</span>
+<span class="sd">    :param object default: Value returned if iterable is empty.</span>
+<span class="sd">    :return: smallest element according to key function</span>
+<span class="sd">    :rtype: object</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">min</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">key</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">default</span>
+
+
+<span class="nd">@nut_sink</span>
+<span class="k">def</span> <span class="nf">ArgMax</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">retvalue</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    iterable &gt;&gt; ArgMax(key=func, default=None, retvalue=False)</span>
+
+<span class="sd">    Return index of first maximum element (and maximum) in input.</span>
+
+<span class="sd">    &gt;&gt;&gt; [1, 2, 0, 2] &gt;&gt; ArgMax()</span>
+<span class="sd">    1</span>
+
+<span class="sd">    &gt;&gt;&gt; [&#39;12&#39;, &#39;1&#39;, &#39;123&#39;] &gt;&gt; ArgMax(key=len, retvalue=True)</span>
+<span class="sd">    (2, &#39;123&#39;)</span>
+
+<span class="sd">    &gt;&gt;&gt; [&#39;12&#39;, &#39;1&#39;, &#39;123&#39;] &gt;&gt; ArgMax(key=len)</span>
+<span class="sd">    2</span>
+
+<span class="sd">    &gt;&gt;&gt; [] &gt;&gt; ArgMax(default=0)</span>
+<span class="sd">    0</span>
+
+<span class="sd">    &gt;&gt;&gt; [] &gt;&gt; ArgMax(default=(None, 0), retvalue=True)</span>
+<span class="sd">    (None, 0)</span>
+
+<span class="sd">    :param iterable iterable: Iterable over numbers</span>
+<span class="sd">    :param func key: Function maximum is based on</span>
+<span class="sd">    :param object default: Value returned if iterable is empty.</span>
+<span class="sd">    :param bool retvalue: If True the index and the value of the</span>
+<span class="sd">           maximum element is returned.</span>
+<span class="sd">    :return: index of largest element according to key function</span>
+<span class="sd">             and the largest element itself if retvalue==True</span>
+<span class="sd">    :rtype: object | tuple</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">i</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">enumerate</span><span class="p">(</span><span class="n">iterable</span><span class="p">),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">e</span><span class="p">):</span> <span class="n">key</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="k">if</span> <span class="n">retvalue</span> <span class="k">else</span> <span class="n">i</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">default</span>
+
+
+<span class="nd">@nut_sink</span>
+<span class="k">def</span> <span class="nf">ArgMin</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">retvalue</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    iterable &gt;&gt; ArgMin(key=func, default=None, retvalue=True)</span>
+
+<span class="sd">    Return index of first minimum element (and minimum) in input.</span>
+
+<span class="sd">    &gt;&gt;&gt; [1, 2, 0, 2] &gt;&gt; ArgMin()</span>
+<span class="sd">    2</span>
+
+<span class="sd">    &gt;&gt;&gt; [&#39;12&#39;, &#39;1&#39;, &#39;123&#39;] &gt;&gt; ArgMin(key=len, retvalue=True)</span>
+<span class="sd">    (1, &#39;1&#39;)</span>
+
+<span class="sd">    &gt;&gt;&gt; [&#39;12&#39;, &#39;1&#39;, &#39;123&#39;] &gt;&gt; ArgMin(key=len)</span>
+<span class="sd">    1</span>
+
+<span class="sd">    &gt;&gt;&gt; [] &gt;&gt; ArgMin(default=0)</span>
+<span class="sd">    0</span>
+
+<span class="sd">    &gt;&gt;&gt; [] &gt;&gt; ArgMin(default=(None, 0), retvalue=True)</span>
+<span class="sd">    (None, 0)</span>
+
+<span class="sd">    :param iterable iterable: Iterable over numbers</span>
+<span class="sd">    :param func key: Function minimum is based on</span>
+<span class="sd">    :param object default: Value returned if iterable is empty.</span>
+<span class="sd">    :param bool retvalue: If True the index and the value of the</span>
+<span class="sd">           minimum element is returned.</span>
+<span class="sd">    :return: index of smallest element according to key function</span>
+<span class="sd">             and the smallest element itself if retvalue==True.</span>
+<span class="sd">    :rtype: object | tuple</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">i</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="nb">enumerate</span><span class="p">(</span><span class="n">iterable</span><span class="p">),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">e</span><span class="p">):</span> <span class="n">key</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="k">if</span> <span class="n">retvalue</span> <span class="k">else</span> <span class="n">i</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">default</span>
+
+
+<span class="n">Reduce</span> <span class="o">=</span> <span class="n">nut_sink</span><span class="p">(</span><span class="n">reduce</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">iterable &gt;&gt; Reduce(func [,initiaizer])</span>
+
+<span class="sd">Reduces the iterable using the given function.</span>
+<span class="sd">See https://docs.python.org/2/library/functions.html#reduce</span>
+
+<span class="sd">&gt;&gt;&gt; [1, 2, 3] &gt;&gt; Reduce(lambda a,b: a+b)</span>
+<span class="sd">6</span>
+
+<span class="sd">&gt;&gt;&gt; [2] &gt;&gt; Reduce(lambda a,b: a*b, 1)</span>
+<span class="sd">2</span>
+
+<span class="sd">:param iterable iterable: Any iterable</span>
+<span class="sd">:param function func: Reduction function</span>
+<span class="sd">:return: Result of reduction</span>
+<span class="sd">:rtype: any</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="n">Nth</span> <span class="o">=</span> <span class="n">nut_sink</span><span class="p">(</span><span class="n">nth</span><span class="p">)</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">iterable &gt;&gt; Nth(nth)</span>
+
+<span class="sd">Return n-th element of iterable. This consumes the iterable!</span>
+
+<span class="sd">&gt;&gt;&gt; &#39;test&#39; &gt;&gt; Nth(2)</span>
+<span class="sd">s</span>
+
+<span class="sd">:param iterable iterable: Any iterable</span>
+<span class="sd">:param int nth: Index of element in iterable to return</span>
+<span class="sd">:return: n-th element</span>
+<span class="sd">:rtype: any</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="n">Consume</span> <span class="o">=</span> <span class="n">nut_sink</span><span class="p">(</span><span class="n">consume</span><span class="p">)</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">iterable &gt;&gt; Consume(n=None)</span>
+
+<span class="sd">Consume n elements of the iterable.</span>
+
+<span class="sd">&gt;&gt;&gt; [1,2,3] &gt;&gt; Print() &gt;&gt; Consume()   # Without Consume nothing happens!</span>
+<span class="sd">1</span>
+<span class="sd">2</span>
+<span class="sd">3</span>
+
+<span class="sd">&gt;&gt;&gt; [1,2,3] &gt;&gt; Print() &gt;&gt; Consume(2)</span>
+<span class="sd">1</span>
+<span class="sd">2</span>
+
+<span class="sd">:param iterable iterable: Iterable</span>
+<span class="sd">:param int n: Number of elements to consume.</span>
+<span class="sd">              n = None means the whole iterable is consumed.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="n">Count</span> <span class="o">=</span> <span class="n">nut_sink</span><span class="p">(</span><span class="n">length</span><span class="p">)</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">iterable &gt;&gt; Count()</span>
+
+<span class="sd">Return number elements in input iterable.  This consumes the iterable!</span>
+
+<span class="sd">&gt;&gt;&gt; [0, 1, 2] &gt;&gt; Count()</span>
+<span class="sd">3</span>
+
+<span class="sd">:param iterable iterable: Any iterable</span>
+<span class="sd">:return: Number elements in interable</span>
+<span class="sd">:rtype: int</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="nd">@nut_sink</span>
+<span class="k">def</span> <span class="nf">Unzip</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">container</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    iterable &gt;&gt; Unzip(container=None)</span>
+
+<span class="sd">    Same as izip(*iterable) but returns iterators for container=None</span>
+
+<span class="sd">    &gt;&gt;&gt; [(1, 2, 3), (4, 5, 6)] &gt;&gt; Unzip(tuple) &gt;&gt; Collect()</span>
+<span class="sd">    [(1, 4), (2, 5), (3, 6)]</span>
+
+<span class="sd">    :param iterable iterable:  Any iterable, e.g. list, xrange, ...</span>
+<span class="sd">    :param container container: If not none, unzipped results are collected</span>
+<span class="sd">       in the provided container, eg. list, tuple, set</span>
+<span class="sd">    :return: Unzip iterable.</span>
+<span class="sd">    :rtype: iterator over iterators</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">unzipped</span> <span class="o">=</span> <span class="n">itt</span><span class="o">.</span><span class="n">izip</span><span class="p">(</span><span class="o">*</span><span class="n">iterable</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">itt</span><span class="o">.</span><span class="n">imap</span><span class="p">(</span><span class="n">container</span><span class="p">,</span> <span class="n">unzipped</span><span class="p">)</span> <span class="k">if</span> <span class="n">container</span> <span class="k">else</span> <span class="n">unzipped</span>
+
+
+<span class="nd">@nut_sink</span>
+<span class="k">def</span> <span class="nf">Head</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">container</span><span class="o">=</span><span class="nb">list</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    iterable &gt;&gt; Head(n, container=list)</span>
+
+<span class="sd">    Collect first n elements of iterable in specified container.</span>
+
+<span class="sd">    &gt;&gt;&gt; [1, 2, 3, 4] &gt;&gt; Head(2)</span>
+<span class="sd">    [1, 2]</span>
+
+<span class="sd">    :param iterable iterable: Any iterable, e.g. list, xrange, ...</span>
+<span class="sd">    :param int n: Number of elements to take.</span>
+<span class="sd">    :param container container: Container to collect elements in, e.g. list, set</span>
+<span class="sd">    :return: Container with head elements</span>
+<span class="sd">    :rtype: container</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">container</span><span class="p">(</span><span class="n">take</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span>
+
+
+<span class="nd">@nut_sink</span>
+<span class="k">def</span> <span class="nf">Tail</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">container</span><span class="o">=</span><span class="nb">list</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    iterable &gt;&gt; Tail(n, container=list)</span>
+
+<span class="sd">    Collect last n elements of iterable in specified container. This consumes</span>
+<span class="sd">    the iterable completely!</span>
+
+<span class="sd">    &gt;&gt;&gt; [1, 2, 3, 4] &gt;&gt; Tail(2)</span>
+<span class="sd">    [1, 2]</span>
+
+<span class="sd">    :param iterable iterable: Any iterable, e.g. list, xrange, ...</span>
+<span class="sd">    :param int n: Number of elements to take.</span>
+<span class="sd">    :param container container: Container to collect elements in, e.g. list, set</span>
+<span class="sd">    :return: Container with tail elements</span>
+<span class="sd">    :rtype: container</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">container</span><span class="p">(</span><span class="n">cl</span><span class="o">.</span><span class="n">deque</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span>
+
+
+<span class="nd">@nut_sink</span>
+<span class="k">def</span> <span class="nf">CountValues</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">relative</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    iterable &gt;&gt; CountValues(relative=False)</span>
+
+<span class="sd">    Return dictionary with (relative) counts of the values</span>
+<span class="sd">    in the input iterable.</span>
+
+<span class="sd">    &gt;&gt;&gt; &#39;abaacc&#39; &gt;&gt; CountValues()</span>
+<span class="sd">    {&#39;a&#39;:3, &#39;b&#39;:1, &#39;c&#39;:2}</span>
+
+<span class="sd">    &gt;&gt;&gt; &#39;aabaab&#39; &gt;&gt; CountValues(True)</span>
+<span class="sd">    {&#39;a&#39;: 1.0, &#39;b&#39;: 0.5}</span>
+
+<span class="sd">    :param iterable iterable: Any iterable, e.g. list, xrange, ...</span>
+<span class="sd">    :param bool relative: True: return relative counts otherwise absolute counts</span>
+<span class="sd">    :return: Dictionary with (relative) counts for elements in iterable.</span>
+<span class="sd">    :rtype: dict</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">cnts</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">cl</span><span class="o">.</span><span class="n">Counter</span><span class="p">(</span><span class="n">iterable</span><span class="p">))</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">relative</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">cnts</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+        <span class="k">return</span> <span class="n">cnts</span>
+    <span class="n">max_cnt</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">cnts</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">max_cnt</span><span class="p">)</span> <span class="k">if</span> <span class="n">max_cnt</span> <span class="k">else</span> <span class="mf">1.0</span>
+    <span class="k">return</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="o">/</span> <span class="n">n</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">cnts</span><span class="o">.</span><span class="n">iteritems</span><span class="p">()}</span>
+
+
+<span class="nd">@nut_sink</span>
+<span class="k">def</span> <span class="nf">Collect</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">container</span><span class="o">=</span><span class="nb">list</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    iterable &gt;&gt; Collect(container)</span>
+
+<span class="sd">    Collects all elements of the iterable input in the given container.</span>
+
+<span class="sd">    &gt;&gt;&gt; xrange(5) &gt;&gt; Collect()</span>
+<span class="sd">    [0, 1, 2, 3, 4]</span>
+
+<span class="sd">    &gt;&gt;&gt; [1, 2, 3, 2] &gt;&gt; Collect(set)</span>
+<span class="sd">    set([1, 2, 3])</span>
+
+<span class="sd">    &gt;&gt;&gt; [(&#39;one&#39;, 1), (&#39;two&#39;, 2)] &gt;&gt; Collect(dict)</span>
+<span class="sd">    {&#39;two&#39;: 2, &#39;one&#39;: 1}</span>
+
+<span class="sd">    :param iterable iterable: Any iterable, e.g. list, xrange, ...</span>
+<span class="sd">    :param container container: Some container, e.g. list, set, dict</span>
+<span class="sd">           that can be filled from an iterable</span>
+<span class="sd">    :return: Container</span>
+<span class="sd">    :rtype: container</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">container</span><span class="p">(</span><span class="n">iterable</span><span class="p">)</span>
+
+
+<span class="nd">@nut_sink</span>
+<span class="k">def</span> <span class="nf">Join</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">separator</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    iterable &gt;&gt; Join(separator=&#39;&#39;)</span>
+
+<span class="sd">    Same as Python&#39;s sep.join(iterable). Concatenates the elements in</span>
+<span class="sd">    the iterable to a string using the given separator. In addition to</span>
+<span class="sd">    Python&#39;s sep.join(iterable) it also automatically converts elements</span>
+<span class="sd">    to strings.</span>
+
+<span class="sd">    :param iterable iterable: Any iterable</span>
+<span class="sd">    :param string separator: Seperator string between elements.</span>
+<span class="sd">    :return: String of with concatenated elements of iterable.</span>
+<span class="sd">    :rtype: str</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">separator</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">itt</span><span class="o">.</span><span class="n">imap</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">iterable</span><span class="p">))</span>
+
+
+<div class="viewcode-block" id="WriteCSV"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.sink.WriteCSV">[docs]</a><span class="k">class</span> <span class="nc">WriteCSV</span><span class="p">(</span><span class="n">NutSink</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Write data to a CSV file using Python&#39;s CSV writer.</span>
+<span class="sd">    See: https://docs.python.org/2/library/csv.html</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="WriteCSV.__init__"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.sink.WriteCSV.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filepath</span><span class="p">,</span> <span class="n">cols</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">skipheader</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                 <span class="n">fmtfunc</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        WriteCSV(filepath, cols, skipheader, fmtfunc, **kwargs)</span>
+
+<span class="sd">        Write data in Comma Separated Values format (CSV) and other formats</span>
+<span class="sd">        to file. Tab Separated Values (TSV) files can be written by</span>
+<span class="sd">        specifying a different delimiter. Note that in the docstring below</span>
+<span class="sd">        delimiter is &#39;\\t&#39; but in code it should be &#39;\t&#39;. See unit tests.</span>
+
+<span class="sd">        Also see https://docs.python.org/2/library/csv.html</span>
+<span class="sd">        and ReadCSV.</span>
+
+
+<span class="sd">        &gt;&gt;&gt; import os</span>
+<span class="sd">        &gt;&gt;&gt; filepath = &#39;tests/data/temp_out.csv&#39;</span>
+<span class="sd">        &gt;&gt;&gt; with WriteCSV(filepath) as writer:</span>
+<span class="sd">        ...     xrange(10) &gt;&gt; writer</span>
+<span class="sd">        &gt;&gt;&gt; os.remove(filepath)</span>
+
+<span class="sd">        &gt;&gt;&gt; with WriteCSV(filepath, cols=(1,0)) as writer:</span>
+<span class="sd">        ...     [(1,2), (3,4)] &gt;&gt; writer</span>
+<span class="sd">        &gt;&gt;&gt; os.remove(filepath)</span>
+
+<span class="sd">        &gt;&gt;&gt; filepath = &#39;tests/data/temp_out.tsv&#39;</span>
+<span class="sd">        &gt;&gt;&gt; with WriteCSV(filepath, delimiter=&#39;\\t&#39;) as writer:</span>
+<span class="sd">        ...     [[1,2], [3,4]] &gt;&gt; writer</span>
+<span class="sd">        &gt;&gt;&gt; os.remove(filepath)</span>
+
+
+<span class="sd">        :param string filepath: Path to file in CSV format.</span>
+<span class="sd">        :param tuple cols: Indices of the columns to write.</span>
+<span class="sd">                           If None all columns are written.</span>
+<span class="sd">        :param int skipheader: Number of header rows to skip.</span>
+<span class="sd">        :param function fmtfunc: Function to apply to the elements of each row.</span>
+<span class="sd">        :param kwargs kwargs: Keyword arguments for Python&#39;s CSV writer.</span>
+<span class="sd">                              See https://docs.python.org/2/library/csv.html</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">csvfile</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">cols</span> <span class="k">if</span> <span class="n">cols</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">as_tuple</span><span class="p">(</span><span class="n">cols</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fmtfunc</span> <span class="o">=</span> <span class="n">fmtfunc</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">skipheader</span> <span class="o">=</span> <span class="n">skipheader</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">writer</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">writer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">csvfile</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="WriteCSV.close"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.sink.WriteCSV.close">[docs]</a>    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Close writer&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">csvfile</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">writer</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+    <span class="k">def</span> <span class="nf">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Implementation of context manager API&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span>
+
+    <span class="k">def</span> <span class="nf">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Implementation of context manager API&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<div class="viewcode-block" id="WriteCSV.__rrshift__"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.sink.WriteCSV.__rrshift__">[docs]</a>    <span class="k">def</span> <span class="nf">__rrshift__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">iterable</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Write elements of iterable to file&quot;&quot;&quot;</span>
+        <span class="n">cols</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">columns</span>
+        <span class="n">iterable</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">iterable</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">xrange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">skipheader</span><span class="p">):</span>
+            <span class="nb">next</span><span class="p">(</span><span class="n">iterable</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">iterable</span><span class="p">:</span>
+            <span class="n">row</span> <span class="o">=</span> <span class="n">row</span> <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="s1">&#39;__iter__&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="p">[</span><span class="n">row</span><span class="p">]</span>
+            <span class="n">row</span> <span class="o">=</span> <span class="p">[</span><span class="n">row</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">cols</span><span class="p">]</span> <span class="k">if</span> <span class="n">cols</span> <span class="k">else</span> <span class="n">row</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fmtfunc</span><span class="p">,</span> <span class="n">row</span><span class="p">))</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, IBM.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>
