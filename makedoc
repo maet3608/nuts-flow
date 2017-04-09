@@ -18,7 +18,7 @@ fi
 if [ $1 = "commit" ]
 then
   echo "committing ..."
-  # commit and push
+  # commit and push to master
   git add -A
   git commit -m "documentation updated"
   git push origin master
@@ -34,6 +34,10 @@ then
   # move docs to root and delete docs
   mv ./docs/html/* ./
   rm -rf ./docs
+  
+  # commit to gh-pages
+  git add -A
+  git commit -m "documentation updated"
   git checkout master
 fi
 
@@ -42,10 +46,7 @@ if [ $1 = "push" ]
 then
   echo "pushing ..."
   # push updated gh-pages
-  git add -A
-  git commit -m "documentation updated"
   git push origin gh-pages
-  
   # switch back to master
   git checkout master
 fi
