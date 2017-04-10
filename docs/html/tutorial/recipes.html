@@ -61,18 +61,19 @@ file contains Arabic numbers and their Roman counterparts.</p>
 </pre></div>
 </div>
 <p>We create a Python dictionary that maps Arabic to Roman numbers by
-loading the CSV file, skipping the header line, converting Arabic numbers
+loading the CSV file, dropping the header line, converting Arabic numbers
 (that are loaded as strings) to integers and collecting the results in
 a dictionary</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">fpath</span> <span class="o">=</span> <span class="s1">&#39;tests/data/arab2num.csv&#39;</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">arab2roman</span> <span class="o">=</span> <span class="n">ReadCSV</span><span class="p">(</span><span class="n">fpath</span><span class="p">,</span> <span class="n">skipheader</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">MapCol</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">(</span><span class="nb">dict</span><span class="p">)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">arab2roman</span> <span class="o">=</span> <span class="n">ReadCSV</span><span class="p">(</span><span class="n">fpath</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Drop</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">MapCol</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">(</span><span class="nb">dict</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">arab2roman</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
 <span class="go">&#39;II&#39;</span>
 </pre></div>
 </div>
-<p>For the reversed mapping (Roman to Arabic), we just flip the columns via <code class="docutils literal"><span class="pre">GetCols</span></code></p>
+<p>For the reversed mapping (Roman to Arabic), we just flip the columns via <code class="docutils literal"><span class="pre">GetCols</span></code>
+and use <code class="docutils literal"><span class="pre">skipheader=1</span></code> to skip the header line</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">roman2arab</span> <span class="o">=</span> <span class="p">(</span><span class="n">ReadCSV</span><span class="p">(</span><span class="n">fpath</span><span class="p">,</span> <span class="n">skipheader</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">MapCol</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span> <span class="o">&gt;&gt;</span>
 <span class="gp">... </span><span class="n">GetCols</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">(</span><span class="nb">dict</span><span class="p">))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">roman2arab</span><span class="p">[</span><span class="s1">&#39;III&#39;</span><span class="p">]</span>

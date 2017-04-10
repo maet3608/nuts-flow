@@ -176,6 +176,26 @@ of the *absolute counts*
 
 
 
+Reduce
+^^^^^^
+
+``Reduce(func [,initiaizer])`` reduces a flow of data elements to a 
+single element, using a given function. ``Reduce`` is a thin wrapper around 
+Python's `reduce <https://docs.python.org/2/library/functions.html#reduce>`_
+function.
+
+The following example compute the product of numbers
+
+  >>> [1, 2, 3] >> Reduce(lambda a, b: a * b)
+  6
+
+``Reduce`` can be called with an initalizer, which specifies the first
+element used in the reduction
+
+  >>> ['one', 'two'] >> Reduce(lambda a, b: a + b, 'start')
+
+
+
 Consume
 ^^^^^^^
 

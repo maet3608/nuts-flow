@@ -215,6 +215,23 @@ of the <em>absolute counts</em></p>
 </pre></div>
 </div>
 </div>
+<div class="section" id="reduce">
+<h3>Reduce<a class="headerlink" href="#reduce" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal"><span class="pre">Reduce(func</span> <span class="pre">[,initiaizer])</span></code> reduces a flow of data elements to a
+single element, using a given function. <code class="docutils literal"><span class="pre">Reduce</span></code> is a thin wrapper around
+Python&#8217;s <a class="reference external" href="https://docs.python.org/2/library/functions.html#reduce">reduce</a>
+function.</p>
+<p>The following example compute the product of numbers</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">Reduce</span><span class="p">(</span><span class="k">lambda</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="n">a</span> <span class="o">*</span> <span class="n">b</span><span class="p">)</span>
+<span class="go">6</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">Reduce</span></code> can be called with an initalizer, which specifies the first
+element used in the reduction</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="s1">&#39;one&#39;</span><span class="p">,</span> <span class="s1">&#39;two&#39;</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">Reduce</span><span class="p">(</span><span class="k">lambda</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">,</span> <span class="s1">&#39;start&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
 <div class="section" id="consume">
 <h3>Consume<a class="headerlink" href="#consume" title="Permalink to this headline">¶</a></h3>
 <p>If a data flow has side effects (e.g. printing, writing to a file)
@@ -326,6 +343,7 @@ See <a class="reference external" href="https://docs.python.org/2/library/csv.ht
 <li><a class="reference internal" href="#head-and-tail">Head and Tail</a></li>
 <li><a class="reference internal" href="#common-nuts">Common nuts</a></li>
 <li><a class="reference internal" href="#count-and-countvalues">Count and CountValues</a></li>
+<li><a class="reference internal" href="#reduce">Reduce</a></li>
 <li><a class="reference internal" href="#consume">Consume</a></li>
 <li><a class="reference internal" href="#writecsv">WriteCSV</a></li>
 </ul>
