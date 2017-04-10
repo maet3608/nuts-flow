@@ -193,7 +193,7 @@ The following example computes the product of a list of numbers
 element used in the reduction
 
   >>> ['one', 'two'] >> Reduce(lambda a, b: a + b, 'start')
-
+  'startonetwo'
 
 
 Consume
