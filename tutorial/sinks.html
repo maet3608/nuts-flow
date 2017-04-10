@@ -221,7 +221,7 @@ of the <em>absolute counts</em></p>
 single element, using a given function. <code class="docutils literal"><span class="pre">Reduce</span></code> is a thin wrapper around
 Python&#8217;s <a class="reference external" href="https://docs.python.org/2/library/functions.html#reduce">reduce</a>
 function.</p>
-<p>The following example compute the product of numbers</p>
+<p>The following example computes the product of a list of numbers</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">Reduce</span><span class="p">(</span><span class="k">lambda</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="n">a</span> <span class="o">*</span> <span class="n">b</span><span class="p">)</span>
 <span class="go">6</span>
 </pre></div>
