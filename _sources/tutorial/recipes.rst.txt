@@ -23,18 +23,19 @@ file contains Arabic numbers and their Roman counterparts.
   3,III
 
 We create a Python dictionary that maps Arabic to Roman numbers by
-loading the CSV file, skipping the header line, converting Arabic numbers
+loading the CSV file, dropping the header line, converting Arabic numbers
 (that are loaded as strings) to integers and collecting the results in 
 a dictionary
 
   >>> fpath = 'tests/data/arab2num.csv'
 
-  >>> arab2roman = ReadCSV(fpath, skipheader=1) >> MapCol(0, int) >> Collect(dict)
+  >>> arab2roman = ReadCSV(fpath) >> Drop(1) >> MapCol(0, int) >> Collect(dict)
   >>> arab2roman[2]
   'II'
 
 
 For the reversed mapping (Roman to Arabic), we just flip the columns via ``GetCols``
+and use ``skipheader=1`` to skip the header line
 
   >>> roman2arab = (ReadCSV(fpath, skipheader=1) >> MapCol(0, int) >> 
   ... GetCols(1, 0) >> Collect(dict))
