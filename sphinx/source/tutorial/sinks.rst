@@ -184,7 +184,7 @@ single element, using a given function. ``Reduce`` is a thin wrapper around
 Python's `reduce <https://docs.python.org/2/library/functions.html#reduce>`_
 function.
 
-The following example compute the product of numbers
+The following example computes the product of a list of numbers
 
   >>> [1, 2, 3] >> Reduce(lambda a, b: a * b)
   6
