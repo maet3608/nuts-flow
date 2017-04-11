@@ -130,7 +130,7 @@ Counter
 Sometimes only the number of elements processed at a certain stage
 is of interest. ``Counter`` is a nut with the needed side-effect:
 
-  >>> count = Counter()
+  >>> count = Counter('cnt')
   >>> Range(10) >> count >> Square() >> Sum()
   285
   >>> count.value
@@ -139,15 +139,15 @@ is of interest. ``Counter`` is a nut with the needed side-effect:
 Note that ``Counter`` does not modify the data flow. ``Counter`` also
 has a filter function to count only certain elements:
 
-  >>> greater5 = Counter(filterfunc = lambda x: x > 5)
+  >>> greater5 = Counter('gt5', filterfunc = lambda x: x > 5)
   >>> Range(10) >> Square() >> greater5 >> Collect()
   [0, 1, 4, 9, 16, 25, 36, 49, 64, 81]
   >>> greater5
-  7
+  gt5 = 7
   
-Note that the actual value of the counter is stored in ``value`` but
-for conveniency ``print greater5`` directly prints ``greater5.value``
-as well.
+Note that the actual value of the counter is stored in ``value`` and can 
+be printed but for conveniency ``print greater5`` prints the name of the 
+counter and its value as well.
    
 
    
