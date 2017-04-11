@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Printing and Debugging &#8212; nutsflow 1.0.6 documentation</title>
+    <title>Printing and Debugging &#8212; nutsflow 1.0.7 documentation</title>
     
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '1.0.6',
+        VERSION:     '1.0.7',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -167,7 +167,7 @@ operate on single nuts.</p>
 <h2>Counter<a class="headerlink" href="#counter" title="Permalink to this headline">¶</a></h2>
 <p>Sometimes only the number of elements processed at a certain stage
 is of interest. <code class="docutils literal"><span class="pre">Counter</span></code> is a nut with the needed side-effect:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">count</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">()</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">count</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="s1">&#39;cnt&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">count</span> <span class="o">&gt;&gt;</span> <span class="n">Square</span><span class="p">()</span> <span class="o">&gt;&gt;</span> <span class="n">Sum</span><span class="p">()</span>
 <span class="go">285</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">count</span><span class="o">.</span><span class="n">value</span>
@@ -176,16 +176,16 @@ is of interest. <code class="docutils literal"><span class="pre">Counter</span><
 </div>
 <p>Note that <code class="docutils literal"><span class="pre">Counter</span></code> does not modify the data flow. <code class="docutils literal"><span class="pre">Counter</span></code> also
 has a filter function to count only certain elements:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">greater5</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="n">filterfunc</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">5</span><span class="p">)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">greater5</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="s1">&#39;gt5&#39;</span><span class="p">,</span> <span class="n">filterfunc</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">5</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Square</span><span class="p">()</span> <span class="o">&gt;&gt;</span> <span class="n">greater5</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
 <span class="go">[0, 1, 4, 9, 16, 25, 36, 49, 64, 81]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">greater5</span>
-<span class="go">7</span>
+<span class="go">gt5 = 7</span>
 </pre></div>
 </div>
-<p>Note that the actual value of the counter is stored in <code class="docutils literal"><span class="pre">value</span></code> but
-for conveniency <code class="docutils literal"><span class="pre">print</span> <span class="pre">greater5</span></code> directly prints <code class="docutils literal"><span class="pre">greater5.value</span></code>
-as well.</p>
+<p>Note that the actual value of the counter is stored in <code class="docutils literal"><span class="pre">value</span></code> and can
+be printed but for conveniency <code class="docutils literal"><span class="pre">print</span> <span class="pre">greater5</span></code> prints the name of the
+counter and its value as well.</p>
 </div>
 </div>
 
