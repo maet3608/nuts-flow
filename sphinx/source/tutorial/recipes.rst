@@ -8,6 +8,16 @@ A collection of common problems with solutions. Make sure **nutsflow** has been 
   >>> from nutsflow import *
 
 
+Write CSV file with column names
+--------------------------------
+
+.. code::
+
+  with WriteCSV(filepath) as writer:
+      [('Col1', 'Col2')] >> writer
+      [(1, 2), (3, 4)] >> writer
+      
+
 Load a mapping file
 -------------------
 
@@ -41,6 +51,7 @@ and use ``skipheader=1`` to skip the header line
   ... GetCols(1, 0) >> Collect(dict))
   >>> roman2arab['III']
   3
+
 
 
 
