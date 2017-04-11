@@ -131,21 +131,23 @@ class Counter(NutFunction):
     processing of data. The function has side-effects but is thread-safe.
     """
 
-    def __init__(self, value=0, filterfunc=lambda x: True):
+    def __init__(self, name, filterfunc=lambda x: True, value=0):
         """
-        counter = Counter()
+        counter = Counter(name, filterfunc, value)
         iterable >> counter
 
         >>> from nutsflow import Consume
-        >>> counter = Counter(value=1, filterfunc=lambda x: x < 3)
+        >>> counter = Counter('smallerthan3', lambda x: x < 3, 1)
         >>> xrange(10) >> counter >> Consume()
-        >>> counter.value
-        4
+        >>> counter
+        smallerthan3 = 4
 
-        :param int value: Initial value
+        :param str name: Name of the counter
         :param func filterfunc: Filter function.
+        :param int value: Initial value
            Count only elements where func returns True.
         """
+        self.name = name
         self.value = value
         self.filterfunc = filterfunc
         self.lock = threading.Lock()
@@ -171,10 +173,10 @@ class Counter(NutFunction):
         """
         Return string representation of counter value.
 
-        :return: counter value as string
+        :return: counter name and value as string
         :rtype: str
         """
-        return str(self.value)
+        return '{} = {}'.format(self.name, self.value)
 
     def __call__(self, x):
         """

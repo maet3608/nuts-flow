@@ -60,17 +60,17 @@ def test_GetCols():
 
 
 def test_Counter():
-    counter = Counter()
+    counter = Counter('cnt')
     assert counter.value == 0
 
     xrange(10) >> counter >> Consume()
     assert counter.value == 10
-    assert str(counter) == '10'
+    assert str(counter) == 'cnt = 10'
 
     counter.reset()
     assert counter.value == 0
 
-    counter = Counter(value=1, filterfunc=lambda x: x < 3)
+    counter = Counter('cnt', filterfunc=lambda x: x < 3, value=1)
     xrange(10) >> counter >> Consume()
     assert counter.value == 4
 
