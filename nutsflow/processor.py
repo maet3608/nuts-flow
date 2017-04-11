@@ -3,6 +3,8 @@
    :synopsis: Nuts that process iterables and return iterables.
 """
 
+from __future__ import print_function
+
 import tempfile
 import shutil
 import os
@@ -853,7 +855,8 @@ class PrintProgress(Nut):
                 per_done = 100 * i / self.n
                 sec_consumed = int(time.clock() - start_time)
                 eta = sec_consumed * (self.n / float(i) - 1) if i else 0
-                print '\rprogress: %d%% %s' % (per_done, timestr(eta, etafmt)),
+                tstr = timestr(eta, etafmt)
+                print('\rprogress: {}% {}'.format(per_done, tstr), end='')
             yield e
         duration = int(time.clock() - start_time)
-        print '\rprogress: 100%% %s' % timestr(duration, endfmt)
+        print('\rprogress: 100% {}'.format(timestr(duration, endfmt)))
