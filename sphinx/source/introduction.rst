@@ -8,8 +8,8 @@ Introduction
 provide a ``>>`` operator to chain iterators in pipelines
 to construct data flows. The result is a more explict flow of data.
 
-The following two examples show the same data flow. The first 
-using Python's itertools and the second using **nuts-flow**:
+The following two examples show the same data flow. The first is
+using Python's itertools and the second is using **nuts-flow**:
 
 >>> from itertools import islice, ifilter
 >>> list(islice(ifilter(lambda x: x > 5, xrange(8)), 3))
