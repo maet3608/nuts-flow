@@ -212,7 +212,9 @@ def Flatten(iterable):
     Flatten the iterables within the iterable and non-iterables are passed
     through. Only one level is flattened.
 
+    >>> from nutsflow import Collect    
     >>> [(1, 2), (3, 4, 5), 6] >> Flatten() >> Collect()
+    [1, 2, 3, 4, 5, 6]
 
     :param iterable iterable: Any iterable.
     :return: Flattened iterable
@@ -344,7 +346,8 @@ def DropWhile(iterable, func):
 
     Skip elements in iterable while predicate function is True.
 
-    >>>[0, 1, 2, 3, 0] >> DropWhile(_ < 2) >> Collect()
+    >>> from nutsflow import _
+    >>> [0, 1, 2, 3, 0] >> DropWhile(_ < 2) >> Collect()
     [2, 3, 0]
 
     :param iterable iterable: Any iterable
@@ -423,6 +426,8 @@ def If(iterable, cond, if_nut, else_nut=Identity()):
     Depending on condition cond execute if_nut or else_nut. Useful for
     conditional flows.
 
+    >>> from nutsflow import Square, Collect
+
     >>> [1, 2, 3] >> If(True, Square()) >> Collect()
     [1, 4, 9]
 
@@ -468,6 +473,8 @@ def Pick(iterable, p_n, rand=rnd.Random()):
     Pick every p_n-th element from the iterable if p_n is an integer,
     otherwise pick randomly with probability p_n.
 
+    >>> from nutsflow import Range, Collect
+    
     >>> [1, 2, 3, 4] >> Pick(0.0) >> Collect()
     []
 
@@ -508,6 +515,8 @@ def GroupBy(iterable, keycol=lambda x: x, nokey=False):
     GroupBy will store all elements in memory!
     If the iterable is sorted use GroupBySorted() instead.
 
+    >>> from nutsflow import Collect
+    
     >>> [1, 2, 1, 1, 3] >> GroupBy() >> Collect()
     [(1, [1, 1, 1]), (2, [2]), (3, [3])]
 
@@ -544,6 +553,8 @@ def GroupBySorted(iterable, keycol=lambda x: x, nokey=False):
     If iterable is not sorted use GroupBy but be aware that it stores all
     elements of the iterable in memory!
 
+    >>> from nutsflow import Collect, nut_sink
+    
     >>> @nut_sink
     ... def ViewResult(iterable):
     ...     return iterable >> Map(lambda (k, es): (k, list(es))) >> Collect()
@@ -583,6 +594,8 @@ def Shuffle(iterable, buffersize, rand=rnd.Random()):
     shuffle. Usually, this is not what you want. Use the default
     rand=rnd.Random() instead.
 
+    >>> from nutsflow import Range, Collect
+    
     >>> Range(10) >> Shuffle(5, rnd.Random(0)) >> Collect()
     [1, 5, 3, 0, 6, 2, 8, 9, 7, 4]
 
@@ -644,11 +657,15 @@ def MapMulti(iterable, *funcs):
     is returned. Can consume large amounts of memory when iterables are
     processed sequentially!
 
+    >>> from nutsflow import Collect, _
+    
     >>> nums, twos, greater2 = [1, 2, 3] >> MapMulti(_, _ * 2, _ > 2)
     >>> nums >> Collect()
     [1, 2, 3]
+
     >>> twos >> Collect()
     [2, 4, 6]
+
     >>> greater2 >> Collect()
     [False, False, True]
 
@@ -807,6 +824,8 @@ def Prefetch(iterable, num_prefetch=1):
     Prefetch elements from iterable.
     Typically used to keep the CPU busy while the GPU is crunching.
 
+    >>> from nutsflow import Take, Collect
+    
     >>> it = iter([1, 2, 3, 4])
     >>> it >> Prefetch() >> Take(1) >> Collect()
     [1]

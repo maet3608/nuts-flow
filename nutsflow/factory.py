@@ -36,10 +36,14 @@ def _create_nut_wrapper(base_class, func, iterpos):
     """
 
     class Wrapper(base_class):
+        __doc__ = func.__doc__
+
         def __rrshift__(self, iterable):
             args = _arg_insert(self.args, iterable, iterpos)
             return func(*args, **self.kwargs)
 
+    Wrapper.__name__ = func.__name__
+    Wrapper.__module__ = func.__module__
     return Wrapper
 
 
@@ -54,12 +58,16 @@ def _create_filter_wrapper(func, invert=False):
     """
 
     class Wrapper(Nut):
+        __doc__ = func.__doc__
+
         def __rrshift__(self, iterable):
             for e in iterable:
                 args = _arg_insert(self.args, e)
                 if bool(func(*args, **self.kwargs)) != invert:
                     yield e
 
+    Wrapper.__name__ = func.__name__
+    Wrapper.__module__ = func.__module__
     return Wrapper
 
 
@@ -111,9 +119,13 @@ def nut_function(func):
     """
 
     class Wrapper(NutFunction):
+        __doc__ = func.__doc__
+
         def __call__(self, element):
             return func(element, *self.args, **self.kwargs)
 
+    Wrapper.__name__ = func.__name__
+    Wrapper.__module__ = func.__module__
     return Wrapper
 
 
@@ -131,9 +143,13 @@ def nut_source(func):
     """
 
     class Wrapper(NutSource):
+        __doc__ = func.__doc__
+
         def __iter__(self):
             return func(*self.args, **self.kwargs)
 
+    Wrapper.__name__ = func.__name__
+    Wrapper.__module__ = func.__module__
     return Wrapper
 
 

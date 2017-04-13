@@ -278,7 +278,7 @@ def Tail(iterable, n, container=list):
     the iterable completely!
 
     >>> [1, 2, 3, 4] >> Tail(2)
-    [1, 2]
+    [3, 4]
 
     :param iterable iterable: Any iterable, e.g. list, xrange, ...
     :param int n: Number of elements to take.
@@ -298,7 +298,7 @@ def CountValues(iterable, relative=False):
     in the input iterable.
 
     >>> 'abaacc' >> CountValues()
-    {'a':3, 'b':1, 'c':2}
+    {'a': 3, 'c': 2, 'b': 1}
 
     >>> 'aabaab' >> CountValues(True)
     {'a': 1.0, 'b': 0.5}

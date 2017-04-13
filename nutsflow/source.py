@@ -56,6 +56,8 @@ def Product(*args, **kwds):
 
     Return cartesian product of input iterables.
 
+    >>> from nutsflow import Collect
+    
     >>> Product([1, 2], [3, 4]) >> Collect()
     [(1, 3), (1, 4), (2, 3), (2, 4)]
 
@@ -82,6 +84,7 @@ def Empty():
 
     Return empty iterable.
 
+    >>> from nutsflow import Collect
     >>> Empty() >> Collect()
     []
 

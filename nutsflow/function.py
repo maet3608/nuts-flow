@@ -18,6 +18,7 @@ def Identity(x):
 
     Return same input as output.
 
+    >>> from nutsflow import Collect
     >>> [1, 2, 3] >> Identity() >> Collect()
     [1, 2, 3]
 
@@ -36,6 +37,7 @@ def Square(x):
 
     Return squared input.
 
+    >>> from nutsflow import Collect
     >>> [1, 2, 3] >> Square() >> Collect()
     [1, 4, 9]
 
@@ -55,6 +57,7 @@ def NOP(x, *args):  # *args is needed!
     No Operation. Useful to skip nuts. Same as commenting a nut out
     or removing it from a pipeline.
 
+    >>> from nutsflow import Collect
     >>> [1, 2, 3] >> NOP(Square()) >> Collect()
     [1, 2, 3]
 
@@ -74,6 +77,8 @@ def Get(x, start, end=None, step=None):
 
     Extract elements from x. Equivalent to Python slicing [start:end:step]
     but per element of the iterable.
+
+    >>> from nutsflow import Collect
 
     >>> [(1, 2, 3), (4, 5, 6)] >> Get(1) >> Collect()
     [2, 5]
@@ -103,6 +108,8 @@ def GetCols(x, *columns):
     Extract elements in given order from x. Also useful to change the order of
     or clone elements in x.
 
+    >>> from nutsflow import Collect
+    
     >>> [(1, 2, 3), (4, 5, 6)] >> GetCols(1) >> Collect()
     [(2,), (5,)]
 
@@ -199,6 +206,7 @@ def Sleep(x, duration=1):
 
     Return same input as output but sleep for each element.
 
+    >>> from nutsflow import Collect
     >>> [1, 2, 3] >> Sleep(0.1) >> Collect()
     [1, 2, 3]
 
@@ -220,6 +228,7 @@ def Format(x, fmt):
     Return input as formatted string. For format definition see:
     https://docs.python.org/2/library/string.html
 
+    >>> from nutsflow import Collect
     >>> [1, 2, 3] >> Format('num:{}') >> Collect()
     ['num:1', 'num:2', 'num:3']
 
