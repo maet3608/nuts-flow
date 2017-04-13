@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nutsflow.processor &mdash; nutsflow 1.0.7 documentation</title>
+  <title>nutsflow.processor &mdash; nutsflow 1.0.8 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../../genindex.html"/>
         <link rel="search" title="Search" href="../../search.html"/>
-    <link rel="top" title="nutsflow 1.0.7 documentation" href="../../index.html"/>
+    <link rel="top" title="nutsflow 1.0.8 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -185,106 +185,127 @@
 <span class="kn">from</span> <span class="nn">sink</span> <span class="k">import</span> <span class="n">Consume</span><span class="p">,</span> <span class="n">Collect</span>
 <span class="kn">from</span> <span class="nn">nutsflow.common</span> <span class="k">import</span> <span class="n">timestr</span>
 
-<span class="n">Take</span> <span class="o">=</span> <span class="n">nut_processor</span><span class="p">(</span><span class="n">itf</span><span class="o">.</span><span class="n">take</span><span class="p">)</span>
-<span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">iterable &gt;&gt; Take(n)</span>
 
-<span class="sd">Return first n elements of iterable</span>
+<span class="nd">@nut_processor</span>
+<div class="viewcode-block" id="Take"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.processor.Take">[docs]</a><span class="k">def</span> <span class="nf">Take</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    iterable &gt;&gt; Take(n)</span>
 
-<span class="sd">&gt;&gt;&gt; [1, 2, 3, 4] &gt;&gt; Take(2) &gt;&gt; Collect()</span>
-<span class="sd">[1, 2]</span>
+<span class="sd">    Return first n elements of iterable</span>
 
-<span class="sd">:param iterable iterable: Any iterable</span>
-<span class="sd">:param int n: Number of elements to take</span>
-<span class="sd">:return: First n elements of iterable</span>
-<span class="sd">:rtype: iterator</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    &gt;&gt;&gt; from nutsflow import Collect</span>
 
-<span class="n">Slice</span> <span class="o">=</span> <span class="n">nut_processor</span><span class="p">(</span><span class="n">itt</span><span class="o">.</span><span class="n">islice</span><span class="p">)</span>
-<span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">iterable &gt;&gt; Slice([start,] stop[, stride])</span>
+<span class="sd">    &gt;&gt;&gt; [1, 2, 3, 4] &gt;&gt; Take(2) &gt;&gt; Collect()</span>
+<span class="sd">    [1, 2]</span>
 
-<span class="sd">Return slice of elements from iterable.</span>
-<span class="sd">See https://docs.python.org/2/library/itertools.html#itertools.islice</span>
-
-<span class="sd">&gt;&gt;&gt; [1, 2, 3, 4] &gt;&gt; Slice(2) &gt;&gt; Collect()</span>
-<span class="sd">[1, 2]</span>
-
-<span class="sd">&gt;&gt;&gt; [1, 2, 3, 4] &gt;&gt; Slice(1, 3) &gt;&gt; Collect()</span>
-<span class="sd">[2, 3]</span>
-
-<span class="sd">&gt;&gt;&gt; [1, 2, 3, 4] &gt;&gt; Slice(0, 4, 2) &gt;&gt; Collect()</span>
-<span class="sd">[1, 3]</span>
-
-<span class="sd">:param iterable iterable: Any iterable</span>
-<span class="sd">:param int start: Start index of slice.</span>
-<span class="sd">:param int stop: End index of slice.</span>
-<span class="sd">:param int step: Step size of slice.</span>
-<span class="sd">:return: Elements sliced from iterable</span>
-<span class="sd">:rtype: iterator</span>
-<span class="sd">&quot;&quot;&quot;</span>
-
-<span class="n">Concat</span> <span class="o">=</span> <span class="n">nut_processor</span><span class="p">(</span><span class="n">itt</span><span class="o">.</span><span class="n">chain</span><span class="p">)</span>
-<span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">iterable &gt;&gt; Concat(*iterables)</span>
-
-<span class="sd">Concatenate iterables.</span>
-
-<span class="sd">&gt;&gt;&gt; Range(5) &gt;&gt; Concat(&#39;abc&#39;) &gt;&gt; Collect()</span>
-<span class="sd">[0, 1, 2, 3, 4, &#39;a&#39;, &#39;b&#39;, &#39;c&#39;]</span>
-
-<span class="sd">&gt;&gt;&gt; &#39;12&#39; &gt;&gt; Concat(&#39;abcd&#39;, &#39;+-&#39;) &gt;&gt; Collect()</span>
-<span class="sd">[&#39;1&#39;, &#39;2&#39;, &#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;, &#39;+&#39;, &#39;-&#39;]</span>
+<span class="sd">    :param iterable iterable: Any iterable</span>
+<span class="sd">    :param int n: Number of elements to take</span>
+<span class="sd">    :return: First n elements of iterable</span>
+<span class="sd">    :rtype: iterator</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">itf</span><span class="o">.</span><span class="n">take</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span></div>
 
 
-<span class="sd">:param iterable iterable: Any iterable</span>
-<span class="sd">:param iterable iterables: Iterables to concatenate</span>
-<span class="sd">:return: Concatenated iterators</span>
-<span class="sd">:rtype: iterator</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="nd">@nut_processor</span>
+<div class="viewcode-block" id="Slice"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.processor.Slice">[docs]</a><span class="k">def</span> <span class="nf">Slice</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    iterable &gt;&gt; Slice([start,] stop[, stride])</span>
 
-<span class="n">Interleave</span> <span class="o">=</span> <span class="n">nut_processor</span><span class="p">(</span><span class="n">itf</span><span class="o">.</span><span class="n">interleave</span><span class="p">)</span>
-<span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">iterable &gt;&gt; Interleave(*iterables)</span>
+<span class="sd">    Return slice of elements from iterable.</span>
+<span class="sd">    See https://docs.python.org/2/library/itertools.html#itertools.islice</span>
+<span class="sd">    </span>
+<span class="sd">    &gt;&gt;&gt; from nutsflow import Collect</span>
+<span class="sd">     </span>
+<span class="sd">    &gt;&gt;&gt; [1, 2, 3, 4] &gt;&gt; Slice(2) &gt;&gt; Collect()</span>
+<span class="sd">    [1, 2]</span>
 
-<span class="sd">Interleave elements of iterable with elements of given iterables.</span>
-<span class="sd">Similar to iterable &gt;&gt; Zip(*iterables) &gt;&gt; Flatten() but longest iterable</span>
-<span class="sd">determines length of interleaved iterator.</span>
+<span class="sd">    &gt;&gt;&gt; [1, 2, 3, 4] &gt;&gt; Slice(1, 3) &gt;&gt; Collect()</span>
+<span class="sd">    [2, 3]</span>
 
-<span class="sd">&gt;&gt;&gt; Range(5) &gt;&gt; Interleave(&#39;abc&#39;) &gt;&gt; Collect()</span>
-<span class="sd">[0, &#39;a&#39;, 1, &#39;b&#39;, 2, &#39;c&#39;, 3, 4]</span>
+<span class="sd">    &gt;&gt;&gt; [1, 2, 3, 4] &gt;&gt; Slice(0, 4, 2) &gt;&gt; Collect()</span>
+<span class="sd">    [1, 3]</span>
 
-<span class="sd">&gt;&gt;&gt; &#39;12&#39; &gt;&gt; Interleave(&#39;abcd&#39;, &#39;+-&#39;) &gt;&gt; Collect()</span>
-<span class="sd">[&#39;1&#39;, &#39;a&#39;, &#39;+&#39;, &#39;2&#39;, &#39;b&#39;, &#39;-&#39;, &#39;c&#39;, &#39;d&#39;]</span>
-
-
-<span class="sd">:param iterable iterable: Any iterable</span>
-<span class="sd">:param iterable iterables: Iterables to interleave</span>
-<span class="sd">:return: Iterator over interleaved elements.</span>
-<span class="sd">:rtype: iterator</span>
-<span class="sd">&quot;&quot;&quot;</span>
-
-<span class="n">Zip</span> <span class="o">=</span> <span class="n">nut_processor</span><span class="p">(</span><span class="n">itt</span><span class="o">.</span><span class="n">izip</span><span class="p">)</span>
-<span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">iterable &gt;&gt; Zip(*iterables)</span>
-
-<span class="sd">Zip elements of iterable with elements of given iterables</span>
-<span class="sd">Zip finishes when shortest iterable is exhausted.</span>
-<span class="sd">See https://docs.python.org/2/library/itertools.html#itertools.izip</span>
-<span class="sd">And https://docs.python.org/2/library/itertools.html#itertools.izip_longest</span>
-
-<span class="sd">&gt;&gt;&gt; [0, 1, 2] &gt;&gt; Zip(&#39;abc&#39;) &gt;&gt; Collect()</span>
-<span class="sd">[(0, &#39;a&#39;), (1, &#39;b&#39;), (2, &#39;c&#39;)]</span>
-
-<span class="sd">&gt;&gt;&gt; &#39;12&#39; &gt;&gt; Zip(&#39;abcd&#39;, &#39;+-&#39;) &gt;&gt; Collect()</span>
-<span class="sd">[(&#39;1&#39;, &#39;a&#39;, &#39;+&#39;), (&#39;2&#39;, &#39;b&#39;, &#39;-&#39;)]</span>
+<span class="sd">    :param iterable iterable: Any iterable</span>
+<span class="sd">    :param int start: Start index of slice.</span>
+<span class="sd">    :param int stop: End index of slice.</span>
+<span class="sd">    :param int step: Step size of slice.</span>
+<span class="sd">    :return: Elements sliced from iterable</span>
+<span class="sd">    :rtype: iterator</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">itt</span><span class="o">.</span><span class="n">islice</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 
 
-<span class="sd">:param iterable iterable: Any iterable</span>
-<span class="sd">:param iterable iterables: Iterables to zip</span>
-<span class="sd">:return: Zipped elements from iterables.</span>
-<span class="sd">:rtype: iterator over tuples</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="nd">@nut_processor</span>
+<div class="viewcode-block" id="Concat"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.processor.Concat">[docs]</a><span class="k">def</span> <span class="nf">Concat</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="o">*</span><span class="n">iterables</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    iterable &gt;&gt; Concat(*iterables)</span>
+
+<span class="sd">    Concatenate iterables.</span>
+
+<span class="sd">    &gt;&gt;&gt; from nutsflow import Range, Collect</span>
+
+<span class="sd">    &gt;&gt;&gt; Range(5) &gt;&gt; Concat(&#39;abc&#39;) &gt;&gt; Collect()</span>
+<span class="sd">    [0, 1, 2, 3, 4, &#39;a&#39;, &#39;b&#39;, &#39;c&#39;]</span>
+
+<span class="sd">    &gt;&gt;&gt; &#39;12&#39; &gt;&gt; Concat(&#39;abcd&#39;, &#39;+-&#39;) &gt;&gt; Collect()</span>
+<span class="sd">    [&#39;1&#39;, &#39;2&#39;, &#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;, &#39;+&#39;, &#39;-&#39;]</span>
+
+<span class="sd">    :param iterable iterable: Any iterable</span>
+<span class="sd">    :param iterable iterables: Iterables to concatenate</span>
+<span class="sd">    :return: Concatenated iterators</span>
+<span class="sd">    :rtype: iterator</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">itt</span><span class="o">.</span><span class="n">chain</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="o">*</span><span class="n">iterables</span><span class="p">)</span></div>
+
+
+<span class="nd">@nut_processor</span>
+<div class="viewcode-block" id="Interleave"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.processor.Interleave">[docs]</a><span class="k">def</span> <span class="nf">Interleave</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="o">*</span><span class="n">iterables</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    iterable &gt;&gt; Interleave(*iterables)</span>
+
+<span class="sd">    Interleave elements of iterable with elements of given iterables.</span>
+<span class="sd">    Similar to iterable &gt;&gt; Zip(*iterables) &gt;&gt; Flatten() but longest iterable</span>
+<span class="sd">    determines length of interleaved iterator.</span>
+
+<span class="sd">    &gt;&gt;&gt; from nutsflow import Range, Collect</span>
+<span class="sd">    &gt;&gt;&gt; Range(5) &gt;&gt; Interleave(&#39;abc&#39;) &gt;&gt; Collect()</span>
+<span class="sd">    [0, &#39;a&#39;, 1, &#39;b&#39;, 2, &#39;c&#39;, 3, 4]</span>
+
+<span class="sd">    &gt;&gt;&gt; &#39;12&#39; &gt;&gt; Interleave(&#39;abcd&#39;, &#39;+-&#39;) &gt;&gt; Collect()</span>
+<span class="sd">    [&#39;1&#39;, &#39;a&#39;, &#39;+&#39;, &#39;2&#39;, &#39;b&#39;, &#39;-&#39;, &#39;c&#39;, &#39;d&#39;]</span>
+
+<span class="sd">    :param iterable iterable: Any iterable</span>
+<span class="sd">    :param iterable iterables: Iterables to interleave</span>
+<span class="sd">    :return: Iterator over interleaved elements.</span>
+<span class="sd">    :rtype: iterator</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">itf</span><span class="o">.</span><span class="n">interleave</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="o">*</span><span class="n">iterables</span><span class="p">)</span></div>
+
+
+<span class="nd">@nut_processor</span>
+<div class="viewcode-block" id="Zip"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.processor.Zip">[docs]</a><span class="k">def</span> <span class="nf">Zip</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">iterable2</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="n">iterables</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    iterable &gt;&gt; Zip(*iterables)</span>
+
+<span class="sd">    Zip elements of iterable with elements of given iterables</span>
+<span class="sd">    Zip finishes when shortest iterable is exhausted.</span>
+<span class="sd">    See https://docs.python.org/2/library/itertools.html#itertools.izip</span>
+<span class="sd">    And https://docs.python.org/2/library/itertools.html#itertools.izip_longest</span>
+
+<span class="sd">    &gt;&gt;&gt; from nutsflow import Collect</span>
+
+<span class="sd">    &gt;&gt;&gt; [0, 1, 2] &gt;&gt; Zip(&#39;abc&#39;) &gt;&gt; Collect()</span>
+<span class="sd">    [(0, &#39;a&#39;), (1, &#39;b&#39;), (2, &#39;c&#39;)]</span>
+
+<span class="sd">    &gt;&gt;&gt; &#39;12&#39; &gt;&gt; Zip(&#39;abcd&#39;, &#39;+-&#39;) &gt;&gt; Collect()</span>
+<span class="sd">    [(&#39;1&#39;, &#39;a&#39;, &#39;+&#39;), (&#39;2&#39;, &#39;b&#39;, &#39;-&#39;)]</span>
+
+<span class="sd">    :param iterable iterable: Any iterable</span>
+<span class="sd">    :param iterable iterables: Iterables to zip</span>
+<span class="sd">    :return: Zipped elements from iterables.</span>
+<span class="sd">    :rtype: iterator over tuples</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">itt</span><span class="o">.</span><span class="n">izip</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">iterable2</span><span class="p">,</span> <span class="o">*</span><span class="n">iterables</span><span class="p">)</span></div>
 
 
 <span class="nd">@nut_processor</span>
@@ -756,7 +777,6 @@
 <span class="sd">    rand=rnd.Random() instead.</span>
 
 <span class="sd">    &gt;&gt;&gt; from nutsflow import Range, Collect</span>
-<span class="sd">    </span>
 <span class="sd">    &gt;&gt;&gt; Range(10) &gt;&gt; Shuffle(5, rnd.Random(0)) &gt;&gt; Collect()</span>
 <span class="sd">    [1, 5, 3, 0, 6, 2, 8, 9, 7, 4]</span>
 
@@ -985,11 +1005,10 @@
 <span class="sd">    Prefetch elements from iterable.</span>
 <span class="sd">    Typically used to keep the CPU busy while the GPU is crunching.</span>
 
-<span class="sd">    &gt;&gt;&gt; from nutsflow import Take, Collect</span>
-<span class="sd">    </span>
+<span class="sd">    &gt;&gt;&gt; from nutsflow import Take, Consume</span>
+
 <span class="sd">    &gt;&gt;&gt; it = iter([1, 2, 3, 4])</span>
-<span class="sd">    &gt;&gt;&gt; it &gt;&gt; Prefetch() &gt;&gt; Take(1) &gt;&gt; Collect()</span>
-<span class="sd">    [1]</span>
+<span class="sd">    &gt;&gt;&gt; it &gt;&gt; Prefetch(1) &gt;&gt; Take(1) &gt;&gt; Consume()</span>
 <span class="sd">    &gt;&gt;&gt; next(it)</span>
 <span class="sd">    3</span>
 
@@ -1076,7 +1095,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'1.0.7',
+            VERSION:'1.0.8',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,
