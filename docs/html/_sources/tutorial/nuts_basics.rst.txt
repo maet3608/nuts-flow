@@ -22,7 +22,7 @@ if not needed. For instance,
   >>> Range(10000000) >> Square() >> Take(3) >> Collect()
   [0, 1, 4]
   
-works just fine and does not generate 10 million integers in memory.
+works just fine and does not store 10 million integers in memory.
 
 
 Sources and Sinks

@@ -11,6 +11,7 @@ Contents:
 
    introduction
    installation
+   contributions
    tutorial/introduction
    nutsflow
 

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Introduction &mdash; nutsflow 1.0.7 documentation</title>
+  <title>Contributions &mdash; nutsflow 1.0.7 documentation</title>
   
 
   
@@ -36,8 +36,8 @@
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
     <link rel="top" title="nutsflow 1.0.7 documentation" href="index.html"/>
-        <link rel="next" title="Installation" href="installation.html"/>
-        <link rel="prev" title="Nuts-flow" href="index.html"/> 
+        <link rel="next" title="Tutorial" href="tutorial/introduction.html"/>
+        <link rel="prev" title="Installation" href="installation.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -91,9 +91,9 @@
             
             
               <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="contributions.html">Contributions</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Contributions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorial/introduction.html">Tutorial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="nutsflow.html">nutsflow package</a></li>
 </ul>
@@ -140,13 +140,13 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Introduction</li>
+      <li>Contributions</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="_sources/introduction.rst.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/contributions.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -159,32 +159,79 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="introduction">
-<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
-<p><strong>nuts-flow</strong> is a data processing pipeline that is largely based on Python&#8217;s
-<a class="reference external" href="https://docs.python.org/2/library/itertools.html">itertools</a>.</p>
-<p><strong>nuts</strong> are thin wrappers around itertool functions and
-provide a <code class="docutils literal"><span class="pre">&gt;&gt;</span></code> operator to chain iterators in pipelines
-to construct data flows. The result is a more explict flow of data.</p>
-<p>The following two examples show the same data flow. The first is
-using Python&#8217;s itertools and the second is using <strong>nuts-flow</strong>:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">itertools</span> <span class="k">import</span> <span class="n">islice</span><span class="p">,</span> <span class="n">ifilter</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">islice</span><span class="p">(</span><span class="n">ifilter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">5</span><span class="p">,</span> <span class="n">xrange</span><span class="p">(</span><span class="mi">8</span><span class="p">)),</span> <span class="mi">3</span><span class="p">))</span>
-<span class="go">[6, 7]</span>
+  <div class="section" id="contributions">
+<h1>Contributions<a class="headerlink" href="#contributions" title="Permalink to this headline">¶</a></h1>
+<p>Contributions to <strong>nuts-flow</strong> are welcome. Please document the code following
+the examples, provide unit tests and ensure that <code class="docutils literal"><span class="pre">pytest</span></code> runs without
+errors.</p>
+<div class="code highlight-default"><div class="highlight"><pre><span></span>$ pytest
+============================= test session starts =============================
+platform win32 -- Python 2.7.13, pytest-3.0.3, py-1.4.31, pluggy-0.4.0
+rootdir: C:\Maet\Projects\Python\nuts-flow, inifile: pytest.ini
+plugins: cov-2.3.1
+collected 138 items
+
+README.rst .
+nutsflow\base.py ..
+nutsflow\common.py ...
+nutsflow\function.py ..
+nutsflow\iterfunction.py ...........
+nutsflow\processor.py .
+nutsflow\sink.py .
+nutsflow\source.py ..
+nutsflow\underscore.py .
+sphinx\source\installation.rst .
+sphinx\source\introduction.rst .
+sphinx\source\tutorial\custom_nuts.rst .
+sphinx\source\tutorial\debugging.rst .
+sphinx\source\tutorial\divide_conquer.rst .
+sphinx\source\tutorial\error_messages.rst .
+sphinx\source\tutorial\filtering.rst .
+sphinx\source\tutorial\nuts_basics.rst .
+sphinx\source\tutorial\performance.rst .
+sphinx\source\tutorial\practice_problems.rst .
+sphinx\source\tutorial\prerequisites.rst .
+sphinx\source\tutorial\rearranging.rst .
+sphinx\source\tutorial\recipes.rst .
+sphinx\source\tutorial\sinks.rst .
+sphinx\source\tutorial\sources.rst .
+sphinx\source\tutorial\transforming.rst .
+sphinx\source\tutorial\underscore.rst .
+tests\nutsflow\test_base.py ....
+tests\nutsflow\test_common.py .....
+tests\nutsflow\test_factory.py .........
+tests\nutsflow\test_function.py .........
+tests\nutsflow\test_iterfunction.py ...........
+tests\nutsflow\test_processor.py ..................................
+tests\nutsflow\test_sink.py ...............
+tests\nutsflow\test_source.py .......
+tests\nutsflow\test_underscore.py ..
+tests\nutsflow\examples\test_examples.py .
+
+========================= 138 passed in 19.74 seconds =========================
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nutsflow</span> <span class="k">import</span> <span class="n">Range</span><span class="p">,</span> <span class="n">Filter</span><span class="p">,</span> <span class="n">Take</span><span class="p">,</span> <span class="n">Collect</span><span class="p">,</span> <span class="n">_</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Filter</span><span class="p">(</span><span class="n">_</span> <span class="o">&gt;</span> <span class="mi">5</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Take</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
-<span class="go">[6, 7]</span>
+<p>We are aiming at a code coverage of 100%. Run <code class="docutils literal"><span class="pre">pytest</span> <span class="pre">--cov</span></code> for verification.</p>
+<div class="code highlight-default"><div class="highlight"><pre><span></span>$ cd nutsflow
+$ pytest --cov
+
+---------- coverage: platform win32, python 2.7.13-final-0 -----------
+Name                            Stmts   Miss  Cover
+---------------------------------------------------
+nutsflow\base.py                   22      0   100%
+nutsflow\common.py                 27      0   100%
+nutsflow\examples\examples.py      57      0   100%
+nutsflow\factory.py                39      0   100%
+nutsflow\function.py               69      0   100%
+nutsflow\iterfunction.py           65      0   100%
+nutsflow\processor.py             160      0   100%
+nutsflow\sink.py                   85      0   100%
+nutsflow\source.py                 40      0   100%
+nutsflow\underscore.py             26      0   100%
+---------------------------------------------------
+TOTAL                             590      0   100%
 </pre></div>
 </div>
-<p>Both data flows extract the first three integers
-in the interval [0, 8[ that are greater than five. However,
-the linear arrangment of processing steps with <strong>nuts-flow</strong> is
-easier to read than the nested calls of itertool functions.</p>
-<p><strong>nuts-flow</strong> is the base library for
-<a class="reference external" href="https://github.com/maet3608/nuts-ml">nuts-ml</a>, a
-data pre-processing pipeline for (GPU-based) machine learning.</p>
 </div>
 
 
@@ -197,10 +244,10 @@ data pre-processing pipeline for (GPU-based) machine learning.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="installation.html" class="btn btn-neutral float-right" title="Installation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="tutorial/introduction.html" class="btn btn-neutral float-right" title="Tutorial" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="index.html" class="btn btn-neutral" title="Nuts-flow" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="installation.html" class="btn btn-neutral" title="Installation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

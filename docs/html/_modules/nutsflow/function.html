@@ -1,45 +1,162 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 
-<html xmlns="http://www.w3.org/1999/xhtml">
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>nutsflow.function &mdash; nutsflow 1.0.7 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
     
-    <title>nutsflow.function &#8212; nutsflow 1.0.7 documentation</title>
-    
-    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
-    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../../',
-        VERSION:     '1.0.7',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true,
-        SOURCELINK_SUFFIX: '.txt'
-      };
-    </script>
-    <script type="text/javascript" src="../../_static/jquery.js"></script>
-    <script type="text/javascript" src="../../_static/underscore.js"></script>
-    <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="index" title="Index" href="../../genindex.html" />
-    <link rel="search" title="Search" href="../../search.html" />
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="nutsflow 1.0.7 documentation" href="../../index.html"/>
+        <link rel="up" title="Module code" href="../index.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
    
-  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
-  
-  
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+  <div class="wy-grid-for-nav">
 
-  </head>
-  <body role="document">
-  
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
 
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
-          <div class="body" role="main">
+          
+            <a href="../../index.html" class="icon icon-home"> nutsflow
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                ['1', '0']
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributions.html">Contributions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial/introduction.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../nutsflow.html">nutsflow package</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">nutsflow</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>nutsflow.function</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
             
   <h1>Source code for nutsflow.function</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;</span>
@@ -56,12 +173,13 @@
 
 
 <span class="nd">@nut_function</span>
-<span class="k">def</span> <span class="nf">Identity</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<div class="viewcode-block" id="Identity"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.function.Identity">[docs]</a><span class="k">def</span> <span class="nf">Identity</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    iterable &gt;&gt; Identity()</span>
 
 <span class="sd">    Return same input as output.</span>
 
+<span class="sd">    &gt;&gt;&gt; from nutsflow import Collect</span>
 <span class="sd">    &gt;&gt;&gt; [1, 2, 3] &gt;&gt; Identity() &gt;&gt; Collect()</span>
 <span class="sd">    [1, 2, 3]</span>
 
@@ -70,16 +188,17 @@
 <span class="sd">    :return: Returns input unaltered</span>
 <span class="sd">    :rtype: any</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">x</span>
+    <span class="k">return</span> <span class="n">x</span></div>
 
 
 <span class="nd">@nut_function</span>
-<span class="k">def</span> <span class="nf">Square</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<div class="viewcode-block" id="Square"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.function.Square">[docs]</a><span class="k">def</span> <span class="nf">Square</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    iterable &gt;&gt; Square()</span>
 
 <span class="sd">    Return squared input.</span>
 
+<span class="sd">    &gt;&gt;&gt; from nutsflow import Collect</span>
 <span class="sd">    &gt;&gt;&gt; [1, 2, 3] &gt;&gt; Square() &gt;&gt; Collect()</span>
 <span class="sd">    [1, 4, 9]</span>
 
@@ -88,17 +207,18 @@
 <span class="sd">    :return: Squared number</span>
 <span class="sd">    :rtype: number</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">x</span> <span class="o">*</span> <span class="n">x</span>
+    <span class="k">return</span> <span class="n">x</span> <span class="o">*</span> <span class="n">x</span></div>
 
 
 <span class="nd">@nut_function</span>
-<span class="k">def</span> <span class="nf">NOP</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>  <span class="c1"># *args is needed!</span>
+<div class="viewcode-block" id="NOP"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.function.NOP">[docs]</a><span class="k">def</span> <span class="nf">NOP</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>  <span class="c1"># *args is needed!</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    iterable &gt;&gt; Nop(*args)</span>
 
 <span class="sd">    No Operation. Useful to skip nuts. Same as commenting a nut out</span>
 <span class="sd">    or removing it from a pipeline.</span>
 
+<span class="sd">    &gt;&gt;&gt; from nutsflow import Collect</span>
 <span class="sd">    &gt;&gt;&gt; [1, 2, 3] &gt;&gt; NOP(Square()) &gt;&gt; Collect()</span>
 <span class="sd">    [1, 2, 3]</span>
 
@@ -108,16 +228,18 @@
 <span class="sd">    :return: Squared number</span>
 <span class="sd">    :rtype: number</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">x</span>
+    <span class="k">return</span> <span class="n">x</span></div>
 
 
 <span class="nd">@nut_function</span>
-<span class="k">def</span> <span class="nf">Get</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="Get"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.function.Get">[docs]</a><span class="k">def</span> <span class="nf">Get</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    iterable &gt;&gt; Get(start, end, step)</span>
 
 <span class="sd">    Extract elements from x. Equivalent to Python slicing [start:end:step]</span>
 <span class="sd">    but per element of the iterable.</span>
+
+<span class="sd">    &gt;&gt;&gt; from nutsflow import Collect</span>
 
 <span class="sd">    &gt;&gt;&gt; [(1, 2, 3), (4, 5, 6)] &gt;&gt; Get(1) &gt;&gt; Collect()</span>
 <span class="sd">    [2, 5]</span>
@@ -136,17 +258,19 @@
 <span class="sd">    :return: Extracted elements</span>
 <span class="sd">    :rtype: any|list</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">x</span><span class="p">[</span><span class="nb">slice</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">step</span><span class="p">)</span> <span class="k">if</span> <span class="n">end</span> <span class="k">else</span> <span class="n">start</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">x</span><span class="p">[</span><span class="nb">slice</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">step</span><span class="p">)</span> <span class="k">if</span> <span class="n">end</span> <span class="k">else</span> <span class="n">start</span><span class="p">]</span></div>
 
 
 <span class="nd">@nut_function</span>
-<span class="k">def</span> <span class="nf">GetCols</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">columns</span><span class="p">):</span>
+<div class="viewcode-block" id="GetCols"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.function.GetCols">[docs]</a><span class="k">def</span> <span class="nf">GetCols</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">columns</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    iterable &gt;&gt; GetCols(*columns)</span>
 
 <span class="sd">    Extract elements in given order from x. Also useful to change the order of</span>
 <span class="sd">    or clone elements in x.</span>
 
+<span class="sd">    &gt;&gt;&gt; from nutsflow import Collect</span>
+<span class="sd">    </span>
 <span class="sd">    &gt;&gt;&gt; [(1, 2, 3), (4, 5, 6)] &gt;&gt; GetCols(1) &gt;&gt; Collect()</span>
 <span class="sd">    [(2,), (5,)]</span>
 
@@ -165,7 +289,7 @@
 <span class="sd">    :return: Extracted elements</span>
 <span class="sd">    :rtype: tuple</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">columns</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">columns</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="Counter"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.function.Counter">[docs]</a><span class="k">class</span> <span class="nc">Counter</span><span class="p">(</span><span class="n">NutFunction</span><span class="p">):</span>
@@ -237,12 +361,13 @@
 
 
 <span class="nd">@nut_function</span>
-<span class="k">def</span> <span class="nf">Sleep</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">duration</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+<div class="viewcode-block" id="Sleep"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.function.Sleep">[docs]</a><span class="k">def</span> <span class="nf">Sleep</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">duration</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    iterable &gt;&gt; Sleep(duration)</span>
 
 <span class="sd">    Return same input as output but sleep for each element.</span>
 
+<span class="sd">    &gt;&gt;&gt; from nutsflow import Collect</span>
 <span class="sd">    &gt;&gt;&gt; [1, 2, 3] &gt;&gt; Sleep(0.1) &gt;&gt; Collect()</span>
 <span class="sd">    [1, 2, 3]</span>
 
@@ -253,17 +378,18 @@
 <span class="sd">    :rtype: any</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">duration</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">x</span>
+    <span class="k">return</span> <span class="n">x</span></div>
 
 
 <span class="nd">@nut_function</span>
-<span class="k">def</span> <span class="nf">Format</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">fmt</span><span class="p">):</span>
+<div class="viewcode-block" id="Format"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.function.Format">[docs]</a><span class="k">def</span> <span class="nf">Format</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">fmt</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    iterable &gt;&gt; Format(fmt)</span>
 
 <span class="sd">    Return input as formatted string. For format definition see:</span>
 <span class="sd">    https://docs.python.org/2/library/string.html</span>
 
+<span class="sd">    &gt;&gt;&gt; from nutsflow import Collect</span>
 <span class="sd">    &gt;&gt;&gt; [1, 2, 3] &gt;&gt; Format(&#39;num:{}&#39;) &gt;&gt; Collect()</span>
 <span class="sd">    [&#39;num:1&#39;, &#39;num:2&#39;, &#39;num:3&#39;]</span>
 
@@ -275,7 +401,7 @@
 <span class="sd">    :return: Returns inputs as strings formatted as specified</span>
 <span class="sd">    :rtype: str</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">fmt</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="p">(</span><span class="n">x</span> <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s1">&#39;__iter__&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="p">[</span><span class="n">x</span><span class="p">]))</span>
+    <span class="k">return</span> <span class="n">fmt</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="p">(</span><span class="n">x</span> <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s1">&#39;__iter__&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="p">[</span><span class="n">x</span><span class="p">]))</span></div>
 
 
 <div class="viewcode-block" id="Print"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.function.Print">[docs]</a><span class="k">class</span> <span class="nc">Print</span><span class="p">(</span><span class="n">NutFunction</span><span class="p">):</span>
@@ -370,44 +496,66 @@
         <span class="k">return</span> <span class="n">x</span></div></div>
 </pre></div>
 
+           </div>
+           <div class="articleComments">
+            
+           </div>
           </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, IBM Research Australia.
+      Last updated on Apr 13, 2017.
+
+    </p>
+  </div> 
+
+</footer>
+
         </div>
       </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper"><div class="relations">
-<h3>Related Topics</h3>
-<ul>
-  <li><a href="../../index.html">Documentation overview</a><ul>
-  <li><a href="../index.html">Module code</a><ul>
-  </ul></li>
-  </ul></li>
-</ul>
-</div>
-<div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
-    <form class="search" action="../../search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
-    </form>
-</div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
-        </div>
-      </div>
-      <div class="clearer"></div>
-    </div>
-    <div class="footer">
-      &copy;2017, IBM.
-      
-      |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5.1</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
-      
-    </div>
 
-    
+    </section>
 
-    
-  </body>
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'1.0.7',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
 </html>
