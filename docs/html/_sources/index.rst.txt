@@ -10,9 +10,9 @@ Contents:
    :maxdepth: 2
 
    introduction
-   installation
-   contributions
+   installation   
    tutorial/introduction
+   contributions
    nutsflow
 
 Indices
