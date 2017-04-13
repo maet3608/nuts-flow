@@ -70,8 +70,8 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'nutsflow'
-copyright = u'2017, IBM'
-author = u'IBM Research Australia'
+copyright = u'2017, IBM Research Australia'
+author = u'Stefan Maetschke'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
