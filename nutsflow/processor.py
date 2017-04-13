@@ -595,7 +595,6 @@ def Shuffle(iterable, buffersize, rand=rnd.Random()):
     rand=rnd.Random() instead.
 
     >>> from nutsflow import Range, Collect
-    
     >>> Range(10) >> Shuffle(5, rnd.Random(0)) >> Collect()
     [1, 5, 3, 0, 6, 2, 8, 9, 7, 4]
 
@@ -824,11 +823,10 @@ def Prefetch(iterable, num_prefetch=1):
     Prefetch elements from iterable.
     Typically used to keep the CPU busy while the GPU is crunching.
 
-    >>> from nutsflow import Take, Collect
-    
+    >>> from nutsflow import Take, Consume
+
     >>> it = iter([1, 2, 3, 4])
-    >>> it >> Prefetch() >> Take(1) >> Collect()
-    [1]
+    >>> it >> Prefetch(1) >> Take(1) >> Consume()
     >>> next(it)
     3
 
