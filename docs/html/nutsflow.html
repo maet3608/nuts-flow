@@ -633,7 +633,7 @@ def Range(start, end):</p>
 <span id="nutsflow-function-module"></span><h2>nutsflow.function module<a class="headerlink" href="#module-nutsflow.function" title="Permalink to this headline">¶</a></h2>
 <span class="target" id="module-function"></span><dl class="class">
 <dt id="nutsflow.function.Counter">
-<em class="property">class </em><code class="descname">Counter</code><span class="sig-paren">(</span><em>name</em>, <em>filterfunc=&lt;function &lt;lambda&gt; at 0x0000000003C53BA8&gt;</em>, <em>value=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/function.html#Counter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.function.Counter" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descname">Counter</code><span class="sig-paren">(</span><em>name</em>, <em>filterfunc=&lt;function &lt;lambda&gt; at 0x0000000003C2ABA8&gt;</em>, <em>value=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/function.html#Counter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.function.Counter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#nutsflow.base.NutFunction" title="nutsflow.base.NutFunction"><code class="xref py py-class docutils literal"><span class="pre">nutsflow.base.NutFunction</span></code></a></p>
 <p>Increment counter depending on elements in iterable.
 Intended mostly for debugging and monitoring. Avoid for standard
@@ -658,7 +658,7 @@ processing of data. The function has side-effects but is thread-safe.</p>
 
 <dl class="method">
 <dt id="nutsflow.function.Counter.__init__">
-<code class="descname">__init__</code><span class="sig-paren">(</span><em>name</em>, <em>filterfunc=&lt;function &lt;lambda&gt; at 0x0000000003C53BA8&gt;</em>, <em>value=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/function.html#Counter.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.function.Counter.__init__" title="Permalink to this definition">¶</a></dt>
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>name</em>, <em>filterfunc=&lt;function &lt;lambda&gt; at 0x0000000003C2ABA8&gt;</em>, <em>value=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/function.html#Counter.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.function.Counter.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>counter = Counter(name, filterfunc, value)
 iterable &gt;&gt; counter</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nutsflow</span> <span class="k">import</span> <span class="n">Consume</span>
@@ -919,7 +919,7 @@ or removing it from a pipeline.</p>
 
 <dl class="class">
 <dt id="nutsflow.function.Print">
-<em class="property">class </em><code class="descname">Print</code><span class="sig-paren">(</span><em>fmtfunc=None</em>, <em>every_sec=0</em>, <em>every_n=0</em>, <em>filterfunc=&lt;function &lt;lambda&gt; at 0x0000000003C60048&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/function.html#Print"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.function.Print" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descname">Print</code><span class="sig-paren">(</span><em>fmtfunc=None</em>, <em>every_sec=0</em>, <em>every_n=0</em>, <em>filterfunc=&lt;function &lt;lambda&gt; at 0x0000000003C37048&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/function.html#Print"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.function.Print" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#nutsflow.base.NutFunction" title="nutsflow.base.NutFunction"><code class="xref py py-class docutils literal"><span class="pre">nutsflow.base.NutFunction</span></code></a></p>
 <p>Print elements in iterable.</p>
 <dl class="method">
@@ -930,7 +930,7 @@ or removing it from a pipeline.</p>
 
 <dl class="method">
 <dt id="nutsflow.function.Print.__init__">
-<code class="descname">__init__</code><span class="sig-paren">(</span><em>fmtfunc=None</em>, <em>every_sec=0</em>, <em>every_n=0</em>, <em>filterfunc=&lt;function &lt;lambda&gt; at 0x0000000003C60048&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/function.html#Print.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.function.Print.__init__" title="Permalink to this definition">¶</a></dt>
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>fmtfunc=None</em>, <em>every_sec=0</em>, <em>every_n=0</em>, <em>filterfunc=&lt;function &lt;lambda&gt; at 0x0000000003C37048&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/function.html#Print.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.function.Print.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="docutils">
 <dt>iterable &gt;&gt; Print(fmtfunc=None, every_sec=0, every_n=0,</dt>
 <dd>filterfunc=lambda x: True)</dd>
@@ -2918,13 +2918,13 @@ in the provided container, eg. list, tuple, set</li>
 
 <dl class="class">
 <dt id="nutsflow.sink.WriteCSV">
-<em class="property">class </em><code class="descname">WriteCSV</code><span class="sig-paren">(</span><em>filepath</em>, <em>cols=None</em>, <em>skipheader=0</em>, <em>fmtfunc=&lt;function &lt;lambda&gt; at 0x0000000003C60F98&gt;</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/sink.html#WriteCSV"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.sink.WriteCSV" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descname">WriteCSV</code><span class="sig-paren">(</span><em>filepath</em>, <em>cols=None</em>, <em>skipheader=0</em>, <em>fmtfunc=&lt;function &lt;lambda&gt; at 0x0000000003C37F98&gt;</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/sink.html#WriteCSV"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.sink.WriteCSV" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#nutsflow.base.NutSink" title="nutsflow.base.NutSink"><code class="xref py py-class docutils literal"><span class="pre">nutsflow.base.NutSink</span></code></a></p>
 <p>Write data to a CSV file using Python&#8217;s CSV writer.
 See: <a class="reference external" href="https://docs.python.org/2/library/csv.html">https://docs.python.org/2/library/csv.html</a></p>
 <dl class="method">
 <dt id="nutsflow.sink.WriteCSV.__init__">
-<code class="descname">__init__</code><span class="sig-paren">(</span><em>filepath</em>, <em>cols=None</em>, <em>skipheader=0</em>, <em>fmtfunc=&lt;function &lt;lambda&gt; at 0x0000000003C60F98&gt;</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/sink.html#WriteCSV.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.sink.WriteCSV.__init__" title="Permalink to this definition">¶</a></dt>
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>filepath</em>, <em>cols=None</em>, <em>skipheader=0</em>, <em>fmtfunc=&lt;function &lt;lambda&gt; at 0x0000000003C37F98&gt;</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/sink.html#WriteCSV.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.sink.WriteCSV.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>WriteCSV(filepath, cols, skipheader, fmtfunc, <a href="#id19"><span class="problematic" id="id20">**</span></a>kwargs)</p>
 <p>Write data in Comma Separated Values format (CSV) and other formats
 to file. Tab Separated Values (TSV) files can be written by
@@ -3130,13 +3130,13 @@ Procuct([1,2], [1,2]) is equal to Product([1,2], repeat=2)</li>
 
 <dl class="class">
 <dt id="nutsflow.source.ReadCSV">
-<em class="property">class </em><code class="descname">ReadCSV</code><span class="sig-paren">(</span><em>filepath</em>, <em>columns=None</em>, <em>skipheader=0</em>, <em>fmtfunc=&lt;function &lt;lambda&gt; at 0x0000000003C53278&gt;</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/source.html#ReadCSV"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.source.ReadCSV" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descname">ReadCSV</code><span class="sig-paren">(</span><em>filepath</em>, <em>columns=None</em>, <em>skipheader=0</em>, <em>fmtfunc=&lt;function &lt;lambda&gt; at 0x0000000003C2A278&gt;</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/source.html#ReadCSV"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.source.ReadCSV" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#nutsflow.base.NutSource" title="nutsflow.base.NutSource"><code class="xref py py-class docutils literal"><span class="pre">nutsflow.base.NutSource</span></code></a></p>
 <p>Read data from a CSV file using Python&#8217;s CSV reader.
 See: <a class="reference external" href="https://docs.python.org/2/library/csv.html">https://docs.python.org/2/library/csv.html</a></p>
 <dl class="method">
 <dt id="nutsflow.source.ReadCSV.__init__">
-<code class="descname">__init__</code><span class="sig-paren">(</span><em>filepath</em>, <em>columns=None</em>, <em>skipheader=0</em>, <em>fmtfunc=&lt;function &lt;lambda&gt; at 0x0000000003C53278&gt;</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/source.html#ReadCSV.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.source.ReadCSV.__init__" title="Permalink to this definition">¶</a></dt>
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>filepath</em>, <em>columns=None</em>, <em>skipheader=0</em>, <em>fmtfunc=&lt;function &lt;lambda&gt; at 0x0000000003C2A278&gt;</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/source.html#ReadCSV.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.source.ReadCSV.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>ReadCSV(filepath, columns, skipheader, fmtfunc, <a href="#id21"><span class="problematic" id="id22">**</span></a>kwargs)</p>
 <p>Read data in Comma Separated Format (CSV) from file.
 See also CSVWriter.
