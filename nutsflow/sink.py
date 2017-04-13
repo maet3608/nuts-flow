@@ -13,19 +13,22 @@ from factory import nut_sink
 from common import as_tuple
 from iterfunction import nth, consume, length, take
 
-Sum = nut_sink(sum)
-"""
-iterable >> Sum()
 
-Return sum over inputs.
+@nut_sink
+def Sum(iterable):
+    """
+    iterable >> Sum()
 
->>> [1, 2, 3] >> Sum()
-6
+    Return sum over inputs.
 
-:param iterable iterable: Iterable over numbers
-:return: Sum of numbers
-:rtype: number
-"""
+    >>> [1, 2, 3] >> Sum()
+    6
+
+    :param iterable iterable: Iterable over numbers
+    :return: Sum of numbers
+    :rtype: number
+    """
+    return sum(iterable)
 
 
 @nut_sink

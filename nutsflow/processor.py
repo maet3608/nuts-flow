@@ -24,106 +24,127 @@ from function import Identity
 from sink import Consume, Collect
 from nutsflow.common import timestr
 
-Take = nut_processor(itf.take)
-"""
-iterable >> Take(n)
 
-Return first n elements of iterable
+@nut_processor
+def Take(iterable, n):
+    """
+    iterable >> Take(n)
 
->>> [1, 2, 3, 4] >> Take(2) >> Collect()
-[1, 2]
+    Return first n elements of iterable
 
-:param iterable iterable: Any iterable
-:param int n: Number of elements to take
-:return: First n elements of iterable
-:rtype: iterator
-"""
+    >>> from nutsflow import Collect
 
-Slice = nut_processor(itt.islice)
-"""
-iterable >> Slice([start,] stop[, stride])
+    >>> [1, 2, 3, 4] >> Take(2) >> Collect()
+    [1, 2]
 
-Return slice of elements from iterable.
-See https://docs.python.org/2/library/itertools.html#itertools.islice
-
->>> [1, 2, 3, 4] >> Slice(2) >> Collect()
-[1, 2]
-
->>> [1, 2, 3, 4] >> Slice(1, 3) >> Collect()
-[2, 3]
-
->>> [1, 2, 3, 4] >> Slice(0, 4, 2) >> Collect()
-[1, 3]
-
-:param iterable iterable: Any iterable
-:param int start: Start index of slice.
-:param int stop: End index of slice.
-:param int step: Step size of slice.
-:return: Elements sliced from iterable
-:rtype: iterator
-"""
-
-Concat = nut_processor(itt.chain)
-"""
-iterable >> Concat(*iterables)
-
-Concatenate iterables.
-
->>> Range(5) >> Concat('abc') >> Collect()
-[0, 1, 2, 3, 4, 'a', 'b', 'c']
-
->>> '12' >> Concat('abcd', '+-') >> Collect()
-['1', '2', 'a', 'b', 'c', 'd', '+', '-']
+    :param iterable iterable: Any iterable
+    :param int n: Number of elements to take
+    :return: First n elements of iterable
+    :rtype: iterator
+    """
+    return itf.take(iterable, n)
 
 
-:param iterable iterable: Any iterable
-:param iterable iterables: Iterables to concatenate
-:return: Concatenated iterators
-:rtype: iterator
-"""
+@nut_processor
+def Slice(iterable, start=None, *args, **kwargs):
+    """
+    iterable >> Slice([start,] stop[, stride])
 
-Interleave = nut_processor(itf.interleave)
-"""
-iterable >> Interleave(*iterables)
+    Return slice of elements from iterable.
+    See https://docs.python.org/2/library/itertools.html#itertools.islice
+    
+    >>> from nutsflow import Collect
+     
+    >>> [1, 2, 3, 4] >> Slice(2) >> Collect()
+    [1, 2]
 
-Interleave elements of iterable with elements of given iterables.
-Similar to iterable >> Zip(*iterables) >> Flatten() but longest iterable
-determines length of interleaved iterator.
+    >>> [1, 2, 3, 4] >> Slice(1, 3) >> Collect()
+    [2, 3]
 
->>> Range(5) >> Interleave('abc') >> Collect()
-[0, 'a', 1, 'b', 2, 'c', 3, 4]
+    >>> [1, 2, 3, 4] >> Slice(0, 4, 2) >> Collect()
+    [1, 3]
 
->>> '12' >> Interleave('abcd', '+-') >> Collect()
-['1', 'a', '+', '2', 'b', '-', 'c', 'd']
-
-
-:param iterable iterable: Any iterable
-:param iterable iterables: Iterables to interleave
-:return: Iterator over interleaved elements.
-:rtype: iterator
-"""
-
-Zip = nut_processor(itt.izip)
-"""
-iterable >> Zip(*iterables)
-
-Zip elements of iterable with elements of given iterables
-Zip finishes when shortest iterable is exhausted.
-See https://docs.python.org/2/library/itertools.html#itertools.izip
-And https://docs.python.org/2/library/itertools.html#itertools.izip_longest
-
->>> [0, 1, 2] >> Zip('abc') >> Collect()
-[(0, 'a'), (1, 'b'), (2, 'c')]
-
->>> '12' >> Zip('abcd', '+-') >> Collect()
-[('1', 'a', '+'), ('2', 'b', '-')]
+    :param iterable iterable: Any iterable
+    :param int start: Start index of slice.
+    :param int stop: End index of slice.
+    :param int step: Step size of slice.
+    :return: Elements sliced from iterable
+    :rtype: iterator
+    """
+    return itt.islice(iterable, start, *args, **kwargs)
 
 
-:param iterable iterable: Any iterable
-:param iterable iterables: Iterables to zip
-:return: Zipped elements from iterables.
-:rtype: iterator over tuples
-"""
+@nut_processor
+def Concat(iterable, *iterables):
+    """
+    iterable >> Concat(*iterables)
+
+    Concatenate iterables.
+
+    >>> from nutsflow import Range, Collect
+
+    >>> Range(5) >> Concat('abc') >> Collect()
+    [0, 1, 2, 3, 4, 'a', 'b', 'c']
+
+    >>> '12' >> Concat('abcd', '+-') >> Collect()
+    ['1', '2', 'a', 'b', 'c', 'd', '+', '-']
+
+    :param iterable iterable: Any iterable
+    :param iterable iterables: Iterables to concatenate
+    :return: Concatenated iterators
+    :rtype: iterator
+    """
+    return itt.chain(iterable, *iterables)
+
+
+@nut_processor
+def Interleave(iterable, *iterables):
+    """
+    iterable >> Interleave(*iterables)
+
+    Interleave elements of iterable with elements of given iterables.
+    Similar to iterable >> Zip(*iterables) >> Flatten() but longest iterable
+    determines length of interleaved iterator.
+
+    >>> from nutsflow import Range, Collect
+    >>> Range(5) >> Interleave('abc') >> Collect()
+    [0, 'a', 1, 'b', 2, 'c', 3, 4]
+
+    >>> '12' >> Interleave('abcd', '+-') >> Collect()
+    ['1', 'a', '+', '2', 'b', '-', 'c', 'd']
+
+    :param iterable iterable: Any iterable
+    :param iterable iterables: Iterables to interleave
+    :return: Iterator over interleaved elements.
+    :rtype: iterator
+    """
+    return itf.interleave(iterable, *iterables)
+
+
+@nut_processor
+def Zip(iterable, iterable2=None, *iterables):
+    """
+    iterable >> Zip(*iterables)
+
+    Zip elements of iterable with elements of given iterables
+    Zip finishes when shortest iterable is exhausted.
+    See https://docs.python.org/2/library/itertools.html#itertools.izip
+    And https://docs.python.org/2/library/itertools.html#itertools.izip_longest
+
+    >>> from nutsflow import Collect
+
+    >>> [0, 1, 2] >> Zip('abc') >> Collect()
+    [(0, 'a'), (1, 'b'), (2, 'c')]
+
+    >>> '12' >> Zip('abcd', '+-') >> Collect()
+    [('1', 'a', '+'), ('2', 'b', '-')]
+
+    :param iterable iterable: Any iterable
+    :param iterable iterables: Iterables to zip
+    :return: Zipped elements from iterables.
+    :rtype: iterator over tuples
+    """
+    return itt.izip(iterable, iterable2, *iterables)
 
 
 @nut_processor

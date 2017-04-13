@@ -12,41 +12,51 @@ from base import NutSource
 from factory import nut_source
 from common import as_tuple
 
-Enumerate = nut_source(itt.count)
-"""
-Enumerate(start=0 [, step])
 
-Return increasing integers. See itertools.count
+@nut_source
+def Enumerate(start=0, step=1):
+    """
+    Enumerate(start=0 [, step])
 
->>> Enumerate() >> Take(3) >> Collect()
-[0, 1, 2]
+    Return increasing integers. See itertools.count
+    
+    >>> from nutsflow import Take, Collect
 
->>> Enumerate(1, 2) >> Take(3) >> Collect()
-[1, 3, 5]
+    >>> Enumerate() >> Take(3) >> Collect()
+    [0, 1, 2]
 
-:param int start: Start of integer sequence
-:param int step: Step of sequence
-:return: Increasing integers.
-:rtype: iterable over int
-"""
+    >>> Enumerate(1, 2) >> Take(3) >> Collect()
+    [1, 3, 5]
 
-Repeat = nut_source(itt.repeat)
-"""
-Repeat(value [, times])
+    :param int start: Start of integer sequence
+    :param int step: Step of sequence
+    :return: Increasing integers.
+    :rtype: iterable over int
+    """
+    return itt.count(start, step=step)
 
-Return given value repeatedly. See itertools.repeat
 
->>> Repeat(1, 3) >> Collect()
-[1, 1, 1]
+@nut_source
+def Repeat(value, n=None):
+    """
+    Repeat(value [, n])
 
->>> Repeat(1) >> Take(4) >> Collect()
-[1, 1, 1, 1]
+    Return given value repeatedly. See itertools.repeat
+    
+    >>> from nutsflow import Take, Collect
 
-:param object value: Value to repeat
-:param int times: Optional parameter. Object is repeated 'times' times.
-:return: Iterator of repeated objects
-:rtype: iterable over object
-"""
+    >>> Repeat(1, 3) >> Collect()
+    [1, 1, 1]
+
+    >>> Repeat(1) >> Take(4) >> Collect()
+    [1, 1, 1, 1]
+
+    :param object value: Value to repeat
+    :param int times: Optional parameter. Object is repeated 'n' times.
+    :return: Iterator of repeated objects
+    :rtype: iterable over object
+    """
+    return itt.repeat(value, n) if n else itt.repeat(value)
 
 
 @nut_source
