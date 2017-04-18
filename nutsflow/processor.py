@@ -263,15 +263,15 @@ def FlattenCol(iterable, columns):
     Only one level is flattened.
 
     >>> from nutsflow import Collect
-    >>> data = [([1, 2], [3, 4])]
+    >>> data = [([1, 2], [3, 4]), ([5, 6], [7, 8])]
     >>> data >> FlattenCol(0) >> Collect()
-    [(1,), (2,)]
+    [(1,), (2,), (5,), (6,)]
 
     >>> data >> FlattenCol((1, 0)) >> Collect()
-    [(3, 1), (4, 2)]
+    [(3, 1), (4, 2), (7, 5), (8, 6)]
 
     >>> data >> FlattenCol((1, 1, 0)) >> Collect()
-    [(3, 3, 1), (4, 4, 2)]
+    [(3, 3, 1), (4, 4, 2), (7, 7, 5), (8, 8, 6)]
 
     :param iterable iterable: Any iterable.
     :params int|tuple columns: Column index or indices
