@@ -88,6 +88,15 @@ def test_Flatten():
     assert [(1,), ((2, 3), 4)] >> Flatten() >> Collect() == [1, (2, 3), 4]
 
 
+def test_FlattenCol():
+    data = [([1, 2], [3, 4])]
+    assert [] >> FlattenCol(0) >> Collect() == []
+    assert data >> FlattenCol(0) >> Collect() == [(1,), (2,)]
+    assert data >> FlattenCol((0, 1)) >> Collect() == [(1, 3), (2, 4)]
+    assert data >> FlattenCol((1, 0)) >> Collect() == [(3, 1), (4, 2)]
+    assert data >> FlattenCol((1, 1, 0)) >> Collect() == [(3, 3, 1), (4, 4, 2)]
+
+
 def test_FlatMap():
     assert [] >> FlatMap(_) >> Collect() == []
     assert [[1], [2]] >> FlatMap(_) >> Collect() == [1, 2]

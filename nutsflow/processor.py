@@ -19,6 +19,7 @@ import multiprocessing as mp
 import collections as cl
 
 from base import Nut
+from common import as_tuple, as_set
 from factory import nut_processor
 from function import Identity
 from sink import Consume, Collect
@@ -231,10 +232,14 @@ def Flatten(iterable):
     iterable >> Flatten()
 
     Flatten the iterables within the iterable and non-iterables are passed
-    through. Only one level is flattened.
+    through. Only one level is flattened. Chain Flatten to flatten deeper
+    structures.
 
-    >>> from nutsflow import Collect    
+    >>> from nutsflow import Collect
     >>> [(1, 2), (3, 4, 5), 6] >> Flatten() >> Collect()
+    [1, 2, 3, 4, 5, 6]
+
+    >>> [(1, (2)), (3, (4, 5)), 6] >> Flatten() >> Flatten() >> Collect()
     [1, 2, 3, 4, 5, 6]
 
     :param iterable iterable: Any iterable.
@@ -247,6 +252,36 @@ def Flatten(iterable):
                 yield element
         else:
             yield it
+
+
+@nut_processor
+def FlattenCol(iterable, columns):
+    """
+    iterable >> FlattenCol(columns)
+
+    Flattens the specified columns of the tuples/iterables within the iterable.
+    Only one level is flattened.
+
+    >>> from nutsflow import Collect
+    >>> data = [([1, 2], [3, 4])]
+    >>> data >> FlattenCol(0) >> Collect()
+    [(1,), (2,)]
+
+    >>> data >> FlattenCol((1, 0)) >> Collect()
+    [(3, 1), (4, 2)]
+
+    >>> data >> FlattenCol((1, 1, 0)) >> Collect()
+    [(3, 3, 1), (4, 4, 2)]
+
+    :param iterable iterable: Any iterable.
+    :params int|tuple columns: Column index or indices
+    :return: Flattened columns of iterable
+    :rtype: generator
+    """
+    columns = as_tuple(columns)
+    for es in iterable:
+        for e in itt.izip(*[es[c] for c in columns]):
+            yield e
 
 
 FlatMap = nut_processor(itf.flatmap, 1)
@@ -663,7 +698,7 @@ def MapCol(iterable, columns, func):
     :return: Iterator over lists
     :rtype: iterator of list
     """
-    colset = {columns} if isinstance(columns, int) else set(columns)
+    colset = as_set(columns)
     for es in iterable:
         yield tuple(func(e) if i in colset else e for i, e in enumerate(es))
 
