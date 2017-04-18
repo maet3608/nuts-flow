@@ -6,8 +6,8 @@ from __future__ import print_function
 
 import time
 import threading
-import common
 
+from common import console
 from factory import nut_function, NutFunction
 
 
@@ -16,7 +16,7 @@ def Identity(x):
     """
     iterable >> Identity()
 
-    Return same input as output.
+    Return same input as console.
 
     >>> from nutsflow import Collect
     >>> [1, 2, 3] >> Identity() >> Collect()
@@ -204,7 +204,7 @@ def Sleep(x, duration=1):
     """
     iterable >> Sleep(duration)
 
-    Return same input as output but sleep for each element.
+    Return same input as console but sleep for each element.
 
     >>> from nutsflow import Collect
     >>> [1, 2, 3] >> Sleep(0.1) >> Collect()
@@ -254,7 +254,7 @@ class Print(NutFunction):
         iterable >> Print(fmtfunc=None, every_sec=0, every_n=0,
                           filterfunc=lambda x: True)
 
-        Return same input as output but print for each element.
+        Return same input as console but print for each element.
 
         >>> from nutsflow import Consume
         >>> [1, 2] >> Print() >> Consume()
@@ -303,7 +303,7 @@ class Print(NutFunction):
 
     def __delta_sec(self):
         """Return time in seconds (float) consumed between prints so far"""
-        return (time.time() - self.time)
+        return time.time() - self.time
 
     def __should_print(self, x):
         """Return true if element x should be printed"""
@@ -324,11 +324,11 @@ class Print(NutFunction):
         if hasattr(x, 'ndim'):  # is it a numpy array?
             x = x.tolist() if x.ndim else x.item()
         if not fmtfunc:
-            print(x)
+            console(x)
         elif isinstance(fmtfunc, str):
-            print(fmtfunc.format(*(x if hasattr(x, '__iter__') else [x])))
+            console(fmtfunc.format(*(x if hasattr(x, '__iter__') else [x])))
         elif hasattr(fmtfunc, '__call__'):
-            print(fmtfunc(x))
+            console(fmtfunc(x))
         else:
             raise ValueError('Invalid format ' + str(fmtfunc))
 

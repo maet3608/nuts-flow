@@ -3,7 +3,9 @@
    :synopsis: Unit tests for common module
 """
 
-from nutsflow.common import sec_to_hms, timestr, Redirect, as_tuple, as_set
+from __future__ import print_function
+from nutsflow.common import (sec_to_hms, timestr, Redirect, as_tuple, as_set,
+                             console)
 
 
 def test_as_tuple():
@@ -28,7 +30,13 @@ def test_timestr():
     assert timestr('80') == '0:01:20'
 
 
+def test_output():
+    with Redirect() as out:
+        console('test')
+    assert out.getvalue() == 'test\n'
+
+
 def test_Redirect():
     with Redirect() as out:
-        print 'test'
+        print('test')
     assert out.getvalue() == 'test\n'

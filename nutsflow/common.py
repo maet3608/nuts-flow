@@ -2,6 +2,7 @@
 .. module:: common
    :synopsis: Common utility functions
 """
+from __future__ import print_function
 
 import sys
 
@@ -74,13 +75,30 @@ def timestr(duration, fmt='{:d}:{:02d}:{:02d}'):
     return fmt.format(h, m, s)
 
 
+def console(*args, **kwargs):
+    """
+    Print to stdout and flush.
+
+    Wrapper around Python's print function that ensures flushing after each
+    call.
+
+    >>> print('test')
+    test
+
+    :param args: Arguments
+    :param kwargs: Key-Word arguments.
+    """
+    print(*args, **kwargs)
+    sys.stdout.flush()
+
+
 class Redirect(object):
     """
     Redirect stdout to string.
 
     >>> with Redirect() as out:
-    ...     print 'test'
-    >>> print out.getvalue()
+    ...     print('test')
+    >>> print(out.getvalue())
     test
     <BLANKLINE>
     """

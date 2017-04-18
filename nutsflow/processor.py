@@ -3,8 +3,6 @@
    :synopsis: Nuts that process iterables and return iterables.
 """
 
-from __future__ import print_function
-
 import tempfile
 import shutil
 import os
@@ -19,7 +17,7 @@ import multiprocessing as mp
 import collections as cl
 
 from base import Nut
-from common import as_tuple, as_set
+from common import as_tuple, as_set, console
 from factory import nut_processor
 from function import Identity
 from sink import Consume, Collect
@@ -929,7 +927,9 @@ class PrintProgress(Nut):
                 sec_consumed = int(time.clock() - start_time)
                 eta = sec_consumed * (self.n / float(i) - 1) if i else 0
                 tstr = timestr(eta, etafmt)
-                print('\rprogress: {}% {}'.format(per_done, tstr), end='')
+                text = '\rprogress: {}% {}'.format(per_done, tstr)
+                console(text, end='')
             yield e
         duration = int(time.clock() - start_time)
-        print('\rprogress: 100% {}'.format(timestr(duration, endfmt)))
+        text = '\rprogress: 100% {}'.format(timestr(duration, endfmt))
+        console(text)
