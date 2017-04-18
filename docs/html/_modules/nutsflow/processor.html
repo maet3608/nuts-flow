@@ -180,6 +180,7 @@
 <span class="kn">import</span> <span class="nn">collections</span> <span class="k">as</span> <span class="nn">cl</span>
 
 <span class="kn">from</span> <span class="nn">base</span> <span class="k">import</span> <span class="n">Nut</span>
+<span class="kn">from</span> <span class="nn">common</span> <span class="k">import</span> <span class="n">as_tuple</span><span class="p">,</span> <span class="n">as_set</span>
 <span class="kn">from</span> <span class="nn">factory</span> <span class="k">import</span> <span class="n">nut_processor</span>
 <span class="kn">from</span> <span class="nn">function</span> <span class="k">import</span> <span class="n">Identity</span>
 <span class="kn">from</span> <span class="nn">sink</span> <span class="k">import</span> <span class="n">Consume</span><span class="p">,</span> <span class="n">Collect</span>
@@ -392,10 +393,14 @@
 <span class="sd">    iterable &gt;&gt; Flatten()</span>
 
 <span class="sd">    Flatten the iterables within the iterable and non-iterables are passed</span>
-<span class="sd">    through. Only one level is flattened.</span>
+<span class="sd">    through. Only one level is flattened. Chain Flatten to flatten deeper</span>
+<span class="sd">    structures.</span>
 
-<span class="sd">    &gt;&gt;&gt; from nutsflow import Collect    </span>
+<span class="sd">    &gt;&gt;&gt; from nutsflow import Collect</span>
 <span class="sd">    &gt;&gt;&gt; [(1, 2), (3, 4, 5), 6] &gt;&gt; Flatten() &gt;&gt; Collect()</span>
+<span class="sd">    [1, 2, 3, 4, 5, 6]</span>
+
+<span class="sd">    &gt;&gt;&gt; [(1, (2)), (3, (4, 5)), 6] &gt;&gt; Flatten() &gt;&gt; Flatten() &gt;&gt; Collect()</span>
 <span class="sd">    [1, 2, 3, 4, 5, 6]</span>
 
 <span class="sd">    :param iterable iterable: Any iterable.</span>
@@ -408,6 +413,36 @@
                 <span class="k">yield</span> <span class="n">element</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">yield</span> <span class="n">it</span></div>
+
+
+<span class="nd">@nut_processor</span>
+<div class="viewcode-block" id="FlattenCol"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.processor.FlattenCol">[docs]</a><span class="k">def</span> <span class="nf">FlattenCol</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">columns</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    iterable &gt;&gt; FlattenCol(columns)</span>
+
+<span class="sd">    Flattens the specified columns of the tuples/iterables within the iterable.</span>
+<span class="sd">    Only one level is flattened.</span>
+
+<span class="sd">    &gt;&gt;&gt; from nutsflow import Collect</span>
+<span class="sd">    &gt;&gt;&gt; data = [([1, 2], [3, 4]), ([5, 6], [7, 8])]</span>
+<span class="sd">    &gt;&gt;&gt; data &gt;&gt; FlattenCol(0) &gt;&gt; Collect()</span>
+<span class="sd">    [(1,), (2,), (5,), (6,)]</span>
+
+<span class="sd">    &gt;&gt;&gt; data &gt;&gt; FlattenCol((1, 0)) &gt;&gt; Collect()</span>
+<span class="sd">    [(3, 1), (4, 2), (7, 5), (8, 6)]</span>
+
+<span class="sd">    &gt;&gt;&gt; data &gt;&gt; FlattenCol((1, 1, 0)) &gt;&gt; Collect()</span>
+<span class="sd">    [(3, 3, 1), (4, 4, 2), (7, 7, 5), (8, 8, 6)]</span>
+
+<span class="sd">    :param iterable iterable: Any iterable.</span>
+<span class="sd">    :params int|tuple columns: Column index or indices</span>
+<span class="sd">    :return: Flattened columns of iterable</span>
+<span class="sd">    :rtype: generator</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">columns</span> <span class="o">=</span> <span class="n">as_tuple</span><span class="p">(</span><span class="n">columns</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">es</span> <span class="ow">in</span> <span class="n">iterable</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">itt</span><span class="o">.</span><span class="n">izip</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">es</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">columns</span><span class="p">]):</span>
+            <span class="k">yield</span> <span class="n">e</span></div>
 
 
 <span class="n">FlatMap</span> <span class="o">=</span> <span class="n">nut_processor</span><span class="p">(</span><span class="n">itf</span><span class="o">.</span><span class="n">flatmap</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
@@ -824,7 +859,7 @@
 <span class="sd">    :return: Iterator over lists</span>
 <span class="sd">    :rtype: iterator of list</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">colset</span> <span class="o">=</span> <span class="p">{</span><span class="n">columns</span><span class="p">}</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">columns</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span> <span class="k">else</span> <span class="nb">set</span><span class="p">(</span><span class="n">columns</span><span class="p">)</span>
+    <span class="n">colset</span> <span class="o">=</span> <span class="n">as_set</span><span class="p">(</span><span class="n">columns</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">es</span> <span class="ow">in</span> <span class="n">iterable</span><span class="p">:</span>
         <span class="k">yield</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">func</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="k">if</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">colset</span> <span class="k">else</span> <span class="n">e</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">e</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">es</span><span class="p">))</span></div>
 
@@ -1074,7 +1109,7 @@
   <div role="contentinfo">
     <p>
         &copy; Copyright 2017, IBM Research Australia.
-      Last updated on Apr 13, 2017.
+      Last updated on Apr 18, 2017.
 
     </p>
   </div> 
