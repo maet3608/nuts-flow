@@ -22,6 +22,19 @@ for bleeding-edge version:
   python setup.py install
   pytest
 
+For upgrading an existing installation
+
+.. code::
+  
+  pip install nutsflow  --upgrade
+
+or if installed via ``git clone`` and ``setup.py``
+
+  .. code::
+  
+  cd nuts-flow
+  python setup.py install --force  
+
   
 Verification
 ------------
