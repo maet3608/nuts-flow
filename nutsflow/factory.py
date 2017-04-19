@@ -75,11 +75,13 @@ def nut_processor(func, iterpos=0):
     """
     Decorator for Nut processors.
 
-    @nut_processor
-    def Pick(iterable, p):
-        for e in iterable:
-            if random() > p:
-                yield e
+    .. code::
+    
+      @nut_processor
+      def Pick(iterable, p):
+          for e in iterable:
+              if random() > p:
+                  yield e
 
     :param function func: Function to decorate
     :param iterpos: Position of iterable in function arguments
@@ -93,9 +95,11 @@ def nut_sink(func, iterpos=0):
     """
     Decorator for Nut sinks.
 
-    @nut_sink
-    def Collect(iterable, container):
-        return container(iterable)
+    .. code::
+    
+      @nut_sink
+      def Collect(iterable, container):
+          return container(iterable)
 
     :param function func: Function to decorate
     :param iterpos: Position of iterable in function arguments
@@ -109,9 +113,11 @@ def nut_function(func):
     """
     Decorator for Nut functions.
 
-    @nut_function
-    def TimesN(x, n):
-        return x * n
+    .. code::
+    
+      @nut_function
+      def TimesN(x, n):
+          return x * n
 
     :param function func: Function to decorate
     :return: Nut function for given function
@@ -133,9 +139,11 @@ def nut_source(func):
     """
     Decorator for Nut sources.
 
-    @nut_source
-    def Range(start, end):
-        return xrange(start, end)
+    .. code::
+
+      @nut_source
+      def Range(start, end):
+          return xrange(start, end)
 
     :param function func: Function to decorate
     :return: Nut source for given function
@@ -157,9 +165,11 @@ def nut_filter(func):
     """
     Decorator for Nut filters.
 
-    @nut_filter
-    def GreaterThan(x, threshold):
-        return x > threshold
+    .. code::
+    
+      @nut_filter
+      def GreaterThan(x, threshold):
+          return x > threshold
 
     :param function func: Function to decorate. Must return boolean value.
     :return: Nut filter for given function
@@ -172,9 +182,11 @@ def nut_filterfalse(func):
     """
     Decorator for Nut filters that are inverted.
 
-    @nut_filterfalse
-    def NotGreaterThan(x, threshold):
-        return x > threshold
+    .. code::
+
+      @nut_filterfalse
+      def NotGreaterThan(x, threshold):
+          return x > threshold
 
     :param function func: Function to decorate
     :return: Nut filter for given function. . Must return boolean value.
