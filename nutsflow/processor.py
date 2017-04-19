@@ -893,9 +893,9 @@ def Prefetch(iterable, num_prefetch=1):
 
 
 class PrintProgress(Nut):
-    def __init__(self, data, update=10.0):
+    def __init__(self, data, every_sec=10.0):
         """
-        iterable >> PrintProgress(data, update=10.0)
+        iterable >> PrintProgress(data, every_sec=10.0)
 
         Print progress on iterable. Requires that length of iterable is known
         beforehand. Data are just passed through.
@@ -908,12 +908,12 @@ class PrintProgress(Nut):
         :param int data: Number of elements in iterable or realized iterable.
                If data is provided it must not be an iterator since it will be
                consumed!
-        :param float update: Progress is printed every 'update' seconds.
+        :param float every_sec: Progress is printed every 'every_sec' seconds.
         :return: Iterator over input elements
         :rtype: iterator
         """
         self.n = (data if isinstance(data, int) else len(data)) - 1
-        self.update = update
+        self.every_sec = every_sec
 
     def __rrshift__(self, iterable):
         etafmt = '(eta: {:d}:{:02d}:{:02d})'
@@ -921,7 +921,7 @@ class PrintProgress(Nut):
         start_time = time.clock()
         up_time = time.clock()
         for i, e in enumerate(iterable):
-            if (time.clock() - up_time) >= self.update:
+            if (time.clock() - up_time) >= self.every_sec:
                 up_time = time.clock()
                 per_done = 100 * i / self.n
                 sec_consumed = int(time.clock() - start_time)
