@@ -32,6 +32,28 @@ def Sum(iterable):
 
 
 @nut_sink
+def Mean(iterable, default=None):
+    """
+    iterable >> Mean(default=None)
+
+    Return sum over inputs.
+
+    >>> [1, 2, 3] >> Mean()
+    2.0
+
+    :param iterable iterable: Iterable over numbers
+    :param object default: Value returned if iterable is empty.
+    :return: Mean of numbers or default value
+    :rtype: number
+    """
+    sum, n = 0, 0
+    for e in iterable:
+        sum += e
+        n += 1
+    return float(sum)/n if n else default
+
+
+@nut_sink
 def Max(iterable, key=lambda x: x, default=None):
     """
     iterable >> Max(key=func, default=None)

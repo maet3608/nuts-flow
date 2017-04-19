@@ -17,6 +17,12 @@ def test_Sum():
     assert [0, 1, 2] >> Sum() == 3
 
 
+def test_Mean():
+    assert [] >> Mean() is None
+    assert [] >> Mean(default=0) == 0
+    assert [1, 2, 3] >> Mean() == float(1+2+3) / 3
+
+
 def test_Max():
     assert [] >> Max(default=0) == 0
     assert [0, 3, 2] >> Max() == 3
