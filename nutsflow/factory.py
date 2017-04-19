@@ -76,7 +76,7 @@ def nut_processor(func, iterpos=0):
     Decorator for Nut processors.
 
     .. code::
-    
+
       @nut_processor
       def Pick(iterable, p):
           for e in iterable:
@@ -96,7 +96,7 @@ def nut_sink(func, iterpos=0):
     Decorator for Nut sinks.
 
     .. code::
-    
+
       @nut_sink
       def Collect(iterable, container):
           return container(iterable)
@@ -114,7 +114,7 @@ def nut_function(func):
     Decorator for Nut functions.
 
     .. code::
-    
+
       @nut_function
       def TimesN(x, n):
           return x * n
@@ -166,7 +166,7 @@ def nut_filter(func):
     Decorator for Nut filters.
 
     .. code::
-    
+
       @nut_filter
       def GreaterThan(x, threshold):
           return x > threshold
