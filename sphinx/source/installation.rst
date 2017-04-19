@@ -30,7 +30,7 @@ For upgrading an existing installation
 
 or if installed via ``git clone`` and ``setup.py``
 
-  .. code::
+.. code::
   
   cd nuts-flow
   python setup.py install --force  
