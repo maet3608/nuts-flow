@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                ['1', '0']
+                1.0.8
               </div>
             
           
@@ -164,8 +164,6 @@
 <span class="sd">   :synopsis: Nuts that process iterables and return iterables.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span>
-
 <span class="kn">import</span> <span class="nn">tempfile</span>
 <span class="kn">import</span> <span class="nn">shutil</span>
 <span class="kn">import</span> <span class="nn">os</span>
@@ -180,7 +178,7 @@
 <span class="kn">import</span> <span class="nn">collections</span> <span class="k">as</span> <span class="nn">cl</span>
 
 <span class="kn">from</span> <span class="nn">base</span> <span class="k">import</span> <span class="n">Nut</span>
-<span class="kn">from</span> <span class="nn">common</span> <span class="k">import</span> <span class="n">as_tuple</span><span class="p">,</span> <span class="n">as_set</span>
+<span class="kn">from</span> <span class="nn">common</span> <span class="k">import</span> <span class="n">as_tuple</span><span class="p">,</span> <span class="n">as_set</span><span class="p">,</span> <span class="n">console</span>
 <span class="kn">from</span> <span class="nn">factory</span> <span class="k">import</span> <span class="n">nut_processor</span>
 <span class="kn">from</span> <span class="nn">function</span> <span class="k">import</span> <span class="n">Identity</span>
 <span class="kn">from</span> <span class="nn">sink</span> <span class="k">import</span> <span class="n">Consume</span><span class="p">,</span> <span class="n">Collect</span>
@@ -1056,9 +1054,9 @@
 
 
 <div class="viewcode-block" id="PrintProgress"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.processor.PrintProgress">[docs]</a><span class="k">class</span> <span class="nc">PrintProgress</span><span class="p">(</span><span class="n">Nut</span><span class="p">):</span>
-<div class="viewcode-block" id="PrintProgress.__init__"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.processor.PrintProgress.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">update</span><span class="o">=</span><span class="mf">10.0</span><span class="p">):</span>
+<div class="viewcode-block" id="PrintProgress.__init__"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.processor.PrintProgress.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">every_sec</span><span class="o">=</span><span class="mf">10.0</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        iterable &gt;&gt; PrintProgress(data, update=10.0)</span>
+<span class="sd">        iterable &gt;&gt; PrintProgress(data, every_sec=10.0)</span>
 
 <span class="sd">        Print progress on iterable. Requires that length of iterable is known</span>
 <span class="sd">        beforehand. Data are just passed through.</span>
@@ -1071,12 +1069,12 @@
 <span class="sd">        :param int data: Number of elements in iterable or realized iterable.</span>
 <span class="sd">               If data is provided it must not be an iterator since it will be</span>
 <span class="sd">               consumed!</span>
-<span class="sd">        :param float update: Progress is printed every &#39;update&#39; seconds.</span>
+<span class="sd">        :param float every_sec: Progress is printed every &#39;every_sec&#39; seconds.</span>
 <span class="sd">        :return: Iterator over input elements</span>
 <span class="sd">        :rtype: iterator</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">n</span> <span class="o">=</span> <span class="p">(</span><span class="n">data</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span> <span class="k">else</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">))</span> <span class="o">-</span> <span class="mi">1</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">update</span> <span class="o">=</span> <span class="n">update</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">every_sec</span> <span class="o">=</span> <span class="n">every_sec</span></div>
 
 <div class="viewcode-block" id="PrintProgress.__rrshift__"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.processor.PrintProgress.__rrshift__">[docs]</a>    <span class="k">def</span> <span class="nf">__rrshift__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">iterable</span><span class="p">):</span>
         <span class="n">etafmt</span> <span class="o">=</span> <span class="s1">&#39;(eta: </span><span class="si">{:d}</span><span class="s1">:</span><span class="si">{:02d}</span><span class="s1">:</span><span class="si">{:02d}</span><span class="s1">)&#39;</span>
@@ -1084,16 +1082,18 @@
         <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">clock</span><span class="p">()</span>
         <span class="n">up_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">clock</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">e</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">iterable</span><span class="p">):</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">clock</span><span class="p">()</span> <span class="o">-</span> <span class="n">up_time</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">:</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">clock</span><span class="p">()</span> <span class="o">-</span> <span class="n">up_time</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">every_sec</span><span class="p">:</span>
                 <span class="n">up_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">clock</span><span class="p">()</span>
                 <span class="n">per_done</span> <span class="o">=</span> <span class="mi">100</span> <span class="o">*</span> <span class="n">i</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">n</span>
                 <span class="n">sec_consumed</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">clock</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span><span class="p">)</span>
                 <span class="n">eta</span> <span class="o">=</span> <span class="n">sec_consumed</span> <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="k">if</span> <span class="n">i</span> <span class="k">else</span> <span class="mi">0</span>
                 <span class="n">tstr</span> <span class="o">=</span> <span class="n">timestr</span><span class="p">(</span><span class="n">eta</span><span class="p">,</span> <span class="n">etafmt</span><span class="p">)</span>
-                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\r</span><span class="s1">progress: </span><span class="si">{}</span><span class="s1">% </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">per_done</span><span class="p">,</span> <span class="n">tstr</span><span class="p">),</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+                <span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\r</span><span class="s1">progress: </span><span class="si">{}</span><span class="s1">% </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">per_done</span><span class="p">,</span> <span class="n">tstr</span><span class="p">)</span>
+                <span class="n">console</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
             <span class="k">yield</span> <span class="n">e</span>
         <span class="n">duration</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">clock</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\r</span><span class="s1">progress: 100% </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">timestr</span><span class="p">(</span><span class="n">duration</span><span class="p">,</span> <span class="n">endfmt</span><span class="p">)))</span></div></div>
+        <span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\r</span><span class="s1">progress: 100% </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">timestr</span><span class="p">(</span><span class="n">duration</span><span class="p">,</span> <span class="n">endfmt</span><span class="p">))</span>
+        <span class="n">console</span><span class="p">(</span><span class="n">text</span><span class="p">)</span></div></div>
 </pre></div>
 
            </div>
@@ -1109,7 +1109,7 @@
   <div role="contentinfo">
     <p>
         &copy; Copyright 2017, IBM Research Australia.
-      Last updated on Apr 18, 2017.
+      Last updated on Apr 19, 2017.
 
     </p>
   </div> 
