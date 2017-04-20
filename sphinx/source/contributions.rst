@@ -5,8 +5,13 @@ Contributions to **nuts-flow** are welcome. Please document the code following
 the examples, provide unit tests and ensure that ``pytest`` runs without
 errors. 
 
+
+Unit tests
+^^^^^^^^^^
+
 .. code ::
 
+  $ cd nutsflow
   $ pytest
   ============================= test session starts =============================
   platform win32 -- Python 2.7.13, pytest-3.0.3, py-1.4.31, pluggy-0.4.0
@@ -77,3 +82,19 @@ We are aiming at a code coverage of 100%. Run ``pytest --cov`` for verification.
   nutsflow\underscore.py             26      0   100%
   ---------------------------------------------------
   TOTAL                             590      0   100%
+
+
+
+Documentation
+^^^^^^^^^^^^^
+
+Update Sphinx/HTML documentation as follows
+
+.. code::
+
+  cd sphinx
+  make clean
+  make html
+
+  cd ..
+  ./push_docs
