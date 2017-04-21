@@ -94,7 +94,12 @@
 <li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorial/introduction.html">Tutorial</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Contributions</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Contributions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#unit-tests">Unit tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#documentation">Documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#style-guide">Style guide</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="nutsflow.html">nutsflow package</a></li>
 </ul>
 
@@ -164,7 +169,10 @@
 <p>Contributions to <strong>nuts-flow</strong> are welcome. Please document the code following
 the examples, provide unit tests and ensure that <code class="docutils literal"><span class="pre">pytest</span></code> runs without
 errors.</p>
-<div class="code highlight-default"><div class="highlight"><pre><span></span>$ pytest
+<div class="section" id="unit-tests">
+<h2>Unit tests<a class="headerlink" href="#unit-tests" title="Permalink to this headline">¶</a></h2>
+<div class="code highlight-default"><div class="highlight"><pre><span></span>$ cd nutsflow
+$ pytest
 ============================= test session starts =============================
 platform win32 -- Python 2.7.13, pytest-3.0.3, py-1.4.31, pluggy-0.4.0
 rootdir: C:\Maet\Projects\Python\nuts-flow, inifile: pytest.ini
@@ -173,12 +181,12 @@ collected 138 items
 
 README.rst .
 nutsflow\base.py ..
-nutsflow\common.py ...
-nutsflow\function.py ..
+nutsflow\common.py ....
+nutsflow\function.py .........
 nutsflow\iterfunction.py ...........
-nutsflow\processor.py .
-nutsflow\sink.py .
-nutsflow\source.py ..
+nutsflow\processor.py ...................
+nutsflow\sink.py ............
+nutsflow\source.py ......
 nutsflow\underscore.py .
 sphinx\source\installation.rst .
 sphinx\source\introduction.rst .
@@ -198,17 +206,17 @@ sphinx\source\tutorial\sources.rst .
 sphinx\source\tutorial\transforming.rst .
 sphinx\source\tutorial\underscore.rst .
 tests\nutsflow\test_base.py ....
-tests\nutsflow\test_common.py .....
+tests\nutsflow\test_common.py ......
 tests\nutsflow\test_factory.py .........
 tests\nutsflow\test_function.py .........
 tests\nutsflow\test_iterfunction.py ...........
-tests\nutsflow\test_processor.py ..................................
-tests\nutsflow\test_sink.py ...............
+tests\nutsflow\test_processor.py ...................................
+tests\nutsflow\test_sink.py ................
 tests\nutsflow\test_source.py .......
 tests\nutsflow\test_underscore.py ..
 tests\nutsflow\examples\test_examples.py .
 
-========================= 138 passed in 19.74 seconds =========================
+========================= 182 passed in 19.58 seconds =========================
 </pre></div>
 </div>
 <p>We are aiming at a code coverage of 100%. Run <code class="docutils literal"><span class="pre">pytest</span> <span class="pre">--cov</span></code> for verification.</p>
@@ -231,6 +239,34 @@ nutsflow\underscore.py             26      0   100%
 ---------------------------------------------------
 TOTAL                             590      0   100%
 </pre></div>
+</div>
+</div>
+<div class="section" id="documentation">
+<h2>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h2>
+<p>Update Sphinx/HTML documentation as follows</p>
+<div class="code highlight-default"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="n">sphinx</span>
+<span class="n">make</span> <span class="n">clean</span>
+<span class="n">make</span> <span class="n">html</span>
+
+<span class="n">cd</span> <span class="o">..</span>
+<span class="o">./</span><span class="n">push_docs</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="style-guide">
+<h2>Style guide<a class="headerlink" href="#style-guide" title="Permalink to this headline">¶</a></h2>
+<p>Code should be formatted following the <a class="reference external" href="https://www.python.org/dev/peps/pep-0008/">PEP-8</a>
+style guide.</p>
+<p>Names of <em>nuts</em> shoulds be in CamelCase (just like class names) and describe an action,
+e.g. <code class="docutils literal"><span class="pre">ReadCSV</span></code> but not <code class="docutils literal"><span class="pre">CSVReader</span></code>.</p>
+<p>Prefer <em>immutable</em> data types, e.g. tuples over lists, for outputs of nuts and
+avoid nuts with <em>side-effects. Nuts should not *mutate</em> their input data but create
+copies.</p>
+<p>If a nut has no input it should be a <em>source</em>, for instance like <code class="docutils literal"><span class="pre">Range</span></code>.
+If it doesn&#8217;t output a generator or iterator it should be a <em>sink</em>,
+see <code class="docutils literal"><span class="pre">Collect</span></code> for example.
+If a nut outputs the same number of elements it reads, it probably
+is a <em>function</em> (e.g. <code class="docutils literal"><span class="pre">Square</span></code>) otherwise a <em>processor</em>.</p>
 </div>
 </div>
 
@@ -257,7 +293,7 @@ TOTAL                             590      0   100%
   <div role="contentinfo">
     <p>
         &copy; Copyright 2017, IBM Research Australia.
-      Last updated on Apr 19, 2017.
+      Last updated on Apr 21, 2017.
 
     </p>
   </div> 
