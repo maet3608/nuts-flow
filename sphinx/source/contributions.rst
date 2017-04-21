@@ -21,12 +21,12 @@ Unit tests
 
   README.rst .
   nutsflow\base.py ..
-  nutsflow\common.py ...
-  nutsflow\function.py ..
+  nutsflow\common.py ....
+  nutsflow\function.py .........
   nutsflow\iterfunction.py ...........
-  nutsflow\processor.py .
-  nutsflow\sink.py .
-  nutsflow\source.py ..
+  nutsflow\processor.py ...................
+  nutsflow\sink.py ............
+  nutsflow\source.py ......
   nutsflow\underscore.py .
   sphinx\source\installation.rst .
   sphinx\source\introduction.rst .
@@ -46,17 +46,17 @@ Unit tests
   sphinx\source\tutorial\transforming.rst .
   sphinx\source\tutorial\underscore.rst .
   tests\nutsflow\test_base.py ....
-  tests\nutsflow\test_common.py .....
+  tests\nutsflow\test_common.py ......
   tests\nutsflow\test_factory.py .........
   tests\nutsflow\test_function.py .........
   tests\nutsflow\test_iterfunction.py ...........
-  tests\nutsflow\test_processor.py ..................................
-  tests\nutsflow\test_sink.py ...............
+  tests\nutsflow\test_processor.py ...................................
+  tests\nutsflow\test_sink.py ................
   tests\nutsflow\test_source.py .......
   tests\nutsflow\test_underscore.py ..
   tests\nutsflow\examples\test_examples.py .
 
-  ========================= 138 passed in 19.74 seconds =========================
+  ========================= 182 passed in 19.58 seconds =========================
 
 
 
@@ -98,3 +98,23 @@ Update Sphinx/HTML documentation as follows
 
   cd ..
   ./push_docs
+
+
+Style guide
+^^^^^^^^^^^
+
+Code should be formatted following the `PEP-8 <https://www.python.org/dev/peps/pep-0008/>`_
+style guide. 
+
+Names of *nuts* shoulds be in CamelCase (just like class names) and describe an action,
+e.g. ``ReadCSV`` but not ``CSVReader``.
+
+Prefer *immutable* data types, e.g. tuples over lists, for outputs of nuts and
+avoid nuts with *side-effects. Nuts should not *mutate* their input data but create
+copies.
+
+If a nut has no input it should be a *source*, for instance like ``Range``. 
+If it doesn't output a generator or iterator it should be a *sink*, 
+see ``Collect`` for example.
+If a nut outputs the same number of elements it reads, it probably
+is a *function* (e.g. ``Square``) otherwise a *processor*.

@@ -2,18 +2,46 @@
 Installation
 ============
 
-Pip or clone
-------------
+Standard
+--------
 
-Installation via ``pip`` from `PyPi <https://pypi.python.org/pypi>`_ :
+Installation via ``pip`` from `PyPi <https://pypi.python.org/pypi>`_ 
 
 .. code::
   
   pip install nutsflow
+  cd my_python_path/site-packages/nutflow
+  pytest
+
+
+.. note::
+
+  If you don't know where your ``site-packages`` are, run the following code
+
+  .. code::
+
+    python -c "import site; print(site.getsitepackages())"
+    ['C:\\Maet\\Software\\Anaconda', 'C:\\Maet\\Software\\Anaconda\\lib\\site-packages']  
   
 
-or ``git clone`` from `GitHub <https://github.com/>`_  
-for bleeding-edge version: 
+Verification
+------------
+  
+Verify that it works
+
+.. doctest::
+
+  python
+  >>> from nutsflow import *
+  >>> Range(5) >> Square() >> Collect()
+  [0, 1, 4, 9, 16]
+    
+
+Bleeding-edge
+-------------
+
+If you want the bleeding-edge version, install via
+``git clone`` from `GitHub <https://github.com/>`_ 
   
 .. code::
 
@@ -21,6 +49,10 @@ for bleeding-edge version:
   cd nuts-flow
   python setup.py install
   pytest
+
+
+Upgrade
+-------  
 
 For upgrading an existing installation
 
@@ -33,31 +65,7 @@ or if installed via ``git clone`` and ``setup.py``
 .. code::
   
   cd nuts-flow
-  python setup.py install --force  
-
-  
-Verification
-------------
-  
-Verify that it works:
-
-.. doctest::
-
-  python
-  >>> from nutsflow import *
-  >>> Range(5) >> Square() >> Collect()
-  [0, 1, 4, 9, 16]
-  
-  
-Print version number:
-
-.. doctest::
-
-  python
-  >>> import nutsflow
-  >>> nutsflow.__version__
-  '1.0.8'
-  
+  python setup.py install --force    
   
   
 Virtual environment
@@ -74,7 +82,7 @@ Create virtual environment:
   
 Activate/deactivate  environment:
 
-Linux, Mac:
+**Linux, Mac**
 
 .. code::
 
@@ -82,7 +90,7 @@ Linux, Mac:
   $ deactivate
 
   
-Windows:
+**Windows**
 
 .. code::
 
@@ -90,11 +98,11 @@ Windows:
   > vnuts\Scripts\deactivate.bat
   
   
-Install **nuts-flow**:
+Install **nuts-flow** in virtual environment (here for Linux, Mac)
 
 .. code::
   
   source vnuts/bin/activate
-  pip install nuts-flow
+  pip install nutsflow
 
 
