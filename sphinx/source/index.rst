@@ -1,10 +1,12 @@
 .. Nutsflow documentation master file
 
 
-Nuts-flow
-=========
+.. image:: pics/nutsflow_logo.gif
+   :align: center
 
-Contents:
+
+Contents
+--------
 
 .. toctree::
    :maxdepth: 2
@@ -15,8 +17,9 @@ Contents:
    contributions
    nutsflow
 
+
 Indices
-=======
+-------
 
 * :ref:`genindex`
 * :ref:`modindex`
