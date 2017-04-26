@@ -9,9 +9,10 @@
 - `Code <https://github.com/maet3608/nuts-flow>`_
 
 **nuts-flow** is largely a thin wrapper around Python’s *itertools* that allows
-the chaining of iterators using the ``>>`` operator. This lead to more
-readable code that shows the flow of data. The following examples show
-a simple data processing pipeline comparing *itertools* with **nuts-flow**:
+the chaining of iterators using the ``>>`` operator. This leads to more
+readable code that highlights the flow of data. The following example shows
+two implementations of a simple data processing pipeline; the first based on
+*itertools* and the second using **nuts-flow**:
 
   >>> from itertools import islice, ifilter
   >>> list(islice(ifilter(lambda x: x > 5, xrange(10)), 3))
