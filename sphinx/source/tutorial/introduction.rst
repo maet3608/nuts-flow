@@ -5,6 +5,7 @@ This tutorial introduces the basic concepts of **nuts-flow** and
 provides examples of its usage.
 
 .. toctree::
+   :maxdepth: 2
 
    prerequisites
    nuts_basics

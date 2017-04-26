@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Contents &mdash; nutsflow 1.0.8 documentation</title>
+  <title>Welcome to nuts-flow &mdash; nutsflow 1.0.8 documentation</title>
   
 
   
@@ -139,7 +139,7 @@
     
       <li><a href="#">Docs</a> &raquo;</li>
         
-      <li>Contents</li>
+      <li>Welcome to nuts-flow</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -158,59 +158,25 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <img alt="_images/nutsflow_logo.gif" class="align-center" src="_images/nutsflow_logo.gif" />
-<div class="section" id="contents">
-<h1>Contents<a class="headerlink" href="#contents" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="welcome-to-nuts-flow">
+<h1>Welcome to nuts-flow<a class="headerlink" href="#welcome-to-nuts-flow" title="Permalink to this headline">¶</a></h1>
+<img alt="_images/nutsflow_logo.gif" class="align-center" src="_images/nutsflow_logo.gif" />
+<p><strong>nuts-flow</strong> is a flow-programming framework based on the chaining of
+iterators using the <code class="docutils literal"><span class="pre">&gt;&gt;</span></code> operator. Here a small example</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nutsflow</span> <span class="k">import</span> <span class="n">Range</span><span class="p">,</span> <span class="n">Filter</span><span class="p">,</span> <span class="n">Take</span><span class="p">,</span> <span class="n">Collect</span><span class="p">,</span> <span class="n">_</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Filter</span><span class="p">(</span><span class="n">_</span> <span class="o">&gt;</span> <span class="mi">5</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Take</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
+<span class="go">[6, 7, 8]</span>
+</pre></div>
+</div>
+<p>For a quick start have a look at the <a class="reference internal" href="introduction.html#introduction"><span class="std std-ref">Introduction</span></a> and for
+more detailed information see the <a class="reference internal" href="tutorial/introduction.html#tutorial"><span class="std std-ref">Tutorial</span></a> .</p>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="installation.html#standard">Standard</a></li>
-<li class="toctree-l2"><a class="reference internal" href="installation.html#verification">Verification</a></li>
-<li class="toctree-l2"><a class="reference internal" href="installation.html#bleeding-edge">Bleeding-edge</a></li>
-<li class="toctree-l2"><a class="reference internal" href="installation.html#upgrade">Upgrade</a></li>
-<li class="toctree-l2"><a class="reference internal" href="installation.html#virtual-environment">Virtual environment</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="tutorial/introduction.html">Tutorial</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="tutorial/prerequisites.html">Prerequisites</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tutorial/nuts_basics.html">Nuts basics</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tutorial/debugging.html">Printing and Debugging</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tutorial/filtering.html">Filtering</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tutorial/transforming.html">Data transformation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tutorial/rearranging.html">Rearranging data</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tutorial/divide_conquer.html">Divide and conquer</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tutorial/sources.html">Reading from Sources</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tutorial/sinks.html">Writing to Sinks</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tutorial/custom_nuts.html">Custom nuts</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tutorial/underscore.html">Underscore syntax</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tutorial/performance.html">Performance</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tutorial/recipes.html">Recipes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tutorial/practice_problems.html">Practice problems</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tutorial/error_messages.html">Common error messages</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="contributions.html">Contributions</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="contributions.html#unit-tests">Unit tests</a></li>
-<li class="toctree-l2"><a class="reference internal" href="contributions.html#documentation">Documentation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="contributions.html#style-guide">Style guide</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="nutsflow.html">nutsflow package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="nutsflow.html#subpackages">Subpackages</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nutsflow.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nutsflow.html#module-nutsflow.base">nutsflow.base module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nutsflow.html#module-nutsflow.common">nutsflow.common module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nutsflow.html#module-nutsflow.factory">nutsflow.factory module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nutsflow.html#module-nutsflow.function">nutsflow.function module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nutsflow.html#module-nutsflow.iterfunction">nutsflow.iterfunction module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nutsflow.html#module-nutsflow.processor">nutsflow.processor module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nutsflow.html#module-nutsflow.sink">nutsflow.sink module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nutsflow.html#module-nutsflow.source">nutsflow.source module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nutsflow.html#module-nutsflow.underscore">nutsflow.underscore module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nutsflow.html#module-nutsflow">Module contents</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial/introduction.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributions.html">Contributions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nutsflow.html">nutsflow package</a></li>
 </ul>
 </div>
 </div>
