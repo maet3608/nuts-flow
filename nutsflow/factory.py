@@ -1,6 +1,6 @@
 """
 .. module:: factory
-   :synopsis: Methods to construct nuts.
+   :synopsis: Functions and decorators to construct nuts.
 """
 
 from base import Nut, NutSink, NutSource, NutFunction
