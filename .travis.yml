@@ -4,8 +4,11 @@ python:
   - "2.7"
 cache: pip
 before_install:
-  - pip install pytest pytest-cov  
+  - pip install pytest pytest-cov
+  - pip install coveralls
 install: 
   - pip install nutsflow
 script: 
-  - pytest
+  - py.test
+after_success:
+  - coveralls  
