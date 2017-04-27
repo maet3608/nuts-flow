@@ -5,8 +5,6 @@ Recipes
 
 A collection of common problems with solutions. Make sure **nutsflow** has been imported.
 
-  >>> from nutsflow import *
-  
 
 Write CSV file with column names
 --------------------------------
@@ -37,6 +35,7 @@ loading the CSV file, dropping the header line, converting Arabic numbers
 (that are loaded as strings) to integers and collecting the results in 
 a dictionary
 
+  >>> from nutsflow import *
   >>> fpath = 'tests/data/arab2num.csv'
 
   >>> arab2roman = ReadCSV(fpath) >> Drop(1) >> MapCol(0, int) >> Collect(dict)
