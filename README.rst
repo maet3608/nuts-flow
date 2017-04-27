@@ -1,5 +1,5 @@
 
-.. image:: https://github.com/maet3608/nuts-flow/blob/master/pics/nutsflow_logo.gif
+.. image:: pics/nutsflow_logo.gif
    :align: center
 
 - `Introduction <https://maet3608.github.io/nuts-flow/introduction.html>`_

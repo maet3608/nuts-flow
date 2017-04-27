@@ -1,2 +1,3 @@
 recursive-include tests/data *
-include README.md
+include README.rst
+include pics/nutsflow_logo.gif
