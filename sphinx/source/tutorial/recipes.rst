@@ -6,7 +6,7 @@ Recipes
 A collection of common problems with solutions. Make sure **nutsflow** has been imported.
 
   >>> from nutsflow import *
-
+  
 
 Write CSV file with column names
 --------------------------------
