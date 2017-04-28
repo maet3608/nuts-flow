@@ -79,14 +79,18 @@ The following two examples demonstrate the difference between processing
 a data flow with and without pre-fetching. First a flow *without pre-fetching*
 that takes one number and prints it
 
->>> Range(5) >> Print() >> Take(1) >> Consume()
-0
+.. code:: python
+
+  >>> Range(5) >> Print() >> Take(1) >> Consume()
+  0
 
 now the same flow but *with pre-fetching*
 
->>> Range(5) >> Print() >> Prefetch() >> Take(1) >> Consume()
-0
-1
+.. code:: python
+
+  >>> Range(5) >> Print() >> Prefetch() >> Take(1) >> Consume()
+  0
+  1
 
 
 
