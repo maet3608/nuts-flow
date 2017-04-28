@@ -46,8 +46,8 @@ Occasionally, it is necessary to apply different, independent
 mappings to the same data. One way is to process the data for each
 mapping individually, e.g.
   
- >>> times2 = Range(5) >> Map(_ * 2) >> Collect()
- >>> greater3 = Range(5) >> Map(_ > 3) >> Collect()
+>>> times2 = Range(5) >> Map(_ * 2) >> Collect()
+>>> greater3 = Range(5) >> Map(_ > 3) >> Collect()
 
 However, if the generation or reading of the input data is
 computationally expensive it is more efficient to use ``MapMulti``
