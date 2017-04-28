@@ -1,4 +1,4 @@
-.. _underscore:
+.. _recipes:
 
 Recipes
 =======
