@@ -37,7 +37,6 @@ a dictionary
 
 >>> from nutsflow import *
 >>> fpath = 'tests/data/arab2num.csv'
-
 >>> arab2roman = ReadCSV(fpath) >> Drop(1) >> MapCol(0, int) >> Collect(dict)
 >>> arab2roman[2]
 'II'

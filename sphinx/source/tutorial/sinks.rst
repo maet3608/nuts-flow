@@ -28,6 +28,7 @@ set([1, 4, 9])
 >>> dict([('one', 1), ('four', 2)] >> MapCol(1, Square()))
 {'four': 4, 'one': 1}
 
+
 .. code::
 
   with open(filepath) as f:
