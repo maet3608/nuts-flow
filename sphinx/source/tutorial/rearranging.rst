@@ -19,12 +19,14 @@ are provided, ``Slice`` extracts the first ``stop`` elements:
 >>> from nutsflow import *
 >>> [1, 2, 3, 4] >> Slice(2) >> Collect()
 [1, 2]
-  
+
+
 If ``start`` and ``stop`` are provided the elements from ``start`` index
 to ``stop`` index (excluded) are extracted:
 
 >>> [1, 2, 3, 4] >> Slice(1, 3) >> Collect()
 [2, 3]
+
 
 Finally the third parameter allows to specify a ``stride``. In this example
 every second element in the slice starting at index 0 and ending at index 4

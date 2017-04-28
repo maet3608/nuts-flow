@@ -16,17 +16,19 @@ serve as sinks, e.g. ``list``, ``set``, ``dict``, ``sum``,
 they do not support the ``>>`` operator and need to be 
 called as functions. Here some examples
 
->>> from nutsflow import *
->>> from nutsflow import _
+.. doctest::
 
->>> list(Range(10) >> Filter(_ < 4) >> Square())
-[0, 1, 4, 9]
+  >>> from nutsflow import *
+  >>> from nutsflow import _
 
->>> set([1, 2, 1, 3] >> Square())
-set([1, 4, 9])
+  >>> list(Range(10) >> Filter(_ < 4) >> Square())
+  [0, 1, 4, 9]
 
->>> dict([('one', 1), ('four', 2)] >> MapCol(1, Square()))
-{'four': 4, 'one': 1}
+  >>> set([1, 2, 1, 3] >> Square())
+  set([1, 4, 9])
+
+  >>> dict([('one', 1), ('four', 2)] >> MapCol(1, Square()))
+  {'four': 4, 'one': 1}
 
 
 .. code::
