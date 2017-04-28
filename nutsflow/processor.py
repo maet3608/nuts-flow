@@ -877,8 +877,7 @@ def Prefetch(iterable, num_prefetch=1):
     Prefetch elements from iterable.
     Typically used to keep the CPU busy while the GPU is crunching.
 
-    >>> from nutsflow import Take, Consume
-
+    >>> from nutsflow import Take, Consume   # doctest: +SKIP
     >>> it = iter([1, 2, 3, 4])
     >>> it >> Prefetch(1) >> Take(1) >> Consume()
     >>> next(it)
