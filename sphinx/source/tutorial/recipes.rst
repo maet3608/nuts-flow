@@ -35,7 +35,7 @@ loading the CSV file, dropping the header line, converting Arabic numbers
 (that are loaded as strings) to integers and collecting the results in 
 a dictionary
 
->>> from nutsflow import *
+>>> from nutsflow import ReadCSV, Drop, MapCol, GetCols, Collect  
 >>> fpath = 'tests/data/arab2num.csv'
 >>> arab2roman = ReadCSV(fpath) >> Drop(1) >> MapCol(0, int) >> Collect(dict)
 >>> arab2roman[2]
