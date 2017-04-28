@@ -10,11 +10,10 @@ can help with that.
 Slice
 -----
 
-``Slice([start,] stop, stride]])``, as the name indicates, takes a slice of the
-data. Similar to Python's
+``Slice([start,] stop, [stride])`` takes a slice of the data. Similar to Python's
 `slicing <https://docs.python.org/2.3/whatsnew/section-slices.html>`_
-operation it extracts a section of the data. If not ``start`` or ``stride``
-are provided, ``Slice`` extracts the first ``stop`` elements:
+operation it extracts a section of the data. If no ``start`` or ``stride``
+are provided, ``Slice`` extracts the first ``stop`` elements
 
 >>> from nutsflow import *
 >>> [1, 2, 3, 4] >> Slice(2) >> Collect()
@@ -22,7 +21,7 @@ are provided, ``Slice`` extracts the first ``stop`` elements:
 
 
 If ``start`` and ``stop`` are provided the elements from ``start`` index
-to ``stop`` index (excluded) are extracted:
+to ``stop`` index (excluded) are extracted
 
 >>> [1, 2, 3, 4] >> Slice(1, 3) >> Collect()
 [2, 3]
@@ -30,7 +29,7 @@ to ``stop`` index (excluded) are extracted:
 
 Finally the third parameter allows to specify a ``stride``. In this example
 every second element in the slice starting at index 0 and ending at index 4
-(exclusive) is extracted:
+(exclusive) is extracted
 
 >>> [1, 2, 3, 4] >> Slice(0, 4, 2) >> Collect()
 [1, 3]
@@ -47,7 +46,7 @@ Chunk
 
 Note that each chunk is an iterator over the elements in the chunk,
 which is why ``Map(list)`` is required to convert the chunks to printable lists.
-A more interesting example might be the sum of the elements within each chunk:
+A more interesting example might be the sum of the elements within each chunk
 
 >>> Range(5) >> Chunk(2) >> Map(sum) >> Collect()
 [1, 5, 4]
@@ -59,7 +58,7 @@ Cycle
 Sometimes it is necessary to repeatedly process an iterable. ``Cycle`` takes
 all elements from its input iterable, stores them in memory and returns an
 iterator that cycles through the elements indefinitely. Here an example that
-cycles through 1, 2, 3 and takes the first 10 elements:
+cycles through 1, 2, 3 and takes the first 10 elements
 
 >>> [1, 2, 3] >> Cycle() >> Take(10) >> Collect()
 [1, 2, 3, 1, 2, 3, 1, 2, 3, 1]
@@ -111,13 +110,13 @@ A very common task is to remove all duplicates from a data set.
 that defines which elements are treated as equal.
 
 ``Dedupe()`` preserves the order of the element in the input. See the
-following example:
+following example
 
 >>> [2, 3, 1, 1, 2, 4] >> Dedupe() >> Collect()
 [2, 3, 1, 4]
 
 More complex data often require a more sophisticated definition of equality
-and the key functions provides this:
+and the key functions provides this
 
 >>> data = [(1, 'a'), (2, 'a'), (3, 'b')]
 >>> data >> Dedupe(lambda (x, y): y) >> Collect()
