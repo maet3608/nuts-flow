@@ -10,6 +10,6 @@ install:
   - pip install nutsflow
 script: 
   - py.test
-  - coverage run --source=nutsflow
+  - coverage run --source=nutsflow setup.py test
 after_success:
   - coveralls  
