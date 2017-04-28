@@ -6,8 +6,6 @@ Rearranging data
 Another common need is to rearrange or restructure data. The following nuts
 can help with that.
 
->>> from nutsflow import *
-<BLANKLINE>
 
 Slice
 -----
@@ -18,6 +16,7 @@ data. Similar to Python's
 operation it extracts a section of the data. If not ``start`` or ``stride``
 are provided, ``Slice`` extracts the first ``stop`` elements:
 
+>>> from nutsflow import *
 >>> [1, 2, 3, 4] >> Slice(2) >> Collect()
 [1, 2]
 
