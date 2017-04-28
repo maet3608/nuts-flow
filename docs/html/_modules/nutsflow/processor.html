@@ -1038,8 +1038,7 @@
 <span class="sd">    Prefetch elements from iterable.</span>
 <span class="sd">    Typically used to keep the CPU busy while the GPU is crunching.</span>
 
-<span class="sd">    &gt;&gt;&gt; from nutsflow import Take, Consume</span>
-
+<span class="sd">    &gt;&gt;&gt; from nutsflow import Take, Consume   # doctest: +SKIP</span>
 <span class="sd">    &gt;&gt;&gt; it = iter([1, 2, 3, 4])</span>
 <span class="sd">    &gt;&gt;&gt; it &gt;&gt; Prefetch(1) &gt;&gt; Take(1) &gt;&gt; Consume()</span>
 <span class="sd">    &gt;&gt;&gt; next(it)</span>
@@ -1109,7 +1108,7 @@
   <div role="contentinfo">
     <p>
         &copy; Copyright 2017, IBM Research Australia.
-      Last updated on Apr 27, 2017.
+      Last updated on Apr 28, 2017.
 
     </p>
   </div> 

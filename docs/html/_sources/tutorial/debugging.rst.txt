@@ -12,43 +12,43 @@ Typical data flows are largely composed of pure functions without
 side-effects and only the final result is accessible. 
 To display intermediate results the ``Print`` nut can be used:
 
-   >>> from nutsflow import *
-   >>> Range(3) >> Print() >> Consume()
-   0
-   1
-   2
+ >>> from nutsflow import *
+ >>> Range(3) >> Print() >> Consume()
+ 0
+ 1
+ 2
       
 ``Print`` takes a format parameter (either a 
 `format string <https://docs.python.org/2/library/string.html#formatstrings>`_
 or a function) that allows to tailor its output
 
-   >>> Range(3) >> Print('number: {}') >> Consume()
-   number: 0
-   number: 1
-   number: 2
-   
-   >>> Range(3) >> Print(lambda x: 'odd : %s' % bool(x % 2)) >> Consume()
-   odd : False
-   odd : True
-   odd : False
+ >>> Range(3) >> Print('number: {}') >> Consume()
+ number: 0
+ number: 1
+ number: 2
+ 
+ >>> Range(3) >> Print(lambda x: 'odd : %s' % bool(x % 2)) >> Consume()
+ odd : False
+ odd : True
+ odd : False
    
 ``Print`` furthermore supports to print every *n-ths* element, print at
 certain time intervals, or filter for the elements to be displayed:
    
-   >>> Range(6) >> Print(every_n=2) >> Consume()
-   1
-   3
-   5
-   
-   >>> Range(6) >> Sleep(1.0) >> Print(every_sec=1.5) >> Consume()
-   1
-   3
-   5
-   
-   >>> Range(6) >> Print(filterfunc=lambda x: x > 2) >> Consume()
-   3
-   4
-   5
+ >>> Range(6) >> Print(every_n=2) >> Consume()
+ 1
+ 3
+ 5
+ 
+ >>> Range(6) >> Sleep(1.0) >> Print(every_sec=1.5) >> Consume()
+ 1
+ 3
+ 5
+ 
+ >>> Range(6) >> Print(filterfunc=lambda x: x > 2) >> Consume()
+ 3
+ 4
+ 5
    
 ``Sleep()`` waits for the given time in seconds and allows to slow
 down the processing.
@@ -57,9 +57,9 @@ For long running flows printing progress information can be displayed
 by inserting a ``PrintProgress`` nut. It, however, requires that the
 number of elements to be processed is known beforehand.
 
-  >>> n = 10
-  >>> Range(n) >> Sleep(0.1) >> PrintProgress(n, update=0.1) >> Consume() # doctest: +SKIP
-  progress: 100%
+>>> n = 10
+>>> Range(n) >> Sleep(0.1) >> PrintProgress(n, update=0.1) >> Consume() # doctest: +SKIP
+progress: 100%
 
   
 Limit data
@@ -69,25 +69,25 @@ Instead of printing intermediate results the size of data flow
 can be limited by processing only a portion of the data. The
 ``Take(n)`` nut takes the first *n* elements only:
 
-  >>> Range(1000) >> Take(3) >> Collect()
-  [0, 1, 2]
+>>> Range(1000) >> Take(3) >> Collect()
+[0, 1, 2]
   
 Alternatively the ``Head(n)`` nut can be used that takes *n*
 elements and collects them:
 
-  >>> Range(1000) >> Head(3)
-  [0, 1, 2]
+>>> Range(1000) >> Head(3)
+[0, 1, 2]
 
 The last elements of a flow can be captured by ``Tail`` but note
 that the entire flow is consumed:
 
-  >>> Range(1000) >> Tail(3)
-  [997, 998, 999]
+>>> Range(1000) >> Tail(3)
+[997, 998, 999]
   
 Finally, ``Pick(n)`` allows to pick every *n-th* element:
   
-  >>> Range(1000) >> Pick(100) >> Collect()
-  [0, 100, 200, 300, 400, 500, 600, 700, 800, 900]
+>>> Range(1000) >> Pick(100) >> Collect()
+[0, 100, 200, 300, 400, 500, 600, 700, 800, 900]
 
   
 No Operation
@@ -96,10 +96,10 @@ No Operation
 **nuts-flow** provides a ``NOP(nut)`` nut that can be used to quickly
 and temporarily disable the evaluation of a nut in a flow.
 
-  >>> Range(5) >> Square() >> Collect()  # compute squares
-  [0, 1, 4, 9, 16]
-  >>> Range(5) >> NOP(Square()) >> Collect()  # Square disabled
-  [0, 1, 2, 3, 4]
+>>> Range(5) >> Square() >> Collect()  # compute squares
+[0, 1, 4, 9, 16]
+>>> Range(5) >> NOP(Square()) >> Collect()  # Square disabled
+[0, 1, 2, 3, 4]
   
 This is often more convenient that commenting-out or temporarily
 removing a nut for debugging purposes. Note that only single nuts
@@ -112,13 +112,13 @@ Conditional
 Individual nuts in a flow can also be disabled/enabled or replaced
 depending on a boolean flag using the ``If(cond, if_nut, else_nut)`` nut:
 
-  >>> [1, 2, 3] >> If(True, Square()) >> Collect()
-  [1, 4, 9]
-  >>> [1, 2, 3] >> If(False, Square()) >> Collect()
-  [1, 2, 3]
+>>> [1, 2, 3] >> If(True, Square()) >> Collect()
+[1, 4, 9]
+>>> [1, 2, 3] >> If(False, Square()) >> Collect()
+[1, 2, 3]
 
-  >>> [1, 2, 3] >> If(False, Square(), Take(1)) >> Collect()
-  [1]
+>>> [1, 2, 3] >> If(False, Square(), Take(1)) >> Collect()
+[1]
 
 Again this is largely of interest for debugging and limited to
 operate on single nuts.  
@@ -130,20 +130,20 @@ Counter
 Sometimes only the number of elements processed at a certain stage
 is of interest. ``Counter`` is a nut with the needed side-effect:
 
-  >>> count = Counter('cnt')
-  >>> Range(10) >> count >> Square() >> Sum()
-  285
-  >>> count.value
-  10
+>>> count = Counter('cnt')
+>>> Range(10) >> count >> Square() >> Sum()
+285
+>>> count.value
+10
   
 Note that ``Counter`` does not modify the data flow. ``Counter`` also
 has a filter function to count only certain elements:
 
-  >>> greater5 = Counter('gt5', filterfunc = lambda x: x > 5)
-  >>> Range(10) >> Square() >> greater5 >> Collect()
-  [0, 1, 4, 9, 16, 25, 36, 49, 64, 81]
-  >>> greater5
-  gt5 = 7
+>>> greater5 = Counter('gt5', filterfunc = lambda x: x > 5)
+>>> Range(10) >> Square() >> greater5 >> Collect()
+[0, 1, 4, 9, 16, 25, 36, 49, 64, 81]
+>>> greater5
+gt5 = 7
   
 Note that the actual value of the counter is stored in ``value`` and can 
 be printed but for conveniency ``print greater5`` prints the name of the 

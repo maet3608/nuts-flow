@@ -184,14 +184,11 @@
            <div itemprop="articleBody">
             
   <div class="section" id="recipes">
-<span id="underscore"></span><h1>Recipes<a class="headerlink" href="#recipes" title="Permalink to this headline">¶</a></h1>
+<span id="id1"></span><h1>Recipes<a class="headerlink" href="#recipes" title="Permalink to this headline">¶</a></h1>
 <p>A collection of common problems with solutions. Make sure <strong>nutsflow</strong> has been imported.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nutsflow</span> <span class="k">import</span> <span class="o">*</span>
-</pre></div>
-</div>
 <div class="section" id="write-csv-file-with-column-names">
 <h2>Write CSV file with column names<a class="headerlink" href="#write-csv-file-with-column-names" title="Permalink to this headline">¶</a></h2>
-<div class="code highlight-default"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">WriteCSV</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span> <span class="k">as</span> <span class="n">writer</span><span class="p">:</span>
+<div class="code Python highlight-default"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">WriteCSV</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span> <span class="k">as</span> <span class="n">writer</span><span class="p">:</span>
     <span class="p">[(</span><span class="s1">&#39;Col1&#39;</span><span class="p">,</span> <span class="s1">&#39;Col2&#39;</span><span class="p">)]</span> <span class="o">&gt;&gt;</span> <span class="n">writer</span>
     <span class="p">[(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)]</span> <span class="o">&gt;&gt;</span> <span class="n">writer</span>
 </pre></div>
@@ -212,10 +209,9 @@ file contains Arabic numbers and their Roman counterparts.</p>
 loading the CSV file, dropping the header line, converting Arabic numbers
 (that are loaded as strings) to integers and collecting the results in
 a dictionary</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">fpath</span> <span class="o">=</span> <span class="s1">&#39;tests/data/arab2num.csv&#39;</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">arab2roman</span> <span class="o">=</span> <span class="n">ReadCSV</span><span class="p">(</span><span class="n">fpath</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Drop</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">MapCol</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">(</span><span class="nb">dict</span><span class="p">)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nutsflow</span> <span class="k">import</span> <span class="o">*</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fpath</span> <span class="o">=</span> <span class="s1">&#39;tests/data/arab2num.csv&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">arab2roman</span> <span class="o">=</span> <span class="n">ReadCSV</span><span class="p">(</span><span class="n">fpath</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Drop</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">MapCol</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">(</span><span class="nb">dict</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">arab2roman</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
 <span class="go">&#39;II&#39;</span>
 </pre></div>
@@ -254,7 +250,7 @@ and use <code class="docutils literal"><span class="pre">skipheader=1</span></co
   <div role="contentinfo">
     <p>
         &copy; Copyright 2017, IBM Research Australia.
-      Last updated on Apr 27, 2017.
+      Last updated on Apr 28, 2017.
 
     </p>
   </div> 
