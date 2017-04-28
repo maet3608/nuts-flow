@@ -29,3 +29,7 @@ is easier to understand than the nested *itertools* code.
 
 **nuts-flow** is the base for `nuts-ml <https://github.com/maet3608/nuts-ml>`_, 
 which is described `here <https://maet3608.github.io/nuts-ml/>`_ .
+
+.. image:: https://coveralls.io/repos/github/maet3608/nuts-flow/badge.svg?branch=master
+:target: https://coveralls.io/github/maet3608/nuts-flow?branch=master
+
