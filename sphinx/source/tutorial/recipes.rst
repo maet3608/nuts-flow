@@ -35,7 +35,7 @@ loading the CSV file, dropping the header line, converting Arabic numbers
 (that are loaded as strings) to integers and collecting the results in 
 a dictionary
 
-.. doctest::
+.. code:: Python
 
   >>> from nutsflow import *
   >>> fpath = 'tests/data/arab2num.csv'
