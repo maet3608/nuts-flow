@@ -9,7 +9,7 @@ A collection of common problems with solutions. Make sure **nutsflow** has been 
 Write CSV file with column names
 --------------------------------
 
-.. code::
+.. code:: Python
 
   with WriteCSV(filepath) as writer:
       [('Col1', 'Col2')] >> writer
@@ -35,13 +35,11 @@ loading the CSV file, dropping the header line, converting Arabic numbers
 (that are loaded as strings) to integers and collecting the results in 
 a dictionary
 
-.. code:: Python
-
-  >>> from nutsflow import *
-  >>> fpath = 'tests/data/arab2num.csv'
-  >>> arab2roman = ReadCSV(fpath) >> Drop(1) >> MapCol(0, int) >> Collect(dict)
-  >>> arab2roman[2]
-  'II'
+>>> from nutsflow import *
+>>> fpath = 'tests/data/arab2num.csv'
+>>> arab2roman = ReadCSV(fpath) >> Drop(1) >> MapCol(0, int) >> Collect(dict)
+>>> arab2roman[2]
+'II'
 
 
 For the reversed mapping (Roman to Arabic), we just flip the columns via ``GetCols``
@@ -51,4 +49,3 @@ and use ``skipheader=1`` to skip the header line
 ... GetCols(1, 0) >> Collect(dict))
 >>> roman2arab['III']
 3
-
