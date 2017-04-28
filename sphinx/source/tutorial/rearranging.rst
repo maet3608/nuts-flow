@@ -7,7 +7,7 @@ Another common need is to rearrange or restructure data. The following nuts
 can help with that.
 
 >>> from nutsflow import *
-
+<BLANKLINE>
 
 Slice
 -----
