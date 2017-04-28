@@ -12,10 +12,10 @@ Applying a function concurrently to the elements of a flow can be achieved
 with the ``MapPar`` nut. The following toy example converts numbers to their
 *absolute values* by applying the ``abs`` function in parallel
 
-  >>> from nutsflow import *
-  
-  >>> [-1, -2, -3] >> MapPar(abs) >> Collect()
-  [1, 2, 3]
+>>> from nutsflow import *
+
+>>> [-1, -2, -3] >> MapPar(abs) >> Collect()
+[1, 2, 3]
 
 Note that the order of the elements in the iterable is preserved.
 Currently, ``MapPar`` is of limited use, since 1) the function applied 
@@ -79,14 +79,14 @@ The following two examples demonstrate the difference between processing
 a data flow with and without pre-fetching. First a flow *without pre-fetching*
 that takes one number and prints it
 
-  >>> Range(5) >> Print() >> Take(1) >> Consume()
-  0
+>>> Range(5) >> Print() >> Take(1) >> Consume()
+0
 
 now the same flow but *with pre-fetching*
 
-  >>> Range(5) >> Print() >> Prefetch() >> Take(1) >> Consume()
-  0
-  1
+>>> Range(5) >> Print() >> Prefetch() >> Take(1) >> Consume()
+0
+1
 
 
 
