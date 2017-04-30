@@ -50,6 +50,12 @@ help:
 	@echo "  coverage   to run coverage check of the documentation (if enabled)"
 	@echo "  dummy      to check syntax errors of document sources"
 
+.PHONY: test
+test:
+	cd ..; \
+	pytest --doctest-glob='*.rst'; \
+	cd sphinx
+    
 .PHONY: clean
 clean:
 	rm -rf $(BUILDDIR)/*
