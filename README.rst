@@ -6,7 +6,7 @@
 - `Installation <https://maet3608.github.io/nuts-flow/installation.html>`_
 - `Tutorial <https://maet3608.github.io/nuts-flow/tutorial/introduction.html>`_
 - `Documentation <https://maet3608.github.io/nuts-flow/>`_
-- `Code <https://github.com/maet3608/nuts-flow>`_
+- `Code Github <https://github.com/maet3608/nuts-flow>`_
 
 **nuts-flow** is largely a thin wrapper around Python’s *itertools* that allows
 the chaining of iterators using the ``>>`` operator. This leads to more
