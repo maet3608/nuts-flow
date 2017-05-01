@@ -21,7 +21,8 @@ more detailed information see the :ref:`Tutorial` .
    :maxdepth: 1
 
    introduction
-   installation   
+   installation
+   overview   
    tutorial/introduction
    contributions
    nutsflow
