@@ -4,6 +4,7 @@
 """
 
 import os
+import pytest
 
 from nutsflow import *
 
@@ -20,7 +21,15 @@ def test_Sum():
 def test_Mean():
     assert [] >> Mean() is None
     assert [] >> Mean(default=0) == 0
-    assert [1, 2, 3] >> Mean() == float(1+2+3) / 3
+    assert [1, 2, 3] >> Mean() == pytest.approx(2.0, rel=1e-2)
+
+
+def test_MeanStd():
+    assert [] >> MeanStd() is None
+    assert [] >> MeanStd(ddof=1) is None
+    assert [] >> MeanStd(default=0) == 0
+    assert [1, 2, 3] >> MeanStd() == pytest.approx([2.0, 1.0], rel=1e-2)
+    assert [1, 2, 3] >> MeanStd(ddof=0) == pytest.approx([2.0, 0.81], rel=1e-2)
 
 
 def test_Max():

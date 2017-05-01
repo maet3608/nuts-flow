@@ -4,6 +4,7 @@
 """
 
 import csv
+import math
 
 import itertools as itt
 import collections as cl
@@ -36,7 +37,7 @@ def Mean(iterable, default=None):
     """
     iterable >> Mean(default=None)
 
-    Return sum over inputs.
+    Return mean value of inputs.
 
     >>> [1, 2, 3] >> Mean()
     2.0
@@ -50,7 +51,36 @@ def Mean(iterable, default=None):
     for e in iterable:
         sum += e
         n += 1
-    return float(sum)/n if n else default
+    return float(sum) / n if n else default
+
+
+@nut_sink
+def MeanStd(iterable, default=None, ddof=1):
+    """
+    iterable >> MeanStd(default=None)
+
+    Return mean and standard deviation of inputs.
+    Standard deviation is with degrees of freedom = 1
+
+    >>> [1, 2, 3] >> MeanStd()
+    (2.0, 1.0)
+
+    :param iterable iterable: Iterable over numbers
+    :param object default: Value returned if iterable is empty.
+    :param int ddof: Delta degrees of freedom (should 0 or 1)
+    :return: Mean and standard deviation of numbers or default value
+    :rtype: tuple (mean, std)
+    """
+    sume, sqre, n = 0.0, 0.0, 0.0
+    for e in iterable:
+        sume += e
+        sqre += e * e
+        n += 1.0
+    if n - ddof <= 0:
+        return default
+    avg = sume / n
+    dev = math.sqrt((n * sqre - sume * sume) / (n * (n - ddof)))
+    return avg, dev
 
 
 @nut_sink
