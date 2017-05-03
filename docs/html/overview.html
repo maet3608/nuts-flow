@@ -163,7 +163,7 @@
   <div class="section" id="overview">
 <h1>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h1>
 <p>Click on a nut name for more details.</p>
-<p><strong>Decorators &amp; Wrappers</strong></p>
+<p><strong>Decorators &amp; Wrappers</strong> : convert Python functions to nuts</p>
 <ul class="simple">
 <li><a class="reference internal" href="nutsflow.html#nutsflow.factory.nut_filter" title="nutsflow.factory.nut_filter"><code class="xref py py-func docutils literal"><span class="pre">nut_filter</span></code></a> :
 wrapper to create nut filters.</li>
@@ -178,7 +178,7 @@ wrapper for nut sinks that aggregate data flows.</li>
 <li><a class="reference internal" href="nutsflow.html#nutsflow.factory.nut_source" title="nutsflow.factory.nut_source"><code class="xref py py-func docutils literal"><span class="pre">nut_source</span></code></a> :
 wrapper for nut sources that generate data.</li>
 </ul>
-<p><strong>Sources</strong></p>
+<p><strong>Sources</strong> : generate data</p>
 <ul class="simple">
 <li><a class="reference internal" href="nutsflow.html#nutsflow.source.Empty" title="nutsflow.source.Empty"><code class="xref py py-class docutils literal"><span class="pre">Empty</span></code></a> :
 empty source that does not generate anything.</li>
@@ -193,7 +193,7 @@ read elements from file in CSV (or TSV) format.</li>
 <li><a class="reference internal" href="nutsflow.html#nutsflow.source.Repeat" title="nutsflow.source.Repeat"><code class="xref py py-class docutils literal"><span class="pre">Repeat</span></code></a> :
 repeats a value n times or infinitely.</li>
 </ul>
-<p><strong>Sinks</strong></p>
+<p><strong>Sinks</strong> : aggregate data</p>
 <ul class="simple">
 <li><a class="reference internal" href="nutsflow.html#nutsflow.sink.ArgMax" title="nutsflow.sink.ArgMax"><code class="xref py py-class docutils literal"><span class="pre">ArgMax</span></code></a> :
 return index of largest element.</li>
@@ -232,7 +232,7 @@ reverses Zip() and unzips tuple elements.</li>
 <li><a class="reference internal" href="nutsflow.html#nutsflow.sink.WriteCSV" title="nutsflow.sink.WriteCSV"><code class="xref py py-class docutils literal"><span class="pre">WriteCSV</span></code></a> :
 write elements to file in CSV (or TSV) format.</li>
 </ul>
-<p><strong>Functions</strong></p>
+<p><strong>Functions</strong> : operate on individual elements</p>
 <ul class="simple">
 <li><a class="reference internal" href="nutsflow.html#nutsflow.function.Counter" title="nutsflow.function.Counter"><code class="xref py py-class docutils literal"><span class="pre">Counter</span></code></a> :
 counts elements in an external variable - use for debugging only.</li>
@@ -253,7 +253,7 @@ pause processing thread for a given time.</li>
 <li><a class="reference internal" href="nutsflow.html#nutsflow.function.Square" title="nutsflow.function.Square"><code class="xref py py-class docutils literal"><span class="pre">Square</span></code></a> :
 return square of element.</li>
 </ul>
-<p><strong>Processors</strong></p>
+<p><strong>Processors</strong> : operate on iterables</p>
 <ul class="simple">
 <li><a class="reference internal" href="nutsflow.html#nutsflow.processor.Cache" title="nutsflow.processor.Cache"><code class="xref py py-class docutils literal"><span class="pre">Cache</span></code></a> :
 caches elements on disk.</li>
