@@ -1,7 +1,7 @@
 Overview
 ========
 
-Click on nut name for more details.
+Click on a nut name for more details.
 
 
 **Decorators & Wrappers*

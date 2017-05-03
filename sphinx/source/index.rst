@@ -14,7 +14,9 @@ iterators using the ``>>`` operator. Here a small example
 [6, 7, 8]
 
 For a quick start have a look at the :ref:`Introduction` and for
-more detailed information see the :ref:`Tutorial` .
+more detailed information see the :ref:`Tutorial` . Skim over the
+short description of all nuts in the :ref:`Overview` for an
+overall impression of the available functionality.
 
 
 .. toctree::
