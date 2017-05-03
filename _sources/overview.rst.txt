@@ -4,7 +4,7 @@ Overview
 Click on a nut name for more details.
 
 
-**Decorators & Wrappers*
+**Decorators & Wrappers**
 
 - :func:`nut_filter <nutsflow.factory.nut_filter>` :
   wrapper to create nut filters.
