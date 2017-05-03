@@ -16,27 +16,27 @@ Zip
 every step an element from each iterable and outputting a tuple of the
 grouped elements. Here an example
 
-  >>> from nutsflow import *
+>>> from nutsflow import *
 
-  >>> numbers = [0, 1, 2]
-  >>> letters = ['a', 'b', 'c']
-  >>> numbers >> Zip(letters) >> Collect()
-  [(0, 'a'), (1, 'b'), (2, 'c')]
+>>> numbers = [0, 1, 2]
+>>> letters = ['a', 'b', 'c']
+>>> numbers >> Zip(letters) >> Collect()
+[(0, 'a'), (1, 'b'), (2, 'c')]
 
 ``Zip`` finishes when shortest iterable is exhausted. See
 
-  >>> Range(100) >> Zip('abc') >> Collect()
-  [(0, 'a'), (1, 'b'), (2, 'c')]
+>>> Range(100) >> Zip('abc') >> Collect()
+[(0, 'a'), (1, 'b'), (2, 'c')]
 
 Note that ``Zip`` can zip more than two iterables:
 
-  >>> '12' >> Zip('ab', '+-') >> Collect()
-  [('1', 'a', '+'), ('2', 'b', '-')]
+>>> '12' >> Zip('ab', '+-') >> Collect()
+[('1', 'a', '+'), ('2', 'b', '-')]
 
 If the output of ``Zip`` is required to be flat ``Flatten`` can be called
 
-  >>> [0, 1, 2] >> Zip('abc') >> Flatten() >> Collect()
-  [0, 'a', 1, 'b', 2, 'c']
+>>> [0, 1, 2] >> Zip('abc') >> Flatten() >> Collect()
+[0, 'a', 1, 'b', 2, 'c']
 
 but using :ref:`Interleave` is simpler in this case.
 
@@ -46,18 +46,18 @@ Unzip
 
 ``Unzip(container=None)`` reverses a :ref:`Zip` operation:
 
-  >>> numbers, letters = [0, 1, 2] >> Zip('abc') >> Unzip()
-  >>> list(numbers)
-  [0, 1, 2]
-  >>> list(letters)
-  ['a', 'b', 'c']
+>>> numbers, letters = [0, 1, 2] >> Zip('abc') >> Unzip()
+>>> list(numbers)
+[0, 1, 2]
+>>> list(letters)
+['a', 'b', 'c']
 
 Per default ``Unzip`` returns iterators but often the results are required
 as lists or other collections (see above). ``Unzip`` allows to provide a
 container to collect the results:
 
-  >>> [0, 1, 2] >> Zip('abc') >> Unzip(list) >> Collect()
-  [[0, 1, 2], ['a', 'b', 'c']]
+>>> [0, 1, 2] >> Zip('abc') >> Unzip(list) >> Collect()
+[[0, 1, 2], ['a', 'b', 'c']]
 
 This equivalent to ``Unzip() >> Map(list) >> Collect()`` but shorter.
 
@@ -70,17 +70,17 @@ Interleave
 tuples. Instead an iterator over a flat sequence of interleaved elements
 is returned:
 
-  >>> numbers = [0, 1, 2]
-  >>> letters = ['a', 'b', 'c']
-  >>> numbers >> Interleave(letters) >> Collect()
-  [0, 'a', 1, 'b', 2, 'c']
+>>> numbers = [0, 1, 2]
+>>> letters = ['a', 'b', 'c']
+>>> numbers >> Interleave(letters) >> Collect()
+[0, 'a', 1, 'b', 2, 'c']
 
 Also in contrast to ``Zip``, ``Interleave`` does not stop when the shortest
 input iterable is depleted. Elements are returned until all inputs are
 depleted:
 
-  >>> Range(10) >> Interleave('abc') >> Collect()
-  [0, 'a', 1, 'b', 2, 'c', 3, 4, 5, 6, 7, 8, 9]
+>>> Range(10) >> Interleave('abc') >> Collect()
+[0, 'a', 1, 'b', 2, 'c', 3, 4, 5, 6, 7, 8, 9]
 
 
 Concat
@@ -89,18 +89,18 @@ Concat
 Apart from zipping or interleaving iterators, they can also be concatenated
 using ``Concat``:
 
-  >>> Range(5) >> Concat('abc') >> Collect()
-  [0, 1, 2, 3, 4, 'a', 'b', 'c']
+>>> Range(5) >> Concat('abc') >> Collect()
+[0, 1, 2, 3, 4, 'a', 'b', 'c']
 
-  >>> '12' >> Concat('abcd', [3, 4, 5]) >> Collect()
-  ['1', '2', 'a', 'b', 'c', 'd', 3, 4, 5]
+>>> '12' >> Concat('abcd', [3, 4, 5]) >> Collect()
+['1', '2', 'a', 'b', 'c', 'd', 3, 4, 5]
 
 Note that ``Concat`` is memory efficient and does not materialze any of the
 input iterables or the concatenated result in memory; e.g. in contrast to the
 following code:
 
-  >>> list(Range(5)) + list('abc')
-  [0, 1, 2, 3, 4, 'a', 'b', 'c']
+>>> list(Range(5)) + list('abc')
+[0, 1, 2, 3, 4, 'a', 'b', 'c']
 
 
 Tee
@@ -108,27 +108,26 @@ Tee
 
 ``Tee([n=2])`` creates multiple independent iterators from a single iterable.
 
-  >>> numbers1, numbers2  = Range(5) >> Tee(2)
-  >>> numbers1 >> Collect()
-  [0, 1, 2, 3, 4]
+>>> numbers1, numbers2  = Range(5) >> Tee(2)
+>>> numbers1 >> Collect()
+[0, 1, 2, 3, 4]
 
-  >>> numbers2 >> Collect()
-  [0, 1, 2, 3, 4]
+>>> numbers2 >> Collect()
+[0, 1, 2, 3, 4]
 
 ``Tee`` is only useful if the returned iterators are advanced largely
 synchronously. Otherwise the memory consumption is identical to simply
 materializing the input iterable and referencing it, e.g.
 
-  >>> numbers1 = Range(5) >> Collect()
-  >>> numbers2 = numbers1
+>>> numbers1 = Range(5) >> Collect()
+>>> numbers2 = numbers1
 
 A simple example where ``Tee`` is useful would be to add each number in the
 input iterable to its predecessor:
 
-  >>> numbers1, numbers2  = Range(5) >> Tee(2)
-  >>> numbers1 >> Drop(1) >> Map(lambda a,b: a+b, numbers2) >> Collect()
-  [1, 3, 5, 7]
+>>> numbers1, numbers2  = Range(5) >> Tee(2)
+>>> numbers1 >> Drop(1) >> Map(lambda a,b: a+b, numbers2) >> Collect()
+[1, 3, 5, 7]
 
 Iterators, in contrast to streams, do not allow to go back and ``Tee`` provides
 a way to overcome this limitation.
-

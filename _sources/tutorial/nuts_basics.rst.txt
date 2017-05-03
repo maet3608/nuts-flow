@@ -10,17 +10,17 @@ following data flow, ``Range`` generates number from 0 to 4, the ``Square``
 nut squares those numbers and the ``Collect`` nut collects the results
 in a list:
 
-  >>> from nutsflow import Range, Square, Collect
-  >>> Range(5) >> Square() >> Collect()
-  [0, 1, 4, 9, 16]
+>>> from nutsflow import Range, Square, Collect
+>>> Range(5) >> Square() >> Collect()
+[0, 1, 4, 9, 16]
   
 The data elements of a flow are typically processed element by element, 
 avoiding loading large amounts of data into memory or processing data
 if not needed. For instance, 
 
-  >>> from nutsflow import *
-  >>> Range(10000000) >> Square() >> Take(3) >> Collect()
-  [0, 1, 4]
+>>> from nutsflow import *
+>>> Range(10000000) >> Square() >> Take(3) >> Collect()
+[0, 1, 4]
   
 works just fine and does not store 10 million integers in memory.
 
@@ -32,30 +32,30 @@ Every data flow starts with a :ref:`source <sources>`, which can be any
 *iterable* such as iterators, generators, iterable nuts or 
 plain Python data structures (string, lists, sets, dictionaries, ...): 
 
-  >>> [0, 1, 2, 3, 4] >> Square() >> Collect()
-  [0, 1, 4, 9, 16]
-  
-  >>> "Macadamia" >> Take(4) >> Collect()
-  ['M', 'a', 'c', 'a']
+>>> [0, 1, 2, 3, 4] >> Square() >> Collect()
+[0, 1, 4, 9, 16]
+
+>>> "Macadamia" >> Take(4) >> Collect()
+['M', 'a', 'c', 'a']
 
 Apart from a source, every data flow needs a *sink* at the end that 
 *pulls* the data. Without a sink the data flow does not process any data 
 (nuts flows are lazy). For example
 
-  >>> Range(5) >> Square()
-  <itertools.imap object at ...>
+>>> Range(5) >> Square()
+<itertools.imap object at ...>
 
 simply returns an iterator object but does neither create any ranged numbers 
 nor computes the square. :ref:`Sinks <sinks>` take iterables as input and return a 
 result of any type or even nothing
 
-  >>> Range(5) >> Collect()
-  [0, 1, 2, 3, 4]
-  
-  >>> Range(5) >> Sum()
-  10
-  
-  >>> Range(5) >> Consume()  # returns nothing
+>>> Range(5) >> Collect()
+[0, 1, 2, 3, 4]
+
+>>> Range(5) >> Sum()
+10
+
+>>> Range(5) >> Consume()  # returns nothing
 
 
 Functions and Processors
@@ -70,15 +70,15 @@ a nut function.
 more or less elements than read from the input. For instance, ``Pick(n)`` 
 is a processor that returns only every *n-ths* element from the input iterable
 
-  >>> from nutsflow import Range, Pick, Collect
-  >>> Range(10) >> Pick(3) >> Collect()
-  [0, 3, 6, 9]
+>>> from nutsflow import Range, Pick, Collect
+>>> Range(10) >> Pick(3) >> Collect()
+[0, 3, 6, 9]
 
 Note that nut functions can be used as *normal* functions as well but
 must be called with additional brackets
 
-  >>> Square()(3)
-  9
+>>> Square()(3)
+9
   
   
 Iterator depletion
@@ -88,16 +88,16 @@ It is important to remember that *nuts* usually return iterators
 that will deplete when used multiple times. See the following example,
 where ``Take(2)`` always takes the first *2* elements from its input: 
 
-  >>> from nutsflow import Range, Take, Collect
-  >>> numbers = Range(5)
-  >>> numbers >> Take(2) >> Collect()
-  [0, 1]
-  >>> numbers >> Take(2) >> Collect()
-  [2, 3]
-  >>> numbers >> Take(2) >> Collect()
-  [4]
-  >>> numbers >> Take(2) >> Collect()
-  []
+>>> from nutsflow import Range, Take, Collect
+>>> numbers = Range(5)
+>>> numbers >> Take(2) >> Collect()
+[0, 1]
+>>> numbers >> Take(2) >> Collect()
+[2, 3]
+>>> numbers >> Take(2) >> Collect()
+[4]
+>>> numbers >> Take(2) >> Collect()
+[]
   
   
 New nuts
@@ -106,30 +106,30 @@ New nuts
 **nuts-flow** can easily be extended with new nuts 
 (for details see :ref:`Custom nuts` )
 
-  >>> Tripple = nut_function(lambda x: x * 3)
-  >>> Range(5) >> Tripple() >> Collect()
-  [0, 3, 6, 9, 12]
+>>> Tripple = nut_function(lambda x: x * 3)
+>>> Range(5) >> Tripple() >> Collect()
+[0, 3, 6, 9, 12]
   
 or integrated with plain Python functions
   
-  >>> def Squares(n): return Range(n) >> Square()
-  >>> Squares(3) >> Collect()
-  [0, 1, 4]
-  
-  >>> sum(Range(5) >> Square())
-  30
+>>> def Squares(n): return Range(n) >> Square()
+>>> Squares(3) >> Collect()
+[0, 1, 4]
+
+>>> sum(Range(5) >> Square())
+30
    
 When implementing new nuts, or Python functions/classes that
 behave like nuts, the name of the nut should start with an uppercase letter. 
 This makes it easy to distibuish standard functions from nuts:
 
-  >>> from nutsflow import Range, Sum
-  >>> Range(5) >> Sum()
-  10
-  >>> sum(Range(5))
-  10
-  >>> range(5) >> Sum()
-  10
+>>> from nutsflow import Range, Sum
+>>> Range(5) >> Sum()
+10
+>>> sum(Range(5))
+10
+>>> range(5) >> Sum()
+10
 
   
 Line breaks
@@ -141,15 +141,15 @@ that the Python style guide
 recommends. In such a case flows can be wrapped in brackets 
 to allow for line breaks:
 
-  >>> (Range(10) >> Pick(2) >> Square() >> Square() >> 
-  ... Take(3) >> Collect())
-  [0, 16, 256]
+>>> (Range(10) >> Pick(2) >> Square() >> Square() >> 
+... Take(3) >> Collect())
+[0, 16, 256]
   
 Alternatively, a flow can be broken into shorter pieces:
 
-  >>> squared = Range(10) >> Pick(2) >> Square() >> Square()
-  >>> squared >> Take(3) >> Collect()
-  [0, 16, 256]
+>>> squared = Range(10) >> Pick(2) >> Square() >> Square()
+>>> squared >> Take(3) >> Collect()
+[0, 16, 256]
 
 
 Summary

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nutsflow.sink &mdash; nutsflow 1.0.10 documentation</title>
+  <title>nutsflow.sink &mdash; nutsflow 1.0.11 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../../genindex.html"/>
         <link rel="search" title="Search" href="../../search.html"/>
-    <link rel="top" title="nutsflow 1.0.10 documentation" href="../../index.html"/>
+    <link rel="top" title="nutsflow 1.0.11 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                1.0.10
+                1.0.11
               </div>
             
           
@@ -92,6 +92,7 @@
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../introduction.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html">Overview</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../tutorial/introduction.html">Tutorial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../contributions.html">Contributions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../nutsflow.html">nutsflow package</a></li>
@@ -165,6 +166,7 @@
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">import</span> <span class="nn">csv</span>
+<span class="kn">import</span> <span class="nn">math</span>
 
 <span class="kn">import</span> <span class="nn">itertools</span> <span class="k">as</span> <span class="nn">itt</span>
 <span class="kn">import</span> <span class="nn">collections</span> <span class="k">as</span> <span class="nn">cl</span>
@@ -197,7 +199,7 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    iterable &gt;&gt; Mean(default=None)</span>
 
-<span class="sd">    Return sum over inputs.</span>
+<span class="sd">    Return mean value of inputs.</span>
 
 <span class="sd">    &gt;&gt;&gt; [1, 2, 3] &gt;&gt; Mean()</span>
 <span class="sd">    2.0</span>
@@ -211,7 +213,36 @@
     <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">iterable</span><span class="p">:</span>
         <span class="nb">sum</span> <span class="o">+=</span> <span class="n">e</span>
         <span class="n">n</span> <span class="o">+=</span> <span class="mi">1</span>
-    <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="nb">sum</span><span class="p">)</span><span class="o">/</span><span class="n">n</span> <span class="k">if</span> <span class="n">n</span> <span class="k">else</span> <span class="n">default</span></div>
+    <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="nb">sum</span><span class="p">)</span> <span class="o">/</span> <span class="n">n</span> <span class="k">if</span> <span class="n">n</span> <span class="k">else</span> <span class="n">default</span></div>
+
+
+<span class="nd">@nut_sink</span>
+<div class="viewcode-block" id="MeanStd"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.sink.MeanStd">[docs]</a><span class="k">def</span> <span class="nf">MeanStd</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ddof</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    iterable &gt;&gt; MeanStd(default=None)</span>
+
+<span class="sd">    Return mean and standard deviation of inputs.</span>
+<span class="sd">    Standard deviation is with degrees of freedom = 1</span>
+
+<span class="sd">    &gt;&gt;&gt; [1, 2, 3] &gt;&gt; MeanStd()</span>
+<span class="sd">    (2.0, 1.0)</span>
+
+<span class="sd">    :param iterable iterable: Iterable over numbers</span>
+<span class="sd">    :param object default: Value returned if iterable is empty.</span>
+<span class="sd">    :param int ddof: Delta degrees of freedom (should 0 or 1)</span>
+<span class="sd">    :return: Mean and standard deviation of numbers or default value</span>
+<span class="sd">    :rtype: tuple (mean, std)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">sume</span><span class="p">,</span> <span class="n">sqre</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span>
+    <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">iterable</span><span class="p">:</span>
+        <span class="n">sume</span> <span class="o">+=</span> <span class="n">e</span>
+        <span class="n">sqre</span> <span class="o">+=</span> <span class="n">e</span> <span class="o">*</span> <span class="n">e</span>
+        <span class="n">n</span> <span class="o">+=</span> <span class="mf">1.0</span>
+    <span class="k">if</span> <span class="n">n</span> <span class="o">-</span> <span class="n">ddof</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">default</span>
+    <span class="n">avg</span> <span class="o">=</span> <span class="n">sume</span> <span class="o">/</span> <span class="n">n</span>
+    <span class="n">dev</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="n">n</span> <span class="o">*</span> <span class="n">sqre</span> <span class="o">-</span> <span class="n">sume</span> <span class="o">*</span> <span class="n">sume</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">n</span> <span class="o">*</span> <span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="n">ddof</span><span class="p">)))</span>
+    <span class="k">return</span> <span class="n">avg</span><span class="p">,</span> <span class="n">dev</span></div>
 
 
 <span class="nd">@nut_sink</span>
@@ -245,7 +276,7 @@
 <span class="nd">@nut_sink</span>
 <div class="viewcode-block" id="Min"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.sink.Min">[docs]</a><span class="k">def</span> <span class="nf">Min</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    iterable &gt;&gt; Max(key=func, default=None)</span>
+<span class="sd">    iterable &gt;&gt; Min(key=func, default=None)</span>
 
 <span class="sd">    Return minimum of inputs.</span>
 
@@ -633,7 +664,7 @@
   <div role="contentinfo">
     <p>
         &copy; Copyright 2017, IBM Research Australia.
-      Last updated on Apr 27, 2017.
+      Last updated on May 03, 2017.
 
     </p>
   </div> 
@@ -654,7 +685,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'1.0.10',
+            VERSION:'1.0.11',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

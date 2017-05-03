@@ -5,28 +5,28 @@ Custom nuts
 decorators or derived classes. To clarify the differences between the
 approaches let us start with a simple filter. First, import **nutsflow**
 
-  >>> from nutsflow import *
+>>> from nutsflow import *
 
 then define a ``lambda`` function that returns ``True`` for elements
 greater than five
 
-  >>> greater_than_5 = lambda x: x > 5
+>>> greater_than_5 = lambda x: x > 5
 
 and finally filter numbers using ``Filter`` and the defined ``lambda`` 
 predicate 
 
-  >>> Range(10) >> Filter(greater_than_5) >> Collect()
-  [6, 7, 8, 9]
+>>> Range(10) >> Filter(greater_than_5) >> Collect()
+[6, 7, 8, 9]
 
 By wrapping the lambda function via ``nut_filter`` a custom
 filter nut can be created
 
-  >>> GreaterThan5 = nut_filter(lambda x: x > 5)
+>>> GreaterThan5 = nut_filter(lambda x: x > 5)
 
 that operates the same way but can be directly used as a nut
 
-  >>> Range(10) >> GreaterThan5() >> Collect()
-  [6, 7, 8, 9]
+>>> Range(10) >> GreaterThan5() >> Collect()
+[6, 7, 8, 9]
 
 Note the change from lowercase for ``greater_than_5`` to uppercase 
 for ``GreaterThan5`` to signify the change from a Python function
@@ -38,17 +38,17 @@ and used without brackets.
 For instance, both of the following examples are **invalid**. Here
 ``greater_than_5`` is confused as nut and called with additional brackets 
 
-  >>> Range(10) >> Filter(greater_than_5()) >> Collect()
-  Traceback (most recent call last):
-  ...
-  TypeError: <lambda>() takes exactly 1 argument (0 given)
+>>> Range(10) >> Filter(greater_than_5()) >> Collect()
+Traceback (most recent call last):
+...
+TypeError: <lambda>() takes exactly 1 argument (0 given)
 
 while ``GreaterThan5`` is used with missing brackets 
 
-  >>> Range(10) >> GreaterThan5 >> Collect()
-  Traceback (most recent call last):
-  ...
-  TypeError: unsupported operand type(s) for >>: 'Range' and 'type'
+>>> Range(10) >> GreaterThan5 >> Collect()
+Traceback (most recent call last):
+...
+TypeError: unsupported operand type(s) for >>: 'Range' and 'type'
 
 
 `Wrappers` such as ``nut_filter(...)`` are suitable for simple one-line 
@@ -135,7 +135,7 @@ in specific formats or wrappers around databases. Here
 two toy examples for a wrapper and a decorator around a nut
 that generates ``n`` even numbers. First the wrapper approach
 
-  >>> EvenNumbers = nut_source(lambda n: (2*x for x in xrange(n)))
+>>> EvenNumbers = nut_source(lambda n: (2*x for x in xrange(n)))
 
 and here the decorator
 
@@ -147,8 +147,8 @@ and here the decorator
 
 Both can be used as follows
 
-  >>> EvenNumbers(4) >> Collect()
-  [0, 2, 4, 6]
+>>> EvenNumbers(4) >> Collect()
+[0, 2, 4, 6]
 
 
 nut_sink
@@ -158,10 +158,10 @@ Sinks receive an iterable and can return any result (not necessarily
 an iterable). The following example re-implements the ``Join`` sink
 that already exists in **nuts-flow** using a wrapper
 
- >>> Join = nut_sink(lambda it, sep: sep.join(map(str, it)))
+>>> Join = nut_sink(lambda it, sep: sep.join(map(str, it)))
 
- >>> Range(5) >> Join(':')
- '0:1:2:3:4'
+>>> Range(5) >> Join(':')
+'0:1:2:3:4'
 
 or using the decorator method
 
@@ -174,8 +174,8 @@ or using the decorator method
 Note that while ``Join`` is a sink it returns an iterable (here a string)
 and can therefore serve as input to other nuts
 
-  >>> Range(5) >> Join(':') >> Count()
-  9
+>>> Range(5) >> Join(':') >> Count()
+9
 
 The general rule is, if a nut collects/aggregates data in memory or
 does not return an iterable result is should be implemented as a *sink*
@@ -193,7 +193,7 @@ function is applied to a data flow the values of the elements change but
 not their number. The following example function multiplies each element of
 the data flow by ``n``
 
-  >>> Times = nut_function(lambda x, n: x * n)
+>>> Times = nut_function(lambda x, n: x * n)
 
 and here the same function via a decorator
 
@@ -205,8 +205,8 @@ and here the same function via a decorator
 
 Usage is identical for both the wrapper and the decorator
 
-  >>> Range(5) >> Times(2) >> Collect()
-  [0, 2, 4, 6, 8]
+>>> Range(5) >> Times(2) >> Collect()
+[0, 2, 4, 6, 8]
 
 
 nut_processor
@@ -218,7 +218,7 @@ to a :ref:`nut_function`.  If the numbers don't change both methods
 can be used but a :ref:`nut_function` will be simpler. For instance,
 here the ``Times`` nut re-implemented as a processor:
 
-  >>> Times = nut_processor(lambda iterable, n: (x * n for x in iterable))
+>>> Times = nut_processor(lambda iterable, n: (x * n for x in iterable))
 
 Processors are needed if the number of elements in the flow changes, e.g.
 here a processor nut that duplicates each element of the flow 
@@ -258,7 +258,7 @@ nut_filter
 As described above, *nut filters* extract elements from a data flow.
 Here a nut that extracts all numbers that are in a given interval
 
-  >>> InInterval = nut_filter(lambda x, a, b: a <= x <= b)
+>>> InInterval = nut_filter(lambda x, a, b: a <= x <= b)
 
 and the same filter implemented using the decorator
 
@@ -270,8 +270,8 @@ and the same filter implemented using the decorator
 
 and how it is used
 
-  >>> Range(10) >> InInterval(3, 6) >> Collect()
-  [3, 4, 5, 6]
+>>> Range(10) >> InInterval(3, 6) >> Collect()
+[3, 4, 5, 6]
 
 
 nut_filterfalse
@@ -283,7 +283,7 @@ element that are **not** meeting a given condition. The
 use case. For instance, the following nut filters out all
 elements that are **not** equal to given value
 
-  >>> Not = nut_filterfalse(lambda x, val: x == val)
+>>> Not = nut_filterfalse(lambda x, val: x == val)
 
 or implemented via the decorator
 
@@ -295,8 +295,8 @@ or implemented via the decorator
 
 and a usage example
 
-  >>> [1, 2, 3, 4] >> Not(2) >> Collect()
-  [1, 3, 4]
+>>> [1, 2, 3, 4] >> Not(2) >> Collect()
+[1, 3, 4]
 
 ``nut_filterfalse`` is largely used to wrap existing predicate
 functions as nuts. For example, given a function ``isnull(x)``
