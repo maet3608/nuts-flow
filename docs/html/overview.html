@@ -93,10 +93,7 @@
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Overview</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#sinks">Sinks</a></li>
-</ul>
-</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Overview</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorial/introduction.html">Tutorial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="contributions.html">Contributions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="nutsflow.html">nutsflow package</a></li>
@@ -165,16 +162,166 @@
             
   <div class="section" id="overview">
 <h1>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="sinks">
-<h2>Sinks<a class="headerlink" href="#sinks" title="Permalink to this headline">¶</a></h2>
-<p>Sinks aggregate input elements into a single output.</p>
+<p>Click on nut name for more details.</p>
+<p><a href="#id1"><span class="problematic" id="id2">**</span></a>Decorators &amp; Wrappers*</p>
 <ul class="simple">
-<li><a class="reference internal" href="nutsflow.html#nutsflow.sink.Collect" title="nutsflow.sink.Collect"><code class="xref py py-class docutils literal"><span class="pre">Collect</span></code></a> :
-collect input elements in a container, e.g. list, dict.</li>
-<li><a class="reference internal" href="nutsflow.html#nutsflow.sink.Sum" title="nutsflow.sink.Sum"><code class="xref py py-class docutils literal"><span class="pre">Sum</span></code></a> :
-compute sum of input elements.</li>
+<li><a class="reference internal" href="nutsflow.html#nutsflow.factory.nut_filter" title="nutsflow.factory.nut_filter"><code class="xref py py-func docutils literal"><span class="pre">nut_filter</span></code></a> :
+wrapper to create nut filters.</li>
+<li><a class="reference internal" href="nutsflow.html#nutsflow.factory.nut_filterfalse" title="nutsflow.factory.nut_filterfalse"><code class="xref py py-func docutils literal"><span class="pre">nut_filterfalse</span></code></a> :
+wrapper to create nut filters with inversed logic.</li>
+<li><a class="reference internal" href="nutsflow.html#nutsflow.factory.nut_function" title="nutsflow.factory.nut_function"><code class="xref py py-func docutils literal"><span class="pre">nut_function</span></code></a> :
+wrapper for nut functions that operate on elements.</li>
+<li><a class="reference internal" href="nutsflow.html#nutsflow.factory.nut_processor" title="nutsflow.factory.nut_processor"><code class="xref py py-func docutils literal"><span class="pre">nut_processor</span></code></a> :
+wrapper for nut processors that operate on iterables.</li>
+<li><a class="reference internal" href="nutsflow.html#nutsflow.factory.nut_sink" title="nutsflow.factory.nut_sink"><code class="xref py py-func docutils literal"><span class="pre">nut_sink</span></code></a> :
+wrapper for nut sinks that aggregate data flows.</li>
+<li><a class="reference internal" href="nutsflow.html#nutsflow.factory.nut_source" title="nutsflow.factory.nut_source"><code class="xref py py-func docutils literal"><span class="pre">nut_source</span></code></a> :
+wrapper for nut sources that generate data.</li>
 </ul>
-</div>
+<p><strong>Sources</strong></p>
+<ul class="simple">
+<li><a class="reference internal" href="nutsflow.html#nutsflow.source.Empty" title="nutsflow.source.Empty"><code class="xref py py-class docutils literal"><span class="pre">Empty</span></code></a> :
+empty source that does not generate anything.</li>
+<li><a class="reference internal" href="nutsflow.html#nutsflow.source.Enumerate" title="nutsflow.source.Enumerate"><code class="xref py py-class docutils literal"><span class="pre">Enumerate</span></code></a> :
+generate infinite number of increasing integers.</li>
+<li><a class="reference internal" href="nutsflow.html#nutsflow.source.Product" title="nutsflow.source.Product"><code class="xref py py-class docutils literal"><span class="pre">Product</span></code></a> :
+gernerate cartesian product of iterables.</li>
+<li><a class="reference internal" href="nutsflow.html#nutsflow.source.Range" title="nutsflow.source.Range"><code class="xref py py-class docutils literal"><span class="pre">Range</span></code></a> :
+generate range of integer numbers.</li>
+<li><a class="reference internal" href="nutsflow.html#nutsflow.source.ReadCSV" title="nutsflow.source.ReadCSV"><code class="xref py py-class docutils literal"><span class="pre">ReadCSV</span></code></a> :
+read elements from file in CSV (or TSV) format.</li>
+<li><a class="reference internal" href="nutsflow.html#nutsflow.source.Repeat" title="nutsflow.source.Repeat"><code class="xref py py-class docutils literal"><span class="pre">Repeat</span></code></a> :
+repeats a value n times or infinitely.</li>
+</ul>
+<p><strong>Sinks</strong></p>
+<ul class="simple">
+<li><a class="reference internal" href="nutsflow.html#nutsflow.sink.ArgMax" title="nutsflow.sink.ArgMax"><code class="xref py py-class docutils literal"><span class="pre">ArgMax</span></code></a> :
+return index of largest element.</li>
+<li><a class="reference internal" href="nutsflow.html#nutsflow.sink.ArgMin" title="nutsflow.sink.ArgMin"><code class="xref py py-class docutils literal"><span class="pre">ArgMin</span></code></a> :
+return index of smallest element.</li>
+<li><a class="reference internal" href="nutsflow.html#nutsflow.sink.Collect" title="nutsflow.sink.Collect"><code class="xref py py-class docutils literal"><span class="pre">Collect</span></code></a> :
+collect elements in a container, e.g. list, set, dict.</li>
+<li><a class="reference internal" href="nutsflow.html#nutsflow.sink.Consume" title="nutsflow.sink.Consume"><code class="xref py py-class docutils literal"><span class="pre">Consume</span></code></a> :
+consumes input and returns nothing.</li>
+<li><a class="reference internal" href="nutsflow.html#nutsflow.sink.Count" title="nutsflow.sink.Count"><code class="xref py py-class docutils literal"><span class="pre">Count</span></code></a> :
+count number of elements.</li>
+<li><a class="reference internal" href="nutsflow.html#nutsflow.sink.CountValues" title="nutsflow.sink.CountValues"><code class="xref py py-class docutils literal"><span class="pre">CountValues</span></code></a> :
+return dictionary with counts of the different values.</li>
+<li><a class="reference internal" href="nutsflow.html#nutsflow.sink.Head" title="nutsflow.sink.Head"><code class="xref py py-class docutils literal"><span class="pre">Head</span></code></a> :
+collect first n elements in a container, e.g. list, set, dict.</li>
+<li><a class="reference internal" href="nutsflow.html#nutsflow.sink.Join" title="nutsflow.sink.Join"><code class="xref py py-class docutils literal"><span class="pre">Join</span></code></a> :
+join elements in a string.</li>
+<li><a class="reference internal" href="nutsflow.html#nutsflow.sink.Max" title="nutsflow.sink.Max"><code class="xref py py-class docutils literal"><span class="pre">Max</span></code></a> :
+return largest element.</li>
+<li><a class="reference internal" href="nutsflow.html#nutsflow.sink.Mean" title="nutsflow.sink.Mean"><code class="xref py py-class docutils literal"><span class="pre">Mean</span></code></a> :
+compute mean value of elements.</li>
+<li><a class="reference internal" href="nutsflow.html#nutsflow.sink.MeanStd" title="nutsflow.sink.MeanStd"><code class="xref py py-class docutils literal"><span class="pre">MeanStd</span></code></a> :
+compute mean and standard deviation.</li>
+<li><a class="reference internal" href="nutsflow.html#nutsflow.sink.Min" title="nutsflow.sink.Min"><code class="xref py py-class docutils literal"><span class="pre">Min</span></code></a> :
+return smallest element.</li>
+<li><a class="reference internal" href="nutsflow.html#nutsflow.sink.Nth" title="nutsflow.sink.Nth"><code class="xref py py-class docutils literal"><span class="pre">Nth</span></code></a> :
+get n-th element.</li>
+<li><a class="reference internal" href="nutsflow.html#nutsflow.sink.Reduce" title="nutsflow.sink.Reduce"><code class="xref py py-class docutils literal"><span class="pre">Reduce</span></code></a> :
+reduce inputs with a given function.</li>
+<li><a class="reference internal" href="nutsflow.html#nutsflow.sink.Sum" title="nutsflow.sink.Sum"><code class="xref py py-class docutils literal"><span class="pre">Sum</span></code></a> :
+return sum of elements.</li>
+<li><a class="reference internal" href="nutsflow.html#nutsflow.sink.Tail" title="nutsflow.sink.Tail"><code class="xref py py-class docutils literal"><span class="pre">Tail</span></code></a> :
+collect last n elements in a container, e.g. list, set, dict.</li>
+<li><a class="reference internal" href="nutsflow.html#nutsflow.sink.Unzip" title="nutsflow.sink.Unzip"><code class="xref py py-class docutils literal"><span class="pre">Unzip</span></code></a> :
+reverses Zip() and unzips tuple elements.</li>
+<li><a class="reference internal" href="nutsflow.html#nutsflow.sink.WriteCSV" title="nutsflow.sink.WriteCSV"><code class="xref py py-class docutils literal"><span class="pre">WriteCSV</span></code></a> :
+write elements to file in CSV (or TSV) format.</li>
+</ul>
+<p><strong>Functions</strong></p>
+<ul class="simple">
+<li><a class="reference internal" href="nutsflow.html#nutsflow.function.Counter" title="nutsflow.function.Counter"><code class="xref py py-class docutils literal"><span class="pre">Counter</span></code></a> :
+counts elements in an external variable - use for debugging only.</li>
+<li><a class="reference internal" href="nutsflow.html#nutsflow.function.Format" title="nutsflow.function.Format"><code class="xref py py-class docutils literal"><span class="pre">Format</span></code></a> :
+format element as a string.</li>
+<li><a class="reference internal" href="nutsflow.html#nutsflow.function.Get" title="nutsflow.function.Get"><code class="xref py py-class docutils literal"><span class="pre">Get</span></code></a> :
+extract slice from (indexable) element.</li>
+<li><a class="reference internal" href="nutsflow.html#nutsflow.function.GetCols" title="nutsflow.function.GetCols"><code class="xref py py-class docutils literal"><span class="pre">GetCols</span></code></a> :
+extract columns from (indexable) element.</li>
+<li><a class="reference internal" href="nutsflow.html#nutsflow.function.Identity" title="nutsflow.function.Identity"><code class="xref py py-class docutils literal"><span class="pre">Identity</span></code></a> :
+returns the unchanged element.</li>
+<li><a class="reference internal" href="nutsflow.html#nutsflow.function.NOP" title="nutsflow.function.NOP"><code class="xref py py-class docutils literal"><span class="pre">NOP</span></code></a> :
+no operation. disable individual nuts temporarily - use for debugging only.</li>
+<li><a class="reference internal" href="nutsflow.html#nutsflow.function.Print" title="nutsflow.function.Print"><code class="xref py py-class docutils literal"><span class="pre">Print</span></code></a> :
+print element to console.</li>
+<li><a class="reference internal" href="nutsflow.html#nutsflow.function.Sleep" title="nutsflow.function.Sleep"><code class="xref py py-class docutils literal"><span class="pre">Sleep</span></code></a> :
+pause processing thread for a given time.</li>
+<li><a class="reference internal" href="nutsflow.html#nutsflow.function.Square" title="nutsflow.function.Square"><code class="xref py py-class docutils literal"><span class="pre">Square</span></code></a> :
+return square of element.</li>
+</ul>
+<p><strong>Processors</strong></p>
+<ul class="simple">
+<li><a class="reference internal" href="nutsflow.html#nutsflow.processor.Cache" title="nutsflow.processor.Cache"><code class="xref py py-class docutils literal"><span class="pre">Cache</span></code></a> :
+caches elements on disk.</li>
+<li><a class="reference internal" href="nutsflow.html#nutsflow.processor.Chunk" title="nutsflow.processor.Chunk"><code class="xref py py-class docutils literal"><span class="pre">Chunk</span></code></a> :
+split iterable in chunks of size n.</li>
+<li><a class="reference internal" href="nutsflow.html#nutsflow.processor.Combine" title="nutsflow.processor.Combine"><code class="xref py py-class docutils literal"><span class="pre">Combine</span></code></a> :
+combines elements in subsequences of length r.</li>
+<li><a class="reference internal" href="nutsflow.html#nutsflow.processor.Concat" title="nutsflow.processor.Concat"><code class="xref py py-class docutils literal"><span class="pre">Concat</span></code></a> :
+concatenates iterables.</li>
+<li><a class="reference internal" href="nutsflow.html#nutsflow.processor.Cycle" title="nutsflow.processor.Cycle"><code class="xref py py-class docutils literal"><span class="pre">Cycle</span></code></a> :
+cycle through elments of input iterable infinitely.</li>
+<li><a class="reference internal" href="nutsflow.html#nutsflow.processor.Dedupe" title="nutsflow.processor.Dedupe"><code class="xref py py-class docutils literal"><span class="pre">Dedupe</span></code></a> :
+removes duplicates from iterable.</li>
+<li><a class="reference internal" href="nutsflow.html#nutsflow.processor.Drop" title="nutsflow.processor.Drop"><code class="xref py py-class docutils literal"><span class="pre">Drop</span></code></a> :
+drops first n elements.</li>
+<li><a class="reference internal" href="nutsflow.html#nutsflow.processor.DropWhile" title="nutsflow.processor.DropWhile"><code class="xref py py-class docutils literal"><span class="pre">DropWhile</span></code></a> :
+drops first elements while predicate function is true.</li>
+<li><a class="reference internal" href="nutsflow.html#nutsflow.processor.Filter" title="nutsflow.processor.Filter"><code class="xref py py-class docutils literal"><span class="pre">Filter</span></code></a> :
+drops elements predicate function is false.</li>
+<li><a class="reference internal" href="nutsflow.html#nutsflow.processor.FilterFalse" title="nutsflow.processor.FilterFalse"><code class="xref py py-class docutils literal"><span class="pre">FilterFalse</span></code></a> :
+drops elements predicate function is true.</li>
+<li><a class="reference internal" href="nutsflow.html#nutsflow.processor.FlatMap" title="nutsflow.processor.FlatMap"><code class="xref py py-class docutils literal"><span class="pre">FlatMap</span></code></a> :
+maps function on elements and flattens result.</li>
+<li><a class="reference internal" href="nutsflow.html#nutsflow.processor.Flatten" title="nutsflow.processor.Flatten"><code class="xref py py-class docutils literal"><span class="pre">Flatten</span></code></a> :
+flattens iterables within the input iterable.</li>
+<li><a class="reference internal" href="nutsflow.html#nutsflow.processor.FlattenCol" title="nutsflow.processor.FlattenCol"><code class="xref py py-class docutils literal"><span class="pre">FlattenCol</span></code></a> :
+extract given columns from (indexable) elements and flattens result.</li>
+<li><a class="reference internal" href="nutsflow.html#nutsflow.processor.GroupBy" title="nutsflow.processor.GroupBy"><code class="xref py py-class docutils literal"><span class="pre">GroupBy</span></code></a> :
+groups elements based on grouping function.</li>
+<li><a class="reference internal" href="nutsflow.html#nutsflow.processor.GroupBySorted" title="nutsflow.processor.GroupBySorted"><code class="xref py py-class docutils literal"><span class="pre">GroupBySorted</span></code></a> :
+groups pre-sorted iterable of elements.</li>
+<li><a class="reference internal" href="nutsflow.html#nutsflow.processor.If" title="nutsflow.processor.If"><code class="xref py py-class docutils literal"><span class="pre">If</span></code></a> :
+executes nut depending on condition.</li>
+<li><a class="reference internal" href="nutsflow.html#nutsflow.processor.Interleave" title="nutsflow.processor.Interleave"><code class="xref py py-class docutils literal"><span class="pre">Interleave</span></code></a> :
+interleaves elements of multiple iterables.</li>
+<li><a class="reference internal" href="nutsflow.html#nutsflow.processor.Map" title="nutsflow.processor.Map"><code class="xref py py-class docutils literal"><span class="pre">Map</span></code></a> :
+maps function on elements.</li>
+<li><a class="reference internal" href="nutsflow.html#nutsflow.processor.MapCol" title="nutsflow.processor.MapCol"><code class="xref py py-class docutils literal"><span class="pre">MapCol</span></code></a> :
+maps function on specific columns of (indexable) elements.</li>
+<li><a class="reference internal" href="nutsflow.html#nutsflow.processor.MapMulti" title="nutsflow.processor.MapMulti"><code class="xref py py-class docutils literal"><span class="pre">MapMulti</span></code></a> :
+maps multiple functions on elements, resulting in multiple output iterators.</li>
+<li><a class="reference internal" href="nutsflow.html#nutsflow.processor.MapPar" title="nutsflow.processor.MapPar"><code class="xref py py-class docutils literal"><span class="pre">MapPar</span></code></a> :
+map function (in concurrent threads) on elements.</li>
+<li><a class="reference internal" href="nutsflow.html#nutsflow.processor.Partition" title="nutsflow.processor.Partition"><code class="xref py py-class docutils literal"><span class="pre">Partition</span></code></a> :
+split iterable into two partitions based on predicate function.</li>
+<li><a class="reference internal" href="nutsflow.html#nutsflow.processor.Permutate" title="nutsflow.processor.Permutate"><code class="xref py py-class docutils literal"><span class="pre">Permutate</span></code></a> :
+return successive r length permutations of elements.</li>
+<li><a class="reference internal" href="nutsflow.html#nutsflow.processor.Pick" title="nutsflow.processor.Pick"><code class="xref py py-class docutils literal"><span class="pre">Pick</span></code></a> :
+pick every n-th element or sample with given probability from iterable.</li>
+<li><a class="reference internal" href="nutsflow.html#nutsflow.processor.Prefetch" title="nutsflow.processor.Prefetch"><code class="xref py py-class docutils literal"><span class="pre">Prefetch</span></code></a> :
+prefetch elements in separate thread.</li>
+<li><a class="reference internal" href="nutsflow.html#nutsflow.processor.PrintProgress" title="nutsflow.processor.PrintProgress"><code class="xref py py-class docutils literal"><span class="pre">PrintProgress</span></code></a> :
+print progress on iterable.</li>
+<li><a class="reference internal" href="nutsflow.html#nutsflow.processor.Shuffle" title="nutsflow.processor.Shuffle"><code class="xref py py-class docutils literal"><span class="pre">Shuffle</span></code></a> :
+shuffle elements (partially).</li>
+<li><a class="reference internal" href="nutsflow.html#nutsflow.processor.Slice" title="nutsflow.processor.Slice"><code class="xref py py-class docutils literal"><span class="pre">Slice</span></code></a> :
+return slice of iterable.</li>
+<li><a class="reference internal" href="nutsflow.html#nutsflow.processor.Take" title="nutsflow.processor.Take"><code class="xref py py-class docutils literal"><span class="pre">Take</span></code></a> :
+return first n elements.</li>
+<li><a class="reference internal" href="nutsflow.html#nutsflow.processor.TakeWhile" title="nutsflow.processor.TakeWhile"><code class="xref py py-class docutils literal"><span class="pre">TakeWhile</span></code></a> :
+return elements while predicte function is true.</li>
+<li><a class="reference internal" href="nutsflow.html#nutsflow.processor.Tee" title="nutsflow.processor.Tee"><code class="xref py py-class docutils literal"><span class="pre">Tee</span></code></a> :
+return n independent iterators over iterable.</li>
+<li><a class="reference internal" href="nutsflow.html#nutsflow.processor.Zip" title="nutsflow.processor.Zip"><code class="xref py py-class docutils literal"><span class="pre">Zip</span></code></a> :
+zip elements from multiple iterables.</li>
+<li><a class="reference internal" href="nutsflow.html#nutsflow.processor.ZipWith" title="nutsflow.processor.ZipWith"><code class="xref py py-class docutils literal"><span class="pre">ZipWith</span></code></a> :
+zips elements from multiple iterables with a given function.</li>
+</ul>
 </div>
 
 
@@ -200,7 +347,7 @@ compute sum of input elements.</li>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2017, IBM Research Australia.
-      Last updated on May 01, 2017.
+      Last updated on May 03, 2017.
 
     </p>
   </div> 

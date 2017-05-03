@@ -93,6 +93,7 @@
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorial/introduction.html">Tutorial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="contributions.html">Contributions</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">nutsflow package</a><ul>
@@ -2735,7 +2736,7 @@ See <a class="reference external" href="https://docs.python.org/2/library/iterto
 <em class="property">class </em><code class="descname">Zip</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/processor.html#Zip"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.processor.Zip" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#nutsflow.base.Nut" title="nutsflow.base.Nut"><code class="xref py py-class docutils literal"><span class="pre">nutsflow.base.Nut</span></code></a></p>
 <p>iterable &gt;&gt; Zip(<a href="#id15"><span class="problematic" id="id16">*</span></a>iterables)</p>
-<p>Zip elements of iterable with elements of given iterables
+<p>Zip elements of iterable with elements of given iterables.
 Zip finishes when shortest iterable is exhausted.
 See <a class="reference external" href="https://docs.python.org/2/library/itertools.html#itertools.izip">https://docs.python.org/2/library/itertools.html#itertools.izip</a>
 And <a class="reference external" href="https://docs.python.org/2/library/itertools.html#itertools.izip_longest">https://docs.python.org/2/library/itertools.html#itertools.izip_longest</a></p>
@@ -3255,7 +3256,7 @@ Standard deviation is with degrees of freedom = 1</p>
 <dt id="nutsflow.sink.Min">
 <em class="property">class </em><code class="descname">Min</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/sink.html#Min"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.sink.Min" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#nutsflow.base.NutSink" title="nutsflow.base.NutSink"><code class="xref py py-class docutils literal"><span class="pre">nutsflow.base.NutSink</span></code></a></p>
-<p>iterable &gt;&gt; Max(key=func, default=None)</p>
+<p>iterable &gt;&gt; Min(key=func, default=None)</p>
 <p>Return minimum of inputs.</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">Min</span><span class="p">()</span>
 <span class="go">1</span>
@@ -3808,7 +3809,7 @@ See <a class="reference external" href="https://docs.python.org/2/library/csv.ht
   <div role="contentinfo">
     <p>
         &copy; Copyright 2017, IBM Research Australia.
-      Last updated on May 01, 2017.
+      Last updated on May 03, 2017.
 
     </p>
   </div> 

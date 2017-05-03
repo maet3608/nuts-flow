@@ -114,7 +114,7 @@ def Max(iterable, key=lambda x: x, default=None):
 @nut_sink
 def Min(iterable, key=lambda x: x, default=None):
     """
-    iterable >> Max(key=func, default=None)
+    iterable >> Min(key=func, default=None)
 
     Return minimum of inputs.
 

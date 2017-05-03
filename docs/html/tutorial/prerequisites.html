@@ -94,6 +94,7 @@
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../overview.html">Overview</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="introduction.html">Tutorial</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Prerequisites</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#lambda-functions">Lambda functions</a></li>
@@ -191,10 +192,6 @@ If you are already familiar with these concepts go ahead and skip this section.<
 <h2>Lambda functions<a class="headerlink" href="#lambda-functions" title="Permalink to this headline">¶</a></h2>
 <p>Commonly functions are defined via the <code class="docutils literal"><span class="pre">def</span></code> keyword and a function name,
 e.g.:</p>
-<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
-</pre></div>
-</div>
 <p><em>Lambda</em> functions or so called <em>anonymous</em> functions are an alternative method
 to define very short functions (without a name) that are typically used only once.
 For instance, the <code class="docutils literal"><span class="pre">add</span></code> function above can be written as follows</p>
@@ -267,7 +264,7 @@ that take iterables</p>
 </pre></div>
 </div>
 <p>There are three important properties of iterators to keep in mind.
-Firstly, an iterator is lazy. It doesn&#8217;t produce anything until ask.
+Firstly, an iterator is lazy. It doesn&#8217;t produce anything until asked.
 There needs to be a consumer.
 For instance, <code class="docutils literal"><span class="pre">even</span> <span class="pre">=</span> <span class="pre">Even(100000)</span></code> creates the iterator but does not
 create any numbers.</p>
@@ -335,7 +332,7 @@ the  <code class="docutils literal"><span class="pre">&gt;&gt;</span></code> ope
   <div role="contentinfo">
     <p>
         &copy; Copyright 2017, IBM Research Australia.
-      Last updated on May 01, 2017.
+      Last updated on May 02, 2017.
 
     </p>
   </div> 

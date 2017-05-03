@@ -11,7 +11,7 @@ Lambda functions
 Commonly functions are defined via the ``def`` keyword and a function name,
 e.g.:
 
-.. code:: python
+.. code:: pythonun
 
   def add(a, b):
       return a + b
@@ -93,7 +93,7 @@ that take iterables
 6
 
 There are three important properties of iterators to keep in mind. 
-Firstly, an iterator is lazy. It doesn't produce anything until ask. 
+Firstly, an iterator is lazy. It doesn't produce anything until asked. 
 There needs to be a consumer.
 For instance, ``even = Even(100000)`` creates the iterator but does not 
 create any numbers.

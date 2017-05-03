@@ -125,7 +125,7 @@ def Zip(iterable, iterable2=None, *iterables):
     """
     iterable >> Zip(*iterables)
 
-    Zip elements of iterable with elements of given iterables
+    Zip elements of iterable with elements of given iterables.
     Zip finishes when shortest iterable is exhausted.
     See https://docs.python.org/2/library/itertools.html#itertools.izip
     And https://docs.python.org/2/library/itertools.html#itertools.izip_longest
