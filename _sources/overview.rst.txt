@@ -4,7 +4,7 @@ Overview
 Click on a nut name for more details.
 
 
-**Decorators & Wrappers**
+**Decorators & Wrappers** : convert Python functions to nuts
 
 - :func:`nut_filter <nutsflow.factory.nut_filter>` :
   wrapper to create nut filters.
@@ -26,7 +26,7 @@ Click on a nut name for more details.
 
 
 
-**Sources**
+**Sources** : generate data
 
 - :class:`Empty <nutsflow.source.Empty>` :
   empty source that does not generate anything.
@@ -47,7 +47,7 @@ Click on a nut name for more details.
   repeats a value n times or infinitely.
 
 
-**Sinks**
+**Sinks** : aggregate data
 
 - :class:`ArgMax <nutsflow.sink.ArgMax>` :
   return index of largest element.
@@ -104,7 +104,7 @@ Click on a nut name for more details.
   write elements to file in CSV (or TSV) format.
 
   
-**Functions**
+**Functions** : operate on individual elements
 
 - :class:`Counter <nutsflow.function.Counter>` :
   counts elements in an external variable - use for debugging only.
@@ -134,7 +134,7 @@ Click on a nut name for more details.
   return square of element. 
 
 
-**Processors**
+**Processors** : operate on iterables
 
 - :class:`Cache <nutsflow.processor.Cache>` :
   caches elements on disk.
