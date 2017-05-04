@@ -36,3 +36,8 @@ which is described `here <https://maet3608.github.io/nuts-ml/>`_ .
 .. image:: https://coveralls.io/repos/github/maet3608/nuts-flow/badge.svg?branch=master
    :target: https://coveralls.io/github/maet3608/nuts-flow?branch=master
 
+.. image:: https://pypip.in/v/nutsml/badge.png
+    :target: https://crate.io/packages/nutsml/
+    :alt: Latest PyPI version
+
+
