@@ -39,18 +39,19 @@ which is described `here <https://maet3608.github.io/nuts-ml/>`_ .
 .. image:: https://coveralls.io/repos/github/maet3608/nuts-flow/badge.svg?branch=master  
    :target: https://coveralls.io/github/maet3608/nuts-flow?branch=master
 
-.. image:: https://img.shields.io/github/issues/maet3608/nuts-ml.svg  
+.. image:: https://img.shields.io/github/issues/maet3608/nuts-flow.svg  
 
-.. image:: https://img.shields.io/github/stars/maet3608/nuts-ml.svg  
+.. image:: https://img.shields.io/github/stars/maet3608/nuts-flow.svg  
 
 .. image:: https://img.shields.io/badge/license-Apache%202-blue.svg  
 
 .. image:: https://img.shields.io/pypi/dm/nutsflow.svg  
 
-.. image::  https://img.shields.io/github/downloads/nuts-flow/total.svg
+.. image:: https://img.shields.io/github/downloads/nutsflow/total.svg
 
+.. image:: https://img.shields.io/pypi/pyversions/nutsflow.svg
 
-
+.. image:: https://img.shields.io/pypi/l/nutsflow.svg
 
 
 
