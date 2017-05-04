@@ -1,26 +1,4 @@
-.. image:: https://badge.fury.io/py/nutsflow.svg
-   :target: https://badge.fury.io/py/nutsflow
 
-.. image:: https://img.shields.io/pypi/pyversions/nutsflow.svg
-   :target: https://pypi.python.org/pypi/nutsflow/
-
-.. image:: https://travis-ci.org/maet3608/nuts-flow.svg?branch=master
-   :target: https://travis-ci.org/maet3608/nuts-flow
-
-.. image:: https://coveralls.io/repos/github/maet3608/nuts-flow/badge.svg?branch=master
-   :target: https://coveralls.io/github/maet3608/nuts-flow?branch=master
-
-.. image:: https://img.shields.io/github/issues/maet3608/nuts-flow.svg
-   :target: https://github.com/maet3608/nuts-flow/issues
-
-.. image:: https://img.shields.io/badge/license-Apache%202-blue.svg
-   :target: https://github.com/maet3608/nuts-ml/blob/master/LICENSE
-
-.. image:: https://img.shields.io/pypi/dm/nutsflow.svg
-   :target: https://pypi.python.org/pypi/nutsflow/
-
-.. image:: https://img.shields.io/github/downloads/maet3608/nuts-flow/total.svg
-   :target: https://github.com/maet3608/nuts-flow
 
 
 .. image:: pics/nutsflow_logo.gif
@@ -55,6 +33,29 @@ is easier to understand than the nested *itertools* code.
 which is described `here <https://maet3608.github.io/nuts-ml/>`_ .
 
 
+.. image:: https://badge.fury.io/py/nutsflow.svg
+   :target: https://badge.fury.io/py/nutsflow
+
+.. image:: https://img.shields.io/pypi/pyversions/nutsflow.svg
+   :target: https://pypi.python.org/pypi/nutsflow/
+
+.. image:: https://travis-ci.org/maet3608/nuts-flow.svg?branch=master
+   :target: https://travis-ci.org/maet3608/nuts-flow
+
+.. image:: https://coveralls.io/repos/github/maet3608/nuts-flow/badge.svg?branch=master
+   :target: https://coveralls.io/github/maet3608/nuts-flow?branch=master
+
+.. image:: https://img.shields.io/github/issues/maet3608/nuts-flow.svg
+   :target: https://github.com/maet3608/nuts-flow/issues
+
+.. image:: https://img.shields.io/badge/license-Apache%202-blue.svg
+   :target: https://github.com/maet3608/nuts-ml/blob/master/LICENSE
+
+.. image:: https://img.shields.io/pypi/dm/nutsflow.svg
+   :target: https://pypi.python.org/pypi/nutsflow/
+
+.. image:: https://img.shields.io/github/downloads/maet3608/nuts-flow/total.svg
+   :target: https://github.com/maet3608/nuts-flow
 
 
 
