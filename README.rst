@@ -47,11 +47,12 @@ which is described `here <https://maet3608.github.io/nuts-ml/>`_ .
 
 .. image:: https://img.shields.io/pypi/dm/nutsflow.svg  
 
-.. image:: https://img.shields.io/github/downloads/nutsflow/total.svg
+.. image:: https://img.shields.io/pypi/dt/nutsflow.svg
+
+.. image:: https://img.shields.io/github/downloads/maet3608/nuts-flow/total.svg
 
 .. image:: https://img.shields.io/pypi/pyversions/nutsflow.svg
 
-.. image:: https://img.shields.io/pypi/l/nutsflow.svg
 
 
 
