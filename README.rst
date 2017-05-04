@@ -30,14 +30,15 @@ is easier to understand than the nested *itertools* code.
 **nuts-flow** is the base for `nuts-ml <https://github.com/maet3608/nuts-ml>`_, 
 which is described `here <https://maet3608.github.io/nuts-ml/>`_ .
 
+.. image:: https://badge.fury.io/py/nutsflow.svg
+    :target: https://badge.fury.io/py/nutsflow
+
 .. image:: https://travis-ci.org/maet3608/nuts-flow.svg?branch=master
    :target: https://travis-ci.org/maet3608/nuts-flow
 
 .. image:: https://coveralls.io/repos/github/maet3608/nuts-flow/badge.svg?branch=master
    :target: https://coveralls.io/github/maet3608/nuts-flow?branch=master
 
-.. image:: https://pypip.in/v/nutsml/badge.png
-    :target: https://crate.io/packages/nutsml/
-    :alt: Latest PyPI version
+
 
 
