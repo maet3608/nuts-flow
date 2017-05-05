@@ -613,8 +613,11 @@ def GroupBySorted(iterable, keycol=lambda x: x, nokey=False):
     ... def ViewResult(iterable):
     ...     return iterable >> Map(lambda (k, es): (k, list(es))) >> Collect()
 
-    >>> [1,1, 1, 2, 3] >> GroupBySorted() >> ViewResult()
+    >>> [1, 1, 1, 2, 3] >> GroupBySorted() >> ViewResult()
     [(1, [1, 1, 1]), (2, [2]), (3, [3])]
+
+    >>> [1, 1, 1, 2, 3] >> GroupBySorted(nokey=True) >> Map(list) >> Collect()
+    [[1, 1, 1], [2], [3]]
 
     >>> ['--', '**', '+++'] >> GroupBySorted(len) >> ViewResult()
     [(2, ['--', '**']), (3, ['+++'])]
@@ -630,6 +633,30 @@ def GroupBySorted(iterable, keycol=lambda x: x, nokey=False):
     key = keycol if isfunc else lambda x: x[keycol]
     groupiter = itt.groupby(iterable, key)
     return itt.imap(lambda (k, v): v, groupiter) if nokey else groupiter
+
+
+@nut_processor
+def Clone(iterable, n):
+    """
+    iterable >> Clone(n)
+
+    Clones elements in the iterable n times.
+
+    >>> from nutsflow import Range, Collect, Join
+    >>> Range(4) >> Clone(2) >> Collect()
+    [0, 0, 1, 1, 2, 2, 3, 3]
+
+    >>> 'abc' >> Clone(3) >> Join()
+    'aaabbbccc'
+
+    :param iterable iterable: Any iterable
+    :param n: Number of clones
+    :return: Generator over cloned elements in iterable
+    :rtype: generator
+    """
+    for e in iterable:
+        for _ in xrange(n):
+            yield e
 
 
 @nut_processor
@@ -658,8 +685,8 @@ def Shuffle(iterable, buffersize, rand=rnd.Random()):
     :param iterable iterable: Any iterable
     :param int buffersize: Number of elements stored in shuffle buffer.
     :param random.Random rand: Random number generator.
-    :return: Iterator over shuffled elements
-    :rtype: iterator
+    :return: Generator over shuffled elements
+    :rtype: generator
     """
     iterable = iter(iterable)
     buffer = list(itf.take(iterable, buffersize))

@@ -141,6 +141,9 @@ Click on a nut name for more details.
 
 - :class:`Chunk <nutsflow.processor.Chunk>` :
   split iterable in chunks of size n.
+  
+- :class:`Clone <nutsflow.processor.Clone>` :
+  clone elements in iterables n times.  
 
 - :class:`Combine <nutsflow.processor.Combine>` :
   combines elements in subsequences of length r.

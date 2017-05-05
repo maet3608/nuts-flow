@@ -270,6 +270,15 @@ def test_GroupBySorted():
     assert [(1, 1), (1, 2), (2, 2)] >> GroupBySorted(1) >> KV2List() == expected
 
 
+def test_Clone():
+    assert [] >> Clone(2) >> Collect() == []
+    assert [] >> Clone(0) >> Collect() == []
+    assert Range(4) >> Clone(0) >> Collect() == []
+    assert Range(4) >> Clone(1) >> Collect() == [0, 1, 2, 3]
+    assert Range(4) >> Clone(2) >> Collect() == [0, 0, 1, 1, 2, 2, 3, 3]
+    assert 'abc' >> Clone(3) >> Join() == 'aaabbbccc'
+
+
 def test_Shuffle():
     data = range(50)
     assert data >> Shuffle(100) >> Collect() != data
