@@ -208,6 +208,40 @@ Split iterable in chunks of size n, where each chunk is also an iterator.
 :rtype: Iterator over iterators
 """
 
+
+class ChunkWhen(Nut):
+    def __init__(self, func):
+        """
+        iterable >> ChunkWhen(func)
+
+        Chunk iterable and create new chunk every time func returns True.
+
+        >>> from nutsflow import Map, Join, Collect
+        >>> func = lambda x: x == '|'
+        >>> '0|12|345|6' >> ChunkWhen(func) >> Map(Join()) >> Collect()
+        ['0', '|12', '|345', '|6']
+
+        :param function func: Boolean function that indicates chunks.
+            New chunk is created if return value is True.
+        """
+        self.cnt = 0
+        self.func = func
+
+    def _key(self, x):
+        """ Return keys (= counter) for groups (=chunks)"""
+        if self.func(x):
+            self.cnt += 1
+        return self.cnt
+
+    def __rrshift__(self, iterable):
+        """
+        :param any iterable iterable: iterable to create chunks for.
+        :return: Iterator over chunks, where each chunk is an iterator itself.
+        :rtype: iterator over iterators
+        """
+        return iterable >> GroupBySorted(self._key, nokey=True)
+
+
 Cycle = nut_processor(itt.cycle)
 """
 iterable >> Cycle()

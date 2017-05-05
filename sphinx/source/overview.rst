@@ -142,6 +142,9 @@ Click on a nut name for more details.
 - :class:`Chunk <nutsflow.processor.Chunk>` :
   split iterable in chunks of size n.
   
+- :class:`ChunkWhen <nutsflow.processor.ChunkWhen>` :
+  create new chunk whenever predicate function is true.
+  
 - :class:`Clone <nutsflow.processor.Clone>` :
   clone elements in iterables n times.  
 

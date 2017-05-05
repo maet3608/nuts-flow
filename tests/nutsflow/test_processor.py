@@ -80,6 +80,15 @@ def test_Chunk():
     assert Range(7) >> Chunk(2) >> Map(tuple) >> Collect() == expected
 
 
+def test_ChunkWhen():
+    func = lambda x: x == '|'
+    assert [] >> ChunkWhen(func) >> Map(list) >> Collect() == []
+    expected = ['|12', '|345', '|6']    
+    '|12|345|6' >> ChunkWhen(func) >> Map(''.join) >> Collect() == expected
+    expected = ['123456']
+    assert '123456' >> ChunkWhen(func) >> Map(''.join) >> Collect() == expected
+
+
 def test_Flatten():
     assert [] >> Flatten() >> Collect() == []
     assert [[], []] >> Flatten() >> Collect() == []
