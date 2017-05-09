@@ -181,6 +181,7 @@ def nut_filter(func):
     """
     Decorator for Nut filters.
 
+    Also see nut_filerfalse().
     Example on how to define a custom filter nut:
 
     .. code::
@@ -202,11 +203,16 @@ def nut_filterfalse(func):
     """
     Decorator for Nut filters that are inverted.
 
+    Also see nut_filter().
+    Example on how to define a custom filter-false nut:
+
     .. code::
 
       @nut_filterfalse
       def NotGreaterThan(x, threshold):
           return x > threshold
+
+    [1, 2, 3, 4] >> NotGreaterThan(2) >> Collect()  --> [1, 2]
 
     :param function func: Function to decorate
     :return: Nut filter for given function. . Must return boolean value.
