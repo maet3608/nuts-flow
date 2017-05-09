@@ -25,7 +25,7 @@ def Identity(x):
     :param iterable iterable: Any iterable
     :param any x: Any input
     :return: Returns input unaltered
-    :rtype: any
+    :rtype: object
     """
     return x
 
@@ -95,7 +95,7 @@ def Get(x, start, end=None, step=None):
     :param int end: End index (not inclusive)
     :param int step: Step index (same as slicing)
     :return: Extracted elements
-    :rtype: any|list
+    :rtype: object|list
     """
     return x[slice(start, end, step) if end else start]
 
@@ -214,7 +214,7 @@ def Sleep(x, duration=1):
     :param object x: Any input
     :param float duration: Sleeping time in seconds.
     :return: Returns input unaltered
-    :rtype: any
+    :rtype: object
     """
     time.sleep(duration)
     return x
@@ -291,7 +291,7 @@ class Print(NutFunction):
         :param int every_n: Print every n-th call.
         :param function filterfunc: Boolean function to filter print.
         :return: Returns input unaltered
-        :rtype: any
+        :rtype: object
         :raise: ValueError if fmtfunc is not string or function
         """
         self.fmtfunc = fmtfunc
