@@ -75,13 +75,17 @@ def nut_processor(func, iterpos=0):
     """
     Decorator for Nut processors.
 
+    Example on how to define a custom processor nut:
+
     .. code::
 
       @nut_processor
-      def Pick(iterable, p):
+      def Clone(iterable, n):
           for e in iterable:
-              if random() > p:
+              for _ in xrange(p):
                   yield e
+
+      [1, 2, 3] >> Clone(2) >> Collect()  --> [1, 1, 2, 2, 3, 3]
 
     :param function func: Function to decorate
     :param iterpos: Position of iterable in function arguments
@@ -95,11 +99,15 @@ def nut_sink(func, iterpos=0):
     """
     Decorator for Nut sinks.
 
+    Example on how to define a custom sink nut:
+
     .. code::
 
       @nut_sink
       def Collect(iterable, container):
           return container(iterable)
+
+      xrange(5) >> Collect(tuple)  -->   (0, 1, 2, 3, 4)
 
     :param function func: Function to decorate
     :param iterpos: Position of iterable in function arguments
@@ -113,11 +121,15 @@ def nut_function(func):
     """
     Decorator for Nut functions.
 
+    Example on how to define a custom function nut:
+
     .. code::
 
       @nut_function
       def TimesN(x, n):
           return x * n
+
+      [1, 2, 3] >> TimesN(2) >> Collect()  -->  [2, 4, 6]
 
     :param function func: Function to decorate
     :return: Nut function for given function
@@ -139,11 +151,15 @@ def nut_source(func):
     """
     Decorator for Nut sources.
 
+    Example on how to define a custom source nut:
+
     .. code::
 
       @nut_source
       def Range(start, end):
           return xrange(start, end)
+
+      Range(0, 5) >> Collect()  --> [0, 1, 2, 3, 4]
 
     :param function func: Function to decorate
     :return: Nut source for given function
@@ -165,11 +181,15 @@ def nut_filter(func):
     """
     Decorator for Nut filters.
 
+    Example on how to define a custom filter nut:
+
     .. code::
 
       @nut_filter
       def GreaterThan(x, threshold):
           return x > threshold
+
+      [1, 2, 3, 4] >> GreaterThan(2) >> Collect()  --> [3, 4] 
 
     :param function func: Function to decorate. Must return boolean value.
     :return: Nut filter for given function
