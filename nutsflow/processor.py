@@ -887,9 +887,9 @@ class Cache(Nut):
         .. code:: python
 
             cache = Cache()
-                for _ in xrange(100)
-                    data >> expensive_op >> cache >> Collect()
-                cache.clear()
+            for _ in xrange(100)
+                data >> expensive_op >> cache >> Collect()
+            cache.clear()
 
         :param iterable iterable: Any iterable
         :param string storage: Currently only 'disk' mode.
