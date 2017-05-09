@@ -31,6 +31,17 @@ class Nut(object):
         self.args = args
         self.kwargs = kwargs
 
+    def __call__(self, iterable):
+        """
+        Nut (processor) can be called as a function and mapped on
+        iterable elements within an iterable.
+
+        :param iterable iterable: Iterable to process.
+        :return: Iterable
+        :rtype: iterable
+        """
+        return self.__rrshift__(iterable)
+
     def __rrshift__(self, iterable):
         """
         Chaining operator for Nuts. Needs to be overridden!
@@ -39,7 +50,7 @@ class Nut(object):
         If the number of elements in the input and the output iterable
         does not change consider NutFunction instead.
 
-        :param iterable iterable:
+        :param iterable iterable: Iterable to process.
         :return: Iterable
         :rtype: iterable
         :raise: NotImplementedError if not implemented.

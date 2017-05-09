@@ -16,6 +16,12 @@ def test_Nut():
         [1, 2] >> nut
     assert str(ex.value).startswith('Needs to implement  __rrshift__')
 
+    class Ident(Nut):
+        def __rrshift__(self, iterable):
+            return iterable
+
+    assert Ident()([1, 2]) == [1, 2]
+
 
 def test_NutFunction():
     func = NutFunction()
