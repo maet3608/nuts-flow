@@ -1,0 +1,237 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Practice problems &#8212; nutsflow 1.0.6 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0.6',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Common error messages" href="error_messages.html" />
+    <link rel="prev" title="Recipes" href="recipes.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="practice-problems">
+<h1>Practice problems<a class="headerlink" href="#practice-problems" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference external" href="https://projecteuler.net/archives">Project Euler</a> and
+<a class="reference external" href="http://aperiodic.net/phil/scala/s-99/">99 Scala Problems</a>  or
+<a class="reference external" href="https://wiki.python.org/moin/ProblemSets/99%20Prolog%20Problems%20Solutions">99 Python Problems</a>
+contain collections of small coding problems suitable
+for functional programming - many of them are also good exercises for <strong>nuts-flow</strong>.</p>
+<div class="section" id="problems">
+<h2>99 Problems<a class="headerlink" href="#problems" title="Permalink to this headline">¶</a></h2>
+<p>A few <a class="reference external" href="http://aperiodic.net/phil/scala/s-99/">99 Scala Problems</a>  with solutions
+using <strong>nuts-flow</strong>:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nutsflow</span> <span class="k">import</span> <span class="o">*</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nutsflow</span> <span class="k">import</span> <span class="n">_</span>
+</pre></div>
+</div>
+<p><strong>P01</strong> : Find the last element of a list.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">8</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">Tail</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="go">[8]</span>
+</pre></div>
+</div>
+<p><strong>P02</strong> : Find the last but one element of a list.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">8</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">Tail</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Head</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="go">[5]</span>
+</pre></div>
+</div>
+<p><strong>P03</strong> : Find the Kth element of a list.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">8</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">Nth</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="go">2</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">8</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">Drop</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Head</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="go">[2]</span>
+</pre></div>
+</div>
+<p><strong>P04</strong> : Find the number of elements of a list.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">8</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">Count</span><span class="p">()</span>
+<span class="go">6</span>
+</pre></div>
+</div>
+<p><strong>P14</strong> : Duplicate the elements of a list.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="p">))</span> <span class="o">&gt;&gt;</span> <span class="n">Flatten</span><span class="p">()</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
+<span class="go">[0, 0, 1, 1, 2, 2, 3, 3, 4, 4]</span>
+</pre></div>
+</div>
+<p><strong>P15</strong> : Duplicate the elements of a list a given number of times.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">n</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">([</span><span class="n">x</span><span class="p">]</span> <span class="o">*</span> <span class="n">n</span><span class="p">))</span> <span class="o">&gt;&gt;</span> <span class="n">Flatten</span><span class="p">()</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
+<span class="go">[0, 0, 0, 1, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4]</span>
+</pre></div>
+</div>
+<p><strong>P16</strong> :  Drop every Nth element from a list.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">n</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">drop_last</span> <span class="o">=</span> <span class="n">Map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">c</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="n">c</span><span class="p">)[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Chunk</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">drop_last</span> <span class="o">&gt;&gt;</span> <span class="n">Flatten</span><span class="p">()</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
+<span class="go">[0, 1, 3, 4, 6, 7]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="euler">
+<h2>Euler<a class="headerlink" href="#euler" title="Permalink to this headline">¶</a></h2>
+<p>Some <a class="reference external" href="https://projecteuler.net/archives">Project Euler</a>  with solutions
+using <strong>nuts-flow</strong>.</p>
+<p><strong>P1</strong>: Multiples of 3 and 5</p>
+<blockquote>
+<div><p>If we list all the natural numbers below 10 that are multiples of
+3 or 5, we get 3, 5, 6 and 9. The sum of these multiples is 23.</p>
+<p>Find the sum of all the multiples of 3 or 5 below 1000.</p>
+</div></blockquote>
+<div class="code highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">IsMultiple</span> <span class="o">=</span> <span class="n">nut_filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">%</span> <span class="mi">3</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">x</span> <span class="o">%</span> <span class="mi">5</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">IsMultiple</span><span class="p">()</span> <span class="o">&gt;&gt;</span> <span class="n">Sum</span><span class="p">()</span>
+<span class="go">233168</span>
+</pre></div>
+</div>
+<p><strong>P2</strong>: Even Fibonacci numbers</p>
+<blockquote>
+<div><p>Each new term in the Fibonacci sequence is generated by adding the
+previous two terms. By starting with 1 and 2, the first 10 terms will be:</p>
+<blockquote>
+<div>1, 2, 3, 5, 8, 13, 21, 34, 55, 89, ...</div></blockquote>
+<p>By considering the terms in the Fibonacci sequence whose values do not
+exceed four million, find the sum of the even-valued terms.</p>
+</div></blockquote>
+<div class="code highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nd">@nut_source</span>
+<span class="gp">... </span><span class="k">def</span> <span class="nf">Fib</span><span class="p">():</span>
+<span class="gp">... </span>    <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span>  <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span>
+<span class="gp">... </span>    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+<span class="gp">... </span>        <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">b</span><span class="p">,</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+<span class="gp">... </span>        <span class="k">yield</span> <span class="n">a</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">IsEven</span> <span class="o">=</span> <span class="n">nut_filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">%</span><span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Fib</span><span class="p">()</span> <span class="o">&gt;&gt;</span> <span class="n">TakeWhile</span><span class="p">(</span><span class="n">_</span> <span class="o">&lt;</span> <span class="mi">4000000</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">IsEven</span><span class="p">()</span> <span class="o">&gt;&gt;</span> <span class="n">Sum</span><span class="p">()</span>
+<span class="go">4613732</span>
+</pre></div>
+</div>
+<p><strong>P4</strong>: Largest palindrome product</p>
+<blockquote>
+<div><p>A palindromic number reads the same both ways. The largest palindrome
+made from the product of two 2-digit numbers is 9009 = 91 × 99.</p>
+<p>Find the largest palindrome made from the product of two 3-digit numbers.</p>
+</div></blockquote>
+<div class="code highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">n1</span><span class="p">,</span> <span class="n">n2</span>  <span class="o">=</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">1000</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">IsPalindrom</span> <span class="o">=</span> <span class="n">nut_filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">p</span><span class="p">:</span> <span class="n">p</span> <span class="o">==</span> <span class="n">p</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">BuildString</span> <span class="o">=</span> <span class="n">nut_function</span><span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span> <span class="nb">str</span><span class="p">(</span><span class="n">a</span> <span class="o">*</span> <span class="n">b</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">product</span> <span class="o">=</span> <span class="n">Product</span><span class="p">(</span><span class="n">Range</span><span class="p">(</span><span class="n">n1</span><span class="p">,</span> <span class="n">n2</span><span class="p">),</span> <span class="n">repeat</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">product</span> <span class="o">&gt;&gt;</span> <span class="n">BuildString</span><span class="p">()</span> <span class="o">&gt;&gt;</span> <span class="n">IsPalindrom</span><span class="p">()</span> <span class="o">&gt;&gt;</span> <span class="n">Max</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+<span class="go">&#39;906609&#39;</span>
+</pre></div>
+</div>
+<p><strong>P6</strong>: Sum square difference</p>
+<blockquote>
+<div><p>The sum of the squares of the first ten natural numbers is,</p>
+<blockquote>
+<div>1^2 + 2^2 + ... + 10^2 = 385</div></blockquote>
+<p>The square of the sum of the first ten natural numbers is,</p>
+<blockquote>
+<div>(1 + 2 + ... + 10)^2 = 55^2 = 3025</div></blockquote>
+<p>Hence the difference between the sum of the squares of the first ten natural
+numbers and the square of the sum is 3025 − 385 = 2640.</p>
+<p>Find the difference between the sum of the squares of the first
+one hundred natural numbers and the square of the sum.</p>
+</div></blockquote>
+<div class="code highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sum_sqr</span> <span class="o">=</span> <span class="n">Range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Square</span><span class="p">()</span> <span class="o">&gt;&gt;</span> <span class="n">Sum</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sqr_sum</span> <span class="o">=</span> <span class="p">(</span><span class="n">Range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Sum</span><span class="p">())</span><span class="o">**</span><span class="mi">2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sqr_sum</span> <span class="o">-</span> <span class="n">sum_sqr</span>
+<span class="go">2640</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Practice problems</a><ul>
+<li><a class="reference internal" href="#problems">99 Problems</a></li>
+<li><a class="reference internal" href="#euler">Euler</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="introduction.html">Tutorial</a><ul>
+      <li>Previous: <a href="recipes.html" title="previous chapter">Recipes</a></li>
+      <li>Next: <a href="error_messages.html" title="next chapter">Common error messages</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/tutorial/practice_problems.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, IBM.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="../_sources/tutorial/practice_problems.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

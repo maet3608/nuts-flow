@@ -1,0 +1,285 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>nutsflow.source &#8212; nutsflow 1.0.6 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.0.6',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for nutsflow.source</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">.. module:: source</span>
+<span class="sd">   :synopsis: Nuts that produce iterables but do not take input iterables.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">csv</span>
+
+<span class="kn">import</span> <span class="nn">itertools</span> <span class="k">as</span> <span class="nn">itt</span>
+<span class="kn">import</span> <span class="nn">iterfunction</span> <span class="k">as</span> <span class="nn">itf</span>
+
+<span class="kn">from</span> <span class="nn">base</span> <span class="k">import</span> <span class="n">NutSource</span>
+<span class="kn">from</span> <span class="nn">factory</span> <span class="k">import</span> <span class="n">nut_source</span>
+<span class="kn">from</span> <span class="nn">common</span> <span class="k">import</span> <span class="n">as_tuple</span>
+
+<span class="n">Enumerate</span> <span class="o">=</span> <span class="n">nut_source</span><span class="p">(</span><span class="n">itt</span><span class="o">.</span><span class="n">count</span><span class="p">)</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Enumerate(start=0 [, step])</span>
+
+<span class="sd">Return increasing integers. See itertools.count</span>
+
+<span class="sd">&gt;&gt;&gt; Enumerate() &gt;&gt; Take(3) &gt;&gt; Collect()</span>
+<span class="sd">[0, 1, 2]</span>
+
+<span class="sd">&gt;&gt;&gt; Enumerate(1, 2) &gt;&gt; Take(3) &gt;&gt; Collect()</span>
+<span class="sd">[1, 3, 5]</span>
+
+<span class="sd">:param int start: Start of integer sequence</span>
+<span class="sd">:param int step: Step of sequence</span>
+<span class="sd">:return: Increasing integers.</span>
+<span class="sd">:rtype: iterable over int</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="n">Repeat</span> <span class="o">=</span> <span class="n">nut_source</span><span class="p">(</span><span class="n">itt</span><span class="o">.</span><span class="n">repeat</span><span class="p">)</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Repeat(value [, times])</span>
+
+<span class="sd">Return given value repeatedly. See itertools.repeat</span>
+
+<span class="sd">&gt;&gt;&gt; Repeat(1, 3) &gt;&gt; Collect()</span>
+<span class="sd">[1, 1, 1]</span>
+
+<span class="sd">&gt;&gt;&gt; Repeat(1) &gt;&gt; Take(4) &gt;&gt; Collect()</span>
+<span class="sd">[1, 1, 1, 1]</span>
+
+<span class="sd">:param object value: Value to repeat</span>
+<span class="sd">:param int times: Optional parameter. Object is repeated &#39;times&#39; times.</span>
+<span class="sd">:return: Iterator of repeated objects</span>
+<span class="sd">:rtype: iterable over object</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="nd">@nut_source</span>
+<span class="k">def</span> <span class="nf">Product</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Product(*iterables [, repeat])</span>
+
+<span class="sd">    Return cartesian product of input iterables.</span>
+
+<span class="sd">    &gt;&gt;&gt; Product([1, 2], [3, 4]) &gt;&gt; Collect()</span>
+<span class="sd">    [(1, 3), (1, 4), (2, 3), (2, 4)]</span>
+
+<span class="sd">    &gt;&gt;&gt; Product(&#39;ab&#39;, xrange(3)) &gt;&gt; Collect()</span>
+<span class="sd">    [(&#39;a&#39;, 0), (&#39;a&#39;, 1), (&#39;a&#39;, 2), (&#39;b&#39;, 0), (&#39;b&#39;, 1), (&#39;b&#39;, 2)]</span>
+
+<span class="sd">    &gt;&gt;&gt; Product([1, 2, 3], repeat=2) &gt;&gt; Collect()</span>
+<span class="sd">    [(1, 1), (1, 2), (1, 3), (2, 1), (2, 2), (2, 3), (3, 1), (3, 2), (3, 3)]</span>
+
+<span class="sd">    :param iterables iterables: Collections of iterables to create cartesian</span>
+<span class="sd">            product from.</span>
+<span class="sd">    :param int repeat: Repeat a single iterable &#39;repeat&#39; times, e.g.</span>
+<span class="sd">            Procuct([1,2], [1,2]) is equal to Product([1,2], repeat=2)</span>
+<span class="sd">    :return: cartesian product</span>
+<span class="sd">    :rtype: iterator over tuples</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">itt</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">)</span>
+
+
+<span class="nd">@nut_source</span>
+<span class="k">def</span> <span class="nf">Empty</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Empty()</span>
+
+<span class="sd">    Return empty iterable.</span>
+
+<span class="sd">    &gt;&gt;&gt; Empty() &gt;&gt; Collect()</span>
+<span class="sd">    []</span>
+
+<span class="sd">    :return: Empty iterator</span>
+<span class="sd">    :rtype: iterator</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="nb">iter</span><span class="p">(())</span>
+
+
+<div class="viewcode-block" id="Range"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.source.Range">[docs]</a><span class="k">class</span> <span class="nc">Range</span><span class="p">(</span><span class="n">NutSource</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Range of numbers. Similar to xrange() but returns iterator that depletes.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Range.__init__"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.source.Range.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Range(start [,end [, step]])</span>
+
+<span class="sd">        Return range of integers.</span>
+
+<span class="sd">        &gt;&gt;&gt; from nutsflow import Collect</span>
+<span class="sd">        &gt;&gt;&gt; Range(4) &gt;&gt; Collect()</span>
+<span class="sd">        [0, 1, 2, 3]</span>
+
+<span class="sd">        &gt;&gt;&gt; Range(1, 5) &gt;&gt; Collect()</span>
+<span class="sd">        [1, 2, 3, 4]</span>
+
+<span class="sd">        :param int start: Start of range.</span>
+<span class="sd">        :param int end: End of range. Not inclusive. Optional.</span>
+<span class="sd">        :param int step: Step size. Optional.</span>
+<span class="sd">        :return: Range of integers.</span>
+<span class="sd">        :rtype: iterable over int</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">iter</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">xrange</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">))</span></div>
+
+    <span class="k">def</span> <span class="nf">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return iterator over numbers.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">iter</span></div>
+
+
+<div class="viewcode-block" id="ReadCSV"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.source.ReadCSV">[docs]</a><span class="k">class</span> <span class="nc">ReadCSV</span><span class="p">(</span><span class="n">NutSource</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Read data from a CSV file using Python&#39;s CSV reader.</span>
+<span class="sd">    See: https://docs.python.org/2/library/csv.html</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="ReadCSV.__init__"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.source.ReadCSV.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filepath</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">skipheader</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                 <span class="n">fmtfunc</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        ReadCSV(filepath, columns, skipheader, fmtfunc, **kwargs)</span>
+
+<span class="sd">        Read data in Comma Separated Format (CSV) from file.</span>
+<span class="sd">        See also CSVWriter.</span>
+<span class="sd">        Can also read Tab Separated Format (TSV) be providing the</span>
+<span class="sd">        corresponding delimiter. Note that in the docstring below</span>
+<span class="sd">        delimiter is &#39;\\t&#39; but in code it should be &#39;\t&#39;. See unit tests.</span>
+
+<span class="sd">        &gt;&gt;&gt; from nutsflow import Collect</span>
+<span class="sd">        &gt;&gt;&gt; filepath = &#39;tests/data/data.csv&#39;</span>
+<span class="sd">        &gt;&gt;&gt; with ReadCSV(filepath, skipheader=1, fmtfunc=int) as reader:</span>
+<span class="sd">        ...     reader &gt;&gt; Collect()</span>
+<span class="sd">        [(1, 2, 3), (4, 5, 6)]</span>
+
+<span class="sd">        &gt;&gt;&gt; with ReadCSV(filepath, (2, 1), 1, int) as reader:</span>
+<span class="sd">        ...     reader &gt;&gt; Collect()</span>
+<span class="sd">        [(3, 2), (6, 5)]</span>
+
+<span class="sd">        &gt;&gt;&gt; with ReadCSV(filepath, 2, 1, int) as reader:</span>
+<span class="sd">        ...     reader &gt;&gt; Collect()</span>
+<span class="sd">        [3, 6]</span>
+
+<span class="sd">        &gt;&gt;&gt; filepath = &#39;tests/data/data.tsv&#39;</span>
+<span class="sd">        &gt;&gt;&gt; with ReadCSV(filepath, skipheader=1, fmtfunc=int,</span>
+<span class="sd">        ...                delimiter=&#39;\\t&#39;) as reader:</span>
+<span class="sd">        ...     reader &gt;&gt; Collect()</span>
+<span class="sd">        [(1, 2, 3), (4, 5, 6)]</span>
+
+<span class="sd">        :param string filepath: Path to file in CSV format.</span>
+<span class="sd">        :param tuple columns: Indices of the columns to read.</span>
+<span class="sd">                              If None all columns are read.</span>
+<span class="sd">        :param int skipheader: Number of header lines to skip.</span>
+<span class="sd">        :param function fmtfunc: Function to apply to the elements of each row.</span>
+<span class="sd">        :param kwargs kwargs: Keyword arguments for Python&#39;s CSV reader.</span>
+<span class="sd">                              See https://docs.python.org/2/library/csv.html</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">csvfile</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">columns</span> <span class="k">if</span> <span class="n">columns</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">as_tuple</span><span class="p">(</span><span class="n">columns</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fmtfunc</span> <span class="o">=</span> <span class="n">fmtfunc</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">xrange</span><span class="p">(</span><span class="n">skipheader</span><span class="p">):</span>
+            <span class="nb">next</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">csvfile</span><span class="p">)</span>
+        <span class="n">itf</span><span class="o">.</span><span class="n">take</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">csvfile</span><span class="p">,</span> <span class="n">skipheader</span><span class="p">)</span>
+        <span class="n">stripped</span> <span class="o">=</span> <span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">csvfile</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">reader</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">reader</span><span class="p">(</span><span class="n">stripped</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ReadCSV.close"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.source.ReadCSV.close">[docs]</a>    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Close reader&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">csvfile</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">reader</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+    <span class="k">def</span> <span class="nf">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Implementation of context manager API&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span>
+
+    <span class="k">def</span> <span class="nf">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Implementation of context manager API&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return iterator over rows in CSV file.&quot;&quot;&quot;</span>
+        <span class="n">cols</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">columns</span>
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">reader</span><span class="p">:</span>
+            <span class="n">row</span> <span class="o">=</span> <span class="p">[</span><span class="n">row</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">cols</span><span class="p">]</span> <span class="k">if</span> <span class="n">cols</span> <span class="k">else</span> <span class="n">row</span>
+            <span class="n">row</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fmtfunc</span><span class="p">,</span> <span class="n">row</span><span class="p">)</span>
+            <span class="k">yield</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">row</span><span class="p">)</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">row</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="k">else</span> <span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, IBM.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>
