@@ -3,12 +3,13 @@ Overview
 
 Click on a nut name for more details.
 
-**Decorators & Wrappers** : convert Python functions to nuts
 
->>> from nutsflow import *
->>> GreaterThan = nut_filter(lambda x, t: x > t)
->>> [1, 2, 3, 4] >> GreaterThan(2) >> Collect()
-[3, 4]
+**Decorators & Wrappers** : convert plain Python functions to nuts
+
+.. code:: Python
+
+  GreaterThan2 = nut_filter(lambda x: x > 2)
+  [1, 2, 3, 4] >> GreaterThan2() >> Collect()   --> [3, 4]
 
 - :func:`nut_filter <nutsflow.factory.nut_filter>` :
   wrapper to create nut filters.
@@ -30,10 +31,11 @@ Click on a nut name for more details.
 
 
 
-**Sources** : generate data
+**Sources** : generate iterable data
 
->>> Range(5) >> Collect()
-[0, 1, 2, 3, 4]
+.. code:: Python
+
+  Range(5) >> Collect()   --> [0, 1, 2, 3, 4]
 
 - :class:`Empty <nutsflow.source.Empty>` :
   empty source that does not generate anything.
@@ -54,10 +56,11 @@ Click on a nut name for more details.
   repeats a value n times or infinitely.
 
 
-**Sinks** : aggregate data
+**Sinks** : aggregate iterable data
 
->>> [1, 2, 3] >> Count()
-3
+.. code:: Python
+
+  [1, 2, 3] >> Count()   --> 3
 
 - :class:`ArgMax <nutsflow.sink.ArgMax>` :
   return index of largest element.
@@ -117,10 +120,11 @@ Click on a nut name for more details.
   write elements to file in CSV (or TSV) format.
 
   
-**Functions** : operate on individual elements
+**Functions** : operate on individual elements and return elements
 
->>> [1, 2, 3] >> Square() >> Collect()
-[1, 4, 9]
+.. code:: Python
+
+  [1, 2, 3] >> Square() >> Collect()   --> [1, 4, 9]
 
 - :class:`Counter <nutsflow.function.Counter>` :
   counts elements in an external variable - use for debugging only.
@@ -150,10 +154,11 @@ Click on a nut name for more details.
   return square of element. 
 
 
-**Processors** : operate on iterables
+**Processors** : operate on iterables and return iterables
 
->>> [1, 2, 3, 4] >> Take(2) >> Collect()
-[1, 2]
+.. code:: Python
+
+  [1, 2, 3, 4] >> Take(2) >> Collect()   --> [1, 2]
 
 - :class:`Cache <nutsflow.processor.Cache>` :
   caches elements on disk.
