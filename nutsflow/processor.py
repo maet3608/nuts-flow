@@ -884,7 +884,7 @@ class Cache(Nut):
                     data >> expensive_op >> cache >> process(i) >> Consume()
 
 
-         .. code:: python
+        .. code:: python
 
             cache = Cache()
                 for _ in xrange(100)

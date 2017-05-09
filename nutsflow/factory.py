@@ -212,7 +212,7 @@ def nut_filterfalse(func):
       def NotGreaterThan(x, threshold):
           return x > threshold
 
-    [1, 2, 3, 4] >> NotGreaterThan(2) >> Collect()  --> [1, 2]
+      [1, 2, 3, 4] >> NotGreaterThan(2) >> Collect()  --> [1, 2]
 
     :param function func: Function to decorate
     :return: Nut filter for given function. . Must return boolean value.
