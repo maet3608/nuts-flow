@@ -32,18 +32,20 @@ Note the change from lowercase for ``greater_than_5`` to uppercase
 for ``GreaterThan5`` to signify the change from a Python function
 to a **nuts-flow** nut. This is strongly recommended to avoid
 confusion on how to use a function or nut. Nuts are generally
-in uppercase and used with brackets while Python functions are lowercase
-and used without brackets. 
+in uppercase and invoked with brackets while Python functions are 
+in lowercase, without brackets and passed on as parameters to nuts. 
 
 For instance, both of the following examples are **invalid**. Here
-``greater_than_5`` is confused as nut and called with additional brackets 
+``greater_than_5`` is confused as nut and invoked with brackets
+instead of being passed as a value to ``Filter``
 
 >>> Range(10) >> Filter(greater_than_5()) >> Collect()
 Traceback (most recent call last):
 ...
 TypeError: <lambda>() takes exactly 1 argument (0 given)
 
-while ``GreaterThan5`` is used with missing brackets 
+Similarily in the following example ``GreaterThan5`` is invoked 
+without brackets 
 
 >>> Range(10) >> GreaterThan5 >> Collect()
 Traceback (most recent call last):
@@ -71,7 +73,7 @@ In this case `decorators` are a better solution
   Range(10) >> GreaterThan(5) >> Collect()
 
 Note that for wrappers and decorators there is a difference in the 
-arguments depending on whether the nut is *defined* or *used*
+arguments depending on whether the nut is *defined* or *invoked*
 
 **definitions:**
 
@@ -85,13 +87,13 @@ arguments depending on whether the nut is *defined* or *used*
   def GreaterThan(x, threshold): ...
   
 
-**usage:**
+**invokation:**
 
 .. code::
 
   x >> GreaterThan(threshold)
 
-When *used* the first argument of the nut (here ``x``) appears as input 
+When *invoked* the first argument of the nut (here ``x``) appears as input 
 on the  left side of the ``>>`` operator and the remaining parameters 
 appear in brackets.
 
