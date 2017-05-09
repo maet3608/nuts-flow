@@ -556,9 +556,10 @@ Example on how to define a custom filter-false nut:</p>
 <div class="code highlight-default"><div class="highlight"><pre><span></span><span class="nd">@nut_filterfalse</span>
 <span class="k">def</span> <span class="nf">NotGreaterThan</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">threshold</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="n">threshold</span>
+
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">NotGreaterThan</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>  <span class="o">--&gt;</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
 </pre></div>
 </div>
-<p>[1, 2, 3, 4] &gt;&gt; NotGreaterThan(2) &gt;&gt; Collect()  &#8211;&gt; [1, 2]</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -1509,18 +1510,16 @@ to file system and loads them the next time instead of recomputing.</p>
 <p>Cache elements of iterable to disk. Only worth it if elements of
 iterable are time-consuming to produce and can be loaded faster
 from disk.</p>
-<div class="code python highlight-default"><div class="highlight"><pre><span></span>   <span class="k">with</span> <span class="n">Cache</span><span class="p">()</span> <span class="k">as</span> <span class="n">cache</span><span class="p">:</span>
-       <span class="n">data</span> <span class="o">=</span> <span class="n">xrange</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
-       <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">xrange</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
-           <span class="n">data</span> <span class="o">&gt;&gt;</span> <span class="n">expensive_op</span> <span class="o">&gt;&gt;</span> <span class="n">cache</span> <span class="o">&gt;&gt;</span> <span class="n">process</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Consume</span><span class="p">()</span>
-
-
-<span class="o">..</span> <span class="n">code</span><span class="p">::</span> <span class="n">python</span>
-
-   <span class="n">cache</span> <span class="o">=</span> <span class="n">Cache</span><span class="p">()</span>
-       <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">xrange</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
-           <span class="n">data</span> <span class="o">&gt;&gt;</span> <span class="n">expensive_op</span> <span class="o">&gt;&gt;</span> <span class="n">cache</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
-       <span class="n">cache</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">Cache</span><span class="p">()</span> <span class="k">as</span> <span class="n">cache</span><span class="p">:</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">xrange</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">xrange</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+        <span class="n">data</span> <span class="o">&gt;&gt;</span> <span class="n">expensive_op</span> <span class="o">&gt;&gt;</span> <span class="n">cache</span> <span class="o">&gt;&gt;</span> <span class="n">process</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Consume</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="n">cache</span> <span class="o">=</span> <span class="n">Cache</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">xrange</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+        <span class="n">data</span> <span class="o">&gt;&gt;</span> <span class="n">expensive_op</span> <span class="o">&gt;&gt;</span> <span class="n">cache</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
+    <span class="n">cache</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
 </pre></div>
 </div>
 <table class="docutils field-list" frame="void" rules="none">
