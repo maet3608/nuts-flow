@@ -3,8 +3,12 @@ Overview
 
 Click on a nut name for more details.
 
-
 **Decorators & Wrappers** : convert Python functions to nuts
+
+>>> from nutsflow import *
+>>> GreaterThan = nut_filter(lambda x, t: x > t)
+>>> [1, 2, 3, 4] >> GreaterThan(2) >> Collect()
+[3, 4]
 
 - :func:`nut_filter <nutsflow.factory.nut_filter>` :
   wrapper to create nut filters.
@@ -28,6 +32,9 @@ Click on a nut name for more details.
 
 **Sources** : generate data
 
+>>> Range(5) >> Collect()
+[0, 1, 2, 3, 4]
+
 - :class:`Empty <nutsflow.source.Empty>` :
   empty source that does not generate anything.
 
@@ -35,7 +42,7 @@ Click on a nut name for more details.
   generate infinite number of increasing integers.
 
 - :class:`Product <nutsflow.source.Product>` :
-  gernerate cartesian product of iterables.
+  generate Cartesian product of iterables.
 
 - :class:`Range <nutsflow.source.Range>` :
   generate range of integer numbers.
@@ -48,6 +55,9 @@ Click on a nut name for more details.
 
 
 **Sinks** : aggregate data
+
+>>> [1, 2, 3] >> Count()
+3
 
 - :class:`ArgMax <nutsflow.sink.ArgMax>` :
   return index of largest element.
@@ -109,6 +119,9 @@ Click on a nut name for more details.
   
 **Functions** : operate on individual elements
 
+>>> [1, 2, 3] >> Square() >> Collect()
+[1, 4, 9]
+
 - :class:`Counter <nutsflow.function.Counter>` :
   counts elements in an external variable - use for debugging only.
 
@@ -138,6 +151,9 @@ Click on a nut name for more details.
 
 
 **Processors** : operate on iterables
+
+>>> [1, 2, 3, 4] >> Take(2) >> Collect()
+[1, 2]
 
 - :class:`Cache <nutsflow.processor.Cache>` :
   caches elements on disk.
@@ -191,7 +207,7 @@ Click on a nut name for more details.
   groups elements based on grouping function.
 
 - :class:`GroupBySorted <nutsflow.processor.GroupBySorted>` :
-  groups pre-sorted iterable of elements.
+  groups presorted iterable of elements.
 
 - :class:`If <nutsflow.processor.If>` :
   executes nut depending on condition.
@@ -221,7 +237,7 @@ Click on a nut name for more details.
   pick every n-th element or sample with given probability from iterable.
 
 - :class:`Prefetch <nutsflow.processor.Prefetch>` :
-  prefetch elements in separate thread.
+  pre-fetch elements in separate thread.
 
 - :class:`PrintProgress <nutsflow.processor.PrintProgress>` :
   print progress on iterable.
@@ -236,7 +252,7 @@ Click on a nut name for more details.
   return first n elements.
 
 - :class:`TakeWhile <nutsflow.processor.TakeWhile>` :
-  return elements while predicte function is true.
+  return elements while predicate function is true.
 
 - :class:`Tee <nutsflow.processor.Tee>` :
   return n independent iterators over iterable.
