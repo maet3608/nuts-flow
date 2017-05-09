@@ -224,17 +224,19 @@ filter nut can be created</p>
 for <code class="docutils literal"><span class="pre">GreaterThan5</span></code> to signify the change from a Python function
 to a <strong>nuts-flow</strong> nut. This is strongly recommended to avoid
 confusion on how to use a function or nut. Nuts are generally
-in uppercase and used with brackets while Python functions are lowercase
-and used without brackets.</p>
+in uppercase and invoked with brackets while Python functions are
+in lowercase, without brackets and passed on as parameters to nuts.</p>
 <p>For instance, both of the following examples are <strong>invalid</strong>. Here
-<code class="docutils literal"><span class="pre">greater_than_5</span></code> is confused as nut and called with additional brackets</p>
+<code class="docutils literal"><span class="pre">greater_than_5</span></code> is confused as nut and invoked with brackets
+instead of being passed as a value to <code class="docutils literal"><span class="pre">Filter</span></code></p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Filter</span><span class="p">(</span><span class="n">greater_than_5</span><span class="p">())</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
 <span class="gt">Traceback (most recent call last):</span>
 <span class="c">...</span>
 <span class="gr">TypeError</span>: <span class="n">&lt;lambda&gt;() takes exactly 1 argument (0 given)</span>
 </pre></div>
 </div>
-<p>while <code class="docutils literal"><span class="pre">GreaterThan5</span></code> is used with missing brackets</p>
+<p>Similarily in the following example <code class="docutils literal"><span class="pre">GreaterThan5</span></code> is invoked
+without brackets</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">GreaterThan5</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
 <span class="gt">Traceback (most recent call last):</span>
 <span class="c">...</span>
@@ -257,7 +259,7 @@ additional parameters are required,  e.g. filtering with a given threshold</p>
 </pre></div>
 </div>
 <p>Note that for wrappers and decorators there is a difference in the
-arguments depending on whether the nut is <em>defined</em> or <em>used</em></p>
+arguments depending on whether the nut is <em>defined</em> or <em>invoked</em></p>
 <p><strong>definitions:</strong></p>
 <div class="code highlight-default"><div class="highlight"><pre><span></span><span class="n">GreaterThan</span> <span class="o">=</span> <span class="n">nut_filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">threshold</span><span class="p">:</span> <span class="o">...</span><span class="p">)</span>
 </pre></div>
@@ -266,11 +268,11 @@ arguments depending on whether the nut is <em>defined</em> or <em>used</em></p>
 <span class="k">def</span> <span class="nf">GreaterThan</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">threshold</span><span class="p">):</span> <span class="o">...</span>
 </pre></div>
 </div>
-<p><strong>usage:</strong></p>
+<p><strong>invokation:</strong></p>
 <div class="code highlight-default"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">&gt;&gt;</span> <span class="n">GreaterThan</span><span class="p">(</span><span class="n">threshold</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>When <em>used</em> the first argument of the nut (here <code class="docutils literal"><span class="pre">x</span></code>) appears as input
+<p>When <em>invoked</em> the first argument of the nut (here <code class="docutils literal"><span class="pre">x</span></code>) appears as input
 on the  left side of the <code class="docutils literal"><span class="pre">&gt;&gt;</span></code> operator and the remaining parameters
 appear in brackets.</p>
 <p>In rare (more advanced) cases custom nuts can be implemented
