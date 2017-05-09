@@ -69,6 +69,13 @@ def test_Nth():
     assert [0, 1, 2, 3] >> Nth(2) == 2
 
 
+def test_Next():
+    it = iter([1, 2, 3])
+    assert it >> Next() == 1
+    assert it >> Next() == 2
+    assert it >> Next() == 3
+
+
 def test_Consume():
     it = iter([0, 1, 2])
     it >> Consume()

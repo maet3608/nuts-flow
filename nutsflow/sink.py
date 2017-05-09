@@ -249,6 +249,20 @@ s
 :rtype: any
 """
 
+Next = nut_sink(next)
+"""
+iterable >> Next()
+
+Return next element of iterable.
+
+>>> [1,2,3] >> Next()
+1
+
+:param iterable iterable: Any iterable
+:return: next element
+:rtype: any
+"""
+
 Consume = nut_sink(consume)
 """
 iterable >> Consume(n=None)

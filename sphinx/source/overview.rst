@@ -85,6 +85,9 @@ Click on a nut name for more details.
 - :class:`Min <nutsflow.sink.Min>` :
   return smallest element.
 
+- :class:`Next <nutsflow.sink.Next>` :
+  get next element.
+
 - :class:`Nth <nutsflow.sink.Nth>` :
   get n-th element.
 
