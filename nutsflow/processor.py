@@ -195,6 +195,7 @@ Chunk = nut_processor(itf.chunked)
 iterable >> Chunk(n)
 
 Split iterable in chunks of size n, where each chunk is also an iterator.
+see also GroupBySorted(), ChunkWhen(), ChunkBy()
 
 >>> for chunk in Range(5) >> Chunk(2):
 >>> ... print list(chunk)
@@ -215,6 +216,7 @@ class ChunkWhen(Nut):
         iterable >> ChunkWhen(func)
 
         Chunk iterable and create new chunk every time func returns True.
+        see also GroupBySorted(), Chunk(), ChunkBy()
 
         >>> from nutsflow import Map, Join, Collect
         >>> func = lambda x: x == '|'
@@ -248,7 +250,7 @@ def ChunkBy(iterable, func):
     iterable >> ChunkBy(func)
 
     Chunk iterable and create chunk every time func changes its return value.
-    see also GroupBySorted(), Chunk(), ChunkBy()
+    see also GroupBySorted(), Chunk(), ChunkWhen()
 
     >>> [1,1, 2, 3,3,3] >> ChunkBy(lambda x: x) >> Map(list) >> Collect()
     [[1, 1], [2], [3, 3, 3]]
@@ -625,6 +627,7 @@ def GroupBy(iterable, keycol=lambda x: x, nokey=False):
     Note that elements of iterable do not need to be sorted.
     GroupBy will store all elements in memory!
     If the iterable is sorted use GroupBySorted() instead.
+    see also Chunk(), ChunkWhen(), ChunkBy()
 
     >>> from nutsflow import Collect
 
@@ -669,6 +672,7 @@ def GroupBySorted(iterable, keycol=lambda x: x, nokey=False):
     See https://docs.python.org/2/library/itertools.html#itertools.groupby
     If iterable is not sorted use GroupBy but be aware that it stores all
     elements of the iterable in memory!
+    see also Chunk(), ChunkWhen(), ChunkBy()
 
     >>> from nutsflow import Collect, nut_sink
     
