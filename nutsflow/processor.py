@@ -203,7 +203,7 @@ Split iterable in chunks of size n, where each chunk is also an iterator.
 [4]
 
 :param iterable iterable: Any iterable, e.g. list, xrange, ...
-:param n: Chunk size
+:param int n: Chunk size
 :return: Chunked iterable
 :rtype: Iterator over iterators
 """
@@ -239,7 +239,30 @@ class ChunkWhen(Nut):
         :return: Iterator over chunks, where each chunk is an iterator itself.
         :rtype: iterator over iterators
         """
-        return iterable >> GroupBySorted(self._key, nokey=True)
+        return iterable >> ChunkBy(self._key)
+
+
+@nut_processor
+def ChunkBy(iterable, func):
+    """
+    iterable >> ChunkBy(func)
+
+    Chunk iterable and create chunk every time func changes its return value.
+    see also GroupBySorted(), Chunk(), ChunkBy()
+
+    >>> [1,1, 2, 3,3,3] >> ChunkBy(lambda x: x) >> Map(list) >> Collect()
+    [[1, 1], [2], [3, 3, 3]]
+
+    >>> [1,1, 2, 3,3,3] >> ChunkBy(lambda x: x < 3) >> Map(list) >> Collect()
+    [[1, 1, 2], [3, 3, 3]]
+
+    :param iterable iterable: Any iterable, e.g. list, xrange, ...
+    :param function func: Functions the iterable is chunked by 
+    :return: Chunked iterable
+    :rtype: Iterator over iterators
+    """
+    groupiter = itt.groupby(iterable, func)
+    return itt.imap(lambda t: t[1], groupiter)
 
 
 Cycle = nut_processor(itt.cycle)
@@ -604,7 +627,7 @@ def GroupBy(iterable, keycol=lambda x: x, nokey=False):
     If the iterable is sorted use GroupBySorted() instead.
 
     >>> from nutsflow import Collect
-    
+
     >>> [1, 2, 1, 1, 3] >> GroupBy() >> Collect()
     [(1, [1, 1, 1]), (2, [2]), (3, [3])]
 
@@ -613,6 +636,12 @@ def GroupBy(iterable, keycol=lambda x: x, nokey=False):
 
     >>> ['--', '+++', '**'] >> GroupBy(len) >> Collect()
     [(2, ['--', '**']), (3, ['+++'])]
+
+    >>> ['a3', 'b2', 'c1'] >> GroupBy(1) >> Collect()
+    [('1', ['c1']), ('3', ['a3']), ('2', ['b2'])]
+
+    >>> [(1,3), (2,2), (3,1)] >> GroupBy(1, nokey=True) >> Collect()
+    [[(3, 1)], [(2, 2)], [(1, 3)]]
 
     :param iterable iterable: Any iterable
     :param int|function keycol: Column index or key function.

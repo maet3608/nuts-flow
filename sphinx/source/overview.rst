@@ -144,6 +144,9 @@ Click on a nut name for more details.
   
 - :class:`ChunkWhen <nutsflow.processor.ChunkWhen>` :
   create new chunk whenever predicate function is true.
+
+- :class:`ChunkBy <nutsflow.processor.ChunkBy>` :
+  create new chunk whenever function value changes.
   
 - :class:`Clone <nutsflow.processor.Clone>` :
   clone elements in iterables n times.  

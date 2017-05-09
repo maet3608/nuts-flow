@@ -83,10 +83,22 @@ def test_Chunk():
 def test_ChunkWhen():
     func = lambda x: x == '|'
     assert [] >> ChunkWhen(func) >> Map(list) >> Collect() == []
-    expected = ['|12', '|345', '|6']    
+    expected = ['|12', '|345', '|6']
     '|12|345|6' >> ChunkWhen(func) >> Map(''.join) >> Collect() == expected
     expected = ['123456']
     assert '123456' >> ChunkWhen(func) >> Map(''.join) >> Collect() == expected
+
+
+def test_ChunkBy():
+    func = lambda x: x
+    assert [] >> ChunkBy(func) >> Map(list) >> Collect() == []
+    expected = [[1, 1], [2], [3, 3, 3]]
+    [1, 1, 2, 3, 3, 3] >> ChunkBy(func) >> Map(list) >> Collect() == expected
+    func = lambda x: x < 3
+    expected = [[1, 1, 2], [3, 3, 3]]
+    [1, 1, 2, 3, 3, 3] >> ChunkBy(func) >> Map(list) >> Collect() == expected
+    expected = [[1, 2], [3], [1, 2], [3]]
+    [1, 2, 3, 1, 2, 3] >> ChunkBy(func) >> Map(list) >> Collect()
 
 
 def test_Flatten():
