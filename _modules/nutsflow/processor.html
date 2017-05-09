@@ -1049,9 +1049,9 @@
 <span class="sd">        .. code:: python</span>
 
 <span class="sd">            cache = Cache()</span>
-<span class="sd">                for _ in xrange(100)</span>
-<span class="sd">                    data &gt;&gt; expensive_op &gt;&gt; cache &gt;&gt; Collect()</span>
-<span class="sd">                cache.clear()</span>
+<span class="sd">            for _ in xrange(100)</span>
+<span class="sd">                data &gt;&gt; expensive_op &gt;&gt; cache &gt;&gt; Collect()</span>
+<span class="sd">            cache.clear()</span>
 
 <span class="sd">        :param iterable iterable: Any iterable</span>
 <span class="sd">        :param string storage: Currently only &#39;disk&#39; mode.</span>
