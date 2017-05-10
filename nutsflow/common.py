@@ -23,6 +23,20 @@ def as_tuple(x):
     return tuple(x) if hasattr(x, '__iter__') else (x,)
 
 
+def as_list(x):
+    """
+    Return x as list.
+
+    If x is a single item it gets wrapped into a list otherwise it is
+    changed to a list, e.g. tuple => list
+
+    :param item or iterable x: Any item or iterable
+    :return: list(x)
+    :rtype: list
+    """
+    return list(x) if hasattr(x, '__iter__') else [x]
+
+
 def as_set(x):
     """
     Return x as set.

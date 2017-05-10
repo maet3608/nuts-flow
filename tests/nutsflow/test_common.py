@@ -5,13 +5,19 @@
 
 from __future__ import print_function
 from nutsflow.common import (sec_to_hms, timestr, Redirect, as_tuple, as_set,
-                             console)
+                             as_list, console)
 
 
 def test_as_tuple():
     assert as_tuple(1) == (1,)
     assert as_tuple((1, 2)) == (1, 2)
     assert as_tuple([1, 2]) == (1, 2)
+
+
+def test_as_list():
+    assert as_list(1) == [1]
+    assert as_list((1, 2)) == [1, 2]
+    assert as_list([1, 2]) == [1, 2]
 
 
 def test_as_set():
