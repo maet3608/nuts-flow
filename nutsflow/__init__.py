@@ -1,4 +1,4 @@
-__version__ = '1.0.12'
+__version__ = '1.0.13'
 
 # TODO: Replace wildcard imports by specific imports
 from nutsflow.source import *
