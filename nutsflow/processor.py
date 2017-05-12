@@ -344,6 +344,7 @@ def FlattenCol(iterable, cols):
     [(3, 3, 1), (4, 4, 2), (7, 7, 5), (8, 8, 6)]
     
     >>> data = [([1, 2], 3), (6, [7, 8])]
+    >>> data >> FlattenCol((0, 1)) >> Collect()
     [(1, 3), (2, 3), (6, 7), (6, 8)]
 
     :param iterable iterable: Any iterable.
