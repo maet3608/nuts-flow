@@ -319,15 +319,15 @@ def FlattenCol(iterable, cols):
     Flattens the specified columns of the tuples/iterables within the iterable.
     Only one level is flattened.
 
-    |1 3|  |5 7|
-    |2 4|  |6 8|   >> FlattenCols((0,1) >>   |1 3|  |2 4|  |5 7|  |6 8|
+    (1 3)  (5 7)
+    (2 4)  (6 8)   >> FlattenCols((0,1) >>   (1 3)  (2 4)  (5 7)  (6 8)
 
     If a column contains a single element (instead of an iterable) it is 
     wrapped into a repeater. This allows to flatten columns that are iterable
     together with non-iterable columns, e.g.
 
-    |1 3|  |6 7|
-    |2  |  |  8|   >> FlattenCols((0,1) >>   |1 3|  |2 3|  |6 7|  |6 8|
+    (1 3)  (6 7)
+    (2  )  (  8)   >> FlattenCols((0,1) >>   (1 3)  (2 3)  (6 7)  (6 8)
 
     >>> from nutsflow import Collect
     >>> data = [([1, 2], [3, 4]), ([5, 6], [7, 8])]
@@ -336,13 +336,13 @@ def FlattenCol(iterable, cols):
 
     >>> data >> FlattenCol((0, 1)) >> Collect()
     [(1, 3), (2, 4), (5, 7), (6, 8)]
-    
+
     >>> data >> FlattenCol((1, 0)) >> Collect()
     [(3, 1), (4, 2), (7, 5), (8, 6)]
 
     >>> data >> FlattenCol((1, 1, 0)) >> Collect()
     [(3, 3, 1), (4, 4, 2), (7, 7, 5), (8, 8, 6)]
-    
+
     >>> data = [([1, 2], 3), (6, [7, 8])]
     >>> data >> FlattenCol((0, 1)) >> Collect()
     [(1, 3), (2, 3), (6, 7), (6, 8)]
