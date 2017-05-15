@@ -98,7 +98,7 @@ def test_ChunkBy():
     expected = [[1, 1, 2], [3, 3, 3]]
     [1, 1, 2, 3, 3, 3] >> ChunkBy(func) >> Map(list) >> Collect() == expected
     expected = [[1, 2], [3], [1, 2], [3]]
-    [1, 2, 3, 1, 2, 3] >> ChunkBy(func) >> Map(list) >> Collect()
+    [1, 2, 3, 1, 2, 3] >> ChunkBy(func) >> Map(list) >> Collect() == expected
 
 
 def test_Flatten():
