@@ -1,0 +1,10 @@
+Links
+=====
+
+Links to other interesting projects regarding data flows or functional programming
+under Python.
+
+
+- `toolz <https://github.com/pytoolz/toolz>`_
+- `PyFunctional <https://github.com/EntilZha/PyFunctional>`_
+- `fn <https://github.com/kachayev/fn.py>`_
