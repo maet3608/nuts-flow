@@ -45,11 +45,12 @@ def test_NOP():
 
 def test_Get():
     data = [(1, 2, 3), (4, 5, 6)]
+    assert data >> Get(None) >> Collect() == data
     assert data >> Get(0) >> Collect() == [1, 4]
     assert data >> Get(1) >> Collect() == [2, 5]
     assert data >> Get(0, 2) >> Collect() == [(1, 2), (4, 5)]
     assert data >> Get(0, 3, 2) >> Collect() == [(1, 3), (4, 6)]
-
+    
 
 def test_GetCols():
     data = [[1, 2, 3], [4, 5, 6]]

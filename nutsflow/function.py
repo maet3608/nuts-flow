@@ -89,15 +89,19 @@ def Get(x, start, end=None, step=None):
     >>> [(1, 2, 3), (4, 5, 6)] >> Get(0, 3, 2) >> Collect()
     [(1, 3), (4, 6)]
 
+    >>> [(1, 2, 3), (4, 5, 6)] >> Get(None) >> Collect()
+    [(1, 2, 3), (4, 5, 6)]
+
     :param iterable iterable: Any iterable
     :param indexable x: Any indexable input
     :param int start: Start index for columns to extract from x
+           If start = None, x is returned
     :param int end: End index (not inclusive)
     :param int step: Step index (same as slicing)
     :return: Extracted elements
     :rtype: object|list
     """
-    return x[slice(start, end, step) if end else start]
+    return x if start is None else x[slice(start, end, step) if end else start]
 
 
 @nut_function
