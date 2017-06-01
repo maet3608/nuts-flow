@@ -1,4 +1,6 @@
 from __future__ import print_function
+from builtins import zip
+from builtins import range
 from nutsflow import _
 from nutsflow import *
 
@@ -6,7 +8,7 @@ from nutsflow import *
 @nut_processor
 def MyClone(iterable, n):
     for e in iterable:
-        for _ in xrange(n):
+        for _ in range(n):
             yield e
 
 
@@ -22,7 +24,7 @@ def MySmallerOrEqualThan(x, threshold):
 
 @nut_source
 def MyRange(start, end):
-    return iter(xrange(start, end))
+    return iter(range(start, end))
 
 
 @nut_sink
@@ -72,29 +74,29 @@ def run(datapath):
 
     print(Range(10) >> Take(5) >> Collect())
 
-    print(xrange(10) >> TakeWhile(_ < 5) >> Collect())
+    print(range(10) >> TakeWhile(_ < 5) >> Collect())
 
-    print(xrange(10) >> Filter(_ < 5) >> Collect())
+    print(range(10) >> Filter(_ < 5) >> Collect())
 
-    print(xrange(10) >> FilterFalse(_ < 5) >> Collect())
+    print(range(10) >> FilterFalse(_ < 5) >> Collect())
 
-    print(xrange(10) >> Map(_ * 5) >> Collect())
+    print(range(10) >> Map(_ * 5) >> Collect())
 
     print('abc' >> Cycle() >> Take(5) >> Collect())
 
     print('aabacddeaf' >> Dedupe(_ < 'c') >> Collect())
 
-    print(xrange(10) >> Zip('abcd') >> Collect())
+    print(range(10) >> Zip('abcd') >> Collect())
 
     print(zip([1, 2, 3], 'abc') >> Map(_[::-1]) >> Collect())
 
-    print(xrange(10) >> Zip('abcd') >> Map(_[0]) >> Collect())
+    print(range(10) >> Zip('abcd') >> Map(_[0]) >> Collect())
 
-    print(xrange(10) >> Interleave('abcd') >> Collect())
+    print(range(10) >> Interleave('abcd') >> Collect())
 
     print(Empty() >> Collect())
 
-    print(xrange(20) >> Prefetch() >> Collect())
+    print(range(20) >> Prefetch() >> Collect())
 
     with ReadCSV(datapath + 'data.csv') as reader:
         print('data.csv:', reader >> Collect())
