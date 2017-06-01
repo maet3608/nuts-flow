@@ -1,3 +1,4 @@
+from __future__ import print_function
 from nutsflow import _
 from nutsflow import *
 
@@ -41,65 +42,65 @@ def MyPipeline(iterable, func):
 
 
 def run(datapath):
-    print Range(10) >> Shuffle(1) >> Collect()
+    print(Range(10) >> Shuffle(1) >> Collect())
 
-    print Range(5) >> MyPipeline(Square()) >> Collect()
+    print(Range(5) >> MyPipeline(Square()) >> Collect())
 
-    print MyRange(1, 10) >> MySmallerOrEqualThan(5) >> MyCollect()
+    print(MyRange(1, 10) >> MySmallerOrEqualThan(5) >> MyCollect())
 
-    print MyRange(1, 10) >> MyTimes(3) >> MyGreaterThan(5) >> MyCollect()
+    print(MyRange(1, 10) >> MyTimes(3) >> MyGreaterThan(5) >> MyCollect())
 
-    print MyRange(1, 5) >> MyClone(2) >> MyCollect()
+    print(MyRange(1, 5) >> MyClone(2) >> MyCollect())
 
-    print Range(5, 10) >> Zip(Repeat('a')) >> Collect()
+    print(Range(5, 10) >> Zip(Repeat('a')) >> Collect())
 
-    print Range(10) >> Head(5)
+    print(Range(10) >> Head(5))
 
-    print Range(10) >> Tail(5)
+    print(Range(10) >> Tail(5))
 
-    print Range(10) >> Drop(3) >> Collect()
+    print(Range(10) >> Drop(3) >> Collect())
 
-    print [1, 2, 2, 3, 3, 3] >> CountValues()
+    print([1, 2, 2, 3, 3, 3] >> CountValues())
 
-    print Product([1, 2], ['a', 'b']) >> Collect()
+    print(Product([1, 2], ['a', 'b']) >> Collect())
 
-    print [1, 2, 3] >> Permutate(2) >> Collect()
+    print([1, 2, 3] >> Permutate(2) >> Collect())
 
-    print [1, 2, 3] >> Map(_ * 2) >> Collect()
+    print([1, 2, 3] >> Map(_ * 2) >> Collect())
 
-    print Range(10) >> Identity() >> Collect()
+    print(Range(10) >> Identity() >> Collect())
 
-    print Range(10) >> Take(5) >> Collect()
+    print(Range(10) >> Take(5) >> Collect())
 
-    print xrange(10) >> TakeWhile(_ < 5) >> Collect()
+    print(xrange(10) >> TakeWhile(_ < 5) >> Collect())
 
-    print xrange(10) >> Filter(_ < 5) >> Collect()
+    print(xrange(10) >> Filter(_ < 5) >> Collect())
 
-    print xrange(10) >> FilterFalse(_ < 5) >> Collect()
+    print(xrange(10) >> FilterFalse(_ < 5) >> Collect())
 
-    print xrange(10) >> Map(_ * 5) >> Collect()
+    print(xrange(10) >> Map(_ * 5) >> Collect())
 
-    print 'abc' >> Cycle() >> Take(5) >> Collect()
+    print('abc' >> Cycle() >> Take(5) >> Collect())
 
-    print 'aabacddeaf' >> Dedupe(_ < 'c') >> Collect()
+    print('aabacddeaf' >> Dedupe(_ < 'c') >> Collect())
 
-    print xrange(10) >> Zip('abcd') >> Collect()
+    print(xrange(10) >> Zip('abcd') >> Collect())
 
-    print zip([1, 2, 3], 'abc') >> Map(_[::-1]) >> Collect()
+    print(zip([1, 2, 3], 'abc') >> Map(_[::-1]) >> Collect())
 
-    print xrange(10) >> Zip('abcd') >> Map(_[0]) >> Collect()
+    print(xrange(10) >> Zip('abcd') >> Map(_[0]) >> Collect())
 
-    print xrange(10) >> Interleave('abcd') >> Collect()
+    print(xrange(10) >> Interleave('abcd') >> Collect())
 
-    print Empty() >> Collect()
+    print(Empty() >> Collect())
 
-    print xrange(20) >> Prefetch() >> Collect()
+    print(xrange(20) >> Prefetch() >> Collect())
 
     with ReadCSV(datapath + 'data.csv') as reader:
-        print 'data.csv:', reader >> Collect()
+        print('data.csv:', reader >> Collect())
 
     with open(datapath + 'numbers.txt') as f:
-        print 'numbers.txt:', f >> Collect()
+        print('numbers.txt:', f >> Collect())
 
     nums, twos, greater5 = Range(10) >> MapMulti(_, _ * 2, _ > 5)
     nums >> Zip(twos, greater5) >> Print() >> Consume()
@@ -108,7 +109,7 @@ def run(datapath):
     Range(10) >> If(debug, Print()) >> Consume()
 
     do_square = True
-    print Range(10) >> If(do_square, Square()) >> Collect()
+    print(Range(10) >> If(do_square, Square()) >> Collect())
 
     # numbers = range(100)
     # numbers >> PrintProgress(numbers, 0) >> Sleep(0.1) >> Consume()
