@@ -2,15 +2,16 @@
 .. module:: source
    :synopsis: Nuts that produce iterables but do not take input iterables.
 """
+from __future__ import absolute_import
 
 import csv
 
 import itertools as itt
-import iterfunction as itf
+from . import iterfunction as itf
 
-from base import NutSource
-from factory import nut_source
-from common import as_tuple
+from .base import NutSource
+from .factory import nut_source
+from .common import as_tuple
 
 
 @nut_source

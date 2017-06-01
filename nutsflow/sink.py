@@ -2,6 +2,7 @@
 .. module:: sink
    :synopsis: Nuts that reads streams and potentially produce non-stream output.
 """
+from __future__ import absolute_import
 
 import csv
 import math
@@ -9,10 +10,10 @@ import math
 import itertools as itt
 import collections as cl
 
-from base import NutSink
-from factory import nut_sink
-from common import as_tuple
-from iterfunction import nth, consume, length, take
+from .base import NutSink
+from .factory import nut_sink
+from .common import as_tuple
+from .iterfunction import nth, consume, length, take
 
 
 @nut_sink
@@ -171,7 +172,7 @@ def ArgMax(iterable, key=lambda x: x, default=None, retvalue=False):
     :rtype: object | tuple
     """
     try:
-        i, v = max(enumerate(iterable), key=lambda (i, e): key(e))
+        i, v = max(enumerate(iterable), key=lambda i_e: key(i_e[1]))
         return (i, v) if retvalue else i
     except Exception:
         return default
@@ -209,7 +210,7 @@ def ArgMin(iterable, key=lambda x: x, default=None, retvalue=False):
     :rtype: object | tuple
     """
     try:
-        i, v = min(enumerate(iterable), key=lambda (i, e): key(e))
+        i, v = min(enumerate(iterable), key=lambda i_e1: key(i_e1[1]))
         return (i, v) if retvalue else i
     except Exception:
         return default

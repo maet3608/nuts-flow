@@ -3,12 +3,13 @@
    :synopsis: Nuts that perform functions on single stream elements.
 """
 from __future__ import print_function
+from __future__ import absolute_import
 
 import time
 import threading
 
-from common import console
-from factory import nut_function, NutFunction
+from .common import console
+from .factory import nut_function, NutFunction
 
 
 @nut_function

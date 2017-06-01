@@ -2,8 +2,9 @@
 .. module:: factory
    :synopsis: Functions and decorators to construct nuts.
 """
+from __future__ import absolute_import
 
-from base import Nut, NutSink, NutSource, NutFunction
+from .base import Nut, NutSink, NutSource, NutFunction
 
 
 def _arg_insert(args, arg, pos=0):
