@@ -7,7 +7,8 @@ from __future__ import absolute_import
 import csv
 
 import itertools as itt
-from . import iterfunction as itf
+
+import nutsflow.iterfunction as itf
 
 from .base import NutSource
 from .factory import nut_source
