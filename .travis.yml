@@ -7,6 +7,7 @@ before_install:
   - pip install pytest pytest-cov
   - pip install coveralls
   - pip install future
+  - pip install six
 install: 
   - pip install nutsflow
 script: 
