@@ -64,4 +64,4 @@ def test_NutSink():
 
     assert [1, 2, 3] >> Len() == 3
     assert Len()([1, 2, 3]) == 3  # Sink can operate as function
-    assert map(Len(), ['a', 'bb', 'cc']) == [1, 2, 2]
+    assert list(map(Len(), ['a', 'bb', 'cc'])) == [1, 2, 2]

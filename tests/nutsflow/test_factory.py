@@ -3,6 +3,7 @@
    :synopsis: Unit tests for factory module
 """
 
+from six.moves import range 
 from nutsflow.base import Nut
 from nutsflow.sink import Collect
 from nutsflow.factory import (_arg_insert, _create_nut_wrapper,
@@ -46,7 +47,7 @@ def test_nut_processor():
     @nut_processor
     def CloneN(iterable, n):
         for e in iterable:
-            for _ in xrange(n):
+            for _ in range(n):
                 yield e
 
     assert [1, 2] >> CloneN(2) >> Collect() == [1, 1, 2, 2]
@@ -71,7 +72,7 @@ def test_nut_function():
 def test_nut_source():
     @nut_source
     def MyRange(start, end):
-        return iter(xrange(start, end))
+        return iter(range(start, end))
 
     assert MyRange(1, 4) >> Collect() == [1, 2, 3]
 
