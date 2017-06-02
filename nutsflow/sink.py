@@ -10,6 +10,7 @@ import math
 import itertools as itt
 import collections as cl
 
+from six.moves import reduce
 from .base import NutSink
 from .factory import nut_sink
 from .common import as_tuple

@@ -65,7 +65,7 @@ def test_Dedupe():
 
     data = [(1, 'a'), (2, 'a'), (3, 'b')]
     expected = [(1, 'a'), (3, 'b')]
-    assert data >> Dedupe(key=lambda (x, y): y) >> Collect() == expected
+    assert data >> Dedupe(key=lambda t: t[1]) >> Collect() == expected
     assert data >> Dedupe(_[1]) >> Collect() == expected
 
 
@@ -273,7 +273,7 @@ def test_GroupBy():
 def test_GroupBySorted():
     @nut_sink
     def KV2List(iterable):
-        return iterable >> Map(lambda (k, es): (k, list(es))) >> Collect()
+        return iterable >> Map(lambda t: (t[0], list(t[1]))) >> Collect()
 
     @nut_sink
     def V2List(iterable):

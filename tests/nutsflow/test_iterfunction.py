@@ -42,7 +42,7 @@ def test_unique():
     assert list(itf.unique([])) == []
 
     data = [(1, 'a'), (2, 'a'), (3, 'b')]
-    it = itf.unique(data, key=lambda (x, y): y)
+    it = itf.unique(data, key=lambda t: t[1])
     assert list(it) == [(1, 'a'), (3, 'b')]
 
 
