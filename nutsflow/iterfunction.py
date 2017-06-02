@@ -5,9 +5,10 @@
 """
 
 import itertools as itt
-import Queue as q
 import threading as t
 import collections as cl
+
+from six.moves import queue as q
 
 
 def length(iterable):
