@@ -9,7 +9,6 @@ import shutil
 import os
 import time
 
-
 import os.path as osp
 import itertools as itt
 import random as rnd
@@ -24,7 +23,6 @@ from .factory import nut_processor
 from .function import Identity
 from .sink import Consume, Collect
 from nutsflow.common import timestr
-
 
 
 @nut_processor
