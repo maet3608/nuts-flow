@@ -40,7 +40,8 @@ class PyTest(TestCommand):
 setup(
     name='nutsflow',
     version=nutsflow.__version__,
-    url='https://github.com/maet3608/nuts-flow',
+    url='https://maet3608.github.io/nuts-flow',
+    download_url='https://github.com/maet3608/nuts-flow',
     license='Apache Software License (http://www.apache.org/licenses/LICENSE-2.0)',
     author='Stefan Maetschke',
     author_email='stefan.maetschke@gmail.com',
