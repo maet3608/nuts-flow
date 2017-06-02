@@ -6,9 +6,11 @@
 import time
 import nutsflow.iterfunction as itf
 
+from six.moves import range
+
 
 def test_length():
-    assert itf.length(xrange(10)) == 10
+    assert itf.length(range(10)) == 10
     assert itf.length([]) == 0
 
 
@@ -22,18 +24,18 @@ def test_interleave():
 
 
 def test_take():
-    it = itf.take(xrange(10), 3)
+    it = itf.take(range(10), 3)
     assert list(it) == [0, 1, 2]
-    it = itf.take(xrange(10), 0)
+    it = itf.take(range(10), 0)
     assert list(it) == []
-    it = itf.take(xrange(0), 3)
+    it = itf.take(range(0), 3)
     assert list(it) == []
 
 
 def test_nth():
-    assert itf.nth(xrange(10), 2) == 2
-    assert itf.nth(xrange(10), 100) is None
-    assert itf.nth(xrange(10), 100, -1) == -1
+    assert itf.nth(range(10), 2) == 2
+    assert itf.nth(range(10), 100) is None
+    assert itf.nth(range(10), 100, -1) == -1
 
 
 def test_unique():
@@ -47,18 +49,18 @@ def test_unique():
 
 
 def test_chunked():
-    it = itf.chunked(xrange(5), 2)
+    it = itf.chunked(range(5), 2)
     assert list(map(tuple, it)) == [(0, 1), (2, 3), (4,)]
-    it = itf.chunked(xrange(6), 3)
+    it = itf.chunked(range(6), 3)
     assert list(map(tuple, it)) == [(0, 1, 2), (3, 4, 5)]
     assert list(itf.chunked([], 2)) == []
 
 
 def test_consume():
-    it = iter(xrange(10))
+    it = iter(range(10))
     itf.consume(it)
     assert next(it, None) is None
-    it = iter(xrange(10))
+    it = iter(range(10))
     itf.consume(it, 5)
     assert next(it, None) == 5
 
@@ -79,7 +81,7 @@ def test_flatmap():
 
 def test_partition():
     pred = lambda x: x < 6
-    smaller, larger = itf.partition(xrange(10), pred)
+    smaller, larger = itf.partition(range(10), pred)
     assert list(smaller) == [0, 1, 2, 3, 4, 5]
     assert list(larger) == [6, 7, 8, 9]
 
@@ -89,7 +91,7 @@ def test_prefetch_iterator():
         time.sleep(0.01)
 
     def number_generator():
-        for i in xrange(10):
+        for i in range(10):
             sleep()
             yield i
 
