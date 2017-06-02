@@ -3,7 +3,7 @@
    :synopsis: Base classes and functions.
 """
 
-import itertools as itt
+from six.moves import map
 
 
 class Nut(object):
@@ -91,7 +91,7 @@ class NutFunction(Nut):
         :return: transformed iterable.
         :rtype: iterable
         """
-        return itt.imap(self, iterable)
+        return map(self, iterable)
 
 
 class NutSource(Nut):

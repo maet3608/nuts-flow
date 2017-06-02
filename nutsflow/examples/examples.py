@@ -1,6 +1,6 @@
 from __future__ import print_function
-from builtins import zip
-from builtins import range
+
+from six.moves import range, zip
 from nutsflow import _
 from nutsflow import *
 
