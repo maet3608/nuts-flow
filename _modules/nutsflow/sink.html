@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nutsflow.sink &mdash; nutsflow 1.0.14 documentation</title>
+  <title>nutsflow.sink &mdash; nutsflow 1.0.16 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../../genindex.html"/>
         <link rel="search" title="Search" href="../../search.html"/>
-    <link rel="top" title="nutsflow 1.0.14 documentation" href="../../index.html"/>
+    <link rel="top" title="nutsflow 1.0.16 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                1.0.14
+                1.0.16
               </div>
             
           
@@ -165,6 +165,7 @@
 <span class="sd">.. module:: sink</span>
 <span class="sd">   :synopsis: Nuts that reads streams and potentially produce non-stream output.</span>
 <span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">absolute_import</span>
 
 <span class="kn">import</span> <span class="nn">csv</span>
 <span class="kn">import</span> <span class="nn">math</span>
@@ -172,10 +173,10 @@
 <span class="kn">import</span> <span class="nn">itertools</span> <span class="k">as</span> <span class="nn">itt</span>
 <span class="kn">import</span> <span class="nn">collections</span> <span class="k">as</span> <span class="nn">cl</span>
 
-<span class="kn">from</span> <span class="nn">base</span> <span class="k">import</span> <span class="n">NutSink</span>
-<span class="kn">from</span> <span class="nn">factory</span> <span class="k">import</span> <span class="n">nut_sink</span>
-<span class="kn">from</span> <span class="nn">common</span> <span class="k">import</span> <span class="n">as_tuple</span>
-<span class="kn">from</span> <span class="nn">iterfunction</span> <span class="k">import</span> <span class="n">nth</span><span class="p">,</span> <span class="n">consume</span><span class="p">,</span> <span class="n">length</span><span class="p">,</span> <span class="n">take</span>
+<span class="kn">from</span> <span class="nn">.base</span> <span class="k">import</span> <span class="n">NutSink</span>
+<span class="kn">from</span> <span class="nn">.factory</span> <span class="k">import</span> <span class="n">nut_sink</span>
+<span class="kn">from</span> <span class="nn">.common</span> <span class="k">import</span> <span class="n">as_tuple</span>
+<span class="kn">from</span> <span class="nn">.iterfunction</span> <span class="k">import</span> <span class="n">nth</span><span class="p">,</span> <span class="n">consume</span><span class="p">,</span> <span class="n">length</span><span class="p">,</span> <span class="n">take</span>
 
 
 <span class="nd">@nut_sink</span>
@@ -334,7 +335,7 @@
 <span class="sd">    :rtype: object | tuple</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="n">i</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">enumerate</span><span class="p">(</span><span class="n">iterable</span><span class="p">),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">e</span><span class="p">):</span> <span class="n">key</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+        <span class="n">i</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">enumerate</span><span class="p">(</span><span class="n">iterable</span><span class="p">),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">i_e</span><span class="p">:</span> <span class="n">key</span><span class="p">(</span><span class="n">i_e</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
         <span class="k">return</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="k">if</span> <span class="n">retvalue</span> <span class="k">else</span> <span class="n">i</span>
     <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">default</span></div>
@@ -372,7 +373,7 @@
 <span class="sd">    :rtype: object | tuple</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="n">i</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="nb">enumerate</span><span class="p">(</span><span class="n">iterable</span><span class="p">),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">e</span><span class="p">):</span> <span class="n">key</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+        <span class="n">i</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="nb">enumerate</span><span class="p">(</span><span class="n">iterable</span><span class="p">),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">i_e1</span><span class="p">:</span> <span class="n">key</span><span class="p">(</span><span class="n">i_e1</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
         <span class="k">return</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="k">if</span> <span class="n">retvalue</span> <span class="k">else</span> <span class="n">i</span>
     <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">default</span></div>
@@ -679,7 +680,7 @@
   <div role="contentinfo">
     <p>
         &copy; Copyright 2017, IBM Research Australia.
-      Last updated on May 30, 2017.
+      Last updated on Jun 02, 2017.
 
     </p>
   </div> 
@@ -700,7 +701,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'1.0.14',
+            VERSION:'1.0.16',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,
