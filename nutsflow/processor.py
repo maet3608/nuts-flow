@@ -9,20 +9,22 @@ import shutil
 import os
 import time
 
-import cPickle as pickle
+
 import os.path as osp
 import itertools as itt
-from . import iterfunction as itf
 import random as rnd
 import multiprocessing as mp
 import collections as cl
 
+from . import iterfunction as itf
+from six.moves import cPickle as pickle
 from .base import Nut
 from .common import as_tuple, as_set, console
 from .factory import nut_processor
 from .function import Identity
 from .sink import Consume, Collect
 from nutsflow.common import timestr
+
 
 
 @nut_processor
