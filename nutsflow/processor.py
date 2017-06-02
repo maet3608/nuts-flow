@@ -17,7 +17,7 @@ import collections as cl
 
 from . import iterfunction as itf
 from six.moves import cPickle as pickle
-from six.moves import map
+from six.moves import map, filter, filterfalse
 from .base import Nut
 from .common import as_tuple, as_set, console
 from .factory import nut_processor
@@ -403,7 +403,7 @@ See https://docs.python.org/2/library/itertools.html#itertools.imap
 :rtype: Iterator
 """
 
-Filter = nut_processor(itt.ifilter, None)
+Filter = nut_processor(filter, None)
 """
 iterable >> Filter(func)
 
@@ -419,7 +419,7 @@ See https://docs.python.org/2/library/itertools.html#itertools.ifilter
 :rtype: Iterator
 """
 
-FilterFalse = nut_processor(itt.ifilterfalse, None)
+FilterFalse = nut_processor(filterfalse, None)
 """
 iterable >> FilterFalse(func)
 
