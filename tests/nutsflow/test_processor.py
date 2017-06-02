@@ -7,6 +7,7 @@ import pytest
 
 import random as rnd
 
+from six.moves import range
 from nutsflow import *
 from nutsflow import _
 from nutsflow.common import Redirect
@@ -305,7 +306,7 @@ def test_Clone():
 
 
 def test_Shuffle():
-    data = range(50)
+    data = list(range(50))
     assert data >> Shuffle(100) >> Collect() != data
     assert data >> Shuffle(100) >> Collect(set) == set(data)
 
@@ -336,7 +337,7 @@ def test_MapMulti():
 
 def test_MapPar():
     assert [-1, -2, -3] >> MapPar(abs) >> Collect() == [1, 2, 3]
-    data = range(1000)
+    data = list(range(1000))
     assert data >> MapPar(_) >> MapPar(_) >> Collect() == data
 
 
@@ -366,7 +367,7 @@ def test_Cache():
         [1] >> Cache(storage='memory') >> Consume()
     assert str(ex.value).startswith('Unsupported storage')
 
-    data = range(100)
+    data = list(range(100))
     with Cache() as cache:
         it = iter(data)
         assert it >> cache >> Collect() == data

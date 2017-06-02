@@ -9,6 +9,7 @@ import csv
 import itertools as itt
 import nutsflow.iterfunction as itf
 
+from six.moves import range
 from .base import NutSource
 from .factory import nut_source
 from .common import as_tuple
@@ -72,7 +73,7 @@ def Product(*args, **kwds):
     >>> Product([1, 2], [3, 4]) >> Collect()
     [(1, 3), (1, 4), (2, 3), (2, 4)]
 
-    >>> Product('ab', xrange(3)) >> Collect()
+    >>> Product('ab', range(3)) >> Collect()
     [('a', 0), ('a', 1), ('a', 2), ('b', 0), ('b', 1), ('b', 2)]
 
     >>> Product([1, 2, 3], repeat=2) >> Collect()
@@ -107,7 +108,7 @@ def Empty():
 
 class Range(NutSource):
     """
-    Range of numbers. Similar to xrange() but returns iterator that depletes.
+    Range of numbers. Similar to range() but returns iterator that depletes.
     """
 
     def __init__(self, *args, **kwargs):
@@ -129,7 +130,7 @@ class Range(NutSource):
         :return: Range of integers.
         :rtype: iterable over int
         """
-        self.iter = iter(xrange(*args, **kwargs))
+        self.iter = iter(range(*args, **kwargs))
 
     def __iter__(self):
         """Return iterator over numbers."""
@@ -184,7 +185,7 @@ class ReadCSV(NutSource):
         self.csvfile = open(filepath, 'rb')
         self.columns = columns if columns is None else as_tuple(columns)
         self.fmtfunc = fmtfunc
-        for _ in xrange(skipheader):
+        for _ in range(skipheader):
             next(self.csvfile)
         itf.take(self.csvfile, skipheader)
         stripped = (r.strip() for r in self.csvfile)
