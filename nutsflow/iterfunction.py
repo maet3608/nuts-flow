@@ -256,7 +256,7 @@ class PrefetchIterator(t.Thread):
             self.queue.put(item)
         self.queue.put(None)
 
-    def next(self):
+    def next(self):  # py 2.x
         """
         Return next element from pre-fetch iterator.
 
@@ -267,6 +267,15 @@ class PrefetchIterator(t.Thread):
         if next_item is None:
             raise StopIteration
         return next_item
+
+    def __next__(self):  # py 3k
+        """
+        Return next element from pre-fetch iterator.
+
+        :return: element from iterator
+        :rtype: same as element type of input iterable.
+        """
+        return self.next()
 
     def __iter__(self):
         """
