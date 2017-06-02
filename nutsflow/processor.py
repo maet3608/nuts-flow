@@ -17,7 +17,7 @@ import collections as cl
 
 from . import iterfunction as itf
 from six.moves import cPickle as pickle
-from six.moves import map, filter, filterfalse
+from six.moves import map, filter, filterfalse, zip
 from .base import Nut
 from .common import as_tuple, as_set, console
 from .factory import nut_processor
@@ -145,7 +145,7 @@ def Zip(iterable, iterable2=None, *iterables):
     :return: Zipped elements from iterables.
     :rtype: iterator over tuples
     """
-    return itt.izip(iterable, iterable2, *iterables)
+    return zip(iterable, iterable2, *iterables)
 
 
 @nut_processor
@@ -166,7 +166,7 @@ def ZipWith(iterable, f, *iterables):
     :rtype: iterator
     """
     iterables = [iterable] + list(iterables)
-    return itt.starmap(f, itt.izip(*iterables))
+    return itt.starmap(f, zip(*iterables))
 
 
 Dedupe = nut_processor(itf.unique)
@@ -357,7 +357,7 @@ def FlattenCol(iterable, cols):
     cols = as_tuple(cols)
     get = lambda e: e if hasattr(e, '__iter__') else itt.repeat(e)
     for es in iterable:
-        for e in itt.izip(*[get(es[c]) for c in cols]):
+        for e in zip(*[get(es[c]) for c in cols]):
             yield e
 
 
