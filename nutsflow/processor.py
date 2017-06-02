@@ -17,6 +17,7 @@ import collections as cl
 
 from . import iterfunction as itf
 from six.moves import cPickle as pickle
+from six.moves import map
 from .base import Nut
 from .common import as_tuple, as_set, console
 from .factory import nut_processor
@@ -265,7 +266,7 @@ def ChunkBy(iterable, func):
     :rtype: Iterator over iterators
     """
     groupiter = itt.groupby(iterable, func)
-    return itt.imap(lambda t: t[1], groupiter)
+    return map(lambda t: t[1], groupiter)
 
 
 Cycle = nut_processor(itt.cycle)
@@ -379,7 +380,7 @@ iterable >> Map(func) >> Flatten()
 :rtype: Iterator
 """
 
-Map = nut_processor(itt.imap, 1)
+Map = nut_processor(map, 1)
 """
 iterable >> Map(func, *iterables)
 
@@ -718,7 +719,7 @@ def GroupBySorted(iterable, keycol=lambda x: x, nokey=False):
     isfunc = hasattr(keycol, '__call__')
     key = keycol if isfunc else lambda x: x[keycol]
     groupiter = itt.groupby(iterable, key)
-    return itt.imap(lambda k_v: k_v[1], groupiter) if nokey else groupiter
+    return map(lambda k_v: k_v[1], groupiter) if nokey else groupiter
 
 
 @nut_processor
@@ -841,7 +842,7 @@ def MapMulti(iterable, *funcs):
     :rtype: (iterator, ...)
     """
     tees = itt.tee(iterable, len(funcs))
-    return [itt.imap(f, t) for f, t in zip(funcs, tees)]
+    return [map(f, t) for f, t in zip(funcs, tees)]
 
 
 # Don't use @nut_processor here. Creating Pool is expensive!
