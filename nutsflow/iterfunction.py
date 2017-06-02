@@ -9,7 +9,8 @@ import threading as t
 import collections as cl
 
 from six.moves import queue as q
-from six.moves import range, map, filter, filterfalse 
+from six import advance_iterator
+from six.moves import map, filter, filterfalse
 
 
 def length(iterable):
@@ -41,11 +42,12 @@ def interleave(*iterables):
     :rtype: iterator
     """
     pending = len(iterables)
-    nexts = itt.cycle(iter(it).next for it in iterables)
+    fnext = lambda it: lambda: advance_iterator(it)
+    nexts = itt.cycle(fnext(iter(it)) for it in iterables)
     while pending:
         try:
-            for next in nexts:
-                yield next()
+            for nxt in nexts:
+                yield nxt()
         except StopIteration:
             pending -= 1
             nexts = itt.cycle(itt.islice(nexts, pending))
