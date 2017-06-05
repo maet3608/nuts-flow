@@ -3,6 +3,7 @@
    :synopsis: Functions that work with iterables.
               See https://docs.python.org/2/library/itertools.html
 """
+import six
 
 import itertools as itt
 import threading as t
@@ -219,7 +220,7 @@ def partition(iterable, pred):
     return filter(pred, t1), filterfalse(pred, t2)
 
 
-class PrefetchIterator(t.Thread):
+class PrefetchIterator(t.Thread, six.Iterator):
     """
     Wrap an iterable in an iterator that prefetches elements.
 
@@ -256,7 +257,7 @@ class PrefetchIterator(t.Thread):
             self.queue.put(item)
         self.queue.put(None)
 
-    def next(self):  # py 2.x
+    def __next__(self):
         """
         Return next element from pre-fetch iterator.
 
@@ -267,15 +268,6 @@ class PrefetchIterator(t.Thread):
         if next_item is None:
             raise StopIteration
         return next_item
-
-    def __next__(self):  # py 3k
-        """
-        Return next element from pre-fetch iterator.
-
-        :return: element from iterator
-        :rtype: same as element type of input iterable.
-        """
-        return self.next()
 
     def __iter__(self):
         """

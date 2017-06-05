@@ -106,13 +106,3 @@ def test_prefetch_iterator():
     duration2 = time.time() - start
 
     assert duration2 < duration1
-
-
-def test_prefetch_iterator_next():
-    it1 = itf.PrefetchIterator(range(10))
-    it2 = itf.PrefetchIterator(range(10))
-    while True:
-        try:
-            assert it1.next() == it2.__next__()
-        except StopIteration:
-            break
