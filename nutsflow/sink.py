@@ -9,7 +9,7 @@ import math
 
 import collections as cl
 
-from six.moves import reduce, zip
+from six.moves import reduce, zip, range
 from .base import NutSink
 from .factory import nut_sink
 from .common import as_tuple
@@ -310,7 +310,7 @@ def Unzip(iterable, container=None):
     >>> [(1, 2, 3), (4, 5, 6)] >> Unzip(tuple) >> Collect()
     [(1, 4), (2, 5), (3, 6)]
 
-    :param iterable iterable:  Any iterable, e.g. list, xrange, ...
+    :param iterable iterable:  Any iterable, e.g. list, range, ...
     :param container container: If not none, unzipped results are collected
        in the provided container, eg. list, tuple, set
     :return: Unzip iterable.
@@ -330,7 +330,7 @@ def Head(iterable, n, container=list):
     >>> [1, 2, 3, 4] >> Head(2)
     [1, 2]
 
-    :param iterable iterable: Any iterable, e.g. list, xrange, ...
+    :param iterable iterable: Any iterable, e.g. list, range, ...
     :param int n: Number of elements to take.
     :param container container: Container to collect elements in, e.g. list, set
     :return: Container with head elements
@@ -350,7 +350,7 @@ def Tail(iterable, n, container=list):
     >>> [1, 2, 3, 4] >> Tail(2)
     [3, 4]
 
-    :param iterable iterable: Any iterable, e.g. list, xrange, ...
+    :param iterable iterable: Any iterable, e.g. list, range, ...
     :param int n: Number of elements to take.
     :param container container: Container to collect elements in, e.g. list, set
     :return: Container with tail elements
@@ -373,7 +373,7 @@ def CountValues(iterable, relative=False):
     >>> 'aabaab' >> CountValues(True)
     {'a': 1.0, 'b': 0.5}
 
-    :param iterable iterable: Any iterable, e.g. list, xrange, ...
+    :param iterable iterable: Any iterable, e.g. list, range, ...
     :param bool relative: True: return relative counts otherwise absolute counts
     :return: Dictionary with (relative) counts for elements in iterable.
     :rtype: dict
@@ -393,7 +393,7 @@ def Collect(iterable, container=list):
 
     Collects all elements of the iterable input in the given container.
 
-    >>> xrange(5) >> Collect()
+    >>> range(5) >> Collect()
     [0, 1, 2, 3, 4]
 
     >>> [1, 2, 3, 2] >> Collect(set)
@@ -402,7 +402,7 @@ def Collect(iterable, container=list):
     >>> [('one', 1), ('two', 2)] >> Collect(dict)
     {'two': 2, 'one': 1}
 
-    :param iterable iterable: Any iterable, e.g. list, xrange, ...
+    :param iterable iterable: Any iterable, e.g. list, range, ...
     :param container container: Some container, e.g. list, set, dict
            that can be filled from an iterable
     :return: Container
@@ -452,7 +452,7 @@ class WriteCSV(NutSink):
         >>> import os
         >>> filepath = 'tests/data/temp_out.csv'
         >>> with WriteCSV(filepath) as writer:
-        ...     xrange(10) >> writer
+        ...     range(10) >> writer
         >>> os.remove(filepath)
 
         >>> with WriteCSV(filepath, cols=(1,0)) as writer:
@@ -496,7 +496,7 @@ class WriteCSV(NutSink):
         """Write elements of iterable to file"""
         cols = self.columns
         iterable = iter(iterable)
-        for _ in xrange(self.skipheader):
+        for _ in range(self.skipheader):
             next(iterable)
         for row in iterable:
             row = row if hasattr(row, '__iter__') else [row]
