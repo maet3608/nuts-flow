@@ -21,8 +21,8 @@ def test_underscore():
     assert (1 - _)(2) == -1
     assert (_ * 2)(4) == 8
     assert (2 * _)(4) == 8
-    assert (_ / 2)(4) == 2
-    assert (4 / _)(2) == 2
+    assert (_ / 2)(4) == 2.0
+    assert (4 / _)(2) == 2.0
     assert (_ % 2)(5) == 1
     assert (5 % _)(2) == 1
 
