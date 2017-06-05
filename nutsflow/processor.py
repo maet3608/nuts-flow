@@ -679,7 +679,7 @@ def GroupBy(iterable, keycol=lambda x: x, nokey=False):
     for e in iterable:
         key = keycol(e) if isfunc else e[keycol]
         groups[key].append(e)
-    return groups.itervalues() if nokey else six.iteritems(groups)
+    return six.itervalues(groups) if nokey else six.iteritems(groups)
 
 
 @nut_processor
@@ -1037,7 +1037,7 @@ class PrintProgress(Nut):
         for i, e in enumerate(iterable):
             if (time.clock() - up_time) >= self.every_sec:
                 up_time = time.clock()
-                per_done = 100 * i / self.n
+                per_done = int(100 * i / self.n)
                 sec_consumed = int(time.clock() - start_time)
                 eta = sec_consumed * (self.n / float(i) - 1) if i else 0
                 tstr = timestr(eta, etafmt)
