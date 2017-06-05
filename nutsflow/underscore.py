@@ -30,10 +30,10 @@ class _Underscore(object):
     """
     Placeholder class for anonymous variables. Allows constructs such as:
 
-    >>> map(_ * 2, range(5))
+    >>> list(map(_ * 2, range(5)))
     [0, 2, 4, 6, 8]
 
-    >>> filter(_ < 3, range(5))
+    >>> list(filter(_ < 3, range(5)))
     [0, 1, 2]
     """
 

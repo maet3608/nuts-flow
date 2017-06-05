@@ -396,10 +396,10 @@ def CountValues(iterable, relative=False):
     Return dictionary with (relative) counts of the values
     in the input iterable.
 
-    >>> 'abaacc' >> CountValues()
-    {'a': 3, 'c': 2, 'b': 1}
+    >>> 'abaacc' >> CountValues()  # doctest: +SKIP
+    {'a': 3, 'b': 1, 'c': 2}
 
-    >>> 'aabaab' >> CountValues(True)
+    >>> 'aabaab' >> CountValues(True)  # doctest: +SKIP
     {'a': 1.0, 'b': 0.5}
 
     :param iterable iterable: Any iterable, e.g. list, range, ...
@@ -425,11 +425,11 @@ def Collect(iterable, container=list):
     >>> range(5) >> Collect()
     [0, 1, 2, 3, 4]
 
-    >>> [1, 2, 3, 2] >> Collect(set)
-    set([1, 2, 3])
+    >>> [1, 2, 3, 2] >> Collect(set)  # doctest: +SKIP
+    {1, 2, 3}
 
-    >>> [('one', 1), ('two', 2)] >> Collect(dict)
-    {'two': 2, 'one': 1}
+    >>> [('one', 1), ('two', 2)] >> Collect(dict)  # doctest: +SKIP
+    {'one': 1, 'two': 2}
 
     :param iterable iterable: Any iterable, e.g. list, range, ...
     :param container container: Some container, e.g. list, set, dict
