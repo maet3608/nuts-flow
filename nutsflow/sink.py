@@ -473,7 +473,7 @@ class WriteCSV(NutSink):
         :param kwargs kwargs: Keyword arguments for Python's CSV writer.
                               See https://docs.python.org/2/library/csv.html
         """
-        self.csvfile = open(filepath, 'wb')
+        self.csvfile = open(filepath, 'w')
         self.columns = cols if cols is None else as_tuple(cols)
         self.fmtfunc = fmtfunc
         self.skipheader = skipheader
