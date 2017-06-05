@@ -18,6 +18,34 @@ from .iterfunction import nth, consume, length, take
 
 
 @nut_sink
+def Sort(iterable, key=None, reverse=False):
+    """
+    iterable >> Sort()
+
+    Sorts iterable with respect to key function
+
+    >>> [3, 1, 2] >> Sort()
+    [1, 2, 3]
+
+    >>> [3, 1, 2] >> Sort(reverse=True)
+    [3, 2, 1]
+
+    >>> ['a3', 'c1', 'b2'] >> Sort(key=lambda s: s[0])
+    ['a3', 'b2', 'c1']
+
+    >>> ['a3', 'c1', 'b2'] >> Sort(key=lambda s: s[1])
+    ['c1', 'b2', 'a3']
+
+    :param iterable iterable: Iterable
+    :param function|None key: key to sort iterable with.
+    :param boolean reverse: True: reverse order.
+    :return: Sorted iterable
+    :rtype: list
+    """
+    return sorted(iterable, key=key, reverse=reverse)
+
+
+@nut_sink
 def Sum(iterable):
     """
     iterable >> Sum()

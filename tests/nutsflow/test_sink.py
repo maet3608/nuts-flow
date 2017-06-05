@@ -14,6 +14,14 @@ def assert_equal_text(text1, text2):
     assert text1.splitlines() == text2.splitlines()
 
 
+def test_Sort():
+    assert [] >> Sort() == []
+    assert [3, 1, 2] >> Sort() == [1, 2, 3]
+    assert [3, 1, 2] >> Sort(reverse=True) == [3, 2, 1]
+    assert ['a3', 'c1', 'b2'] >> Sort(key=lambda s: s[0]) == ['a3', 'b2', 'c1']
+    assert ['a3', 'c1', 'b2'] >> Sort(key=lambda s: s[1]) == ['c1', 'b2', 'a3']
+
+
 def test_Sum():
     assert [] >> Sum() == 0
     assert [0, 1, 2] >> Sum() == 3

@@ -103,7 +103,7 @@ def unique(iterable, key=None):
     'this ae'
 
     >>> data = [(1,'a'), (2,'a'), (3,'b')]
-    >>> list(unique(data, key= lambda (x,y): y))
+    >>> list(unique(data, key=lambda t: t[1]))
     [(1, 'a'), (3, 'b')]
 
     :param iterable iterable: Any iterable, e.g. list, range, ...
@@ -228,8 +228,9 @@ class PrefetchIterator(t.Thread, six.Iterator):
     the batch. Keeps the CPU busy pre-processing data and not waiting for the
     GPU to finish the batch.
 
+    >>> from __future__ import print_function
     >>> for i in PrefetchIterator(range(4)):
-    ...    print i
+    ...    print(i)
     0
     1
     2

@@ -150,7 +150,7 @@ class Counter(NutFunction):
 
         >>> from nutsflow import Consume
         >>> counter = Counter('smallerthan3', lambda x: x < 3, 1)
-        >>> xrange(10) >> counter >> Consume()
+        >>> range(10) >> counter >> Consume()
         >>> counter
         smallerthan3 = 4
 
@@ -266,7 +266,7 @@ class Print(NutFunction):
         1
         2
 
-        >>> xrange(10) >> Print(every_n=3) >> Consume()
+        >>> range(10) >> Print(every_n=3) >> Consume()
         2
         5
         8

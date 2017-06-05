@@ -650,22 +650,22 @@ def GroupBy(iterable, keycol=lambda x: x, nokey=False):
     If the iterable is sorted use GroupBySorted() instead.
     see also Chunk(), ChunkWhen(), ChunkBy()
 
-    >>> from nutsflow import Collect
+    >>> from nutsflow import Sort
 
-    >>> [1, 2, 1, 1, 3] >> GroupBy() >> Collect()
+    >>> [1, 2, 1, 1, 3] >> GroupBy() >> Sort()
     [(1, [1, 1, 1]), (2, [2]), (3, [3])]
 
-    >>> [1, 2, 1, 1, 3] >> GroupBy(nokey=True) >> Collect()
+    >>> [1, 2, 1, 1, 3] >> GroupBy(nokey=True) >> Sort()
     [[1, 1, 1], [2], [3]]
 
-    >>> ['--', '+++', '**'] >> GroupBy(len) >> Collect()
+    >>> ['--', '+++', '**'] >> GroupBy(len) >> Sort()
     [(2, ['--', '**']), (3, ['+++'])]
 
-    >>> ['a3', 'b2', 'c1'] >> GroupBy(1) >> Collect()
-    [('1', ['c1']), ('3', ['a3']), ('2', ['b2'])]
+    >>> ['a3', 'b2', 'c1'] >> GroupBy(1) >> Sort()
+     [('1', ['c1']), ('2', ['b2']), ('3', ['a3'])]
 
-    >>> [(1,3), (2,2), (3,1)] >> GroupBy(1, nokey=True) >> Collect()
-    [[(3, 1)], [(2, 2)], [(1, 3)]]
+    >>> [(1,3), (2,2), (3,1)] >> GroupBy(1, nokey=True) >> Sort()
+    [[(1, 3)], [(2, 2)], [(3, 1)]]
 
     :param iterable iterable: Any iterable
     :param int|function keycol: Column index or key function.
@@ -699,7 +699,7 @@ def GroupBySorted(iterable, keycol=lambda x: x, nokey=False):
     
     >>> @nut_sink
     ... def ViewResult(iterable):
-    ...     return iterable >> Map(lambda (k, es): (k, list(es))) >> Collect()
+    ...     return iterable >> Map(lambda t: (t[0], list(t[1]))) >> Collect()
 
     >>> [1, 1, 1, 2, 3] >> GroupBySorted() >> ViewResult()
     [(1, [1, 1, 1]), (2, [2]), (3, [3])]
