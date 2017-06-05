@@ -6,6 +6,7 @@ from __future__ import absolute_import
 
 import csv
 import math
+import six
 
 import collections as cl
 
@@ -383,7 +384,7 @@ def CountValues(iterable, relative=False):
         return cnts
     max_cnt = max(cnts.values())
     n = float(max_cnt) if max_cnt else 1.0
-    return {k: v / n for k, v in cnts.iteritems()}
+    return {k: v / n for k, v in six.iteritems(cnts)}
 
 
 @nut_sink
