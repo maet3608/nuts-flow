@@ -3,6 +3,7 @@
    :synopsis: Unit tests for source module
 """
 
+from six.moves import range
 from nutsflow import *
 
 
@@ -20,7 +21,7 @@ def test_Product():
     assert Product([]) >> Collect() == []
 
     result = [('a', 0), ('a', 1), ('a', 2), ('b', 0), ('b', 1), ('b', 2)]
-    assert Product('ab', xrange(3)) >> Collect() == result
+    assert Product('ab', range(3)) >> Collect() == result
 
     result = [(1, 1), (1, 2), (2, 1), (2, 2)]
     assert Product([1, 2], repeat=2) >> Collect() == result

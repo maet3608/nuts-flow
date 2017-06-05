@@ -182,7 +182,7 @@ class ReadCSV(NutSource):
         :param kwargs kwargs: Keyword arguments for Python's CSV reader.
                               See https://docs.python.org/2/library/csv.html
         """
-        self.csvfile = open(filepath, 'rb')
+        self.csvfile = open(filepath, 'r')
         self.columns = columns if columns is None else as_tuple(columns)
         self.fmtfunc = fmtfunc
         for _ in range(skipheader):
