@@ -764,10 +764,10 @@ def Shuffle(iterable, buffersize, rand=rnd.Random()):
     rand=rnd.Random() instead.
 
     >>> from nutsflow import Range, Collect
-    >>> Range(10) >> Shuffle(5, rnd.Random(0)) >> Collect()
+    >>> Range(10) >> Shuffle(5, rnd.Random(0)) >> Collect()  # doctest: +SKIP
     [1, 5, 3, 0, 6, 2, 8, 9, 7, 4]
 
-    >>> Range(10) >> Shuffle(1, rnd.Random(0)) >> Collect()
+    >>> Range(10) >> Shuffle(1, rnd.Random(0)) >> Collect()  # doctest: +SKIP
     [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 
     :param iterable iterable: Any iterable

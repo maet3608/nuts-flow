@@ -12,15 +12,13 @@ class Nut(object):
     chained using the '>>' operator. The aim is code with an explicit
     data flow. See the following example using Python iterators versus Nuts:
 
-    >>> from __future__ import print_function
-
     >>> from six.moves import filter, range
     >>> from itertools import islice
-    >>> print(list(islice(filter(lambda x: x > 5, range(10)), 3)))
+    >>> list(islice(filter(lambda x: x > 5, range(10)), 3))
     [6, 7, 8]
 
     >>> from nutsflow import Range, Filter, Take, Collect, _
-    >>> print Range(10) >> Filter(_ > 5) >> Take(3) >> Collect()
+    >>> Range(10) >> Filter(_ > 5) >> Take(3) >> Collect()
     [6, 7, 8]
     """
 
