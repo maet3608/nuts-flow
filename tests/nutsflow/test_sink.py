@@ -6,6 +6,7 @@
 import os
 import pytest
 
+from six.moves import range
 from nutsflow import *
 
 
@@ -109,15 +110,15 @@ def test_CountValues():
 
 def test_Collect():
     assert [] >> Collect() == []
-    assert xrange(5) >> Collect() == [0, 1, 2, 3, 4]
+    assert range(5) >> Collect() == [0, 1, 2, 3, 4]
     assert [1, 2, 3, 2] >> Collect(set) == {1, 2, 3}
     assert [('one', 1), ('two', 2)] >> Collect(dict) == {'one': 1, 'two': 2}
 
 
 def test_Join():
     assert [] >> Join() == ''
-    assert xrange(5) >> Join() == '01234'
-    assert xrange(5) >> Join(',') == '0,1,2,3,4'
+    assert range(5) >> Join() == '01234'
+    assert range(5) >> Join(',') == '0,1,2,3,4'
 
 
 def test_WriteCSV():
