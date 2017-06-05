@@ -2,6 +2,7 @@
 .. module:: underscore
    :synopsis: Enables underscore to be used as anonymous variable.
 """
+from __future__ import division
 
 from functools import partial, wraps
 import operator as op
@@ -43,8 +44,10 @@ class _Underscore(object):
     __rsub__ = lambda self, arg: _wrap(op.sub, arg, False)
     __mul__ = lambda self, arg: _wrap(op.mul, arg)
     __rmul__ = lambda self, arg: _wrap(op.mul, arg, False)
-    __div__ = lambda self, arg: _wrap(op.div, arg)
-    __rdiv__ = lambda self, arg: _wrap(op.div, arg, False)
+    __truediv__ = lambda self, arg: _wrap(op.truediv, arg)
+    __rtruediv__ = lambda self, arg: _wrap(op.truediv, arg, False)
+    __floordiv__ = lambda self, arg: _wrap(op.floordiv, arg)
+    __rfloordiv__ = lambda self, arg: _wrap(op.floordiv, arg, False)
     __mod__ = lambda self, arg: _wrap(op.mod, arg)
     __rmod__ = lambda self, arg: _wrap(op.mod, arg, False)
 
