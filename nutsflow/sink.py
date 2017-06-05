@@ -478,7 +478,7 @@ class WriteCSV(NutSink):
         self.columns = cols if cols is None else as_tuple(cols)
         self.fmtfunc = fmtfunc
         self.skipheader = skipheader
-        self.writer = csv.writer(self.csvfile, **kwargs)
+        self.writer = csv.writer(self.csvfile, lineterminator='\n', **kwargs)
 
     def close(self):
         """Close writer"""

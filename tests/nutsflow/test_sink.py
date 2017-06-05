@@ -11,7 +11,7 @@ from nutsflow import *
 
 
 def assert_equal_text(text1, text2):
-    assert str.splitlines(text1) == str.splitlines(text2)
+    assert text1.splitlines() == text2.splitlines()
 
 
 def test_Sum():
