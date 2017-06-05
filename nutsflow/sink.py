@@ -7,10 +7,9 @@ from __future__ import absolute_import
 import csv
 import math
 
-import itertools as itt
 import collections as cl
 
-from six.moves import reduce
+from six.moves import reduce, zip
 from .base import NutSink
 from .factory import nut_sink
 from .common import as_tuple
@@ -317,8 +316,8 @@ def Unzip(iterable, container=None):
     :return: Unzip iterable.
     :rtype: iterator over iterators
     """
-    unzipped = itt.izip(*iterable)
-    return itt.imap(container, unzipped) if container else unzipped
+    unzipped = zip(*iterable)
+    return map(container, unzipped) if container else unzipped
 
 
 @nut_sink
@@ -427,7 +426,7 @@ def Join(iterable, separator=''):
     :return: String of with concatenated elements of iterable.
     :rtype: str
     """
-    return separator.join(itt.imap(str, iterable))
+    return separator.join(map(str, iterable))
 
 
 class WriteCSV(NutSink):
