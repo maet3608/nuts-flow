@@ -8,6 +8,7 @@ import tempfile
 import shutil
 import os
 import time
+import six
 
 import os.path as osp
 import itertools as itt
@@ -17,7 +18,7 @@ import collections as cl
 
 from . import iterfunction as itf
 from six.moves import cPickle as pickle
-from six.moves import map, filter, filterfalse, zip
+from six.moves import map, filter, filterfalse, zip, range
 from .base import Nut
 from .common import as_tuple, as_set, console
 from .factory import nut_processor
@@ -186,7 +187,7 @@ if iterable is long and many elements are unique!
 >>> data >> Dedupe(_[1]) >> Collect()
 [(1, 'a'), (3, 'b')]
 
-:param iterable iterable: Any iterable, e.g. list, xrange, ...
+:param iterable iterable: Any iterable, e.g. list, range, ...
 :param key: Function used to compare for equality.
 :return: Iterator over unique elements.
 :rtype: Iterator
@@ -205,7 +206,7 @@ see also GroupBySorted(), ChunkWhen(), ChunkBy()
 [2, 3]
 [4]
 
-:param iterable iterable: Any iterable, e.g. list, xrange, ...
+:param iterable iterable: Any iterable, e.g. list, range, ...
 :param int n: Chunk size
 :return: Chunked iterable
 :rtype: Iterator over iterators
@@ -260,7 +261,7 @@ def ChunkBy(iterable, func):
     >>> [1,1, 2, 3,3,3] >> ChunkBy(lambda x: x < 3) >> Map(list) >> Collect()
     [[1, 1, 2], [3, 3, 3]]
 
-    :param iterable iterable: Any iterable, e.g. list, xrange, ...
+    :param iterable iterable: Any iterable, e.g. list, range, ...
     :param function func: Functions the iterable is chunked by 
     :return: Chunked iterable
     :rtype: Iterator over iterators
@@ -279,7 +280,7 @@ large!
 >>> [1, 2] >> Cycle() >> Take(5) >> Collect()
 [1, 2, 1, 2, 1]
 
-:param iterable iterable: Any iterable, e.g. list, xrange, ...
+:param iterable iterable: Any iterable, e.g. list, range, ...
 :return: Cycled input iterable
 :rtype: Iterator
 """
@@ -449,7 +450,7 @@ Split iterable into two partitions based on predicate function
 >>> larger >> Collect()
 [3, 4]
 
-:param iterable: Any iterable, e.g. list, xrange, ...
+:param iterable: Any iterable, e.g. list, range, ...
 :param pred: Predicate function.
 :return: Partition iterators
 :rtype: Two iterators
@@ -678,7 +679,7 @@ def GroupBy(iterable, keycol=lambda x: x, nokey=False):
     for e in iterable:
         key = keycol(e) if isfunc else e[keycol]
         groups[key].append(e)
-    return groups.itervalues() if nokey else groups.iteritems()
+    return groups.itervalues() if nokey else six.iteritems(groups)
 
 
 @nut_processor
@@ -742,7 +743,7 @@ def Clone(iterable, n):
     :rtype: generator
     """
     for e in iterable:
-        for _ in xrange(n):
+        for _ in range(n):
             yield e
 
 
@@ -899,15 +900,15 @@ class Cache(Nut):
         .. code:: python
 
             with Cache() as cache:
-                data = xrange(100)
-                for i in xrange(10):
+                data = range(100)
+                for i in range(10):
                     data >> expensive_op >> cache >> process(i) >> Consume()
 
 
         .. code:: python
 
             cache = Cache()
-            for _ in xrange(100)
+            for _ in range(100)
                 data >> expensive_op >> cache >> Collect()
             cache.clear()
 
@@ -1015,7 +1016,7 @@ class PrintProgress(Nut):
         For long running computations and Estimated time of arrival (eta) is
         printed as well
 
-        xrange(10) >> PrintProgress(10, 0) >> Consume()
+        range(10) >> PrintProgress(10, 0) >> Consume()
 
         :param iterable iterable: Any iterable
         :param int data: Number of elements in iterable or realized iterable.
