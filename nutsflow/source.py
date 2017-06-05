@@ -209,5 +209,5 @@ class ReadCSV(NutSource):
         cols = self.columns
         for row in self.reader:
             row = [row[i] for i in cols] if cols else row
-            row = map(self.fmtfunc, row)
+            row = [self.fmtfunc(r) for r in row]
             yield tuple(row) if len(row) > 1 else row[0]
