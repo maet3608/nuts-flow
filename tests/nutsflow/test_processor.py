@@ -385,13 +385,26 @@ def test_PrintProgress():
 
 
 def test_Try():
-    Div = nut_function(lambda x: int(6.0 / x))
+    div = lambda x: int(6.0 / x)
+    Div = nut_function(div)
+
+    assert [] >> Try(div) >> Collect() == []
+    assert [1, 2, 3] >> Try(div) >> Collect() == [6, 3, 2]
+
+    with Redirect() as out:
+        result = [1, 0, 3] >> Try(div, 0) >> Collect()
+        assert result == [6, 0, 2]
+    assert out.getvalue() == '0 : float division by zero\n'
 
     assert [] >> Try(Div()) >> Collect() == []
     assert [1, 2, 3] >> Try(Div()) >> Collect() == [6, 3, 2]
 
     with Redirect() as out:
-        func = lambda x, e: print(x, e)
-        result = [1, 0, 3] >> Try(Div(), default=0, func=func) >> Collect()
+        handler = lambda x, e: print(x, e)
+        result = [1, 0, 3] >> Try(Div(), 0, handler) >> Collect()
         assert result == [6, 0, 2]
     assert out.getvalue() == '0 float division by zero\n'
+
+    with pytest.raises(TypeError) as ex:
+        [1, 0, 3] >> Try(Map(Div())) >> Collect()
+    assert str(ex.value).startswith("Need (nut) function")

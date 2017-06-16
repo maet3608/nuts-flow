@@ -25,6 +25,7 @@ from .factory import nut_processor
 from .function import Identity
 from .sink import Consume, Collect
 from nutsflow.common import timestr
+from inspect import isfunction
 
 
 @nut_processor
@@ -1050,47 +1051,52 @@ class PrintProgress(Nut):
 
 
 @nut_processor
-def Try(iterable, nut, default='SKIP', func=lambda x, e: print(x, ':', e)):
+def Try(iterable, func, default='SKIP', handler=lambda x, e: print(x, ':', e)):
     """
     iterable >> Try(nut)
 
-    Exception handling for nut functions. If the wrapped nut raises an 
-    exception it is caught and handled according to the provided function
-    func. Per default the exeception and the value causing it are printed.
+    Exception handling for (nut) functions. If the wrapped nut or function 
+    raises an exception it is caught and handled with the provided handler.
+    Per default the exception and the value causing it are printed.
     Furthermore a default value can be specified that is returned instead
     of the nut output if an exception occurs. Per default no output is
     returned (SKIP).
 
-    >>> from nutsflow import Try, Collect, nut_function    
+    >>> from nutsflow import Try, Collect, nut_function  
+
+    >>> [1, 2, 3] >> Try(lambda x : int(6.0/x)) >> Collect()
+    [6, 3, 2]
+    >>> [1, 0, 3] >> Try(lambda x : int(6.0/x)) >> Collect()
+    0 : float division by zero
+    [6, 2]
+
     >>> Div = nut_function(lambda x : int(6.0/x))
-    
     >>> [1, 2, 3] >> Try(Div()) >> Collect()
     [6, 3, 2]
     >>> [1, 0, 3] >> Try(Div()) >> Collect()
     0 : float division by zero
     [6, 2]
-    >>> [1, 0, 3] >> Try(Div(), func=None, default=0) >> Collect()
+    >>> [1, 0, 3] >> Try(Div(), handler=None, default=0) >> Collect()
     [6, 0, 2]
 
     :param iterable iterable: Iterable the nut operates on.
-    :param NutFunction nut: Nut function that is wrapped for exception handling. 
+    :param function|NutFunction func: (Nut) function that is wrapped 
+       for exception handling. 
     :param Object default: Return value if exception occurs. 
-                           If default == "SKIP', no value is returned. 
-    :param function|None func: Function that is called if exception occurs.
+       If default == "SKIP', no value is returned. 
+    :param function|None handler: Function that is called if exception occurs.
        Function takes element x and exception e as parameters and the default
-       function prints x and e. For func==None, no function is called.
+       function prints x and e. For handler==None, no handler is called.
     :return: Iterator over input elements transformed by provided nut.
     :rtype: iterator
     """
-    if not isinstance(nut, NutFunction):
-        raise TypeError('Need nut function in Try() :' + str(nut))
+    if not isinstance(func, NutFunction) and not isfunction(func):
+        raise TypeError('Need (nut) function in Try() :' + str(func))
     for x in iterable:
         try:
-            yield nut(x)
-        except StopIteration:
-            raise StopIteration
+            yield func(x)
         except Exception as e:
-            if func is not None:
-                func(x, e)
+            if handler is not None:
+                handler(x, e)
             if default != 'SKIP':
                 yield default
