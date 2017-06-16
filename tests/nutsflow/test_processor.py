@@ -2,6 +2,7 @@
 .. module:: test_processor
    :synopsis: Unit tests for processor module
 """
+from __future__ import print_function
 
 import pytest
 
@@ -381,3 +382,16 @@ def test_PrintProgress():
     expected = \
         '\rprogress: 0% \rprogress: 50% \rprogress: 100% \rprogress: 100% \n'
     assert out.getvalue() == expected
+
+
+def test_Try():
+    Div = nut_function(lambda x: int(6.0 / x))
+
+    assert [] >> Try(Div()) >> Collect() == []
+    assert [1, 2, 3] >> Try(Div()) >> Collect() == [6, 3, 2]
+
+    with Redirect() as out:
+        func = lambda x, e: print(x, e)
+        result = [1, 0, 3] >> Try(Div(), default=0, func=func) >> Collect()
+        assert result == [6, 0, 2]
+    assert out.getvalue() == '0 float division by zero\n'

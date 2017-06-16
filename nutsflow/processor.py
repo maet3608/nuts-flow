@@ -2,7 +2,7 @@
 .. module:: processor
    :synopsis: Nuts that process iterables and return iterables.
 """
-from __future__ import absolute_import
+from __future__ import print_function, absolute_import
 
 import tempfile
 import shutil
@@ -19,7 +19,7 @@ import collections as cl
 from . import iterfunction as itf
 from six.moves import cPickle as pickle
 from six.moves import map, filter, filterfalse, zip, range
-from .base import Nut
+from .base import Nut, NutFunction
 from .common import as_tuple, as_set, console
 from .factory import nut_processor
 from .function import Identity
@@ -1047,3 +1047,50 @@ class PrintProgress(Nut):
         duration = int(time.clock() - start_time)
         text = '\rprogress: 100% {}'.format(timestr(duration, endfmt))
         console(text)
+
+
+@nut_processor
+def Try(iterable, nut, default='SKIP', func=lambda x, e: print(x, ':', e)):
+    """
+    iterable >> Try(nut)
+
+    Exception handling for nut functions. If the wrapped nut raises an 
+    exception it is caught and handled according to the provided function
+    func. Per default the exeception and the value causing it are printed.
+    Furthermore a default value can be specified that is returned instead
+    of the nut output if an exception occurs. Per default no output is
+    returned (SKIP).
+
+    >>> from nutsflow import Try, Collect, nut_function    
+    >>> Div = nut_function(lambda x : int(6.0/x))
+    
+    >>> [1, 2, 3] >> Try(Div()) >> Collect()
+    [6, 3, 2]
+    >>> [1, 0, 3] >> Try(Div()) >> Collect()
+    0 : float division by zero
+    [6, 2]
+    >>> [1, 0, 3] >> Try(Div(), func=None, default=0) >> Collect()
+    [6, 0, 2]
+
+    :param iterable iterable: Iterable the nut operates on.
+    :param NutFunction nut: Nut function that is wrapped for exception handling. 
+    :param Object default: Return value if exception occurs. 
+                           If default == "SKIP', no value is returned. 
+    :param function|None func: Function that is called if exception occurs.
+       Function takes element x and exception e as parameters and the default
+       function prints x and e. For func==None, no function is called.
+    :return: Iterator over input elements transformed by provided nut.
+    :rtype: iterator
+    """
+    if not isinstance(nut, NutFunction):
+        raise TypeError('Need nut function in Try() :' + str(nut))
+    for x in iterable:
+        try:
+            yield nut(x)
+        except StopIteration:
+            raise StopIteration
+        except Exception as e:
+            if func is not None:
+                func(x, e)
+            if default != 'SKIP':
+                yield default
