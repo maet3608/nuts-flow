@@ -5,8 +5,7 @@
 from __future__ import print_function
 
 import sys
-
-import random as rnd
+import random
 
 from math import sqrt, log, cos, pi
 from six.moves import cStringIO as StringIO
@@ -133,23 +132,23 @@ class Redirect(object):
 
 
 # Adopted from: https://en.wikipedia.org/wiki/Mersenne_Twister
-class StableRandom(rnd.Random):
+class StableRandom(random.Random):
     """A pseudo random number generator that is stable across
     Python 2.x and 3.x. Use this only for unit tests or doctests.
     This class is derived from random.Random and supports all
     methods of the base class.
 
     >>> rand = StableRandom(0)
-    >>> rand.gauss_next()
-    -0.9142740968041003
+    >>> rand.random()
+    0.5488135024320365
 
     >>> rand.randint(1, 10)
-    9
+    6
 
     >>> lst = [1, 2, 3, 4, 5]
     >>> rand.shuffle(lst)
     >>> lst
-    [3, 5, 1, 2, 4]
+    [1, 3, 2, 5, 4]
     """
 
     def __init__(self, seed=None):
@@ -170,7 +169,7 @@ class StableRandom(rnd.Random):
         """Return the 32 least significant bits"""
         return int(0xFFFFFFFF & x)
 
-    def _next_rand(self):
+    def random(self):
         """Return next random number in [0,1["""
         if self.index >= 624:
             self._twist()
@@ -214,7 +213,7 @@ class StableRandom(rnd.Random):
         :return: Random number sampled from gaussian distribution.
         :rtype: float
         """
-        x1, x2 = self._next_rand(), self._next_rand()
+        x1, x2 = self.random(), self.random()
         return sqrt(-2.0 * log(x1 + 1e-10)) * cos(2.0 * pi * x2)
 
     def getstate(self):
@@ -241,4 +240,4 @@ class StableRandom(rnd.Random):
         :param int n: Distance to jump.
         """
         self.index += n
-        self._next_rand()
+        self.random()

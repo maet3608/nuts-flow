@@ -52,27 +52,27 @@ def test_Redirect():
 
 def test_StableRandom():
     rnd = StableRandom()
-    assert max(rnd._next_rand() for _ in range(1000)) < 1.0
-    assert min(rnd._next_rand() for _ in range(1000)) >= 0.0
+    assert max(rnd.random() for _ in range(1000)) < 1.0
+    assert min(rnd.random() for _ in range(1000)) >= 0.0
 
     rnd1, rnd2 = StableRandom(0), StableRandom(0)
     for _ in range(100):
-        assert rnd1.gauss_next() == rnd2.gauss_next()
+        assert rnd1.random() == rnd2.random()
 
     rnd1, rnd2 = StableRandom(0), StableRandom(0)
     rnd2.jumpahead(10)
     for _ in range(100):
-        assert rnd1.gauss_next() != rnd2.gauss_next()
+        assert rnd1.random() != rnd2.random()
     rnd2.setstate(rnd1.getstate())
     for _ in range(100):
-        assert rnd1.gauss_next() == rnd2.gauss_next()
+        assert rnd1.random() == rnd2.random()
 
     rnd1, rnd2 = StableRandom(0), StableRandom(1)
     for _ in range(100):
-        assert rnd1.gauss_next() != rnd2.gauss_next()
+        assert rnd1.random() != rnd2.random()
 
     rnd1 = StableRandom()
     sleep(0.5)  # seed is based on system time.
     rnd2 = StableRandom()
     for _ in range(100):
-        assert rnd1.gauss_next() != rnd2.gauss_next()
+        assert rnd1.random() != rnd2.random()
