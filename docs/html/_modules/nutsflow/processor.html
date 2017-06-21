@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nutsflow.processor &mdash; nutsflow 1.0.16 documentation</title>
+  <title>nutsflow.processor &mdash; nutsflow 1.0.20 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../../genindex.html"/>
         <link rel="search" title="Search" href="../../search.html"/>
-    <link rel="top" title="nutsflow 1.0.16 documentation" href="../../index.html"/>
+    <link rel="top" title="nutsflow 1.0.20 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                1.0.16
+                1.0.20
               </div>
             
           
@@ -165,27 +165,30 @@
 <span class="sd">.. module:: processor</span>
 <span class="sd">   :synopsis: Nuts that process iterables and return iterables.</span>
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">absolute_import</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">absolute_import</span>
 
 <span class="kn">import</span> <span class="nn">tempfile</span>
 <span class="kn">import</span> <span class="nn">shutil</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">six</span>
 
-<span class="kn">import</span> <span class="nn">cPickle</span> <span class="k">as</span> <span class="nn">pickle</span>
 <span class="kn">import</span> <span class="nn">os.path</span> <span class="k">as</span> <span class="nn">osp</span>
 <span class="kn">import</span> <span class="nn">itertools</span> <span class="k">as</span> <span class="nn">itt</span>
-<span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">iterfunction</span> <span class="k">as</span> <span class="n">itf</span>
 <span class="kn">import</span> <span class="nn">random</span> <span class="k">as</span> <span class="nn">rnd</span>
 <span class="kn">import</span> <span class="nn">multiprocessing</span> <span class="k">as</span> <span class="nn">mp</span>
 <span class="kn">import</span> <span class="nn">collections</span> <span class="k">as</span> <span class="nn">cl</span>
 
-<span class="kn">from</span> <span class="nn">.base</span> <span class="k">import</span> <span class="n">Nut</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">iterfunction</span> <span class="k">as</span> <span class="n">itf</span>
+<span class="kn">from</span> <span class="nn">six.moves</span> <span class="k">import</span> <span class="n">cPickle</span> <span class="k">as</span> <span class="n">pickle</span>
+<span class="kn">from</span> <span class="nn">six.moves</span> <span class="k">import</span> <span class="nb">map</span><span class="p">,</span> <span class="nb">filter</span><span class="p">,</span> <span class="n">filterfalse</span><span class="p">,</span> <span class="nb">zip</span><span class="p">,</span> <span class="nb">range</span>
+<span class="kn">from</span> <span class="nn">.base</span> <span class="k">import</span> <span class="n">Nut</span><span class="p">,</span> <span class="n">NutFunction</span>
 <span class="kn">from</span> <span class="nn">.common</span> <span class="k">import</span> <span class="n">as_tuple</span><span class="p">,</span> <span class="n">as_set</span><span class="p">,</span> <span class="n">console</span>
 <span class="kn">from</span> <span class="nn">.factory</span> <span class="k">import</span> <span class="n">nut_processor</span>
 <span class="kn">from</span> <span class="nn">.function</span> <span class="k">import</span> <span class="n">Identity</span>
 <span class="kn">from</span> <span class="nn">.sink</span> <span class="k">import</span> <span class="n">Consume</span><span class="p">,</span> <span class="n">Collect</span>
 <span class="kn">from</span> <span class="nn">nutsflow.common</span> <span class="k">import</span> <span class="n">timestr</span>
+<span class="kn">from</span> <span class="nn">inspect</span> <span class="k">import</span> <span class="n">isfunction</span>
 
 
 <span class="nd">@nut_processor</span>
@@ -307,7 +310,7 @@
 <span class="sd">    :return: Zipped elements from iterables.</span>
 <span class="sd">    :rtype: iterator over tuples</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">itt</span><span class="o">.</span><span class="n">izip</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">iterable2</span><span class="p">,</span> <span class="o">*</span><span class="n">iterables</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="nb">zip</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">iterable2</span><span class="p">,</span> <span class="o">*</span><span class="n">iterables</span><span class="p">)</span></div>
 
 
 <span class="nd">@nut_processor</span>
@@ -328,7 +331,7 @@
 <span class="sd">    :rtype: iterator</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">iterables</span> <span class="o">=</span> <span class="p">[</span><span class="n">iterable</span><span class="p">]</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="n">iterables</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">itt</span><span class="o">.</span><span class="n">starmap</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">itt</span><span class="o">.</span><span class="n">izip</span><span class="p">(</span><span class="o">*</span><span class="n">iterables</span><span class="p">))</span></div>
+    <span class="k">return</span> <span class="n">itt</span><span class="o">.</span><span class="n">starmap</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">iterables</span><span class="p">))</span></div>
 
 
 <span class="n">Dedupe</span> <span class="o">=</span> <span class="n">nut_processor</span><span class="p">(</span><span class="n">itf</span><span class="o">.</span><span class="n">unique</span><span class="p">)</span>
@@ -348,7 +351,7 @@
 <span class="sd">&gt;&gt;&gt; data &gt;&gt; Dedupe(_[1]) &gt;&gt; Collect()</span>
 <span class="sd">[(1, &#39;a&#39;), (3, &#39;b&#39;)]</span>
 
-<span class="sd">:param iterable iterable: Any iterable, e.g. list, xrange, ...</span>
+<span class="sd">:param iterable iterable: Any iterable, e.g. list, range, ...</span>
 <span class="sd">:param key: Function used to compare for equality.</span>
 <span class="sd">:return: Iterator over unique elements.</span>
 <span class="sd">:rtype: Iterator</span>
@@ -367,7 +370,7 @@
 <span class="sd">[2, 3]</span>
 <span class="sd">[4]</span>
 
-<span class="sd">:param iterable iterable: Any iterable, e.g. list, xrange, ...</span>
+<span class="sd">:param iterable iterable: Any iterable, e.g. list, range, ...</span>
 <span class="sd">:param int n: Chunk size</span>
 <span class="sd">:return: Chunked iterable</span>
 <span class="sd">:rtype: Iterator over iterators</span>
@@ -422,13 +425,13 @@
 <span class="sd">    &gt;&gt;&gt; [1,1, 2, 3,3,3] &gt;&gt; ChunkBy(lambda x: x &lt; 3) &gt;&gt; Map(list) &gt;&gt; Collect()</span>
 <span class="sd">    [[1, 1, 2], [3, 3, 3]]</span>
 
-<span class="sd">    :param iterable iterable: Any iterable, e.g. list, xrange, ...</span>
+<span class="sd">    :param iterable iterable: Any iterable, e.g. list, range, ...</span>
 <span class="sd">    :param function func: Functions the iterable is chunked by </span>
 <span class="sd">    :return: Chunked iterable</span>
 <span class="sd">    :rtype: Iterator over iterators</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">groupiter</span> <span class="o">=</span> <span class="n">itt</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">func</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">itt</span><span class="o">.</span><span class="n">imap</span><span class="p">(</span><span class="k">lambda</span> <span class="n">t</span><span class="p">:</span> <span class="n">t</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">groupiter</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">t</span><span class="p">:</span> <span class="n">t</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">groupiter</span><span class="p">)</span></div>
 
 
 <span class="n">Cycle</span> <span class="o">=</span> <span class="n">nut_processor</span><span class="p">(</span><span class="n">itt</span><span class="o">.</span><span class="n">cycle</span><span class="p">)</span>
@@ -441,7 +444,7 @@
 <span class="sd">&gt;&gt;&gt; [1, 2] &gt;&gt; Cycle() &gt;&gt; Take(5) &gt;&gt; Collect()</span>
 <span class="sd">[1, 2, 1, 2, 1]</span>
 
-<span class="sd">:param iterable iterable: Any iterable, e.g. list, xrange, ...</span>
+<span class="sd">:param iterable iterable: Any iterable, e.g. list, range, ...</span>
 <span class="sd">:return: Cycled input iterable</span>
 <span class="sd">:rtype: Iterator</span>
 <span class="sd">&quot;&quot;&quot;</span>
@@ -519,7 +522,7 @@
     <span class="n">cols</span> <span class="o">=</span> <span class="n">as_tuple</span><span class="p">(</span><span class="n">cols</span><span class="p">)</span>
     <span class="n">get</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">e</span><span class="p">:</span> <span class="n">e</span> <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="s1">&#39;__iter__&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="n">itt</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">es</span> <span class="ow">in</span> <span class="n">iterable</span><span class="p">:</span>
-        <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">itt</span><span class="o">.</span><span class="n">izip</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">get</span><span class="p">(</span><span class="n">es</span><span class="p">[</span><span class="n">c</span><span class="p">])</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">cols</span><span class="p">]):</span>
+        <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">get</span><span class="p">(</span><span class="n">es</span><span class="p">[</span><span class="n">c</span><span class="p">])</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">cols</span><span class="p">]):</span>
             <span class="k">yield</span> <span class="n">e</span></div>
 
 
@@ -542,7 +545,7 @@
 <span class="sd">:rtype: Iterator</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="n">Map</span> <span class="o">=</span> <span class="n">nut_processor</span><span class="p">(</span><span class="n">itt</span><span class="o">.</span><span class="n">imap</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">Map</span> <span class="o">=</span> <span class="n">nut_processor</span><span class="p">(</span><span class="nb">map</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">iterable &gt;&gt; Map(func, *iterables)</span>
 
@@ -565,7 +568,7 @@
 <span class="sd">:rtype: Iterator</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="n">Filter</span> <span class="o">=</span> <span class="n">nut_processor</span><span class="p">(</span><span class="n">itt</span><span class="o">.</span><span class="n">ifilter</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+<span class="n">Filter</span> <span class="o">=</span> <span class="n">nut_processor</span><span class="p">(</span><span class="nb">filter</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">iterable &gt;&gt; Filter(func)</span>
 
@@ -581,7 +584,7 @@
 <span class="sd">:rtype: Iterator</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="n">FilterFalse</span> <span class="o">=</span> <span class="n">nut_processor</span><span class="p">(</span><span class="n">itt</span><span class="o">.</span><span class="n">ifilterfalse</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+<span class="n">FilterFalse</span> <span class="o">=</span> <span class="n">nut_processor</span><span class="p">(</span><span class="n">filterfalse</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">iterable &gt;&gt; FilterFalse(func)</span>
 
@@ -611,7 +614,7 @@
 <span class="sd">&gt;&gt;&gt; larger &gt;&gt; Collect()</span>
 <span class="sd">[3, 4]</span>
 
-<span class="sd">:param iterable: Any iterable, e.g. list, xrange, ...</span>
+<span class="sd">:param iterable: Any iterable, e.g. list, range, ...</span>
 <span class="sd">:param pred: Predicate function.</span>
 <span class="sd">:return: Partition iterators</span>
 <span class="sd">:rtype: Two iterators</span>
@@ -768,7 +771,7 @@
 <span class="sd">    Pick every p_n-th element from the iterable if p_n is an integer,</span>
 <span class="sd">    otherwise pick randomly with probability p_n.</span>
 
-<span class="sd">    &gt;&gt;&gt; from nutsflow import Range, Collect</span>
+<span class="sd">    &gt;&gt;&gt; from nutsflow import Range, Collect, StableRandom</span>
 <span class="sd">    </span>
 <span class="sd">    &gt;&gt;&gt; [1, 2, 3, 4] &gt;&gt; Pick(0.0) &gt;&gt; Collect()</span>
 <span class="sd">    []</span>
@@ -777,8 +780,8 @@
 <span class="sd">    [1, 2, 3, 4]</span>
 
 <span class="sd">    &gt;&gt;&gt; import random as rnd</span>
-<span class="sd">    &gt;&gt;&gt; Range(10) &gt;&gt; Pick(0.5, rnd.Random(0)) &gt;&gt; Collect()</span>
-<span class="sd">    [2, 3, 5, 7, 8]</span>
+<span class="sd">    &gt;&gt;&gt; Range(10) &gt;&gt; Pick(0.5, StableRandom(1)) &gt;&gt; Collect()</span>
+<span class="sd">    [0, 4, 5, 6, 8, 9]</span>
 
 <span class="sd">    &gt;&gt;&gt; [1, 2, 3, 4] &gt;&gt; Pick(2) &gt;&gt; Collect()</span>
 <span class="sd">    [1, 3]</span>
@@ -787,6 +790,7 @@
 <span class="sd">    :param float|int p_n: Probability p in [0, 1] or</span>
 <span class="sd">        integer n for every n-th element</span>
 <span class="sd">    :param Random rand: Random number generator to be used.</span>
+<span class="sd">        Don&#39;t use StableRandom, which is only for testing.</span>
 <span class="sd">    :return: Iterator over picked elements.</span>
 <span class="sd">    :rtype: iterator</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -811,22 +815,22 @@
 <span class="sd">    If the iterable is sorted use GroupBySorted() instead.</span>
 <span class="sd">    see also Chunk(), ChunkWhen(), ChunkBy()</span>
 
-<span class="sd">    &gt;&gt;&gt; from nutsflow import Collect</span>
+<span class="sd">    &gt;&gt;&gt; from nutsflow import Sort</span>
 
-<span class="sd">    &gt;&gt;&gt; [1, 2, 1, 1, 3] &gt;&gt; GroupBy() &gt;&gt; Collect()</span>
+<span class="sd">    &gt;&gt;&gt; [1, 2, 1, 1, 3] &gt;&gt; GroupBy() &gt;&gt; Sort()</span>
 <span class="sd">    [(1, [1, 1, 1]), (2, [2]), (3, [3])]</span>
 
-<span class="sd">    &gt;&gt;&gt; [1, 2, 1, 1, 3] &gt;&gt; GroupBy(nokey=True) &gt;&gt; Collect()</span>
+<span class="sd">    &gt;&gt;&gt; [1, 2, 1, 1, 3] &gt;&gt; GroupBy(nokey=True) &gt;&gt; Sort()</span>
 <span class="sd">    [[1, 1, 1], [2], [3]]</span>
 
-<span class="sd">    &gt;&gt;&gt; [&#39;--&#39;, &#39;+++&#39;, &#39;**&#39;] &gt;&gt; GroupBy(len) &gt;&gt; Collect()</span>
+<span class="sd">    &gt;&gt;&gt; [&#39;--&#39;, &#39;+++&#39;, &#39;**&#39;] &gt;&gt; GroupBy(len) &gt;&gt; Sort()</span>
 <span class="sd">    [(2, [&#39;--&#39;, &#39;**&#39;]), (3, [&#39;+++&#39;])]</span>
 
-<span class="sd">    &gt;&gt;&gt; [&#39;a3&#39;, &#39;b2&#39;, &#39;c1&#39;] &gt;&gt; GroupBy(1) &gt;&gt; Collect()</span>
-<span class="sd">    [(&#39;1&#39;, [&#39;c1&#39;]), (&#39;3&#39;, [&#39;a3&#39;]), (&#39;2&#39;, [&#39;b2&#39;])]</span>
+<span class="sd">    &gt;&gt;&gt; [&#39;a3&#39;, &#39;b2&#39;, &#39;c1&#39;] &gt;&gt; GroupBy(1) &gt;&gt; Sort()</span>
+<span class="sd">     [(&#39;1&#39;, [&#39;c1&#39;]), (&#39;2&#39;, [&#39;b2&#39;]), (&#39;3&#39;, [&#39;a3&#39;])]</span>
 
-<span class="sd">    &gt;&gt;&gt; [(1,3), (2,2), (3,1)] &gt;&gt; GroupBy(1, nokey=True) &gt;&gt; Collect()</span>
-<span class="sd">    [[(3, 1)], [(2, 2)], [(1, 3)]]</span>
+<span class="sd">    &gt;&gt;&gt; [(1,3), (2,2), (3,1)] &gt;&gt; GroupBy(1, nokey=True) &gt;&gt; Sort()</span>
+<span class="sd">    [[(1, 3)], [(2, 2)], [(3, 1)]]</span>
 
 <span class="sd">    :param iterable iterable: Any iterable</span>
 <span class="sd">    :param int|function keycol: Column index or key function.</span>
@@ -840,7 +844,7 @@
     <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">iterable</span><span class="p">:</span>
         <span class="n">key</span> <span class="o">=</span> <span class="n">keycol</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="k">if</span> <span class="n">isfunc</span> <span class="k">else</span> <span class="n">e</span><span class="p">[</span><span class="n">keycol</span><span class="p">]</span>
         <span class="n">groups</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">groups</span><span class="o">.</span><span class="n">itervalues</span><span class="p">()</span> <span class="k">if</span> <span class="n">nokey</span> <span class="k">else</span> <span class="n">groups</span><span class="o">.</span><span class="n">iteritems</span><span class="p">()</span></div>
+    <span class="k">return</span> <span class="n">six</span><span class="o">.</span><span class="n">itervalues</span><span class="p">(</span><span class="n">groups</span><span class="p">)</span> <span class="k">if</span> <span class="n">nokey</span> <span class="k">else</span> <span class="n">six</span><span class="o">.</span><span class="n">iteritems</span><span class="p">(</span><span class="n">groups</span><span class="p">)</span></div>
 
 
 <span class="nd">@nut_processor</span>
@@ -860,7 +864,7 @@
 <span class="sd">    </span>
 <span class="sd">    &gt;&gt;&gt; @nut_sink</span>
 <span class="sd">    ... def ViewResult(iterable):</span>
-<span class="sd">    ...     return iterable &gt;&gt; Map(lambda (k, es): (k, list(es))) &gt;&gt; Collect()</span>
+<span class="sd">    ...     return iterable &gt;&gt; Map(lambda t: (t[0], list(t[1]))) &gt;&gt; Collect()</span>
 
 <span class="sd">    &gt;&gt;&gt; [1, 1, 1, 2, 3] &gt;&gt; GroupBySorted() &gt;&gt; ViewResult()</span>
 <span class="sd">    [(1, [1, 1, 1]), (2, [2]), (3, [3])]</span>
@@ -881,7 +885,7 @@
     <span class="n">isfunc</span> <span class="o">=</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">keycol</span><span class="p">,</span> <span class="s1">&#39;__call__&#39;</span><span class="p">)</span>
     <span class="n">key</span> <span class="o">=</span> <span class="n">keycol</span> <span class="k">if</span> <span class="n">isfunc</span> <span class="k">else</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="n">keycol</span><span class="p">]</span>
     <span class="n">groupiter</span> <span class="o">=</span> <span class="n">itt</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">itt</span><span class="o">.</span><span class="n">imap</span><span class="p">(</span><span class="k">lambda</span> <span class="n">k_v</span><span class="p">:</span> <span class="n">k_v</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">groupiter</span><span class="p">)</span> <span class="k">if</span> <span class="n">nokey</span> <span class="k">else</span> <span class="n">groupiter</span></div>
+    <span class="k">return</span> <span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">k_v</span><span class="p">:</span> <span class="n">k_v</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">groupiter</span><span class="p">)</span> <span class="k">if</span> <span class="n">nokey</span> <span class="k">else</span> <span class="n">groupiter</span></div>
 
 
 <span class="nd">@nut_processor</span>
@@ -904,7 +908,7 @@
 <span class="sd">    :rtype: generator</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">iterable</span><span class="p">:</span>
-        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">xrange</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
             <span class="k">yield</span> <span class="n">e</span></div>
 
 
@@ -920,15 +924,15 @@
 <span class="sd">    &#39;window&#39; of the shuffle is limited to buffersize.</span>
 <span class="sd">    Note that for buffersize = 1 no shuffling occurs.</span>
 
-<span class="sd">    In the following example rand = rnd.Random(0) is used to create a fixed</span>
+<span class="sd">    In the following example rand = StableRandom(0) is used to create a fixed</span>
 <span class="sd">    shuffle. Usually, this is not what you want. Use the default</span>
 <span class="sd">    rand=rnd.Random() instead.</span>
 
-<span class="sd">    &gt;&gt;&gt; from nutsflow import Range, Collect</span>
-<span class="sd">    &gt;&gt;&gt; Range(10) &gt;&gt; Shuffle(5, rnd.Random(0)) &gt;&gt; Collect()</span>
-<span class="sd">    [1, 5, 3, 0, 6, 2, 8, 9, 7, 4]</span>
+<span class="sd">    &gt;&gt;&gt; from nutsflow import Range, Collect, StableRandom</span>
+<span class="sd">    &gt;&gt;&gt; Range(10) &gt;&gt; Shuffle(5, StableRandom(0)) &gt;&gt; Collect()</span>
+<span class="sd">    [4, 2, 3, 6, 7, 0, 1, 9, 5, 8]</span>
 
-<span class="sd">    &gt;&gt;&gt; Range(10) &gt;&gt; Shuffle(1, rnd.Random(0)) &gt;&gt; Collect()</span>
+<span class="sd">    &gt;&gt;&gt; Range(10) &gt;&gt; Shuffle(1, StableRandom(0)) &gt;&gt; Collect()</span>
 <span class="sd">    [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]</span>
 
 <span class="sd">    :param iterable iterable: Any iterable</span>
@@ -1004,7 +1008,7 @@
 <span class="sd">    :rtype: (iterator, ...)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">tees</span> <span class="o">=</span> <span class="n">itt</span><span class="o">.</span><span class="n">tee</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">funcs</span><span class="p">))</span>
-    <span class="k">return</span> <span class="p">[</span><span class="n">itt</span><span class="o">.</span><span class="n">imap</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span> <span class="k">for</span> <span class="n">f</span><span class="p">,</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">funcs</span><span class="p">,</span> <span class="n">tees</span><span class="p">)]</span></div>
+    <span class="k">return</span> <span class="p">[</span><span class="nb">map</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span> <span class="k">for</span> <span class="n">f</span><span class="p">,</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">funcs</span><span class="p">,</span> <span class="n">tees</span><span class="p">)]</span></div>
 
 
 <span class="c1"># Don&#39;t use @nut_processor here. Creating Pool is expensive!</span>
@@ -1061,15 +1065,15 @@
 <span class="sd">        .. code:: python</span>
 
 <span class="sd">            with Cache() as cache:</span>
-<span class="sd">                data = xrange(100)</span>
-<span class="sd">                for i in xrange(10):</span>
+<span class="sd">                data = range(100)</span>
+<span class="sd">                for i in range(10):</span>
 <span class="sd">                    data &gt;&gt; expensive_op &gt;&gt; cache &gt;&gt; process(i) &gt;&gt; Consume()</span>
 
 
 <span class="sd">        .. code:: python</span>
 
 <span class="sd">            cache = Cache()</span>
-<span class="sd">            for _ in xrange(100)</span>
+<span class="sd">            for _ in range(100)</span>
 <span class="sd">                data &gt;&gt; expensive_op &gt;&gt; cache &gt;&gt; Collect()</span>
 <span class="sd">            cache.clear()</span>
 
@@ -1177,7 +1181,7 @@
 <span class="sd">        For long running computations and Estimated time of arrival (eta) is</span>
 <span class="sd">        printed as well</span>
 
-<span class="sd">        xrange(10) &gt;&gt; PrintProgress(10, 0) &gt;&gt; Consume()</span>
+<span class="sd">        range(10) &gt;&gt; PrintProgress(10, 0) &gt;&gt; Consume()</span>
 
 <span class="sd">        :param iterable iterable: Any iterable</span>
 <span class="sd">        :param int data: Number of elements in iterable or realized iterable.</span>
@@ -1198,7 +1202,7 @@
         <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">e</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">iterable</span><span class="p">):</span>
             <span class="k">if</span> <span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">clock</span><span class="p">()</span> <span class="o">-</span> <span class="n">up_time</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">every_sec</span><span class="p">:</span>
                 <span class="n">up_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">clock</span><span class="p">()</span>
-                <span class="n">per_done</span> <span class="o">=</span> <span class="mi">100</span> <span class="o">*</span> <span class="n">i</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">n</span>
+                <span class="n">per_done</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="mi">100</span> <span class="o">*</span> <span class="n">i</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="p">)</span>
                 <span class="n">sec_consumed</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">clock</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span><span class="p">)</span>
                 <span class="n">eta</span> <span class="o">=</span> <span class="n">sec_consumed</span> <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="k">if</span> <span class="n">i</span> <span class="k">else</span> <span class="mi">0</span>
                 <span class="n">tstr</span> <span class="o">=</span> <span class="n">timestr</span><span class="p">(</span><span class="n">eta</span><span class="p">,</span> <span class="n">etafmt</span><span class="p">)</span>
@@ -1208,6 +1212,58 @@
         <span class="n">duration</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">clock</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span><span class="p">)</span>
         <span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\r</span><span class="s1">progress: 100% </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">timestr</span><span class="p">(</span><span class="n">duration</span><span class="p">,</span> <span class="n">endfmt</span><span class="p">))</span>
         <span class="n">console</span><span class="p">(</span><span class="n">text</span><span class="p">)</span></div></div>
+
+
+<span class="nd">@nut_processor</span>
+<div class="viewcode-block" id="Try"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.processor.Try">[docs]</a><span class="k">def</span> <span class="nf">Try</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">func</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;SKIP&#39;</span><span class="p">,</span> <span class="n">handler</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s1">&#39;:&#39;</span><span class="p">,</span> <span class="n">e</span><span class="p">)):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    iterable &gt;&gt; Try(nut)</span>
+
+<span class="sd">    Exception handling for (nut) functions. If the wrapped nut or function </span>
+<span class="sd">    raises an exception it is caught and handled with the provided handler.</span>
+<span class="sd">    Per default the exception and the value causing it are printed.</span>
+<span class="sd">    Furthermore a default value can be specified that is returned instead</span>
+<span class="sd">    of the nut output if an exception occurs. Per default no output is</span>
+<span class="sd">    returned (SKIP).</span>
+
+<span class="sd">    &gt;&gt;&gt; from nutsflow import Try, Collect, nut_function  </span>
+
+<span class="sd">    &gt;&gt;&gt; [1, 2, 3] &gt;&gt; Try(lambda x : int(6.0/x)) &gt;&gt; Collect()</span>
+<span class="sd">    [6, 3, 2]</span>
+<span class="sd">    &gt;&gt;&gt; [1, 0, 3] &gt;&gt; Try(lambda x : int(6.0/x)) &gt;&gt; Collect()</span>
+<span class="sd">    0 : float division by zero</span>
+<span class="sd">    [6, 2]</span>
+
+<span class="sd">    &gt;&gt;&gt; Div = nut_function(lambda x : int(6.0/x))</span>
+<span class="sd">    &gt;&gt;&gt; [1, 2, 3] &gt;&gt; Try(Div()) &gt;&gt; Collect()</span>
+<span class="sd">    [6, 3, 2]</span>
+<span class="sd">    &gt;&gt;&gt; [1, 0, 3] &gt;&gt; Try(Div()) &gt;&gt; Collect()</span>
+<span class="sd">    0 : float division by zero</span>
+<span class="sd">    [6, 2]</span>
+<span class="sd">    &gt;&gt;&gt; [1, 0, 3] &gt;&gt; Try(Div(), handler=None, default=0) &gt;&gt; Collect()</span>
+<span class="sd">    [6, 0, 2]</span>
+
+<span class="sd">    :param iterable iterable: Iterable the nut operates on.</span>
+<span class="sd">    :param function|NutFunction func: (Nut) function that is wrapped </span>
+<span class="sd">       for exception handling. </span>
+<span class="sd">    :param Object default: Return value if exception occurs. </span>
+<span class="sd">       If default == &quot;SKIP&#39;, no value is returned. </span>
+<span class="sd">    :param function|None handler: Function that is called if exception occurs.</span>
+<span class="sd">       Function takes element x and exception e as parameters and the default</span>
+<span class="sd">       function prints x and e. For handler==None, no handler is called.</span>
+<span class="sd">    :return: Iterator over input elements transformed by provided nut.</span>
+<span class="sd">    :rtype: iterator</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">NutFunction</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">isfunction</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Need (nut) function in Try() :&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">func</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">iterable</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="n">func</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">handler</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">handler</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">default</span> <span class="o">!=</span> <span class="s1">&#39;SKIP&#39;</span><span class="p">:</span>
+                <span class="k">yield</span> <span class="n">default</span></div>
 </pre></div>
 
            </div>
@@ -1223,7 +1279,7 @@
   <div role="contentinfo">
     <p>
         &copy; Copyright 2017, IBM Research Australia.
-      Last updated on Jun 02, 2017.
+      Last updated on Jun 22, 2017.
 
     </p>
   </div> 
@@ -1244,7 +1300,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'1.0.16',
+            VERSION:'1.0.20',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nutsflow.sink &mdash; nutsflow 1.0.16 documentation</title>
+  <title>nutsflow.sink &mdash; nutsflow 1.0.20 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../../genindex.html"/>
         <link rel="search" title="Search" href="../../search.html"/>
-    <link rel="top" title="nutsflow 1.0.16 documentation" href="../../index.html"/>
+    <link rel="top" title="nutsflow 1.0.20 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                1.0.16
+                1.0.20
               </div>
             
           
@@ -169,14 +169,43 @@
 
 <span class="kn">import</span> <span class="nn">csv</span>
 <span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">six</span>
 
-<span class="kn">import</span> <span class="nn">itertools</span> <span class="k">as</span> <span class="nn">itt</span>
 <span class="kn">import</span> <span class="nn">collections</span> <span class="k">as</span> <span class="nn">cl</span>
 
+<span class="kn">from</span> <span class="nn">six.moves</span> <span class="k">import</span> <span class="n">reduce</span><span class="p">,</span> <span class="nb">zip</span><span class="p">,</span> <span class="nb">range</span>
 <span class="kn">from</span> <span class="nn">.base</span> <span class="k">import</span> <span class="n">NutSink</span>
 <span class="kn">from</span> <span class="nn">.factory</span> <span class="k">import</span> <span class="n">nut_sink</span>
 <span class="kn">from</span> <span class="nn">.common</span> <span class="k">import</span> <span class="n">as_tuple</span>
 <span class="kn">from</span> <span class="nn">.iterfunction</span> <span class="k">import</span> <span class="n">nth</span><span class="p">,</span> <span class="n">consume</span><span class="p">,</span> <span class="n">length</span><span class="p">,</span> <span class="n">take</span>
+
+
+<span class="nd">@nut_sink</span>
+<div class="viewcode-block" id="Sort"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.sink.Sort">[docs]</a><span class="k">def</span> <span class="nf">Sort</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    iterable &gt;&gt; Sort()</span>
+
+<span class="sd">    Sorts iterable with respect to key function</span>
+
+<span class="sd">    &gt;&gt;&gt; [3, 1, 2] &gt;&gt; Sort()</span>
+<span class="sd">    [1, 2, 3]</span>
+
+<span class="sd">    &gt;&gt;&gt; [3, 1, 2] &gt;&gt; Sort(reverse=True)</span>
+<span class="sd">    [3, 2, 1]</span>
+
+<span class="sd">    &gt;&gt;&gt; [&#39;a3&#39;, &#39;c1&#39;, &#39;b2&#39;] &gt;&gt; Sort(key=lambda s: s[0])</span>
+<span class="sd">    [&#39;a3&#39;, &#39;b2&#39;, &#39;c1&#39;]</span>
+
+<span class="sd">    &gt;&gt;&gt; [&#39;a3&#39;, &#39;c1&#39;, &#39;b2&#39;] &gt;&gt; Sort(key=lambda s: s[1])</span>
+<span class="sd">    [&#39;c1&#39;, &#39;b2&#39;, &#39;a3&#39;]</span>
+
+<span class="sd">    :param iterable iterable: Iterable</span>
+<span class="sd">    :param function|None key: key to sort iterable with.</span>
+<span class="sd">    :param boolean reverse: True: reverse order.</span>
+<span class="sd">    :return: Sorted iterable</span>
+<span class="sd">    :rtype: list</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">key</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="n">reverse</span><span class="p">)</span></div>
 
 
 <span class="nd">@nut_sink</span>
@@ -473,14 +502,14 @@
 <span class="sd">    &gt;&gt;&gt; [(1, 2, 3), (4, 5, 6)] &gt;&gt; Unzip(tuple) &gt;&gt; Collect()</span>
 <span class="sd">    [(1, 4), (2, 5), (3, 6)]</span>
 
-<span class="sd">    :param iterable iterable:  Any iterable, e.g. list, xrange, ...</span>
+<span class="sd">    :param iterable iterable:  Any iterable, e.g. list, range, ...</span>
 <span class="sd">    :param container container: If not none, unzipped results are collected</span>
 <span class="sd">       in the provided container, eg. list, tuple, set</span>
 <span class="sd">    :return: Unzip iterable.</span>
 <span class="sd">    :rtype: iterator over iterators</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">unzipped</span> <span class="o">=</span> <span class="n">itt</span><span class="o">.</span><span class="n">izip</span><span class="p">(</span><span class="o">*</span><span class="n">iterable</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">itt</span><span class="o">.</span><span class="n">imap</span><span class="p">(</span><span class="n">container</span><span class="p">,</span> <span class="n">unzipped</span><span class="p">)</span> <span class="k">if</span> <span class="n">container</span> <span class="k">else</span> <span class="n">unzipped</span></div>
+    <span class="n">unzipped</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">iterable</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">map</span><span class="p">(</span><span class="n">container</span><span class="p">,</span> <span class="n">unzipped</span><span class="p">)</span> <span class="k">if</span> <span class="n">container</span> <span class="k">else</span> <span class="n">unzipped</span></div>
 
 
 <span class="nd">@nut_sink</span>
@@ -493,7 +522,7 @@
 <span class="sd">    &gt;&gt;&gt; [1, 2, 3, 4] &gt;&gt; Head(2)</span>
 <span class="sd">    [1, 2]</span>
 
-<span class="sd">    :param iterable iterable: Any iterable, e.g. list, xrange, ...</span>
+<span class="sd">    :param iterable iterable: Any iterable, e.g. list, range, ...</span>
 <span class="sd">    :param int n: Number of elements to take.</span>
 <span class="sd">    :param container container: Container to collect elements in, e.g. list, set</span>
 <span class="sd">    :return: Container with head elements</span>
@@ -513,7 +542,7 @@
 <span class="sd">    &gt;&gt;&gt; [1, 2, 3, 4] &gt;&gt; Tail(2)</span>
 <span class="sd">    [3, 4]</span>
 
-<span class="sd">    :param iterable iterable: Any iterable, e.g. list, xrange, ...</span>
+<span class="sd">    :param iterable iterable: Any iterable, e.g. list, range, ...</span>
 <span class="sd">    :param int n: Number of elements to take.</span>
 <span class="sd">    :param container container: Container to collect elements in, e.g. list, set</span>
 <span class="sd">    :return: Container with tail elements</span>
@@ -530,13 +559,13 @@
 <span class="sd">    Return dictionary with (relative) counts of the values</span>
 <span class="sd">    in the input iterable.</span>
 
-<span class="sd">    &gt;&gt;&gt; &#39;abaacc&#39; &gt;&gt; CountValues()</span>
-<span class="sd">    {&#39;a&#39;: 3, &#39;c&#39;: 2, &#39;b&#39;: 1}</span>
+<span class="sd">    &gt;&gt;&gt; &#39;abaacc&#39; &gt;&gt; CountValues()  # doctest: +SKIP</span>
+<span class="sd">    {&#39;a&#39;: 3, &#39;b&#39;: 1, &#39;c&#39;: 2}</span>
 
-<span class="sd">    &gt;&gt;&gt; &#39;aabaab&#39; &gt;&gt; CountValues(True)</span>
+<span class="sd">    &gt;&gt;&gt; &#39;aabaab&#39; &gt;&gt; CountValues(True)  # doctest: +SKIP</span>
 <span class="sd">    {&#39;a&#39;: 1.0, &#39;b&#39;: 0.5}</span>
 
-<span class="sd">    :param iterable iterable: Any iterable, e.g. list, xrange, ...</span>
+<span class="sd">    :param iterable iterable: Any iterable, e.g. list, range, ...</span>
 <span class="sd">    :param bool relative: True: return relative counts otherwise absolute counts</span>
 <span class="sd">    :return: Dictionary with (relative) counts for elements in iterable.</span>
 <span class="sd">    :rtype: dict</span>
@@ -546,7 +575,7 @@
         <span class="k">return</span> <span class="n">cnts</span>
     <span class="n">max_cnt</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">cnts</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
     <span class="n">n</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">max_cnt</span><span class="p">)</span> <span class="k">if</span> <span class="n">max_cnt</span> <span class="k">else</span> <span class="mf">1.0</span>
-    <span class="k">return</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="o">/</span> <span class="n">n</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">cnts</span><span class="o">.</span><span class="n">iteritems</span><span class="p">()}</span></div>
+    <span class="k">return</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="o">/</span> <span class="n">n</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">six</span><span class="o">.</span><span class="n">iteritems</span><span class="p">(</span><span class="n">cnts</span><span class="p">)}</span></div>
 
 
 <span class="nd">@nut_sink</span>
@@ -556,16 +585,16 @@
 
 <span class="sd">    Collects all elements of the iterable input in the given container.</span>
 
-<span class="sd">    &gt;&gt;&gt; xrange(5) &gt;&gt; Collect()</span>
+<span class="sd">    &gt;&gt;&gt; range(5) &gt;&gt; Collect()</span>
 <span class="sd">    [0, 1, 2, 3, 4]</span>
 
-<span class="sd">    &gt;&gt;&gt; [1, 2, 3, 2] &gt;&gt; Collect(set)</span>
-<span class="sd">    set([1, 2, 3])</span>
+<span class="sd">    &gt;&gt;&gt; [1, 2, 3, 2] &gt;&gt; Collect(set)  # doctest: +SKIP</span>
+<span class="sd">    {1, 2, 3}</span>
 
-<span class="sd">    &gt;&gt;&gt; [(&#39;one&#39;, 1), (&#39;two&#39;, 2)] &gt;&gt; Collect(dict)</span>
-<span class="sd">    {&#39;two&#39;: 2, &#39;one&#39;: 1}</span>
+<span class="sd">    &gt;&gt;&gt; [(&#39;one&#39;, 1), (&#39;two&#39;, 2)] &gt;&gt; Collect(dict)  # doctest: +SKIP</span>
+<span class="sd">    {&#39;one&#39;: 1, &#39;two&#39;: 2}</span>
 
-<span class="sd">    :param iterable iterable: Any iterable, e.g. list, xrange, ...</span>
+<span class="sd">    :param iterable iterable: Any iterable, e.g. list, range, ...</span>
 <span class="sd">    :param container container: Some container, e.g. list, set, dict</span>
 <span class="sd">           that can be filled from an iterable</span>
 <span class="sd">    :return: Container</span>
@@ -589,7 +618,7 @@
 <span class="sd">    :return: String of with concatenated elements of iterable.</span>
 <span class="sd">    :rtype: str</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">separator</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">itt</span><span class="o">.</span><span class="n">imap</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">iterable</span><span class="p">))</span></div>
+    <span class="k">return</span> <span class="n">separator</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">iterable</span><span class="p">))</span></div>
 
 
 <div class="viewcode-block" id="WriteCSV"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.sink.WriteCSV">[docs]</a><span class="k">class</span> <span class="nc">WriteCSV</span><span class="p">(</span><span class="n">NutSink</span><span class="p">):</span>
@@ -615,7 +644,7 @@
 <span class="sd">        &gt;&gt;&gt; import os</span>
 <span class="sd">        &gt;&gt;&gt; filepath = &#39;tests/data/temp_out.csv&#39;</span>
 <span class="sd">        &gt;&gt;&gt; with WriteCSV(filepath) as writer:</span>
-<span class="sd">        ...     xrange(10) &gt;&gt; writer</span>
+<span class="sd">        ...     range(10) &gt;&gt; writer</span>
 <span class="sd">        &gt;&gt;&gt; os.remove(filepath)</span>
 
 <span class="sd">        &gt;&gt;&gt; with WriteCSV(filepath, cols=(1,0)) as writer:</span>
@@ -636,11 +665,11 @@
 <span class="sd">        :param kwargs kwargs: Keyword arguments for Python&#39;s CSV writer.</span>
 <span class="sd">                              See https://docs.python.org/2/library/csv.html</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">csvfile</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">csvfile</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">cols</span> <span class="k">if</span> <span class="n">cols</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">as_tuple</span><span class="p">(</span><span class="n">cols</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">fmtfunc</span> <span class="o">=</span> <span class="n">fmtfunc</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">skipheader</span> <span class="o">=</span> <span class="n">skipheader</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">writer</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">writer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">csvfile</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">writer</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">writer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">csvfile</span><span class="p">,</span> <span class="n">lineterminator</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="WriteCSV.close"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.sink.WriteCSV.close">[docs]</a>    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Close writer&quot;&quot;&quot;</span>
@@ -659,7 +688,7 @@
         <span class="sd">&quot;&quot;&quot;Write elements of iterable to file&quot;&quot;&quot;</span>
         <span class="n">cols</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">columns</span>
         <span class="n">iterable</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">iterable</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">xrange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">skipheader</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">skipheader</span><span class="p">):</span>
             <span class="nb">next</span><span class="p">(</span><span class="n">iterable</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">iterable</span><span class="p">:</span>
             <span class="n">row</span> <span class="o">=</span> <span class="n">row</span> <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="s1">&#39;__iter__&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="p">[</span><span class="n">row</span><span class="p">]</span>
@@ -680,7 +709,7 @@
   <div role="contentinfo">
     <p>
         &copy; Copyright 2017, IBM Research Australia.
-      Last updated on Jun 02, 2017.
+      Last updated on Jun 22, 2017.
 
     </p>
   </div> 
@@ -701,7 +730,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'1.0.16',
+            VERSION:'1.0.20',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

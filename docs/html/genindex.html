@@ -9,7 +9,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Index &mdash; nutsflow 1.0.16 documentation</title>
+  <title>Index &mdash; nutsflow 1.0.20 documentation</title>
   
 
   
@@ -36,7 +36,7 @@
         <link rel="index" title="Index"
               href="#"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="nutsflow 1.0.16 documentation" href="index.html"/> 
+    <link rel="top" title="nutsflow 1.0.20 documentation" href="index.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                1.0.16
+                1.0.20
               </div>
             
           
@@ -239,6 +239,8 @@
 </li>
         <li><a href="nutsflow.html#nutsflow.common.Redirect.__init__">(Redirect method)</a>
 </li>
+        <li><a href="nutsflow.html#nutsflow.common.StableRandom.__init__">(StableRandom method)</a>
+</li>
         <li><a href="nutsflow.html#nutsflow.sink.WriteCSV.__init__">(WriteCSV method)</a>
 </li>
       </ul></li>
@@ -321,11 +323,15 @@
 </li>
         <li><a href="nutsflow.html#nutsflow.processor.Slice.__rrshift__">(Slice method)</a>
 </li>
+        <li><a href="nutsflow.html#nutsflow.sink.Sort.__rrshift__">(Sort method)</a>
+</li>
         <li><a href="nutsflow.html#nutsflow.sink.Sum.__rrshift__">(Sum method)</a>
 </li>
         <li><a href="nutsflow.html#nutsflow.sink.Tail.__rrshift__">(Tail method)</a>
 </li>
         <li><a href="nutsflow.html#nutsflow.processor.Take.__rrshift__">(Take method)</a>
+</li>
+        <li><a href="nutsflow.html#nutsflow.processor.Try.__rrshift__">(Try method)</a>
 </li>
         <li><a href="nutsflow.html#nutsflow.sink.Unzip.__rrshift__">(Unzip method)</a>
 </li>
@@ -370,8 +376,6 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="nutsflow.html#nutsflow.processor.Cache">Cache (class in nutsflow.processor)</a>
 </li>
-      <li><a href="nutsflow.html#nutsflow.processor.Chunk">Chunk (in module nutsflow.processor)</a>
-</li>
       <li><a href="nutsflow.html#nutsflow.processor.ChunkBy">ChunkBy (class in nutsflow.processor)</a>
 </li>
       <li><a href="nutsflow.html#nutsflow.iterfunction.chunked">chunked() (in module nutsflow.iterfunction)</a>
@@ -388,11 +392,9 @@
         <li><a href="nutsflow.html#nutsflow.sink.WriteCSV.close">(WriteCSV method)</a>
 </li>
       </ul></li>
-      <li><a href="nutsflow.html#nutsflow.sink.Collect">Collect (class in nutsflow.sink)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="nutsflow.html#nutsflow.processor.Combine">Combine (in module nutsflow.processor)</a>
+      <li><a href="nutsflow.html#nutsflow.sink.Collect">Collect (class in nutsflow.sink)</a>
 </li>
       <li><a href="nutsflow.html#module-common">common (module)</a>
 </li>
@@ -410,20 +412,16 @@
 </li>
       <li><a href="nutsflow.html#nutsflow.sink.CountValues">CountValues (class in nutsflow.sink)</a>
 </li>
-      <li><a href="nutsflow.html#nutsflow.processor.Cycle">Cycle (in module nutsflow.processor)</a>
-</li>
   </ul></td>
 </tr></table>
 
 <h2 id="D">D</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="nutsflow.html#nutsflow.processor.Dedupe">Dedupe (in module nutsflow.processor)</a>
+      <li><a href="nutsflow.html#nutsflow.processor.Drop">Drop (class in nutsflow.processor)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="nutsflow.html#nutsflow.processor.Drop">Drop (class in nutsflow.processor)</a>
-</li>
       <li><a href="nutsflow.html#nutsflow.processor.DropWhile">DropWhile (class in nutsflow.processor)</a>
 </li>
   </ul></td>
@@ -446,18 +444,12 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="nutsflow.html#module-factory">factory (module)</a>
 </li>
-      <li><a href="nutsflow.html#nutsflow.processor.Filter">Filter (in module nutsflow.processor)</a>
-</li>
-      <li><a href="nutsflow.html#nutsflow.processor.FilterFalse">FilterFalse (in module nutsflow.processor)</a>
-</li>
-      <li><a href="nutsflow.html#nutsflow.processor.FlatMap">FlatMap (in module nutsflow.processor)</a>
-</li>
       <li><a href="nutsflow.html#nutsflow.iterfunction.flatmap">flatmap() (in module nutsflow.iterfunction)</a>
+</li>
+      <li><a href="nutsflow.html#nutsflow.processor.Flatten">Flatten (class in nutsflow.processor)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="nutsflow.html#nutsflow.processor.Flatten">Flatten (class in nutsflow.processor)</a>
-</li>
       <li><a href="nutsflow.html#nutsflow.iterfunction.flatten">flatten() (in module nutsflow.iterfunction)</a>
 </li>
       <li><a href="nutsflow.html#nutsflow.processor.FlattenCol">FlattenCol (class in nutsflow.processor)</a>
@@ -472,12 +464,16 @@
 <h2 id="G">G</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="nutsflow.html#nutsflow.common.StableRandom.gauss_next">gauss_next() (StableRandom method)</a>
+</li>
       <li><a href="nutsflow.html#nutsflow.function.Get">Get (class in nutsflow.function)</a>
 </li>
       <li><a href="nutsflow.html#nutsflow.function.GetCols">GetCols (class in nutsflow.function)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="nutsflow.html#nutsflow.common.StableRandom.getstate">getstate() (StableRandom method)</a>
+</li>
       <li><a href="nutsflow.html#nutsflow.processor.GroupBy">GroupBy (class in nutsflow.processor)</a>
 </li>
       <li><a href="nutsflow.html#nutsflow.processor.GroupBySorted">GroupBySorted (class in nutsflow.processor)</a>
@@ -517,6 +513,10 @@
       <li><a href="nutsflow.html#nutsflow.sink.Join">Join (class in nutsflow.sink)</a>
 </li>
   </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="nutsflow.html#nutsflow.common.StableRandom.jumpahead">jumpahead() (StableRandom method)</a>
+</li>
+  </ul></td>
 </tr></table>
 
 <h2 id="L">L</h2>
@@ -530,8 +530,6 @@
 <h2 id="M">M</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="nutsflow.html#nutsflow.processor.Map">Map (in module nutsflow.processor)</a>
-</li>
       <li><a href="nutsflow.html#nutsflow.processor.MapCol">MapCol (class in nutsflow.processor)</a>
 </li>
       <li><a href="nutsflow.html#nutsflow.processor.MapMulti">MapMulti (class in nutsflow.processor)</a>
@@ -544,10 +542,10 @@
 </li>
       <li><a href="nutsflow.html#nutsflow.sink.MeanStd">MeanStd (class in nutsflow.sink)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="nutsflow.html#nutsflow.sink.Min">Min (class in nutsflow.sink)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="nutsflow.examples.html#nutsflow.examples.examples.MyClone">MyClone (class in nutsflow.examples.examples)</a>
 </li>
       <li><a href="nutsflow.examples.html#nutsflow.examples.examples.MyCollect">MyCollect (class in nutsflow.examples.examples)</a>
@@ -569,8 +567,6 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="nutsflow.html#nutsflow.sink.Next">Next (in module nutsflow.sink)</a>
-</li>
-      <li><a href="nutsflow.html#nutsflow.iterfunction.PrefetchIterator.next">next() (PrefetchIterator method)</a>
 </li>
       <li><a href="nutsflow.html#nutsflow.function.NOP">NOP (class in nutsflow.function)</a>
 </li>
@@ -594,10 +590,10 @@
 </li>
       <li><a href="nutsflow.html#nutsflow.base.NutFunction">NutFunction (class in nutsflow.base)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="nutsflow.html#module-nutsflow">nutsflow (module)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="nutsflow.html#module-nutsflow.base">nutsflow.base (module)</a>
 </li>
       <li><a href="nutsflow.html#module-nutsflow.common">nutsflow.common (module)</a>
@@ -630,20 +626,16 @@
 <h2 id="P">P</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="nutsflow.html#nutsflow.processor.Partition">Partition (in module nutsflow.processor)</a>
-</li>
       <li><a href="nutsflow.html#nutsflow.iterfunction.partition">partition() (in module nutsflow.iterfunction)</a>
-</li>
-      <li><a href="nutsflow.html#nutsflow.processor.Permutate">Permutate (in module nutsflow.processor)</a>
 </li>
       <li><a href="nutsflow.html#nutsflow.processor.Pick">Pick (class in nutsflow.processor)</a>
 </li>
       <li><a href="nutsflow.html#nutsflow.processor.Prefetch">Prefetch (class in nutsflow.processor)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="nutsflow.html#nutsflow.iterfunction.PrefetchIterator">PrefetchIterator (class in nutsflow.iterfunction)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="nutsflow.html#nutsflow.function.Print">Print (class in nutsflow.function)</a>
 </li>
       <li><a href="nutsflow.html#nutsflow.processor.PrintProgress">PrintProgress (class in nutsflow.processor)</a>
@@ -658,16 +650,18 @@
 <h2 id="R">R</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="nutsflow.html#nutsflow.common.StableRandom.random">random() (StableRandom method)</a>
+</li>
       <li><a href="nutsflow.html#nutsflow.source.Range">Range (class in nutsflow.source)</a>
 </li>
       <li><a href="nutsflow.html#nutsflow.source.ReadCSV">ReadCSV (class in nutsflow.source)</a>
 </li>
       <li><a href="nutsflow.html#nutsflow.common.Redirect">Redirect (class in nutsflow.common)</a>
 </li>
-      <li><a href="nutsflow.html#nutsflow.sink.Reduce">Reduce (in module nutsflow.sink)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="nutsflow.html#nutsflow.sink.Reduce">Reduce (in module nutsflow.sink)</a>
+</li>
       <li><a href="nutsflow.html#nutsflow.source.Repeat">Repeat (class in nutsflow.source)</a>
 </li>
       <li><a href="nutsflow.html#nutsflow.function.Counter.reset">reset() (Counter method)</a>
@@ -686,6 +680,10 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="nutsflow.html#nutsflow.common.sec_to_hms">sec_to_hms() (in module nutsflow.common)</a>
 </li>
+      <li><a href="nutsflow.html#nutsflow.common.StableRandom.seed">seed() (StableRandom method)</a>
+</li>
+      <li><a href="nutsflow.html#nutsflow.common.StableRandom.setstate">setstate() (StableRandom method)</a>
+</li>
       <li><a href="nutsflow.html#nutsflow.processor.Shuffle">Shuffle (class in nutsflow.processor)</a>
 </li>
       <li><a href="nutsflow.html#module-sink">sink (module)</a>
@@ -696,9 +694,13 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="nutsflow.html#nutsflow.processor.Slice">Slice (class in nutsflow.processor)</a>
 </li>
+      <li><a href="nutsflow.html#nutsflow.sink.Sort">Sort (class in nutsflow.sink)</a>
+</li>
       <li><a href="nutsflow.html#module-source">source (module)</a>
 </li>
       <li><a href="nutsflow.html#nutsflow.function.Square">Square (class in nutsflow.function)</a>
+</li>
+      <li><a href="nutsflow.html#nutsflow.common.StableRandom">StableRandom (class in nutsflow.common)</a>
 </li>
       <li><a href="nutsflow.html#nutsflow.sink.Sum">Sum (class in nutsflow.sink)</a>
 </li>
@@ -712,15 +714,13 @@
 </li>
       <li><a href="nutsflow.html#nutsflow.processor.Take">Take (class in nutsflow.processor)</a>
 </li>
-      <li><a href="nutsflow.html#nutsflow.iterfunction.take">take() (in module nutsflow.iterfunction)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="nutsflow.html#nutsflow.processor.TakeWhile">TakeWhile (in module nutsflow.processor)</a>
-</li>
-      <li><a href="nutsflow.html#nutsflow.processor.Tee">Tee (in module nutsflow.processor)</a>
+      <li><a href="nutsflow.html#nutsflow.iterfunction.take">take() (in module nutsflow.iterfunction)</a>
 </li>
       <li><a href="nutsflow.html#nutsflow.common.timestr">timestr() (in module nutsflow.common)</a>
+</li>
+      <li><a href="nutsflow.html#nutsflow.processor.Try">Try (class in nutsflow.processor)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -774,7 +774,7 @@
   <div role="contentinfo">
     <p>
         &copy; Copyright 2017, IBM Research Australia.
-      Last updated on Jun 02, 2017.
+      Last updated on Jun 22, 2017.
 
     </p>
   </div> 
@@ -795,7 +795,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'1.0.16',
+            VERSION:'1.0.20',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,
