@@ -608,7 +608,7 @@ def Pick(iterable, p_n, rand=rnd.Random()):
     Pick every p_n-th element from the iterable if p_n is an integer,
     otherwise pick randomly with probability p_n.
 
-    >>> from nutsflow import Range, Collect
+    >>> from nutsflow import Range, Collect, StableRandom
     
     >>> [1, 2, 3, 4] >> Pick(0.0) >> Collect()
     []
@@ -617,8 +617,8 @@ def Pick(iterable, p_n, rand=rnd.Random()):
     [1, 2, 3, 4]
 
     >>> import random as rnd
-    >>> Range(10) >> Pick(0.5, rnd.Random(0)) >> Collect()
-    [2, 3, 5, 7, 8]
+    >>> Range(10) >> Pick(0.5, StableRandom(1)) >> Collect()
+    [0, 4, 5, 6, 8, 9]
 
     >>> [1, 2, 3, 4] >> Pick(2) >> Collect()
     [1, 3]
@@ -627,6 +627,7 @@ def Pick(iterable, p_n, rand=rnd.Random()):
     :param float|int p_n: Probability p in [0, 1] or
         integer n for every n-th element
     :param Random rand: Random number generator to be used.
+        Don't use StableRandom, which is only for testing.
     :return: Iterator over picked elements.
     :rtype: iterator
     """
@@ -760,15 +761,15 @@ def Shuffle(iterable, buffersize, rand=rnd.Random()):
     'window' of the shuffle is limited to buffersize.
     Note that for buffersize = 1 no shuffling occurs.
 
-    In the following example rand = rnd.Random(0) is used to create a fixed
+    In the following example rand = StableRandom(0) is used to create a fixed
     shuffle. Usually, this is not what you want. Use the default
     rand=rnd.Random() instead.
 
-    >>> from nutsflow import Range, Collect
-    >>> Range(10) >> Shuffle(5, rnd.Random(0)) >> Collect()  # doctest: +SKIP
-    [1, 5, 3, 0, 6, 2, 8, 9, 7, 4]
+    >>> from nutsflow import Range, Collect, StableRandom
+    >>> Range(10) >> Shuffle(5, StableRandom(0)) >> Collect()
+    [4, 2, 3, 6, 7, 0, 1, 9, 5, 8]
 
-    >>> Range(10) >> Shuffle(1, rnd.Random(0)) >> Collect()  # doctest: +SKIP
+    >>> Range(10) >> Shuffle(1, StableRandom(0)) >> Collect()
     [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 
     :param iterable iterable: Any iterable

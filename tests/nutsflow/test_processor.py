@@ -6,8 +6,6 @@ from __future__ import print_function
 
 import pytest
 
-import random as rnd
-
 from six.moves import range
 from nutsflow import *
 from nutsflow import _
@@ -239,8 +237,8 @@ def test_Pick():
         [1, 2, 3] >> Pick(-1) >> Consume()
     assert str(ex.value).startswith('p_n must not be negative')
 
-    assert Range(5) >> Pick(0.5, rnd.Random(0)) >> Collect() == [2, 3]
-    assert Range(5) >> Pick(0.7, rnd.Random(0)) >> Collect() == [2, 3, 4]
+    assert Range(5) >> Pick(0.5, StableRandom(1)) >> Collect() == [0, 4]
+    assert Range(5) >> Pick(0.7, StableRandom(0)) >> Collect() == [0, 1, 4]
 
     assert Range(10) >> Pick(1.0) >> Count() == 10
     assert Range(10) >> Pick(0.0) >> Count() == 0
@@ -316,8 +314,8 @@ def test_Shuffle():
 
     assert data >> Shuffle(1) >> Collect() == data
 
-    shuffled1 = data >> Shuffle(10, rand=rnd.Random(0)) >> Collect()
-    shuffled2 = data >> Shuffle(10, rand=rnd.Random(0)) >> Collect()
+    shuffled1 = data >> Shuffle(10, rand=StableRandom(0)) >> Collect()
+    shuffled2 = data >> Shuffle(10, rand=StableRandom(0)) >> Collect()
     assert shuffled1 == shuffled2
 
 
