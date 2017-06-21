@@ -184,6 +184,10 @@ class StableRandom(random.Random):
 
         return float(self._int32(y)) / 0xffffffff
 
+    def _randbelow(self, n, **args):
+        """Return a random int in the range [0,n)"""
+        return int(self.random() * n)
+
     def _twist(self):
         """Mersenne Twister"""
         for i in range(624):
