@@ -175,7 +175,7 @@ class StableRandom(rnd.Random):
     def seed(self, seed=None):
         import time
         if seed is None:
-            seed = long(time.time() * 256)
+            seed = int(time.time() * 256)
         self._seed = seed
 
     def gauss_next(self):
