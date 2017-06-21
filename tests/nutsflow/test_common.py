@@ -5,6 +5,7 @@
 
 from __future__ import print_function
 
+from pytest import approx
 from time import sleep
 from nutsflow.common import (sec_to_hms, timestr, Redirect, as_tuple, as_set,
                              as_list, console, StableRandom)
@@ -51,6 +52,16 @@ def test_Redirect():
 
 
 def test_StableRandom():
+    rnd = StableRandom(1)
+    assert rnd.randint(1, 10) == 5
+    assert rnd.uniform(-10, 10) == approx(9.943696167306904)
+    assert rnd.random() == approx(0.7203244894557457)
+    assert rnd.sample(range(10), 3) == [9, 0, 1]
+
+    lst = [1, 2, 3, 4, 5]
+    rnd.shuffle(lst)
+    assert lst == [5, 3, 1, 4, 2]
+
     rnd = StableRandom()
     assert max(rnd.random() for _ in range(1000)) < 1.0
     assert min(rnd.random() for _ in range(1000)) >= 0.0
