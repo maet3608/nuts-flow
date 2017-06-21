@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nutsflow package &mdash; nutsflow 1.0.16 documentation</title>
+  <title>nutsflow package &mdash; nutsflow 1.0.20 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="nutsflow 1.0.16 documentation" href="index.html"/>
+    <link rel="top" title="nutsflow 1.0.20 documentation" href="index.html"/>
         <link rel="next" title="nutsflow.examples package" href="nutsflow.examples.html"/>
         <link rel="prev" title="Links" href="links.html"/> 
 
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                1.0.16
+                1.0.20
               </div>
             
           
@@ -205,13 +205,14 @@
 <p>Base class for all Nuts. Iterables or functions wrapped in Nuts can be
 chained using the &#8216;&gt;&gt;&#8217; operator. The aim is code with an explicit
 data flow. See the following example using Python iterators versus Nuts:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">itertools</span> <span class="k">import</span> <span class="n">islice</span><span class="p">,</span> <span class="n">ifilter</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="nb">list</span><span class="p">(</span><span class="n">islice</span><span class="p">(</span><span class="n">ifilter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">5</span><span class="p">,</span> <span class="n">xrange</span><span class="p">(</span><span class="mi">10</span><span class="p">)),</span> <span class="mi">3</span><span class="p">))</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">six.moves</span> <span class="k">import</span> <span class="nb">filter</span><span class="p">,</span> <span class="nb">range</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">itertools</span> <span class="k">import</span> <span class="n">islice</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">islice</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">5</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)),</span> <span class="mi">3</span><span class="p">))</span>
 <span class="go">[6, 7, 8]</span>
 </pre></div>
 </div>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nutsflow</span> <span class="k">import</span> <span class="n">Range</span><span class="p">,</span> <span class="n">Filter</span><span class="p">,</span> <span class="n">Take</span><span class="p">,</span> <span class="n">Collect</span><span class="p">,</span> <span class="n">_</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="n">Range</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Filter</span><span class="p">(</span><span class="n">_</span> <span class="o">&gt;</span> <span class="mi">5</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Take</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Filter</span><span class="p">(</span><span class="n">_</span> <span class="o">&gt;</span> <span class="mi">5</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Take</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
 <span class="go">[6, 7, 8]</span>
 </pre></div>
 </div>
@@ -400,6 +401,125 @@ Do not override! Override __iter__() instead.</p>
 <dt id="nutsflow.common.Redirect.__init__">
 <code class="descname">__init__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/common.html#Redirect.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.common.Redirect.__init__" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="nutsflow.common.StableRandom">
+<em class="property">class </em><code class="descname">StableRandom</code><span class="sig-paren">(</span><em>seed=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/common.html#StableRandom"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.common.StableRandom" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">random.Random</span></code></p>
+<p>A pseudo random number generator that is stable across
+Python 2.x and 3.x. Use this only for unit tests or doctests.
+This class is derived from random.Random and supports all
+methods of the base class.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">rand</span> <span class="o">=</span> <span class="n">StableRandom</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rand</span><span class="o">.</span><span class="n">random</span><span class="p">()</span>
+<span class="go">0.5488135024320365</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">rand</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="go">6</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">lst</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rand</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">lst</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lst</span>
+<span class="go">[1, 3, 2, 5, 4]</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="nutsflow.common.StableRandom.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>seed=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/common.html#StableRandom.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.common.StableRandom.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize random number generator.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>seed</strong> (<em>None|int</em>) &#8211; Seed. If None the system time is used.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="nutsflow.common.StableRandom.gauss_next">
+<code class="descname">gauss_next</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/common.html#StableRandom.gauss_next"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.common.StableRandom.gauss_next" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return next gaussian random number.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Random number sampled from gaussian distribution.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)">float</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="nutsflow.common.StableRandom.getstate">
+<code class="descname">getstate</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/common.html#StableRandom.getstate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.common.StableRandom.getstate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return state of generator.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Index and Mersenne Twister array.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#tuple" title="(in Python v2.7)">tuple</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="nutsflow.common.StableRandom.jumpahead">
+<code class="descname">jumpahead</code><span class="sig-paren">(</span><em>n</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/common.html#StableRandom.jumpahead"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.common.StableRandom.jumpahead" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set state of generator far away from current state.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>n</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; Distance to jump.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="nutsflow.common.StableRandom.random">
+<code class="descname">random</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/common.html#StableRandom.random"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.common.StableRandom.random" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return next random number in [0,1[</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nutsflow.common.StableRandom.seed">
+<code class="descname">seed</code><span class="sig-paren">(</span><em>seed=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/common.html#StableRandom.seed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.common.StableRandom.seed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set seed.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>seed</strong> (<em>None|int</em>) &#8211; Seed. If None the system time is used.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="nutsflow.common.StableRandom.setstate">
+<code class="descname">setstate</code><span class="sig-paren">(</span><em>state</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/common.html#StableRandom.setstate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.common.StableRandom.setstate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set state of generator.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>state</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#tuple" title="(in Python v2.7)"><em>tuple</em></a>) &#8211; State to set as produced by getstate()</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 </dd></dl>
 
@@ -748,7 +868,7 @@ processing of data. The function has side-effects but is thread-safe.</p>
 iterable &gt;&gt; counter</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nutsflow</span> <span class="k">import</span> <span class="n">Consume</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">counter</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="s1">&#39;smallerthan3&#39;</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">xrange</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">counter</span> <span class="o">&gt;&gt;</span> <span class="n">Consume</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">counter</span> <span class="o">&gt;&gt;</span> <span class="n">Consume</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">counter</span>
 <span class="go">smallerthan3 = 4</span>
 </pre></div>
@@ -1032,7 +1152,7 @@ or removing it from a pipeline.</p>
 <span class="go">2</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">xrange</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Print</span><span class="p">(</span><span class="n">every_n</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Consume</span><span class="p">()</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Print</span><span class="p">(</span><span class="n">every_n</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Consume</span><span class="p">()</span>
 <span class="go">2</span>
 <span class="go">5</span>
 <span class="go">8</span>
@@ -1166,13 +1286,14 @@ every 2.5 sec every_sec = 2.5</li>
 <span class="target" id="module-iterfunction"></span><dl class="class">
 <dt id="nutsflow.iterfunction.PrefetchIterator">
 <em class="property">class </em><code class="descname">PrefetchIterator</code><span class="sig-paren">(</span><em>iterable</em>, <em>num_prefetch=1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/iterfunction.html#PrefetchIterator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.iterfunction.PrefetchIterator" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/2/library/threading.html#threading.Thread" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">threading.Thread</span></code></a></p>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/2/library/threading.html#threading.Thread" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">threading.Thread</span></code></a>, <code class="xref py py-class docutils literal"><span class="pre">six.Iterator</span></code></p>
 <p>Wrap an iterable in an iterator that prefetches elements.</p>
 <p>Typically used to fetch samples or batches while the the GPU processes
 the batch. Keeps the CPU busy pre-processing data and not waiting for the
 GPU to finish the batch.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">PrefetchIterator</span><span class="p">(</span><span class="n">xrange</span><span class="p">(</span><span class="mi">4</span><span class="p">)):</span>
-<span class="gp">... </span>   <span class="nb">print</span> <span class="n">i</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">PrefetchIterator</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">)):</span>
+<span class="gp">... </span>   <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
 <span class="go">0</span>
 <span class="go">1</span>
 <span class="go">2</span>
@@ -1198,22 +1319,6 @@ GPU to finish the batch.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="nutsflow.iterfunction.PrefetchIterator.next">
-<code class="descname">next</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/iterfunction.html#PrefetchIterator.next"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.iterfunction.PrefetchIterator.next" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return next element from pre-fetch iterator.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">element from iterator</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">same as element type of input iterable.</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
 <dt id="nutsflow.iterfunction.PrefetchIterator.run">
 <code class="descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/iterfunction.html#PrefetchIterator.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.iterfunction.PrefetchIterator.run" title="Permalink to this definition">¶</a></dt>
 <dd><p>Put elements in input iterable into queue.</p>
@@ -1226,14 +1331,14 @@ GPU to finish the batch.</p>
 <code class="descname">chunked</code><span class="sig-paren">(</span><em>iterable</em>, <em>n</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/iterfunction.html#chunked"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.iterfunction.chunked" title="Permalink to this definition">¶</a></dt>
 <dd><p>Split iterable in chunks of size n, where each chunk is also an iterator.</p>
 <dl class="docutils">
-<dt>for chunk in chunked(xrange(10), 3):</dt>
+<dt>for chunk in chunked(range(10), 3):</dt>
 <dd><dl class="first last docutils">
 <dt>for element in chunk:</dt>
 <dd>print element</dd>
 </dl>
 </dd>
 </dl>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">it</span> <span class="o">=</span> <span class="n">chunked</span><span class="p">(</span><span class="n">xrange</span><span class="p">(</span><span class="mi">7</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">it</span> <span class="o">=</span> <span class="n">chunked</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">7</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">tuple</span><span class="p">,</span> <span class="n">it</span><span class="p">))</span>
 <span class="go">[(0, 1), (2, 3), (4, 5), (6,)]</span>
 </pre></div>
@@ -1243,7 +1348,7 @@ GPU to finish the batch.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>iterable</strong> (<em>iterable</em>) &#8211; Any iterable, e.g. list, xrange, ...</li>
+<li><strong>iterable</strong> (<em>iterable</em>) &#8211; Any iterable, e.g. list, range, ...</li>
 <li><strong>n</strong> &#8211; Chunk size</li>
 </ul>
 </td>
@@ -1274,7 +1379,7 @@ GPU to finish the batch.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>iterable</strong> (<em>iterable</em>) &#8211; Any iterable, e.g. list, xrange, ...</li>
+<li><strong>iterable</strong> (<em>iterable</em>) &#8211; Any iterable, e.g. list, range, ...</li>
 <li><strong>n</strong> &#8211; Number of elements to consume. For n=None all are consumed.</li>
 </ul>
 </td>
@@ -1292,7 +1397,7 @@ GPU to finish the batch.</p>
 <span class="go">[&#39;1&#39;, &#39;2&#39;, &#39;2&#39;, &#39;3&#39;, &#39;3&#39;, &#39;3&#39;]</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">map</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>  <span class="c1"># map instead of flatmap</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span> <span class="nb">map</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span> <span class="p">)</span>  <span class="c1"># map instead of flatmap</span>
 <span class="go">[&#39;1&#39;, &#39;22&#39;, &#39;333&#39;]</span>
 </pre></div>
 </div>
@@ -1302,7 +1407,7 @@ GPU to finish the batch.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>func</strong> (<a class="reference internal" href="#module-function" title="function: Nuts that perform functions on single stream elements."><em>function</em></a>) &#8211; Function to map on iterable.</li>
-<li><strong>iterable</strong> (<em>iterable</em>) &#8211; Any iterable, e.g. list, xrange, ...</li>
+<li><strong>iterable</strong> (<em>iterable</em>) &#8211; Any iterable, e.g. list, range, ...</li>
 </ul>
 </td>
 </tr>
@@ -1342,7 +1447,7 @@ GPU to finish the batch.</p>
 <dt id="nutsflow.iterfunction.interleave">
 <code class="descname">interleave</code><span class="sig-paren">(</span><em>*iterables</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/iterfunction.html#interleave"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.iterfunction.interleave" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return generator that interleaves the elements of the iterables.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">interleave</span><span class="p">(</span><span class="n">xrange</span><span class="p">(</span><span class="mi">5</span><span class="p">),</span> <span class="s1">&#39;abc&#39;</span><span class="p">))</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">interleave</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">),</span> <span class="s1">&#39;abc&#39;</span><span class="p">))</span>
 <span class="go">[0, &#39;a&#39;, 1, &#39;b&#39;, 2, &#39;c&#39;, 3, 4]</span>
 </pre></div>
 </div>
@@ -1354,7 +1459,7 @@ GPU to finish the batch.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>iterables</strong> (<em>iterable</em>) &#8211; Collection of iterables, e.g. lists, xrange, ...</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>iterables</strong> (<em>iterable</em>) &#8211; Collection of iterables, e.g. lists, range, ...</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Interleaved iterables.</td>
 </tr>
@@ -1368,7 +1473,7 @@ GPU to finish the batch.</p>
 <dt id="nutsflow.iterfunction.length">
 <code class="descname">length</code><span class="sig-paren">(</span><em>iterable</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/iterfunction.html#length"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.iterfunction.length" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return number of elements in iterable. Consumes iterable!</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">length</span><span class="p">(</span><span class="n">xrange</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">length</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
 <span class="go">10</span>
 </pre></div>
 </div>
@@ -1376,7 +1481,7 @@ GPU to finish the batch.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>iterable</strong> (<em>iterable</em>) &#8211; Any iterable, e.g. list, xrange, ...</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>iterable</strong> (<em>iterable</em>) &#8211; Any iterable, e.g. list, range, ...</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Length of iterable.</td>
 </tr>
@@ -1390,11 +1495,11 @@ GPU to finish the batch.</p>
 <dt id="nutsflow.iterfunction.nth">
 <code class="descname">nth</code><span class="sig-paren">(</span><em>iterable</em>, <em>n</em>, <em>default=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/iterfunction.html#nth"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.iterfunction.nth" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return n-th element of iterable. Consumes iterable!</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">nth</span><span class="p">(</span><span class="n">xrange</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">nth</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span>
 <span class="go">2</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">nth</span><span class="p">(</span><span class="n">xrange</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span> <span class="mi">100</span><span class="p">,</span> <span class="n">default</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">nth</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span> <span class="mi">100</span><span class="p">,</span> <span class="n">default</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
 <span class="go">-1</span>
 </pre></div>
 </div>
@@ -1404,7 +1509,7 @@ GPU to finish the batch.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>iterable</strong> (<em>iterable</em>) &#8211; Any iterable, e.g. list, xrange, ...</li>
+<li><strong>iterable</strong> (<em>iterable</em>) &#8211; Any iterable, e.g. list, range, ...</li>
 <li><strong>n</strong> &#8211; Index of element to retrieve.</li>
 <li><strong>default</strong> &#8211; Value to return when iterator is depleted</li>
 </ul>
@@ -1425,7 +1530,7 @@ GPU to finish the batch.</p>
 <code class="descname">partition</code><span class="sig-paren">(</span><em>iterable</em>, <em>pred</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/iterfunction.html#partition"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.iterfunction.partition" title="Permalink to this definition">¶</a></dt>
 <dd><p>Split iterable into two partitions based on predicate function</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">pred</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="mi">6</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">smaller</span><span class="p">,</span> <span class="n">larger</span> <span class="o">=</span> <span class="n">partition</span><span class="p">(</span><span class="n">xrange</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span> <span class="n">pred</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">smaller</span><span class="p">,</span> <span class="n">larger</span> <span class="o">=</span> <span class="n">partition</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span> <span class="n">pred</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">smaller</span><span class="p">)</span>
 <span class="go">[0, 1, 2, 3, 4, 5]</span>
 </pre></div>
@@ -1439,7 +1544,7 @@ GPU to finish the batch.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>iterable</strong> &#8211; Any iterable, e.g. list, xrange, ...</li>
+<li><strong>iterable</strong> &#8211; Any iterable, e.g. list, range, ...</li>
 <li><strong>pred</strong> &#8211; Predicate function.</li>
 </ul>
 </td>
@@ -1458,7 +1563,7 @@ GPU to finish the batch.</p>
 <dt id="nutsflow.iterfunction.take">
 <code class="descname">take</code><span class="sig-paren">(</span><em>iterable</em>, <em>n</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/iterfunction.html#take"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.iterfunction.take" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return iterator over last n elements of given iterable.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">take</span><span class="p">(</span><span class="n">xrange</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span> <span class="mi">3</span><span class="p">))</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">take</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span> <span class="mi">3</span><span class="p">))</span>
 <span class="go">[0, 1, 2]</span>
 </pre></div>
 </div>
@@ -1468,7 +1573,7 @@ GPU to finish the batch.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>iterable</strong> (<em>iterable</em>) &#8211; Any iterable, e.g. list, xrange, ...</li>
+<li><strong>iterable</strong> (<em>iterable</em>) &#8211; Any iterable, e.g. list, range, ...</li>
 <li><strong>n</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; Number of elements to take</li>
 </ul>
 </td>
@@ -1496,7 +1601,7 @@ GPU to finish the batch.</p>
 </pre></div>
 </div>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">1</span><span class="p">,</span><span class="s1">&#39;a&#39;</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="s1">&#39;a&#39;</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">)]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">unique</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span> <span class="k">lambda</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">):</span> <span class="n">y</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">unique</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">t</span><span class="p">:</span> <span class="n">t</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
 <span class="go">[(1, &#39;a&#39;), (3, &#39;b&#39;)]</span>
 </pre></div>
 </div>
@@ -1505,7 +1610,7 @@ GPU to finish the batch.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>iterable</strong> (<em>iterable</em>) &#8211; Any iterable, e.g. list, xrange, ...</li>
+<li><strong>iterable</strong> (<em>iterable</em>) &#8211; Any iterable, e.g. list, range, ...</li>
 <li><strong>key</strong> &#8211; Function used to compare for equality.</li>
 </ul>
 </td>
@@ -1537,13 +1642,13 @@ to file system and loads them the next time instead of recomputing.</p>
 iterable are time-consuming to produce and can be loaded faster
 from disk.</p>
 <div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">Cache</span><span class="p">()</span> <span class="k">as</span> <span class="n">cache</span><span class="p">:</span>
-    <span class="n">data</span> <span class="o">=</span> <span class="n">xrange</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">xrange</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
         <span class="n">data</span> <span class="o">&gt;&gt;</span> <span class="n">expensive_op</span> <span class="o">&gt;&gt;</span> <span class="n">cache</span> <span class="o">&gt;&gt;</span> <span class="n">process</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Consume</span><span class="p">()</span>
 </pre></div>
 </div>
 <div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="n">cache</span> <span class="o">=</span> <span class="n">Cache</span><span class="p">()</span>
-<span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">xrange</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
     <span class="n">data</span> <span class="o">&gt;&gt;</span> <span class="n">expensive_op</span> <span class="o">&gt;&gt;</span> <span class="n">cache</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
 <span class="n">cache</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
 </pre></div>
@@ -1594,40 +1699,6 @@ from disk.</p>
 
 </dd></dl>
 
-<dl class="attribute">
-<dt id="nutsflow.processor.Chunk">
-<code class="descname">Chunk</code><a class="headerlink" href="#nutsflow.processor.Chunk" title="Permalink to this definition">¶</a></dt>
-<dd><p>iterable &gt;&gt; Chunk(n)</p>
-<p>Split iterable in chunks of size n, where each chunk is also an iterator.
-see also GroupBySorted(), ChunkWhen(), ChunkBy()</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">Range</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Chunk</span><span class="p">(</span><span class="mi">2</span><span class="p">):</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="o">...</span> <span class="nb">print</span> <span class="nb">list</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span>
-<span class="go">[0, 1]</span>
-<span class="go">[2, 3]</span>
-<span class="go">[4]</span>
-</pre></div>
-</div>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>iterable</strong> (<em>iterable</em>) &#8211; Any iterable, e.g. list, xrange, ...</li>
-<li><strong>n</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; Chunk size</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Chunked iterable</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">Iterator over iterators</p>
-</td>
-</tr>
-</tbody>
-</table>
-<p>alias of <code class="xref py py-class docutils literal"><span class="pre">chunked</span></code></p>
-</dd></dl>
-
 <dl class="class">
 <dt id="nutsflow.processor.ChunkBy">
 <em class="property">class </em><code class="descname">ChunkBy</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/processor.html#ChunkBy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.processor.ChunkBy" title="Permalink to this definition">¶</a></dt>
@@ -1648,7 +1719,7 @@ see also GroupBySorted(), Chunk(), ChunkWhen()</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>iterable</strong> (<em>iterable</em>) &#8211; Any iterable, e.g. list, xrange, ...</li>
+<li><strong>iterable</strong> (<em>iterable</em>) &#8211; Any iterable, e.g. list, range, ...</li>
 <li><strong>func</strong> (<a class="reference internal" href="#module-function" title="function: Nuts that perform functions on single stream elements."><em>function</em></a>) &#8211; Functions the iterable is chunked by</li>
 </ul>
 </td>
@@ -1754,41 +1825,6 @@ New chunk is created if return value is True.</td>
 
 </dd></dl>
 
-<dl class="attribute">
-<dt id="nutsflow.processor.Combine">
-<code class="descname">Combine</code><a class="headerlink" href="#nutsflow.processor.Combine" title="Permalink to this definition">¶</a></dt>
-<dd><p>iterable &gt;&gt; Combine(r)</p>
-<p>Return r length subsequences of elements from the input iterable.
-See <a class="reference external" href="https://docs.python.org/2/library/itertools.html#itertools.combinations">https://docs.python.org/2/library/itertools.html#itertools.combinations</a></p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="s1">&#39;ABC&#39;</span> <span class="o">&gt;&gt;</span> <span class="n">Combine</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
-<span class="go">[(&#39;A&#39;, &#39;B&#39;), (&#39;A&#39;, &#39;C&#39;), (&#39;B&#39;, &#39;C&#39;)]</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">Combine</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
-<span class="go">[(1, 2, 3), (1, 2, 4), (1, 3, 4), (2, 3, 4)]</span>
-</pre></div>
-</div>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>iterable</strong> (<em>iterable</em>) &#8211; Any iterable</li>
-<li><strong>r</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; Length of combinations</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Iterable over combinations</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">Iterator</p>
-</td>
-</tr>
-</tbody>
-</table>
-<p>alias of <code class="xref py py-class docutils literal"><span class="pre">combinations</span></code></p>
-</dd></dl>
-
 <dl class="class">
 <dt id="nutsflow.processor.Concat">
 <em class="property">class </em><code class="descname">Concat</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/processor.html#Concat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.processor.Concat" title="Permalink to this definition">¶</a></dt>
@@ -1829,71 +1865,6 @@ See <a class="reference external" href="https://docs.python.org/2/library/iterto
 <code class="descname">__rrshift__</code><span class="sig-paren">(</span><em>iterable</em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.processor.Concat.__rrshift__" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-</dd></dl>
-
-<dl class="attribute">
-<dt id="nutsflow.processor.Cycle">
-<code class="descname">Cycle</code><a class="headerlink" href="#nutsflow.processor.Cycle" title="Permalink to this definition">¶</a></dt>
-<dd><p>iterable &gt;&gt; Cycle()</p>
-<p>Cycle through iterable indefinitely. Large memory consumption if iterable is
-large!</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">Cycle</span><span class="p">()</span> <span class="o">&gt;&gt;</span> <span class="n">Take</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
-<span class="go">[1, 2, 1, 2, 1]</span>
-</pre></div>
-</div>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>iterable</strong> (<em>iterable</em>) &#8211; Any iterable, e.g. list, xrange, ...</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Cycled input iterable</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">Iterator</td>
-</tr>
-</tbody>
-</table>
-<p>alias of <code class="xref py py-class docutils literal"><span class="pre">cycle</span></code></p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="nutsflow.processor.Dedupe">
-<code class="descname">Dedupe</code><a class="headerlink" href="#nutsflow.processor.Dedupe" title="Permalink to this definition">¶</a></dt>
-<dd><p>iterable &gt;&gt; Dedupe([key])</p>
-<p>Return only unique elements in iterable. Can have very high memory consumption
-if iterable is long and many elements are unique!</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">Dedupe</span><span class="p">()</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
-<span class="go">[2, 3, 1, 4]</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">1</span><span class="p">,</span><span class="s1">&#39;a&#39;</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="s1">&#39;a&#39;</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">)]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">&gt;&gt;</span> <span class="n">Dedupe</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">):</span> <span class="n">y</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
-<span class="go">[(1, &#39;a&#39;), (3, &#39;b&#39;)]</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">&gt;&gt;</span> <span class="n">Dedupe</span><span class="p">(</span><span class="n">_</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
-<span class="go">[(1, &#39;a&#39;), (3, &#39;b&#39;)]</span>
-</pre></div>
-</div>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>iterable</strong> (<em>iterable</em>) &#8211; Any iterable, e.g. list, xrange, ...</li>
-<li><strong>key</strong> &#8211; Function used to compare for equality.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Iterator over unique elements.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">Iterator</p>
-</td>
-</tr>
-</tbody>
-</table>
-<p>alias of <code class="xref py py-class docutils literal"><span class="pre">unique</span></code></p>
 </dd></dl>
 
 <dl class="class">
@@ -1965,105 +1936,6 @@ if iterable is long and many elements are unique!</p>
 <code class="descname">__rrshift__</code><span class="sig-paren">(</span><em>iterable</em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.processor.DropWhile.__rrshift__" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-</dd></dl>
-
-<dl class="attribute">
-<dt id="nutsflow.processor.Filter">
-<code class="descname">Filter</code><a class="headerlink" href="#nutsflow.processor.Filter" title="Permalink to this definition">¶</a></dt>
-<dd><p>iterable &gt;&gt; Filter(func)</p>
-<p>Filter elements from iterable based on predicate function.
-See <a class="reference external" href="https://docs.python.org/2/library/itertools.html#itertools.ifilter">https://docs.python.org/2/library/itertools.html#itertools.ifilter</a></p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">Filter</span><span class="p">(</span><span class="n">_</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
-<span class="go">[0, 1]</span>
-</pre></div>
-</div>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>iterable</strong> (<em>iterable</em>) &#8211; Any iterable</li>
-<li><strong>func</strong> (<a class="reference internal" href="#module-function" title="function: Nuts that perform functions on single stream elements."><em>function</em></a>) &#8211; Predicate function. Element is removed if False.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Filtered iterable</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">Iterator</p>
-</td>
-</tr>
-</tbody>
-</table>
-<p>alias of <code class="xref py py-class docutils literal"><span class="pre">ifilter</span></code></p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="nutsflow.processor.FilterFalse">
-<code class="descname">FilterFalse</code><a class="headerlink" href="#nutsflow.processor.FilterFalse" title="Permalink to this definition">¶</a></dt>
-<dd><p>iterable &gt;&gt; FilterFalse(func)</p>
-<p>Filter elements from iterable based on predicate function.
-Same as Filter but elements are removed (not kept) if predicate function
-returns True.
-See <a class="reference external" href="https://docs.python.org/2/library/itertools.html#itertools.ifilterfalse">https://docs.python.org/2/library/itertools.html#itertools.ifilterfalse</a></p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">FilterFalse</span><span class="p">(</span><span class="n">_</span> <span class="o">&gt;=</span> <span class="mi">2</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
-<span class="go">[0, 1]</span>
-</pre></div>
-</div>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>iterable</strong> (<em>iterable</em>) &#8211; Any iterable</li>
-<li><strong>func</strong> (<a class="reference internal" href="#module-function" title="function: Nuts that perform functions on single stream elements."><em>function</em></a>) &#8211; Predicate function. Element is removed if True.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Filtered iterable</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">Iterator</p>
-</td>
-</tr>
-</tbody>
-</table>
-<p>alias of <code class="xref py py-class docutils literal"><span class="pre">ifilterfalse</span></code></p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="nutsflow.processor.FlatMap">
-<code class="descname">FlatMap</code><a class="headerlink" href="#nutsflow.processor.FlatMap" title="Permalink to this definition">¶</a></dt>
-<dd><p>iterable &gt;&gt; FlatMap(func)</p>
-<p>Map function on iterable and flatten. Equivalent to
-iterable &gt;&gt; Map(func) &gt;&gt; Flatten()</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[[</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">]]</span> <span class="o">&gt;&gt;</span> <span class="n">FlatMap</span><span class="p">(</span><span class="n">_</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
-<span class="go">[0, 1, 2]</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[[</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">]]</span> <span class="o">&gt;&gt;</span> <span class="n">FlatMap</span><span class="p">(</span><span class="n">_</span> <span class="o">*</span> <span class="mi">2</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
-<span class="go">[0, 0, 1, 1, 2, 2]</span>
-</pre></div>
-</div>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>iterable</strong> (<em>iterable</em>) &#8211; Any iterable.</li>
-<li><strong>func</strong> (<a class="reference internal" href="#module-function" title="function: Nuts that perform functions on single stream elements."><em>function</em></a>) &#8211; Mapping function.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Mapped and flattened iterable</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">Iterator</p>
-</td>
-</tr>
-</tbody>
-</table>
-<p>alias of <code class="xref py py-class docutils literal"><span class="pre">flatmap</span></code></p>
 </dd></dl>
 
 <dl class="class">
@@ -2172,27 +2044,27 @@ Note that elements of iterable do not need to be sorted.
 GroupBy will store all elements in memory!
 If the iterable is sorted use GroupBySorted() instead.
 see also Chunk(), ChunkWhen(), ChunkBy()</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nutsflow</span> <span class="k">import</span> <span class="n">Collect</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nutsflow</span> <span class="k">import</span> <span class="n">Sort</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">GroupBy</span><span class="p">()</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">GroupBy</span><span class="p">()</span> <span class="o">&gt;&gt;</span> <span class="n">Sort</span><span class="p">()</span>
 <span class="go">[(1, [1, 1, 1]), (2, [2]), (3, [3])]</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">GroupBy</span><span class="p">(</span><span class="n">nokey</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">GroupBy</span><span class="p">(</span><span class="n">nokey</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Sort</span><span class="p">()</span>
 <span class="go">[[1, 1, 1], [2], [3]]</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="s1">&#39;+++&#39;</span><span class="p">,</span> <span class="s1">&#39;**&#39;</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">GroupBy</span><span class="p">(</span><span class="nb">len</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="s1">&#39;+++&#39;</span><span class="p">,</span> <span class="s1">&#39;**&#39;</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">GroupBy</span><span class="p">(</span><span class="nb">len</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Sort</span><span class="p">()</span>
 <span class="go">[(2, [&#39;--&#39;, &#39;**&#39;]), (3, [&#39;+++&#39;])]</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="s1">&#39;a3&#39;</span><span class="p">,</span> <span class="s1">&#39;b2&#39;</span><span class="p">,</span> <span class="s1">&#39;c1&#39;</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">GroupBy</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
-<span class="go">[(&#39;1&#39;, [&#39;c1&#39;]), (&#39;3&#39;, [&#39;a3&#39;]), (&#39;2&#39;, [&#39;b2&#39;])]</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="s1">&#39;a3&#39;</span><span class="p">,</span> <span class="s1">&#39;b2&#39;</span><span class="p">,</span> <span class="s1">&#39;c1&#39;</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">GroupBy</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Sort</span><span class="p">()</span>
+<span class="go"> [(&#39;1&#39;, [&#39;c1&#39;]), (&#39;2&#39;, [&#39;b2&#39;]), (&#39;3&#39;, [&#39;a3&#39;])]</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">)]</span> <span class="o">&gt;&gt;</span> <span class="n">GroupBy</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">nokey</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
-<span class="go">[[(3, 1)], [(2, 2)], [(1, 3)]]</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">)]</span> <span class="o">&gt;&gt;</span> <span class="n">GroupBy</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">nokey</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Sort</span><span class="p">()</span>
+<span class="go">[[(1, 3)], [(2, 2)], [(3, 1)]]</span>
 </pre></div>
 </div>
 <table class="docutils field-list" frame="void" rules="none">
@@ -2239,7 +2111,7 @@ see also Chunk(), ChunkWhen(), ChunkBy()</p>
 </div>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nd">@nut_sink</span>
 <span class="gp">... </span><span class="k">def</span> <span class="nf">ViewResult</span><span class="p">(</span><span class="n">iterable</span><span class="p">):</span>
-<span class="gp">... </span>    <span class="k">return</span> <span class="n">iterable</span> <span class="o">&gt;&gt;</span> <span class="n">Map</span><span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">es</span><span class="p">):</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="n">es</span><span class="p">)))</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
+<span class="gp">... </span>    <span class="k">return</span> <span class="n">iterable</span> <span class="o">&gt;&gt;</span> <span class="n">Map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">t</span><span class="p">:</span> <span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">list</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="mi">1</span><span class="p">])))</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
 </pre></div>
 </div>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">GroupBySorted</span><span class="p">()</span> <span class="o">&gt;&gt;</span> <span class="n">ViewResult</span><span class="p">()</span>
@@ -2368,44 +2240,6 @@ determines length of interleaved iterator.</p>
 
 </dd></dl>
 
-<dl class="attribute">
-<dt id="nutsflow.processor.Map">
-<code class="descname">Map</code><a class="headerlink" href="#nutsflow.processor.Map" title="Permalink to this definition">¶</a></dt>
-<dd><p>iterable &gt;&gt; Map(func, <a href="#id11"><span class="problematic" id="id12">*</span></a>iterables)</p>
-<p>Map function on iterable.
-See <a class="reference external" href="https://docs.python.org/2/library/itertools.html#itertools.imap">https://docs.python.org/2/library/itertools.html#itertools.imap</a></p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">Map</span><span class="p">(</span><span class="n">_</span> <span class="o">*</span> <span class="mi">2</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
-<span class="go">[0, 2, 4]</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="s1">&#39;ab&#39;</span><span class="p">,</span> <span class="s1">&#39;cde&#39;</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">Map</span><span class="p">(</span><span class="nb">len</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
-<span class="go">[2, 3]</span>
-</pre></div>
-</div>
-<p>&gt;&gt; [2, 3, 10] &gt;&gt; Map(pow, [5, 2, 3]) &gt;&gt; Collect()
-[32, 9, 1000]</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>iterable</strong> (<em>iterable</em>) &#8211; Any iterable</li>
-<li><strong>iterables</strong> (<em>iterables</em>) &#8211; Any iterables.</li>
-<li><strong>func</strong> (<a class="reference internal" href="#module-function" title="function: Nuts that perform functions on single stream elements."><em>function</em></a>) &#8211; Mapping function.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Mapped iterable</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">Iterator</p>
-</td>
-</tr>
-</tbody>
-</table>
-<p>alias of <code class="xref py py-class docutils literal"><span class="pre">imap</span></code></p>
-</dd></dl>
-
 <dl class="class">
 <dt id="nutsflow.processor.MapCol">
 <em class="property">class </em><code class="descname">MapCol</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/processor.html#MapCol"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.processor.MapCol" title="Permalink to this definition">¶</a></dt>
@@ -2455,7 +2289,7 @@ See <a class="reference external" href="https://docs.python.org/2/library/iterto
 <dt id="nutsflow.processor.MapMulti">
 <em class="property">class </em><code class="descname">MapMulti</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/processor.html#MapMulti"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.processor.MapMulti" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#nutsflow.base.Nut" title="nutsflow.base.Nut"><code class="xref py py-class docutils literal"><span class="pre">nutsflow.base.Nut</span></code></a></p>
-<p>iterable &gt;&gt; MapMulti(<a href="#id13"><span class="problematic" id="id14">*</span></a>funcs)</p>
+<p>iterable &gt;&gt; MapMulti(<a href="#id11"><span class="problematic" id="id12">*</span></a>funcs)</p>
 <p>Map multiple functions on iterable. For each function a separate iterable
 is returned. Can consume large amounts of memory when iterables are
 processed sequentially!</p>
@@ -2545,73 +2379,6 @@ and only top level functions (not class methods) are pickable. See
 
 </dd></dl>
 
-<dl class="attribute">
-<dt id="nutsflow.processor.Partition">
-<code class="descname">Partition</code><a class="headerlink" href="#nutsflow.processor.Partition" title="Permalink to this definition">¶</a></dt>
-<dd><p>partition1, partition2 = iterable &gt;&gt; Partition(func)</p>
-<p>Split iterable into two partitions based on predicate function</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">smaller</span><span class="p">,</span> <span class="n">larger</span> <span class="o">=</span> <span class="n">Range</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Partition</span><span class="p">(</span><span class="n">_</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">smaller</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
-<span class="go">[0, 1, 2]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">larger</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
-<span class="go">[3, 4]</span>
-</pre></div>
-</div>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>iterable</strong> &#8211; Any iterable, e.g. list, xrange, ...</li>
-<li><strong>pred</strong> &#8211; Predicate function.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Partition iterators</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">Two iterators</p>
-</td>
-</tr>
-</tbody>
-</table>
-<p>alias of <code class="xref py py-class docutils literal"><span class="pre">partition</span></code></p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="nutsflow.processor.Permutate">
-<code class="descname">Permutate</code><a class="headerlink" href="#nutsflow.processor.Permutate" title="Permalink to this definition">¶</a></dt>
-<dd><p>iterable &gt;&gt; Permutate([,r])</p>
-<p>Return successive r length permutations of elements in the iterable.
-See <a class="reference external" href="https://docs.python.org/2/library/itertools.html#itertools.permutations">https://docs.python.org/2/library/itertools.html#itertools.permutations</a></p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="s1">&#39;ABC&#39;</span> <span class="o">&gt;&gt;</span> <span class="n">Permutate</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
-<span class="go">[(&#39;A&#39;, &#39;B&#39;), (&#39;A&#39;, &#39;C&#39;), (&#39;B&#39;, &#39;A&#39;), (&#39;B&#39;, &#39;C&#39;), (&#39;C&#39;, &#39;A&#39;), (&#39;C&#39;, &#39;B&#39;)]</span>
-</pre></div>
-</div>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>iterable</strong> (<em>iterable</em>) &#8211; Any iterable</li>
-<li><strong>r</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; Permutation of length r are generated.
-If r is not specified or is None, then r defaults
-to the length of the iterable and all possible full-length
-permutations are generated.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Iterable over permutations</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">Iterator</p>
-</td>
-</tr>
-</tbody>
-</table>
-<p>alias of <code class="xref py py-class docutils literal"><span class="pre">permutations</span></code></p>
-</dd></dl>
-
 <dl class="class">
 <dt id="nutsflow.processor.Pick">
 <em class="property">class </em><code class="descname">Pick</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/processor.html#Pick"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.processor.Pick" title="Permalink to this definition">¶</a></dt>
@@ -2619,7 +2386,7 @@ permutations are generated.</li>
 <p>iterable &gt;&gt; Pick(p_n)</p>
 <p>Pick every p_n-th element from the iterable if p_n is an integer,
 otherwise pick randomly with probability p_n.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nutsflow</span> <span class="k">import</span> <span class="n">Range</span><span class="p">,</span> <span class="n">Collect</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nutsflow</span> <span class="k">import</span> <span class="n">Range</span><span class="p">,</span> <span class="n">Collect</span><span class="p">,</span> <span class="n">StableRandom</span>
 </pre></div>
 </div>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">Pick</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
@@ -2631,8 +2398,8 @@ otherwise pick randomly with probability p_n.</p>
 </pre></div>
 </div>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">random</span> <span class="k">as</span> <span class="nn">rnd</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Pick</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">rnd</span><span class="o">.</span><span class="n">Random</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
-<span class="go">[2, 3, 5, 7, 8]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Pick</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">StableRandom</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
+<span class="go">[0, 4, 5, 6, 8, 9]</span>
 </pre></div>
 </div>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">Pick</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
@@ -2647,7 +2414,8 @@ otherwise pick randomly with probability p_n.</p>
 <li><strong>iterable</strong> (<em>iterable</em>) &#8211; Any iterable</li>
 <li><strong>p_n</strong> (<em>float|int</em>) &#8211; Probability p in [0, 1] or
 integer n for every n-th element</li>
-<li><strong>rand</strong> (<em>Random</em>) &#8211; Random number generator to be used.</li>
+<li><strong>rand</strong> (<em>Random</em>) &#8211; Random number generator to be used.
+Don&#8217;t use StableRandom, which is only for testing.</li>
 </ul>
 </td>
 </tr>
@@ -2717,7 +2485,7 @@ Typically used to keep the CPU busy while the GPU is crunching.</p>
 beforehand. Data are just passed through.
 For long running computations and Estimated time of arrival (eta) is
 printed as well</p>
-<p>xrange(10) &gt;&gt; PrintProgress(10, 0) &gt;&gt; Consume()</p>
+<p>range(10) &gt;&gt; PrintProgress(10, 0) &gt;&gt; Consume()</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -2759,15 +2527,15 @@ and shuffled within. If buffersize is smaller than the length of
 the iterable the shuffle is therefore partial in the sense that the
 &#8216;window&#8217; of the shuffle is limited to buffersize.
 Note that for buffersize = 1 no shuffling occurs.</p>
-<p>In the following example rand = rnd.Random(0) is used to create a fixed
+<p>In the following example rand = StableRandom(0) is used to create a fixed
 shuffle. Usually, this is not what you want. Use the default
 rand=rnd.Random() instead.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nutsflow</span> <span class="k">import</span> <span class="n">Range</span><span class="p">,</span> <span class="n">Collect</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Shuffle</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">rnd</span><span class="o">.</span><span class="n">Random</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
-<span class="go">[1, 5, 3, 0, 6, 2, 8, 9, 7, 4]</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nutsflow</span> <span class="k">import</span> <span class="n">Range</span><span class="p">,</span> <span class="n">Collect</span><span class="p">,</span> <span class="n">StableRandom</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Shuffle</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">StableRandom</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
+<span class="go">[4, 2, 3, 6, 7, 0, 1, 9, 5, 8]</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Shuffle</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">rnd</span><span class="o">.</span><span class="n">Random</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Shuffle</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">StableRandom</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
 <span class="go">[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]</span>
 </pre></div>
 </div>
@@ -2884,14 +2652,35 @@ See <a class="reference external" href="https://docs.python.org/2/library/iterto
 
 </dd></dl>
 
-<dl class="attribute">
-<dt id="nutsflow.processor.TakeWhile">
-<code class="descname">TakeWhile</code><a class="headerlink" href="#nutsflow.processor.TakeWhile" title="Permalink to this definition">¶</a></dt>
-<dd><p>iterable &gt;&gt; TakeWhile(func)</p>
-<p>Take elements from iterable while predicte function is True.
-See <a class="reference external" href="https://docs.python.org/2/library/itertools.html#itertools.takewhile">https://docs.python.org/2/library/itertools.html#itertools.takewhile</a></p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">TakeWhile</span><span class="p">(</span><span class="n">_</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
-<span class="go">[0, 1]</span>
+<dl class="class">
+<dt id="nutsflow.processor.Try">
+<em class="property">class </em><code class="descname">Try</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/processor.html#Try"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.processor.Try" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#nutsflow.base.Nut" title="nutsflow.base.Nut"><code class="xref py py-class docutils literal"><span class="pre">nutsflow.base.Nut</span></code></a></p>
+<p>iterable &gt;&gt; Try(nut)</p>
+<p>Exception handling for (nut) functions. If the wrapped nut or function 
+raises an exception it is caught and handled with the provided handler.
+Per default the exception and the value causing it are printed.
+Furthermore a default value can be specified that is returned instead
+of the nut output if an exception occurs. Per default no output is
+returned (SKIP).</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nutsflow</span> <span class="k">import</span> <span class="n">Try</span><span class="p">,</span> <span class="n">Collect</span><span class="p">,</span> <span class="n">nut_function</span>  
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">Try</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span> <span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="mf">6.0</span><span class="o">/</span><span class="n">x</span><span class="p">))</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
+<span class="go">[6, 3, 2]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">Try</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span> <span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="mf">6.0</span><span class="o">/</span><span class="n">x</span><span class="p">))</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
+<span class="go">0 : float division by zero</span>
+<span class="go">[6, 2]</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Div</span> <span class="o">=</span> <span class="n">nut_function</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span> <span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="mf">6.0</span><span class="o">/</span><span class="n">x</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">Try</span><span class="p">(</span><span class="n">Div</span><span class="p">())</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
+<span class="go">[6, 3, 2]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">Try</span><span class="p">(</span><span class="n">Div</span><span class="p">())</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
+<span class="go">0 : float division by zero</span>
+<span class="go">[6, 2]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">Try</span><span class="p">(</span><span class="n">Div</span><span class="p">(),</span> <span class="n">handler</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
+<span class="go">[6, 0, 2]</span>
 </pre></div>
 </div>
 <table class="docutils field-list" frame="void" rules="none">
@@ -2899,63 +2688,37 @@ See <a class="reference external" href="https://docs.python.org/2/library/iterto
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>iterable</strong> (<em>iterable</em>) &#8211; Any iterable</li>
-<li><strong>func</strong> (<a class="reference internal" href="#module-function" title="function: Nuts that perform functions on single stream elements."><em>function</em></a>) &#8211; Predicate function.</li>
+<li><strong>iterable</strong> (<em>iterable</em>) &#8211; Iterable the nut operates on.</li>
+<li><strong>func</strong> (<em>function|NutFunction</em>) &#8211; (Nut) function that is wrapped 
+for exception handling.</li>
+<li><strong>default</strong> (<em>Object</em>) &#8211; Return value if exception occurs. 
+If default == &#8220;SKIP&#8217;, no value is returned.</li>
+<li><strong>handler</strong> (<em>function|None</em>) &#8211; Function that is called if exception occurs.
+Function takes element x and exception e as parameters and the default
+function prints x and e. For handler==None, no handler is called.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Iterable</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Iterator over input elements transformed by provided nut.</p>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">Iterator</p>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">iterator</p>
 </td>
 </tr>
 </tbody>
 </table>
-<p>alias of <code class="xref py py-class docutils literal"><span class="pre">takewhile</span></code></p>
-</dd></dl>
+<dl class="method">
+<dt id="nutsflow.processor.Try.__rrshift__">
+<code class="descname">__rrshift__</code><span class="sig-paren">(</span><em>iterable</em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.processor.Try.__rrshift__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
-<dl class="attribute">
-<dt id="nutsflow.processor.Tee">
-<code class="descname">Tee</code><a class="headerlink" href="#nutsflow.processor.Tee" title="Permalink to this definition">¶</a></dt>
-<dd><p>iterable &gt;&gt; Tee([n=2])</p>
-<p>Return n independent iterators from a single iterable. Can consume large
-amounts of memory if iterable is large and tee&#8217;s are not processed in
-parallel.
-See <a class="reference external" href="https://docs.python.org/2/library/itertools.html#itertools.tee">https://docs.python.org/2/library/itertools.html#itertools.tee</a></p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">it1</span><span class="p">,</span> <span class="n">it2</span>  <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">Tee</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">it1</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
-<span class="go">[1, 2, 3]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">it2</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
-<span class="go">[1, 2, 3]</span>
-</pre></div>
-</div>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>iterable</strong> (<em>iterable</em>) &#8211; Any iterable</li>
-<li><strong>n</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; Number of iterators to return.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">n iterators</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">(Iterator, ..)</p>
-</td>
-</tr>
-</tbody>
-</table>
-<p>alias of <code class="xref py py-class docutils literal"><span class="pre">tee</span></code></p>
 </dd></dl>
 
 <dl class="class">
 <dt id="nutsflow.processor.Zip">
 <em class="property">class </em><code class="descname">Zip</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/processor.html#Zip"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.processor.Zip" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#nutsflow.base.Nut" title="nutsflow.base.Nut"><code class="xref py py-class docutils literal"><span class="pre">nutsflow.base.Nut</span></code></a></p>
-<p>iterable &gt;&gt; Zip(<a href="#id15"><span class="problematic" id="id16">*</span></a>iterables)</p>
+<p>iterable &gt;&gt; Zip(<a href="#id13"><span class="problematic" id="id14">*</span></a>iterables)</p>
 <p>Zip elements of iterable with elements of given iterables.
 Zip finishes when shortest iterable is exhausted.
 See <a class="reference external" href="https://docs.python.org/2/library/itertools.html#itertools.izip">https://docs.python.org/2/library/itertools.html#itertools.izip</a>
@@ -3000,7 +2763,7 @@ And <a class="reference external" href="https://docs.python.org/2/library/iterto
 <dt id="nutsflow.processor.ZipWith">
 <em class="property">class </em><code class="descname">ZipWith</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/processor.html#ZipWith"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.processor.ZipWith" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#nutsflow.base.Nut" title="nutsflow.base.Nut"><code class="xref py py-class docutils literal"><span class="pre">nutsflow.base.Nut</span></code></a></p>
-<p>iterable &gt;&gt; ZipWith(f, <a href="#id17"><span class="problematic" id="id18">*</span></a>iterables)</p>
+<p>iterable &gt;&gt; ZipWith(f, <a href="#id15"><span class="problematic" id="id16">*</span></a>iterables)</p>
 <p>Zips the given iterables, unpacks them and applies the given function.</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">add</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">ZipWith</span><span class="p">(</span><span class="n">add</span><span class="p">,</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
@@ -3152,16 +2915,16 @@ and the smallest element itself if retvalue==True.</p>
 <dd><p>Bases: <a class="reference internal" href="#nutsflow.base.NutSink" title="nutsflow.base.NutSink"><code class="xref py py-class docutils literal"><span class="pre">nutsflow.base.NutSink</span></code></a></p>
 <p>iterable &gt;&gt; Collect(container)</p>
 <p>Collects all elements of the iterable input in the given container.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">xrange</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
 <span class="go">[0, 1, 2, 3, 4]</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">(</span><span class="nb">set</span><span class="p">)</span>
-<span class="go">set([1, 2, 3])</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">(</span><span class="nb">set</span><span class="p">)</span>  
+<span class="go">{1, 2, 3}</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[(</span><span class="s1">&#39;one&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;two&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)]</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">(</span><span class="nb">dict</span><span class="p">)</span>
-<span class="go">{&#39;two&#39;: 2, &#39;one&#39;: 1}</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[(</span><span class="s1">&#39;one&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;two&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)]</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">(</span><span class="nb">dict</span><span class="p">)</span>  
+<span class="go">{&#39;one&#39;: 1, &#39;two&#39;: 2}</span>
 </pre></div>
 </div>
 <table class="docutils field-list" frame="void" rules="none">
@@ -3169,7 +2932,7 @@ and the smallest element itself if retvalue==True.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>iterable</strong> (<em>iterable</em>) &#8211; Any iterable, e.g. list, xrange, ...</li>
+<li><strong>iterable</strong> (<em>iterable</em>) &#8211; Any iterable, e.g. list, range, ...</li>
 <li><strong>container</strong> (<em>container</em>) &#8211; Some container, e.g. list, set, dict
 that can be filled from an iterable</li>
 </ul>
@@ -3253,11 +3016,11 @@ n = None means the whole iterable is consumed.</li>
 <p>iterable &gt;&gt; CountValues(relative=False)</p>
 <p>Return dictionary with (relative) counts of the values
 in the input iterable.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="s1">&#39;abaacc&#39;</span> <span class="o">&gt;&gt;</span> <span class="n">CountValues</span><span class="p">()</span>
-<span class="go">{&#39;a&#39;: 3, &#39;c&#39;: 2, &#39;b&#39;: 1}</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="s1">&#39;abaacc&#39;</span> <span class="o">&gt;&gt;</span> <span class="n">CountValues</span><span class="p">()</span>  
+<span class="go">{&#39;a&#39;: 3, &#39;b&#39;: 1, &#39;c&#39;: 2}</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="s1">&#39;aabaab&#39;</span> <span class="o">&gt;&gt;</span> <span class="n">CountValues</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="s1">&#39;aabaab&#39;</span> <span class="o">&gt;&gt;</span> <span class="n">CountValues</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>  
 <span class="go">{&#39;a&#39;: 1.0, &#39;b&#39;: 0.5}</span>
 </pre></div>
 </div>
@@ -3266,7 +3029,7 @@ in the input iterable.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>iterable</strong> (<em>iterable</em>) &#8211; Any iterable, e.g. list, xrange, ...</li>
+<li><strong>iterable</strong> (<em>iterable</em>) &#8211; Any iterable, e.g. list, range, ...</li>
 <li><strong>relative</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) &#8211; True: return relative counts otherwise absolute counts</li>
 </ul>
 </td>
@@ -3301,7 +3064,7 @@ in the input iterable.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>iterable</strong> (<em>iterable</em>) &#8211; Any iterable, e.g. list, xrange, ...</li>
+<li><strong>iterable</strong> (<em>iterable</em>) &#8211; Any iterable, e.g. list, range, ...</li>
 <li><strong>n</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; Number of elements to take.</li>
 <li><strong>container</strong> (<em>container</em>) &#8211; Container to collect elements in, e.g. list, set</li>
 </ul>
@@ -3606,6 +3369,54 @@ See <a class="reference external" href="https://docs.python.org/2/library/functi
 </dd></dl>
 
 <dl class="class">
+<dt id="nutsflow.sink.Sort">
+<em class="property">class </em><code class="descname">Sort</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/sink.html#Sort"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.sink.Sort" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#nutsflow.base.NutSink" title="nutsflow.base.NutSink"><code class="xref py py-class docutils literal"><span class="pre">nutsflow.base.NutSink</span></code></a></p>
+<p>iterable &gt;&gt; Sort()</p>
+<p>Sorts iterable with respect to key function</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">Sort</span><span class="p">()</span>
+<span class="go">[1, 2, 3]</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">Sort</span><span class="p">(</span><span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="go">[3, 2, 1]</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="s1">&#39;a3&#39;</span><span class="p">,</span> <span class="s1">&#39;c1&#39;</span><span class="p">,</span> <span class="s1">&#39;b2&#39;</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">Sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">s</span><span class="p">:</span> <span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="go">[&#39;a3&#39;, &#39;b2&#39;, &#39;c1&#39;]</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="s1">&#39;a3&#39;</span><span class="p">,</span> <span class="s1">&#39;c1&#39;</span><span class="p">,</span> <span class="s1">&#39;b2&#39;</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">Sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">s</span><span class="p">:</span> <span class="n">s</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="go">[&#39;c1&#39;, &#39;b2&#39;, &#39;a3&#39;]</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>iterable</strong> (<em>iterable</em>) &#8211; Iterable</li>
+<li><strong>key</strong> (<em>function|None</em>) &#8211; key to sort iterable with.</li>
+<li><strong>reverse</strong> (<em>boolean</em>) &#8211; True: reverse order.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Sorted iterable</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="nutsflow.sink.Sort.__rrshift__">
+<code class="descname">__rrshift__</code><span class="sig-paren">(</span><em>iterable</em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.sink.Sort.__rrshift__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
 <dt id="nutsflow.sink.Sum">
 <em class="property">class </em><code class="descname">Sum</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/sink.html#Sum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.sink.Sum" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#nutsflow.base.NutSink" title="nutsflow.base.NutSink"><code class="xref py py-class docutils literal"><span class="pre">nutsflow.base.NutSink</span></code></a></p>
@@ -3650,7 +3461,7 @@ the iterable completely!</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>iterable</strong> (<em>iterable</em>) &#8211; Any iterable, e.g. list, xrange, ...</li>
+<li><strong>iterable</strong> (<em>iterable</em>) &#8211; Any iterable, e.g. list, range, ...</li>
 <li><strong>n</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; Number of elements to take.</li>
 <li><strong>container</strong> (<em>container</em>) &#8211; Container to collect elements in, e.g. list, set</li>
 </ul>
@@ -3676,7 +3487,7 @@ the iterable completely!</p>
 <em class="property">class </em><code class="descname">Unzip</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/sink.html#Unzip"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.sink.Unzip" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#nutsflow.base.NutSink" title="nutsflow.base.NutSink"><code class="xref py py-class docutils literal"><span class="pre">nutsflow.base.NutSink</span></code></a></p>
 <p>iterable &gt;&gt; Unzip(container=None)</p>
-<p>Same as izip(<a href="#id19"><span class="problematic" id="id20">*</span></a>iterable) but returns iterators for container=None</p>
+<p>Same as izip(<a href="#id17"><span class="problematic" id="id18">*</span></a>iterable) but returns iterators for container=None</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">)]</span> <span class="o">&gt;&gt;</span> <span class="n">Unzip</span><span class="p">(</span><span class="nb">tuple</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
 <span class="go">[(1, 4), (2, 5), (3, 6)]</span>
 </pre></div>
@@ -3686,7 +3497,7 @@ the iterable completely!</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>iterable</strong> (<em>iterable</em>) &#8211; Any iterable, e.g. list, xrange, ...</li>
+<li><strong>iterable</strong> (<em>iterable</em>) &#8211; Any iterable, e.g. list, range, ...</li>
 <li><strong>container</strong> (<em>container</em>) &#8211; If not none, unzipped results are collected
 in the provided container, eg. list, tuple, set</li>
 </ul>
@@ -3716,7 +3527,7 @@ See: <a class="reference external" href="https://docs.python.org/2/library/csv.h
 <dl class="method">
 <dt id="nutsflow.sink.WriteCSV.__init__">
 <code class="descname">__init__</code><span class="sig-paren">(</span><em>filepath</em>, <em>cols=None</em>, <em>skipheader=0</em>, <em>fmtfunc=&lt;function &lt;lambda&gt;&gt;</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/sink.html#WriteCSV.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.sink.WriteCSV.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>WriteCSV(filepath, cols, skipheader, fmtfunc, <a href="#id21"><span class="problematic" id="id22">**</span></a>kwargs)</p>
+<dd><p>WriteCSV(filepath, cols, skipheader, fmtfunc, <a href="#id19"><span class="problematic" id="id20">**</span></a>kwargs)</p>
 <p>Write data in Comma Separated Values format (CSV) and other formats
 to file. Tab Separated Values (TSV) files can be written by
 specifying a different delimiter. Note that in the docstring below
@@ -3726,7 +3537,7 @@ and ReadCSV.</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">os</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">filepath</span> <span class="o">=</span> <span class="s1">&#39;tests/data/temp_out.csv&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">WriteCSV</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span> <span class="k">as</span> <span class="n">writer</span><span class="p">:</span>
-<span class="gp">... </span>    <span class="n">xrange</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">writer</span>
+<span class="gp">... </span>    <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">writer</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -3847,7 +3658,7 @@ See <a class="reference external" href="https://docs.python.org/2/library/csv.ht
 <span class="go">[(1, 3), (1, 4), (2, 3), (2, 4)]</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Product</span><span class="p">(</span><span class="s1">&#39;ab&#39;</span><span class="p">,</span> <span class="n">xrange</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Product</span><span class="p">(</span><span class="s1">&#39;ab&#39;</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
 <span class="go">[(&#39;a&#39;, 0), (&#39;a&#39;, 1), (&#39;a&#39;, 2), (&#39;b&#39;, 0), (&#39;b&#39;, 1), (&#39;b&#39;, 2)]</span>
 </pre></div>
 </div>
@@ -3881,7 +3692,7 @@ Procuct([1,2], [1,2]) is equal to Product([1,2], repeat=2)</li>
 <dt id="nutsflow.source.Range">
 <em class="property">class </em><code class="descname">Range</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/source.html#Range"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.source.Range" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#nutsflow.base.NutSource" title="nutsflow.base.NutSource"><code class="xref py py-class docutils literal"><span class="pre">nutsflow.base.NutSource</span></code></a></p>
-<p>Range of numbers. Similar to xrange() but returns iterator that depletes.</p>
+<p>Range of numbers. Similar to range() but returns iterator that depletes.</p>
 <dl class="method">
 <dt id="nutsflow.source.Range.__init__">
 <code class="descname">__init__</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/source.html#Range.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.source.Range.__init__" title="Permalink to this definition">¶</a></dt>
@@ -3928,7 +3739,7 @@ See: <a class="reference external" href="https://docs.python.org/2/library/csv.h
 <dl class="method">
 <dt id="nutsflow.source.ReadCSV.__init__">
 <code class="descname">__init__</code><span class="sig-paren">(</span><em>filepath</em>, <em>columns=None</em>, <em>skipheader=0</em>, <em>fmtfunc=&lt;function &lt;lambda&gt;&gt;</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/source.html#ReadCSV.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.source.ReadCSV.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>ReadCSV(filepath, columns, skipheader, fmtfunc, <a href="#id23"><span class="problematic" id="id24">**</span></a>kwargs)</p>
+<dd><p>ReadCSV(filepath, columns, skipheader, fmtfunc, <a href="#id21"><span class="problematic" id="id22">**</span></a>kwargs)</p>
 <p>Read data in Comma Separated Format (CSV) from file.
 See also CSVWriter.
 Can also read Tab Separated Format (TSV) be providing the
@@ -4053,7 +3864,7 @@ See <a class="reference external" href="https://docs.python.org/2/library/csv.ht
   <div role="contentinfo">
     <p>
         &copy; Copyright 2017, IBM Research Australia.
-      Last updated on Jun 02, 2017.
+      Last updated on Jun 22, 2017.
 
     </p>
   </div> 
@@ -4074,7 +3885,7 @@ See <a class="reference external" href="https://docs.python.org/2/library/csv.ht
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'1.0.16',
+            VERSION:'1.0.20',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

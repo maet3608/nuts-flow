@@ -262,6 +262,9 @@ Click on a nut name for more details.
 - :class:`Tee <nutsflow.processor.Tee>` :
   return n independent iterators over iterable.
 
+- :class:`Try <nutsflow.processor.Try>` :
+  handle exceptions.
+
 - :class:`Zip <nutsflow.processor.Zip>` :
   zip elements from multiple iterables.
 

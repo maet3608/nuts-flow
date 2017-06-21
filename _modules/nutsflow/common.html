@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nutsflow.common &mdash; nutsflow 1.0.14 documentation</title>
+  <title>nutsflow.common &mdash; nutsflow 1.0.20 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../../genindex.html"/>
         <link rel="search" title="Search" href="../../search.html"/>
-    <link rel="top" title="nutsflow 1.0.14 documentation" href="../../index.html"/>
+    <link rel="top" title="nutsflow 1.0.20 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                1.0.14
+                1.0.20
               </div>
             
           
@@ -168,8 +168,10 @@
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span>
 
 <span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">random</span>
 
-<span class="kn">from</span> <span class="nn">cStringIO</span> <span class="k">import</span> <span class="n">StringIO</span>
+<span class="kn">from</span> <span class="nn">math</span> <span class="k">import</span> <span class="n">sqrt</span><span class="p">,</span> <span class="n">log</span><span class="p">,</span> <span class="n">cos</span><span class="p">,</span> <span class="n">pi</span>
+<span class="kn">from</span> <span class="nn">six.moves</span> <span class="k">import</span> <span class="n">cStringIO</span> <span class="k">as</span> <span class="n">StringIO</span>
 
 
 <div class="viewcode-block" id="as_tuple"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.common.as_tuple">[docs]</a><span class="k">def</span> <span class="nf">as_tuple</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
@@ -290,6 +292,122 @@
 
     <span class="k">def</span> <span class="nf">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
         <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">oldstdout</span></div>
+
+
+<span class="c1"># Adopted from: https://en.wikipedia.org/wiki/Mersenne_Twister</span>
+<div class="viewcode-block" id="StableRandom"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.common.StableRandom">[docs]</a><span class="k">class</span> <span class="nc">StableRandom</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">Random</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A pseudo random number generator that is stable across</span>
+<span class="sd">    Python 2.x and 3.x. Use this only for unit tests or doctests.</span>
+<span class="sd">    This class is derived from random.Random and supports all</span>
+<span class="sd">    methods of the base class.</span>
+
+<span class="sd">    &gt;&gt;&gt; rand = StableRandom(0)</span>
+<span class="sd">    &gt;&gt;&gt; rand.random()</span>
+<span class="sd">    0.5488135024320365</span>
+
+<span class="sd">    &gt;&gt;&gt; rand.randint(1, 10)</span>
+<span class="sd">    6</span>
+
+<span class="sd">    &gt;&gt;&gt; lst = [1, 2, 3, 4, 5]</span>
+<span class="sd">    &gt;&gt;&gt; rand.shuffle(lst)</span>
+<span class="sd">    &gt;&gt;&gt; lst</span>
+<span class="sd">    [1, 3, 2, 5, 4]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="StableRandom.__init__"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.common.StableRandom.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize random number generator.</span>
+
+<span class="sd">        :param None|int seed: Seed. If None the system time is used.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="mi">624</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mt</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">624</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mt</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_seed</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">624</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mt</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_int32</span><span class="p">(</span>
+                <span class="mi">1812433253</span> <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mt</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">^</span> <span class="bp">self</span><span class="o">.</span><span class="n">mt</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="mi">30</span><span class="p">)</span> <span class="o">+</span> <span class="n">i</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_int32</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return the 32 least significant bits&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="mh">0xFFFFFFFF</span> <span class="o">&amp;</span> <span class="n">x</span><span class="p">)</span>
+
+<div class="viewcode-block" id="StableRandom.random"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.common.StableRandom.random">[docs]</a>    <span class="k">def</span> <span class="nf">random</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return next random number in [0,1[&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">&gt;=</span> <span class="mi">624</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_twist</span><span class="p">()</span>
+
+        <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mt</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">]</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">y</span> <span class="o">^</span> <span class="n">y</span> <span class="o">&gt;&gt;</span> <span class="mi">11</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">y</span> <span class="o">^</span> <span class="n">y</span> <span class="o">&lt;&lt;</span> <span class="mi">7</span> <span class="o">&amp;</span> <span class="mi">2636928640</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">y</span> <span class="o">^</span> <span class="n">y</span> <span class="o">&lt;&lt;</span> <span class="mi">15</span> <span class="o">&amp;</span> <span class="mi">4022730752</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">y</span> <span class="o">^</span> <span class="n">y</span> <span class="o">&gt;&gt;</span> <span class="mi">18</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">+</span> <span class="mi">1</span>
+
+        <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_int32</span><span class="p">(</span><span class="n">y</span><span class="p">))</span> <span class="o">/</span> <span class="mh">0xffffffff</span></div>
+
+    <span class="k">def</span> <span class="nf">_randbelow</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="o">**</span><span class="n">args</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return a random int in the range [0,n)&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">*</span> <span class="n">n</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_twist</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Mersenne Twister&quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">624</span><span class="p">):</span>
+            <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_int32</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">mt</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&amp;</span> <span class="mh">0x80000000</span><span class="p">)</span> <span class="o">+</span>
+                            <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mt</span><span class="p">[(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="mi">624</span><span class="p">]</span> <span class="o">&amp;</span> <span class="mh">0x7fffffff</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mt</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mt</span><span class="p">[(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">397</span><span class="p">)</span> <span class="o">%</span> <span class="mi">624</span><span class="p">]</span> <span class="o">^</span> <span class="n">y</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span>
+
+            <span class="k">if</span> <span class="n">y</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">mt</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mt</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">^</span> <span class="mh">0x9908b0df</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="mi">0</span>
+
+<div class="viewcode-block" id="StableRandom.seed"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.common.StableRandom.seed">[docs]</a>    <span class="k">def</span> <span class="nf">seed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set seed.</span>
+
+<span class="sd">        :param None|int seed: Seed. If None the system time is used.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">import</span> <span class="nn">time</span>
+        <span class="k">if</span> <span class="n">seed</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">seed</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">*</span> <span class="mi">256</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_seed</span> <span class="o">=</span> <span class="n">seed</span></div>
+
+<div class="viewcode-block" id="StableRandom.gauss_next"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.common.StableRandom.gauss_next">[docs]</a>    <span class="k">def</span> <span class="nf">gauss_next</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return next gaussian random number.</span>
+
+<span class="sd">        :return: Random number sampled from gaussian distribution.</span>
+<span class="sd">        :rtype: float</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">x1</span><span class="p">,</span> <span class="n">x2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">random</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">random</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">sqrt</span><span class="p">(</span><span class="o">-</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">log</span><span class="p">(</span><span class="n">x1</span> <span class="o">+</span> <span class="mf">1e-10</span><span class="p">))</span> <span class="o">*</span> <span class="n">cos</span><span class="p">(</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">pi</span> <span class="o">*</span> <span class="n">x2</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="StableRandom.getstate"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.common.StableRandom.getstate">[docs]</a>    <span class="k">def</span> <span class="nf">getstate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return state of generator.</span>
+
+<span class="sd">        :return: Index and Mersenne Twister array.</span>
+<span class="sd">        :rtype: tuple</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">mt</span><span class="p">[:],</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span></div>
+
+<div class="viewcode-block" id="StableRandom.setstate"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.common.StableRandom.setstate">[docs]</a>    <span class="k">def</span> <span class="nf">setstate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set state of generator.</span>
+
+<span class="sd">        :param tuple state: State to set as produced by getstate()</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mt</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">state</span></div>
+
+<div class="viewcode-block" id="StableRandom.jumpahead"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.common.StableRandom.jumpahead">[docs]</a>    <span class="k">def</span> <span class="nf">jumpahead</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set state of generator far away from current state.</span>
+
+<span class="sd">        :param int n: Distance to jump.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">+=</span> <span class="n">n</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">random</span><span class="p">()</span></div></div>
 </pre></div>
 
            </div>
@@ -305,7 +423,7 @@
   <div role="contentinfo">
     <p>
         &copy; Copyright 2017, IBM Research Australia.
-      Last updated on May 30, 2017.
+      Last updated on Jun 22, 2017.
 
     </p>
   </div> 
@@ -326,7 +444,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'1.0.14',
+            VERSION:'1.0.20',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

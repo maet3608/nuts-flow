@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nutsflow.iterfunction &mdash; nutsflow 1.0.14 documentation</title>
+  <title>nutsflow.iterfunction &mdash; nutsflow 1.0.20 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../../genindex.html"/>
         <link rel="search" title="Search" href="../../search.html"/>
-    <link rel="top" title="nutsflow 1.0.14 documentation" href="../../index.html"/>
+    <link rel="top" title="nutsflow 1.0.20 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                1.0.14
+                1.0.20
               </div>
             
           
@@ -166,21 +166,25 @@
 <span class="sd">   :synopsis: Functions that work with iterables.</span>
 <span class="sd">              See https://docs.python.org/2/library/itertools.html</span>
 <span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">six</span>
 
 <span class="kn">import</span> <span class="nn">itertools</span> <span class="k">as</span> <span class="nn">itt</span>
-<span class="kn">import</span> <span class="nn">Queue</span> <span class="k">as</span> <span class="nn">q</span>
 <span class="kn">import</span> <span class="nn">threading</span> <span class="k">as</span> <span class="nn">t</span>
 <span class="kn">import</span> <span class="nn">collections</span> <span class="k">as</span> <span class="nn">cl</span>
+
+<span class="kn">from</span> <span class="nn">six.moves</span> <span class="k">import</span> <span class="n">queue</span> <span class="k">as</span> <span class="n">q</span>
+<span class="kn">from</span> <span class="nn">six</span> <span class="k">import</span> <span class="n">advance_iterator</span>
+<span class="kn">from</span> <span class="nn">six.moves</span> <span class="k">import</span> <span class="nb">map</span><span class="p">,</span> <span class="nb">filter</span><span class="p">,</span> <span class="n">filterfalse</span>
 
 
 <div class="viewcode-block" id="length"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.iterfunction.length">[docs]</a><span class="k">def</span> <span class="nf">length</span><span class="p">(</span><span class="n">iterable</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Return number of elements in iterable. Consumes iterable!</span>
 
-<span class="sd">    &gt;&gt;&gt; length(xrange(10))</span>
+<span class="sd">    &gt;&gt;&gt; length(range(10))</span>
 <span class="sd">    10</span>
 
-<span class="sd">    :param iterable iterable: Any iterable, e.g. list, xrange, ...</span>
+<span class="sd">    :param iterable iterable: Any iterable, e.g. list, range, ...</span>
 <span class="sd">    :return: Length of iterable.</span>
 <span class="sd">    :rtype: int</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -191,22 +195,23 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Return generator that interleaves the elements of the iterables.</span>
 
-<span class="sd">    &gt;&gt;&gt; list(interleave(xrange(5), &#39;abc&#39;))</span>
+<span class="sd">    &gt;&gt;&gt; list(interleave(range(5), &#39;abc&#39;))</span>
 <span class="sd">    [0, &#39;a&#39;, 1, &#39;b&#39;, 2, &#39;c&#39;, 3, 4]</span>
 
 <span class="sd">    &gt;&gt;&gt; list(interleave(&#39;12&#39;, &#39;abc&#39;, &#39;+-&#39;))</span>
 <span class="sd">    [&#39;1&#39;, &#39;a&#39;, &#39;+&#39;, &#39;2&#39;, &#39;b&#39;, &#39;-&#39;, &#39;c&#39;]</span>
 
-<span class="sd">    :param iterable iterables: Collection of iterables, e.g. lists, xrange, ...</span>
+<span class="sd">    :param iterable iterables: Collection of iterables, e.g. lists, range, ...</span>
 <span class="sd">    :return: Interleaved iterables.</span>
 <span class="sd">    :rtype: iterator</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">pending</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">iterables</span><span class="p">)</span>
-    <span class="n">nexts</span> <span class="o">=</span> <span class="n">itt</span><span class="o">.</span><span class="n">cycle</span><span class="p">(</span><span class="nb">iter</span><span class="p">(</span><span class="n">it</span><span class="p">)</span><span class="o">.</span><span class="n">next</span> <span class="k">for</span> <span class="n">it</span> <span class="ow">in</span> <span class="n">iterables</span><span class="p">)</span>
+    <span class="n">fnext</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">it</span><span class="p">:</span> <span class="k">lambda</span><span class="p">:</span> <span class="n">advance_iterator</span><span class="p">(</span><span class="n">it</span><span class="p">)</span>
+    <span class="n">nexts</span> <span class="o">=</span> <span class="n">itt</span><span class="o">.</span><span class="n">cycle</span><span class="p">(</span><span class="n">fnext</span><span class="p">(</span><span class="nb">iter</span><span class="p">(</span><span class="n">it</span><span class="p">))</span> <span class="k">for</span> <span class="n">it</span> <span class="ow">in</span> <span class="n">iterables</span><span class="p">)</span>
     <span class="k">while</span> <span class="n">pending</span><span class="p">:</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="k">for</span> <span class="nb">next</span> <span class="ow">in</span> <span class="n">nexts</span><span class="p">:</span>
-                <span class="k">yield</span> <span class="nb">next</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">nxt</span> <span class="ow">in</span> <span class="n">nexts</span><span class="p">:</span>
+                <span class="k">yield</span> <span class="n">nxt</span><span class="p">()</span>
         <span class="k">except</span> <span class="ne">StopIteration</span><span class="p">:</span>
             <span class="n">pending</span> <span class="o">-=</span> <span class="mi">1</span>
             <span class="n">nexts</span> <span class="o">=</span> <span class="n">itt</span><span class="o">.</span><span class="n">cycle</span><span class="p">(</span><span class="n">itt</span><span class="o">.</span><span class="n">islice</span><span class="p">(</span><span class="n">nexts</span><span class="p">,</span> <span class="n">pending</span><span class="p">))</span></div>
@@ -216,12 +221,12 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Return iterator over last n elements of given iterable.</span>
 
-<span class="sd">    &gt;&gt;&gt; list(take(xrange(10), 3))</span>
+<span class="sd">    &gt;&gt;&gt; list(take(range(10), 3))</span>
 <span class="sd">    [0, 1, 2]</span>
 
 <span class="sd">    See: https://docs.python.org/2/library/itertools.html#itertools.islice</span>
 
-<span class="sd">    :param iterable iterable: Any iterable, e.g. list, xrange, ...</span>
+<span class="sd">    :param iterable iterable: Any iterable, e.g. list, range, ...</span>
 <span class="sd">    :param int n: Number of elements to take</span>
 <span class="sd">    :return: Iterator over last n elements</span>
 <span class="sd">    :rtype: iterator</span>
@@ -233,15 +238,15 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Return n-th element of iterable. Consumes iterable!</span>
 
-<span class="sd">    &gt;&gt;&gt; nth(xrange(10), 2)</span>
+<span class="sd">    &gt;&gt;&gt; nth(range(10), 2)</span>
 <span class="sd">    2</span>
 
-<span class="sd">    &gt;&gt;&gt; nth(xrange(10), 100, default=-1)</span>
+<span class="sd">    &gt;&gt;&gt; nth(range(10), 100, default=-1)</span>
 <span class="sd">    -1</span>
 
 <span class="sd">    https://docs.python.org/2/library/itertools.html#itertools.islice</span>
 
-<span class="sd">    :param iterable iterable: Any iterable, e.g. list, xrange, ...</span>
+<span class="sd">    :param iterable iterable: Any iterable, e.g. list, range, ...</span>
 <span class="sd">    :param n: Index of element to retrieve.</span>
 <span class="sd">    :param default: Value to return when iterator is depleted</span>
 <span class="sd">    :return: nth element</span>
@@ -261,10 +266,10 @@
 <span class="sd">    &#39;this ae&#39;</span>
 
 <span class="sd">    &gt;&gt;&gt; data = [(1,&#39;a&#39;), (2,&#39;a&#39;), (3,&#39;b&#39;)]</span>
-<span class="sd">    &gt;&gt;&gt; list(unique(data, key= lambda (x,y): y))</span>
+<span class="sd">    &gt;&gt;&gt; list(unique(data, key=lambda t: t[1]))</span>
 <span class="sd">    [(1, &#39;a&#39;), (3, &#39;b&#39;)]</span>
 
-<span class="sd">    :param iterable iterable: Any iterable, e.g. list, xrange, ...</span>
+<span class="sd">    :param iterable iterable: Any iterable, e.g. list, range, ...</span>
 <span class="sd">    :param key: Function used to compare for equality.</span>
 <span class="sd">    :return: Iterator over unique elements.</span>
 <span class="sd">    :rtype: Iterator</span>
@@ -281,15 +286,15 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Split iterable in chunks of size n, where each chunk is also an iterator.</span>
 
-<span class="sd">    for chunk in chunked(xrange(10), 3):</span>
+<span class="sd">    for chunk in chunked(range(10), 3):</span>
 <span class="sd">        for element in chunk:</span>
 <span class="sd">            print element</span>
 
-<span class="sd">    &gt;&gt;&gt; it = chunked(xrange(7), 2)</span>
+<span class="sd">    &gt;&gt;&gt; it = chunked(range(7), 2)</span>
 <span class="sd">    &gt;&gt;&gt; list(map(tuple, it))</span>
 <span class="sd">    [(0, 1), (2, 3), (4, 5), (6,)]</span>
 
-<span class="sd">    :param iterable iterable: Any iterable, e.g. list, xrange, ...</span>
+<span class="sd">    :param iterable iterable: Any iterable, e.g. list, range, ...</span>
 <span class="sd">    :param n: Chunk size</span>
 <span class="sd">    :return: Chunked iterable</span>
 <span class="sd">    :rtype: Iterator over iterators</span>
@@ -315,7 +320,7 @@
 
 <span class="sd">    See https://docs.python.org/2/library/itertools.html</span>
 
-<span class="sd">    :param iterable iterable: Any iterable, e.g. list, xrange, ...</span>
+<span class="sd">    :param iterable iterable: Any iterable, e.g. list, range, ...</span>
 <span class="sd">    :param n: Number of elements to consume. For n=None all are consumed.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">n</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -346,15 +351,15 @@
 <span class="sd">    &gt;&gt;&gt; list( flatmap(f, [1, 2, 3]) )</span>
 <span class="sd">    [&#39;1&#39;, &#39;2&#39;, &#39;2&#39;, &#39;3&#39;, &#39;3&#39;, &#39;3&#39;]</span>
 
-<span class="sd">    &gt;&gt;&gt; map(f, [1, 2, 3])  # map instead of flatmap</span>
+<span class="sd">    &gt;&gt;&gt; list( map(f, [1, 2, 3]) )  # map instead of flatmap</span>
 <span class="sd">    [&#39;1&#39;, &#39;22&#39;, &#39;333&#39;]</span>
 
 <span class="sd">    :param function func: Function to map on iterable.</span>
-<span class="sd">    :param iterable iterable: Any iterable, e.g. list, xrange, ...</span>
+<span class="sd">    :param iterable iterable: Any iterable, e.g. list, range, ...</span>
 <span class="sd">    :return: Iterator of iterable elements transformed via func and flattened.</span>
 <span class="sd">    :rtype: Iterator</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">itt</span><span class="o">.</span><span class="n">chain</span><span class="o">.</span><span class="n">from_iterable</span><span class="p">(</span><span class="n">itt</span><span class="o">.</span><span class="n">imap</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">iterable</span><span class="p">))</span></div>
+    <span class="k">return</span> <span class="n">itt</span><span class="o">.</span><span class="n">chain</span><span class="o">.</span><span class="n">from_iterable</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">iterable</span><span class="p">))</span></div>
 
 
 <div class="viewcode-block" id="partition"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.iterfunction.partition">[docs]</a><span class="k">def</span> <span class="nf">partition</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">pred</span><span class="p">):</span>
@@ -362,23 +367,23 @@
 <span class="sd">    Split iterable into two partitions based on predicate function</span>
 
 <span class="sd">    &gt;&gt;&gt; pred = lambda x: x &lt; 6</span>
-<span class="sd">    &gt;&gt;&gt; smaller, larger = partition(xrange(10), pred)</span>
+<span class="sd">    &gt;&gt;&gt; smaller, larger = partition(range(10), pred)</span>
 <span class="sd">    &gt;&gt;&gt; list(smaller)</span>
 <span class="sd">    [0, 1, 2, 3, 4, 5]</span>
 
 <span class="sd">    &gt;&gt;&gt; list(larger)</span>
 <span class="sd">    [6, 7, 8, 9]</span>
 
-<span class="sd">    :param iterable: Any iterable, e.g. list, xrange, ...</span>
+<span class="sd">    :param iterable: Any iterable, e.g. list, range, ...</span>
 <span class="sd">    :param pred: Predicate function.</span>
 <span class="sd">    :return: Partition iterators</span>
 <span class="sd">    :rtype: Two iterators</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">t1</span><span class="p">,</span> <span class="n">t2</span> <span class="o">=</span> <span class="n">itt</span><span class="o">.</span><span class="n">tee</span><span class="p">(</span><span class="n">iterable</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">itt</span><span class="o">.</span><span class="n">ifilter</span><span class="p">(</span><span class="n">pred</span><span class="p">,</span> <span class="n">t1</span><span class="p">),</span> <span class="n">itt</span><span class="o">.</span><span class="n">ifilterfalse</span><span class="p">(</span><span class="n">pred</span><span class="p">,</span> <span class="n">t2</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="nb">filter</span><span class="p">(</span><span class="n">pred</span><span class="p">,</span> <span class="n">t1</span><span class="p">),</span> <span class="n">filterfalse</span><span class="p">(</span><span class="n">pred</span><span class="p">,</span> <span class="n">t2</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="PrefetchIterator"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.iterfunction.PrefetchIterator">[docs]</a><span class="k">class</span> <span class="nc">PrefetchIterator</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">Thread</span><span class="p">):</span>
+<div class="viewcode-block" id="PrefetchIterator"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.iterfunction.PrefetchIterator">[docs]</a><span class="k">class</span> <span class="nc">PrefetchIterator</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">Thread</span><span class="p">,</span> <span class="n">six</span><span class="o">.</span><span class="n">Iterator</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Wrap an iterable in an iterator that prefetches elements.</span>
 
@@ -386,8 +391,9 @@
 <span class="sd">    the batch. Keeps the CPU busy pre-processing data and not waiting for the</span>
 <span class="sd">    GPU to finish the batch.</span>
 
-<span class="sd">    &gt;&gt;&gt; for i in PrefetchIterator(xrange(4)):</span>
-<span class="sd">    ...    print i</span>
+<span class="sd">    &gt;&gt;&gt; from __future__ import print_function</span>
+<span class="sd">    &gt;&gt;&gt; for i in PrefetchIterator(range(4)):</span>
+<span class="sd">    ...    print(i)</span>
 <span class="sd">    0</span>
 <span class="sd">    1</span>
 <span class="sd">    2</span>
@@ -415,7 +421,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">queue</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">queue</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="PrefetchIterator.next"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.iterfunction.PrefetchIterator.next">[docs]</a>    <span class="k">def</span> <span class="nf">next</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__next__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return next element from pre-fetch iterator.</span>
 
@@ -425,7 +431,7 @@
         <span class="n">next_item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">queue</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">next_item</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">StopIteration</span>
-        <span class="k">return</span> <span class="n">next_item</span></div>
+        <span class="k">return</span> <span class="n">next_item</span>
 
     <span class="k">def</span> <span class="nf">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -450,7 +456,7 @@
   <div role="contentinfo">
     <p>
         &copy; Copyright 2017, IBM Research Australia.
-      Last updated on May 30, 2017.
+      Last updated on Jun 22, 2017.
 
     </p>
   </div> 
@@ -471,7 +477,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'1.0.14',
+            VERSION:'1.0.20',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,
