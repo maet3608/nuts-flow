@@ -134,7 +134,30 @@ class Redirect(object):
 
 # Adopted from: https://en.wikipedia.org/wiki/Mersenne_Twister
 class StableRandom(rnd.Random):
+    """A pseudo random number generator that is stable across
+    Python 2.x and 3.x. Use this only for unit tests or doctests.
+    This class is derived from random.Random and supports all
+    methods of the base class.
+
+    >>> rand = StableRandom(0)
+    >>> rand.gauss_next()
+    -0.9142740968041003
+
+    >>> rand.randint(1, 10)
+    9
+
+    >>> lst = [1, 2, 3, 4, 5]
+    >>> rand.shuffle(lst)
+    >>> lst
+    [3, 5, 1, 2, 4]
+    """
+
     def __init__(self, seed=None):
+        """
+        Initialize random number generator.
+
+        :param None|int seed: Seed. If None the system time is used.
+        """
         self.seed(seed)
         self.index = 624
         self.mt = [0] * 624
@@ -163,6 +186,7 @@ class StableRandom(rnd.Random):
         return float(self._int32(y)) / 0xffffffff
 
     def _twist(self):
+        """Mersenne Twister"""
         for i in range(624):
             y = self._int32((self.mt[i] & 0x80000000) +
                             (self.mt[(i + 1) % 624] & 0x7fffffff))
@@ -173,21 +197,48 @@ class StableRandom(rnd.Random):
         self.index = 0
 
     def seed(self, seed=None):
+        """
+        Set seed.
+
+        :param None|int seed: Seed. If None the system time is used.
+        """
         import time
         if seed is None:
             seed = int(time.time() * 256)
         self._seed = seed
 
     def gauss_next(self):
+        """
+        Return next gaussian random number.
+
+        :return: Random number sampled from gaussian distribution.
+        :rtype: float
+        """
         x1, x2 = self._next_rand(), self._next_rand()
         return sqrt(-2.0 * log(x1 + 1e-10)) * cos(2.0 * pi * x2)
 
     def getstate(self):
+        """
+        Return state of generator.
+
+        :return: Index and Mersenne Twister array.
+        :rtype: tuple
+        """
         return self.mt[:], self.index
 
     def setstate(self, state):
+        """
+        Set state of generator.
+
+        :param tuple state: State to set as produced by getstate()
+        """
         self.mt, self.index = state
 
     def jumpahead(self, n):
+        """
+        Set state of generator far away from current state.
+
+        :param int n: Distance to jump.
+        """
         self.index += n
         self._next_rand()
