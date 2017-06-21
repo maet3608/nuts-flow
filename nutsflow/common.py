@@ -6,6 +6,9 @@ from __future__ import print_function
 
 import sys
 
+import random as rnd
+
+from math import sqrt, log, cos, pi
 from six.moves import cStringIO as StringIO
 
 
@@ -127,3 +130,64 @@ class Redirect(object):
 
     def __exit__(self, *args):
         sys.stdout = self.oldstdout
+
+
+# Adopted from: https://en.wikipedia.org/wiki/Mersenne_Twister
+class StableRandom(rnd.Random):
+    def __init__(self, seed=None):
+        self.seed(seed)
+        self.index = 624
+        self.mt = [0] * 624
+        self.mt[0] = self._seed
+        for i in range(1, 624):
+            self.mt[i] = self._int32(
+                1812433253 * (self.mt[i - 1] ^ self.mt[i - 1] >> 30) + i)
+
+    def _int32(self, x):
+        """Return the 32 least significant bits"""
+        return int(0xFFFFFFFF & x)
+
+    def _next_rand(self):
+        """Return next random number in [0,1["""
+        if self.index >= 624:
+            self._twist()
+
+        y = self.mt[self.index]
+        y = y ^ y >> 11
+        y = y ^ y << 7 & 2636928640
+        y = y ^ y << 15 & 4022730752
+        y = y ^ y >> 18
+
+        self.index = self.index + 1
+
+        return float(self._int32(y)) / 0xffffffff
+
+    def _twist(self):
+        for i in range(624):
+            y = self._int32((self.mt[i] & 0x80000000) +
+                            (self.mt[(i + 1) % 624] & 0x7fffffff))
+            self.mt[i] = self.mt[(i + 397) % 624] ^ y >> 1
+
+            if y % 2 != 0:
+                self.mt[i] = self.mt[i] ^ 0x9908b0df
+        self.index = 0
+
+    def seed(self, seed=None):
+        import time
+        if seed is None:
+            seed = long(time.time() * 256)
+        self._seed = seed
+
+    def gauss_next(self):
+        x1, x2 = self._next_rand(), self._next_rand()
+        return sqrt(-2.0 * log(x1 + 1e-10)) * cos(2.0 * pi * x2)
+
+    def getstate(self):
+        return self.mt[:], self.index
+
+    def setstate(self, state):
+        self.mt, self.index = state
+
+    def jumpahead(self, n):
+        self.index += n
+        self._next_rand()

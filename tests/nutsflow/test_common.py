@@ -4,8 +4,10 @@
 """
 
 from __future__ import print_function
+
+from time import sleep
 from nutsflow.common import (sec_to_hms, timestr, Redirect, as_tuple, as_set,
-                             as_list, console)
+                             as_list, console, StableRandom)
 
 
 def test_as_tuple():
@@ -46,3 +48,31 @@ def test_Redirect():
     with Redirect() as out:
         print('test')
     assert out.getvalue() == 'test\n'
+
+
+def test_StableRandom():
+    rnd = StableRandom()
+    assert max(rnd._next_rand() for _ in range(1000)) < 1.0
+    assert min(rnd._next_rand() for _ in range(1000)) >= 0.0
+
+    rnd1, rnd2 = StableRandom(0), StableRandom(0)
+    for _ in range(100):
+        assert rnd1.gauss_next() == rnd2.gauss_next()
+
+    rnd1, rnd2 = StableRandom(0), StableRandom(0)
+    rnd2.jumpahead(10)
+    for _ in range(100):
+        assert rnd1.gauss_next() != rnd2.gauss_next()
+    rnd2.setstate(rnd1.getstate())
+    for _ in range(100):
+        assert rnd1.gauss_next() == rnd2.gauss_next()
+
+    rnd1, rnd2 = StableRandom(0), StableRandom(1)
+    for _ in range(100):
+        assert rnd1.gauss_next() != rnd2.gauss_next()
+
+    rnd1 = StableRandom()
+    sleep(0.5)  # seed is based on system time.
+    rnd2 = StableRandom()
+    for _ in range(100):
+        assert rnd1.gauss_next() != rnd2.gauss_next()
