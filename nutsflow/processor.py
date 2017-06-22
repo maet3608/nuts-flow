@@ -16,16 +16,15 @@ import random as rnd
 import multiprocessing as mp
 import collections as cl
 
-from . import iterfunction as itf
+from inspect import isfunction
 from six.moves import cPickle as pickle
 from six.moves import map, filter, filterfalse, zip, range
+from . import iterfunction as itf
 from .base import Nut, NutFunction
-from .common import as_tuple, as_set, console
+from .common import as_tuple, as_set, console, timestr, StableRandom
 from .factory import nut_processor
 from .function import Identity
 from .sink import Consume, Collect
-from nutsflow.common import timestr
-from inspect import isfunction
 
 
 @nut_processor
@@ -608,7 +607,8 @@ def Pick(iterable, p_n, rand=rnd.Random()):
     Pick every p_n-th element from the iterable if p_n is an integer,
     otherwise pick randomly with probability p_n.
 
-    >>> from nutsflow import Range, Collect, StableRandom
+    >>> from nutsflow import Range, Collect
+    >>> from nutsflow.common import StableRandom
     
     >>> [1, 2, 3, 4] >> Pick(0.0) >> Collect()
     []
@@ -765,7 +765,9 @@ def Shuffle(iterable, buffersize, rand=rnd.Random()):
     shuffle. Usually, this is not what you want. Use the default
     rand=rnd.Random() instead.
 
-    >>> from nutsflow import Range, Collect, StableRandom
+    >>> from nutsflow import Range, Collect
+    >>> from nutsflow.common import StableRandom
+
     >>> Range(10) >> Shuffle(5, StableRandom(0)) >> Collect()
     [4, 2, 3, 6, 7, 0, 1, 9, 5, 8]
 

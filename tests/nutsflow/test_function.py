@@ -4,6 +4,7 @@
 """
 
 import pytest
+import time
 
 from six.moves import range
 from nutsflow import *

@@ -5,11 +5,12 @@
 from __future__ import print_function
 
 import pytest
+import os
 
 from six.moves import range
 from nutsflow import *
 from nutsflow import _
-from nutsflow.common import Redirect
+from nutsflow.common import Redirect, StableRandom
 
 
 def test_Take():
