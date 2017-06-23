@@ -15,7 +15,8 @@ provides examples of its usage.
    rearranging
    divide_conquer
    sources
-   sinks   
+   sinks
+   exceptions   
    custom_nuts
    underscore
    performance

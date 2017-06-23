@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nutsflow.processor &mdash; nutsflow 1.0.20 documentation</title>
+  <title>nutsflow.processor &mdash; nutsflow 1.0.21 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../../genindex.html"/>
         <link rel="search" title="Search" href="../../search.html"/>
-    <link rel="top" title="nutsflow 1.0.20 documentation" href="../../index.html"/>
+    <link rel="top" title="nutsflow 1.0.21 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                1.0.20
+                1.0.21
               </div>
             
           
@@ -165,13 +165,14 @@
 <span class="sd">.. module:: processor</span>
 <span class="sd">   :synopsis: Nuts that process iterables and return iterables.</span>
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">absolute_import</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span>
 
 <span class="kn">import</span> <span class="nn">tempfile</span>
 <span class="kn">import</span> <span class="nn">shutil</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">time</span>
 <span class="kn">import</span> <span class="nn">six</span>
+<span class="kn">import</span> <span class="nn">sys</span>
 
 <span class="kn">import</span> <span class="nn">os.path</span> <span class="k">as</span> <span class="nn">osp</span>
 <span class="kn">import</span> <span class="nn">itertools</span> <span class="k">as</span> <span class="nn">itt</span>
@@ -179,16 +180,15 @@
 <span class="kn">import</span> <span class="nn">multiprocessing</span> <span class="k">as</span> <span class="nn">mp</span>
 <span class="kn">import</span> <span class="nn">collections</span> <span class="k">as</span> <span class="nn">cl</span>
 
-<span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">iterfunction</span> <span class="k">as</span> <span class="n">itf</span>
+<span class="kn">from</span> <span class="nn">inspect</span> <span class="k">import</span> <span class="n">isfunction</span><span class="p">,</span> <span class="n">ismethod</span><span class="p">,</span> <span class="n">isbuiltin</span>
 <span class="kn">from</span> <span class="nn">six.moves</span> <span class="k">import</span> <span class="n">cPickle</span> <span class="k">as</span> <span class="n">pickle</span>
 <span class="kn">from</span> <span class="nn">six.moves</span> <span class="k">import</span> <span class="nb">map</span><span class="p">,</span> <span class="nb">filter</span><span class="p">,</span> <span class="n">filterfalse</span><span class="p">,</span> <span class="nb">zip</span><span class="p">,</span> <span class="nb">range</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">iterfunction</span> <span class="k">as</span> <span class="n">itf</span>
 <span class="kn">from</span> <span class="nn">.base</span> <span class="k">import</span> <span class="n">Nut</span><span class="p">,</span> <span class="n">NutFunction</span>
-<span class="kn">from</span> <span class="nn">.common</span> <span class="k">import</span> <span class="n">as_tuple</span><span class="p">,</span> <span class="n">as_set</span><span class="p">,</span> <span class="n">console</span>
+<span class="kn">from</span> <span class="nn">.common</span> <span class="k">import</span> <span class="n">as_tuple</span><span class="p">,</span> <span class="n">as_set</span><span class="p">,</span> <span class="n">console</span><span class="p">,</span> <span class="n">timestr</span>
 <span class="kn">from</span> <span class="nn">.factory</span> <span class="k">import</span> <span class="n">nut_processor</span>
 <span class="kn">from</span> <span class="nn">.function</span> <span class="k">import</span> <span class="n">Identity</span>
 <span class="kn">from</span> <span class="nn">.sink</span> <span class="k">import</span> <span class="n">Consume</span><span class="p">,</span> <span class="n">Collect</span>
-<span class="kn">from</span> <span class="nn">nutsflow.common</span> <span class="k">import</span> <span class="n">timestr</span>
-<span class="kn">from</span> <span class="nn">inspect</span> <span class="k">import</span> <span class="n">isfunction</span>
 
 
 <span class="nd">@nut_processor</span>
@@ -771,7 +771,8 @@
 <span class="sd">    Pick every p_n-th element from the iterable if p_n is an integer,</span>
 <span class="sd">    otherwise pick randomly with probability p_n.</span>
 
-<span class="sd">    &gt;&gt;&gt; from nutsflow import Range, Collect, StableRandom</span>
+<span class="sd">    &gt;&gt;&gt; from nutsflow import Range, Collect</span>
+<span class="sd">    &gt;&gt;&gt; from nutsflow.common import StableRandom</span>
 <span class="sd">    </span>
 <span class="sd">    &gt;&gt;&gt; [1, 2, 3, 4] &gt;&gt; Pick(0.0) &gt;&gt; Collect()</span>
 <span class="sd">    []</span>
@@ -928,7 +929,9 @@
 <span class="sd">    shuffle. Usually, this is not what you want. Use the default</span>
 <span class="sd">    rand=rnd.Random() instead.</span>
 
-<span class="sd">    &gt;&gt;&gt; from nutsflow import Range, Collect, StableRandom</span>
+<span class="sd">    &gt;&gt;&gt; from nutsflow import Range, Collect</span>
+<span class="sd">    &gt;&gt;&gt; from nutsflow.common import StableRandom</span>
+
 <span class="sd">    &gt;&gt;&gt; Range(10) &gt;&gt; Shuffle(5, StableRandom(0)) &gt;&gt; Collect()</span>
 <span class="sd">    [4, 2, 3, 6, 7, 0, 1, 9, 5, 8]</span>
 
@@ -1215,7 +1218,7 @@
 
 
 <span class="nd">@nut_processor</span>
-<div class="viewcode-block" id="Try"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.processor.Try">[docs]</a><span class="k">def</span> <span class="nf">Try</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">func</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;SKIP&#39;</span><span class="p">,</span> <span class="n">handler</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s1">&#39;:&#39;</span><span class="p">,</span> <span class="n">e</span><span class="p">)):</span>
+<div class="viewcode-block" id="Try"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.processor.Try">[docs]</a><span class="k">def</span> <span class="nf">Try</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">func</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;STDERR&#39;</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    iterable &gt;&gt; Try(nut)</span>
 
@@ -1224,45 +1227,66 @@
 <span class="sd">    Per default the exception and the value causing it are printed.</span>
 <span class="sd">    Furthermore a default value can be specified that is returned instead</span>
 <span class="sd">    of the nut output if an exception occurs. Per default no output is</span>
-<span class="sd">    returned (SKIP).</span>
+<span class="sd">    returned but an error message printed (STDERR).</span>
+
+<span class="sd">    NOTE: In the following examples &#39;STDOUT&#39; is used only to verify the</span>
+<span class="sd">    error message within the doctest. In production code use the default</span>
+<span class="sd">    value of &#39;STDERR&#39;.</span>
 
 <span class="sd">    &gt;&gt;&gt; from nutsflow import Try, Collect, nut_function  </span>
 
-<span class="sd">    &gt;&gt;&gt; [1, 2, 3] &gt;&gt; Try(lambda x : int(6.0/x)) &gt;&gt; Collect()</span>
-<span class="sd">    [6, 3, 2]</span>
-<span class="sd">    &gt;&gt;&gt; [1, 0, 3] &gt;&gt; Try(lambda x : int(6.0/x)) &gt;&gt; Collect()</span>
-<span class="sd">    0 : float division by zero</span>
-<span class="sd">    [6, 2]</span>
+<span class="sd">    &gt;&gt;&gt; [10, 2, 1] &gt;&gt; Try(lambda x : 10/x) &gt;&gt; Collect()</span>
+<span class="sd">    [1, 5, 10]</span>
+<span class="sd">    &gt;&gt;&gt; [10, 0, 1] &gt;&gt; Try(lambda x : 10/x, &#39;STDOUT&#39;) &gt;&gt; Collect()</span>
+<span class="sd">    ERROR: 0 : integer division or modulo by zero</span>
+<span class="sd">    [1, 10]</span>
 
-<span class="sd">    &gt;&gt;&gt; Div = nut_function(lambda x : int(6.0/x))</span>
-<span class="sd">    &gt;&gt;&gt; [1, 2, 3] &gt;&gt; Try(Div()) &gt;&gt; Collect()</span>
-<span class="sd">    [6, 3, 2]</span>
-<span class="sd">    &gt;&gt;&gt; [1, 0, 3] &gt;&gt; Try(Div()) &gt;&gt; Collect()</span>
-<span class="sd">    0 : float division by zero</span>
-<span class="sd">    [6, 2]</span>
-<span class="sd">    &gt;&gt;&gt; [1, 0, 3] &gt;&gt; Try(Div(), handler=None, default=0) &gt;&gt; Collect()</span>
-<span class="sd">    [6, 0, 2]</span>
+<span class="sd">    &gt;&gt;&gt; Div = nut_function(lambda x : 10/x)</span>
+<span class="sd">    &gt;&gt;&gt; [10, 2, 1] &gt;&gt; Try(Div()) &gt;&gt; Collect()</span>
+<span class="sd">    [1, 5, 10]</span>
+<span class="sd">    &gt;&gt;&gt; [10, 0, 1] &gt;&gt; Try(Div(), &#39;STDOUT&#39;) &gt;&gt; Collect()</span>
+<span class="sd">    ERROR: 0 : integer division or modulo by zero</span>
+<span class="sd">    [1, 10]</span>
+<span class="sd">    &gt;&gt;&gt; [10, 0, 1] &gt;&gt; Try(Div(), -1) &gt;&gt; Collect()</span>
+<span class="sd">    [1, -1, 10]</span>
+
+<span class="sd">    &gt;&gt;&gt; handlezero = lambda x, e: &#39;FAILED: &#39;+str(x)</span>
+<span class="sd">    &gt;&gt;&gt; [10, 0, 1] &gt;&gt; Try(Div(), handlezero) &gt;&gt; Collect()</span>
+<span class="sd">    [1, &#39;FAILED: 0&#39;, 10]</span>
+
+<span class="sd">    &gt;&gt;&gt; handlezero = lambda x, e: e</span>
+<span class="sd">    &gt;&gt;&gt; [10, 0, 1] &gt;&gt; Try(Div(), handlezero) &gt;&gt; Collect()</span>
+<span class="sd">    [1, ZeroDivisionError(&#39;integer division or modulo by zero&#39;,), 10]</span>
 
 <span class="sd">    :param iterable iterable: Iterable the nut operates on.</span>
 <span class="sd">    :param function|NutFunction func: (Nut) function that is wrapped </span>
-<span class="sd">       for exception handling. </span>
+<span class="sd">       for exception handling. Can be a plain Python function/method as well.</span>
 <span class="sd">    :param Object default: Return value if exception occurs. </span>
-<span class="sd">       If default == &quot;SKIP&#39;, no value is returned. </span>
-<span class="sd">    :param function|None handler: Function that is called if exception occurs.</span>
-<span class="sd">       Function takes element x and exception e as parameters and the default</span>
-<span class="sd">       function prints x and e. For handler==None, no handler is called.</span>
+<span class="sd">       If default = &#39;IGNORE&#39;, no value is returned and no error is printed.</span>
+<span class="sd">       If default = &#39;STDERR&#39;, no value is returned, error is printed to stderr.</span>
+<span class="sd">       If default = &#39;STDOUT&#39;, no value is returned, error is printed to stdout.</span>
+<span class="sd">       If default is function that takes element x and  exception e</span>
+<span class="sd">          as parameters its result is returned and no error is printed.</span>
+<span class="sd">       Otherwise the default value is returned and no error is printed.</span>
 <span class="sd">    :return: Iterator over input elements transformed by provided nut.</span>
 <span class="sd">    :rtype: iterator</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">NutFunction</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">isfunction</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">NutFunction</span><span class="p">)</span> <span class="ow">or</span> <span class="n">isfunction</span><span class="p">(</span><span class="n">func</span><span class="p">)</span> <span class="ow">or</span>
+                <span class="n">isbuiltin</span><span class="p">(</span><span class="n">func</span><span class="p">)</span> <span class="ow">or</span> <span class="n">ismethod</span><span class="p">(</span><span class="n">func</span><span class="p">)):</span>
         <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Need (nut) function in Try() :&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">func</span><span class="p">))</span>
     <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">iterable</span><span class="p">:</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="k">yield</span> <span class="n">func</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">handler</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">handler</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">default</span> <span class="o">!=</span> <span class="s1">&#39;SKIP&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">default</span> <span class="o">==</span> <span class="s1">&#39;IGNORE&#39;</span><span class="p">:</span>
+                <span class="k">pass</span>
+            <span class="k">elif</span> <span class="n">default</span> <span class="o">==</span> <span class="s1">&#39;STDERR&#39;</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;ERROR:&#39;</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="s1">&#39;:&#39;</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">default</span> <span class="o">==</span> <span class="s1">&#39;STDOUT&#39;</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;ERROR:&#39;</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="s1">&#39;:&#39;</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">default</span><span class="p">,</span> <span class="s1">&#39;__call__&#39;</span><span class="p">):</span>
+                <span class="k">yield</span> <span class="n">default</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
                 <span class="k">yield</span> <span class="n">default</span></div>
 </pre></div>
 
@@ -1279,7 +1303,7 @@
   <div role="contentinfo">
     <p>
         &copy; Copyright 2017, IBM Research Australia.
-      Last updated on Jun 22, 2017.
+      Last updated on Jun 23, 2017.
 
     </p>
   </div> 
@@ -1300,7 +1324,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'1.0.20',
+            VERSION:'1.0.21',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,
