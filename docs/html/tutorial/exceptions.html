@@ -1,0 +1,339 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Handling exceptions &mdash; nutsflow 1.0.21 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="nutsflow 1.0.21 documentation" href="../index.html"/>
+        <link rel="up" title="Tutorial" href="introduction.html"/>
+        <link rel="next" title="Custom nuts" href="custom_nuts.html"/>
+        <link rel="prev" title="Writing to Sinks" href="sinks.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> nutsflow
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0.21
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../overview.html">Overview</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="introduction.html">Tutorial</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="prerequisites.html">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nuts_basics.html">Nuts basics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="debugging.html">Printing and Debugging</a></li>
+<li class="toctree-l2"><a class="reference internal" href="filtering.html">Filtering</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforming.html">Data transformation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rearranging.html">Rearranging data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="divide_conquer.html">Divide and conquer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sources.html">Reading from Sources</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sinks.html">Writing to Sinks</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Handling exceptions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#try">Try</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="custom_nuts.html">Custom nuts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="underscore.html">Underscore syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="performance.html">Performance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="recipes.html">Recipes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="practice_problems.html">Practice problems</a></li>
+<li class="toctree-l2"><a class="reference internal" href="error_messages.html">Common error messages</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../contributions.html">Contributions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../links.html">Links</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../nutsflow.html">nutsflow package</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">nutsflow</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="introduction.html">Tutorial</a> &raquo;</li>
+        
+      <li>Handling exceptions</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/tutorial/exceptions.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="handling-exceptions">
+<span id="exceptions"></span><h1>Handling exceptions<a class="headerlink" href="#handling-exceptions" title="Permalink to this headline">¶</a></h1>
+<p>Data processing pipelines are typically composed of multiple nuts
+and process a stream of data. If one of the nuts within the pipeline
+fails the data stream breaks and processing stops.</p>
+<p>Sometimes a more graceful handling of errors is needed and <strong>nuts-flow</strong>
+provides the <code class="docutils literal"><span class="pre">Try</span></code> nut for this purpose.</p>
+<div class="section" id="try">
+<h2>Try<a class="headerlink" href="#try" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal"><span class="pre">Try(func,</span> <span class="pre">default)</span></code> can wrap any nut function
+(but not other types of nuts such as processors) and handle exceptions
+raised by the wrapped nut.
+In the following example a nut <code class="docutils literal"><span class="pre">Div</span></code> is defined, which computes 10/x
+and is applied to a sequence of numbers:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nutsflow</span> <span class="k">import</span> <span class="o">*</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Div</span> <span class="o">=</span> <span class="n">nut_function</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span> <span class="p">:</span> <span class="mi">10</span><span class="o">/</span><span class="n">x</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">Div</span><span class="p">()</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
+<span class="go">[10, 2, 1]</span>
+</pre></div>
+</div>
+<p>As it is this pipeline will break and not collect any results
+if any of the input elements is zero:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">Div</span><span class="p">()</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
+<span class="gt">Traceback (most recent call last):</span>
+<span class="c">...</span>
+<span class="gr">ZeroDivisionError</span>: <span class="n">integer division or modulo by zero</span>
+</pre></div>
+</div>
+<p>Wrapping the <code class="docutils literal"><span class="pre">Div</span></code> function within a <code class="docutils literal"><span class="pre">Try</span></code> allows the pipeline
+to ignore the input element that causes <code class="docutils literal"><span class="pre">Div</span></code> to fail. The problematic
+element and the error message are printed to standard out
+but the pipeline does not break and collects all other elements:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">Try</span><span class="p">(</span><span class="n">Div</span><span class="p">(),</span> <span class="s1">&#39;STDOUT&#39;</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
+<span class="go">ERROR: 0 : integer division or modulo by zero</span>
+<span class="go">[10, 1]</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">Try</span></code> allows defining a default value to be returned if the wrapped
+function fails. In this case no error is printed the offending input element
+is replaced by the provided default value:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">Try</span><span class="p">(</span><span class="n">Div</span><span class="p">(),</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
+<span class="go">[10, -1, 1]</span>
+</pre></div>
+</div>
+<p>This kind of exception handling can be performed for nut functions
+or plain Python functions (user-defined or built-in). Here an example
+where Python&#8217;s logarithm function is wrapped and zero values are
+ignored:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">math</span> <span class="k">import</span> <span class="n">log</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">Try</span><span class="p">(</span><span class="n">log</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;STDOUT&#39;</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
+<span class="go">ERROR: 0 : math domain error</span>
+<span class="go">[0.0, 2.302585092994046]</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal"><span class="pre">default</span></code> parameter can also be a function that takes the offending
+input element <code class="docutils literal"><span class="pre">x</span></code> and the exception <code class="docutils literal"><span class="pre">e</span></code> as parameters. This allows
+to replace offending inputs depending on the input value or the types of
+exception raised.
+In the following example negative input elements are replaced by
+their absolute value and zero is replaced by <code class="docutils literal"><span class="pre">None</span></code>.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">if_invalid</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span> <span class="o">-</span><span class="n">x</span> <span class="k">if</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="kc">None</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">Try</span><span class="p">(</span><span class="n">log</span><span class="p">,</span> <span class="n">if_invalid</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
+<span class="go">[0.0, None, 1, 2.302585092994046]</span>
+</pre></div>
+</div>
+<p>As a last example, invalid inputs are replaced by the exception they
+cause:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">if_invalid</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span> <span class="n">e</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">Try</span><span class="p">(</span><span class="n">log</span><span class="p">,</span> <span class="n">if_invalid</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
+<span class="go">[0.0, ValueError(&#39;math domain error&#39;,), 2.302585092994046]</span>
+</pre></div>
+</div>
+<p>The default value for <code class="docutils literal"><span class="pre">Try(x,default)</span></code> is <code class="docutils literal"><span class="pre">default='STDERR'</span></code>,
+which ignores all elements that raise exceptions and prints error
+message to stderr. For <code class="docutils literal"><span class="pre">default='IGNORE'</span></code>, offending inputs are
+ignored and no error messages are printed.</p>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="custom_nuts.html" class="btn btn-neutral float-right" title="Custom nuts" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="sinks.html" class="btn btn-neutral" title="Writing to Sinks" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, IBM Research Australia.
+      Last updated on Jun 23, 2017.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'1.0.21',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

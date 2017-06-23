@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nutsflow.common &mdash; nutsflow 1.0.20 documentation</title>
+  <title>nutsflow.common &mdash; nutsflow 1.0.21 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../../genindex.html"/>
         <link rel="search" title="Search" href="../../search.html"/>
-    <link rel="top" title="nutsflow 1.0.20 documentation" href="../../index.html"/>
+    <link rel="top" title="nutsflow 1.0.21 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                1.0.20
+                1.0.21
               </div>
             
           
@@ -273,25 +273,39 @@
 
 <div class="viewcode-block" id="Redirect"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.common.Redirect">[docs]</a><span class="k">class</span> <span class="nc">Redirect</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Redirect stdout to string.</span>
+<span class="sd">    Redirect stdout or stderr to string.</span>
 
 <span class="sd">    &gt;&gt;&gt; with Redirect() as out:</span>
 <span class="sd">    ...     print(&#39;test&#39;)</span>
 <span class="sd">    &gt;&gt;&gt; print(out.getvalue())</span>
 <span class="sd">    test</span>
 <span class="sd">    &lt;BLANKLINE&gt;</span>
+
+<span class="sd">    &gt;&gt;&gt; with Redirect(&#39;STDERR&#39;) as out:</span>
+<span class="sd">    ...     print(&#39;error&#39;, file=sys.stderr)</span>
+<span class="sd">    &gt;&gt;&gt; print(out.getvalue())</span>
+<span class="sd">    error</span>
+<span class="sd">    &lt;BLANKLINE&gt;</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="Redirect.__init__"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.common.Redirect.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">oldstdout</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">stdout</span> <span class="o">=</span> <span class="n">StringIO</span><span class="p">()</span>
-        <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stdout</span></div>
+<div class="viewcode-block" id="Redirect.__init__"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.common.Redirect.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">channel</span><span class="o">=</span><span class="s1">&#39;STDOUT&#39;</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">channel</span> <span class="o">=</span> <span class="n">channel</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">oldout</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span> <span class="k">if</span> <span class="n">channel</span> <span class="o">==</span> <span class="s1">&#39;STDERR&#39;</span> <span class="k">else</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">out</span> <span class="o">=</span> <span class="n">StringIO</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__set_channel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">out</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">__set_channel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">out</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">channel</span> <span class="o">==</span> <span class="s1">&#39;STDERR&#39;</span><span class="p">:</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span> <span class="o">=</span> <span class="n">out</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span> <span class="o">=</span> <span class="n">out</span>
 
     <span class="k">def</span> <span class="nf">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">stdout</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">out</span>
 
     <span class="k">def</span> <span class="nf">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
-        <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">oldstdout</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__set_channel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">oldout</span><span class="p">)</span></div>
+
 
 
 <span class="c1"># Adopted from: https://en.wikipedia.org/wiki/Mersenne_Twister</span>
@@ -423,7 +437,7 @@
   <div role="contentinfo">
     <p>
         &copy; Copyright 2017, IBM Research Australia.
-      Last updated on Jun 22, 2017.
+      Last updated on Jun 23, 2017.
 
     </p>
   </div> 
@@ -444,7 +458,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'1.0.20',
+            VERSION:'1.0.21',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,
