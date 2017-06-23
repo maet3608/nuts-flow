@@ -384,25 +384,26 @@ def test_PrintProgress():
 
 
 def test_Try():
-    div = lambda x: int(6.0 / x)
+    div = lambda x: 10 / x
     Div = nut_function(div)
 
     assert [] >> Try(div) >> Collect() == []
-    assert [1, 2, 3] >> Try(div) >> Collect() == [6, 3, 2]
+    assert [10, 5, 1] >> Try(div) >> Collect() == [1, 2, 10]
+    assert [10, 0, 1] >> Try(Div(), -1) >> Collect() == [1,-1, 10]
+    assert [10, 0, 1] >> Try(Div(), 'IGNORE') >> Collect() == [1, 10]
 
-    with Redirect() as out:
-        result = [1, 0, 3] >> Try(div, 0) >> Collect()
-        assert result == [6, 0, 2]
-    assert out.getvalue() == '0 : float division by zero\n'
+    ifzero = lambda x, e: str(x)
+    assert [10, 0, 1] >> Try(Div(), ifzero) >> Collect() == [1, '0', 10]
 
-    assert [] >> Try(Div()) >> Collect() == []
-    assert [1, 2, 3] >> Try(Div()) >> Collect() == [6, 3, 2]
+    with Redirect('STDOUT') as out:
+        result = [10, 0, 1] >> Try(div, 'STDOUT') >> Collect()
+        assert result == [1, 10]
+    assert out.getvalue() == 'ERROR: 0 : integer division or modulo by zero\n'
 
-    with Redirect() as out:
-        handler = lambda x, e: print(x, e)
-        result = [1, 0, 3] >> Try(Div(), 0, handler) >> Collect()
-        assert result == [6, 0, 2]
-    assert out.getvalue() == '0 float division by zero\n'
+    with Redirect('STDERR') as out:
+        result = [10, 0, 1] >> Try(div) >> Collect()
+        assert result == [1, 10]
+    assert out.getvalue() == 'ERROR: 0 : integer division or modulo by zero\n'
 
     with pytest.raises(TypeError) as ex:
         [1, 0, 3] >> Try(Map(Div())) >> Collect()

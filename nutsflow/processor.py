@@ -2,13 +2,14 @@
 .. module:: processor
    :synopsis: Nuts that process iterables and return iterables.
 """
-from __future__ import print_function, absolute_import
+from __future__ import print_function
 
 import tempfile
 import shutil
 import os
 import time
 import six
+import sys
 
 import os.path as osp
 import itertools as itt
@@ -16,12 +17,12 @@ import random as rnd
 import multiprocessing as mp
 import collections as cl
 
-from inspect import isfunction
+from inspect import isfunction, ismethod, isbuiltin
 from six.moves import cPickle as pickle
 from six.moves import map, filter, filterfalse, zip, range
 from . import iterfunction as itf
 from .base import Nut, NutFunction
-from .common import as_tuple, as_set, console, timestr, StableRandom
+from .common import as_tuple, as_set, console, timestr
 from .factory import nut_processor
 from .function import Identity
 from .sink import Consume, Collect
@@ -1054,7 +1055,7 @@ class PrintProgress(Nut):
 
 
 @nut_processor
-def Try(iterable, func, default='SKIP', handler=lambda x, e: print(x, ':', e)):
+def Try(iterable, func, default='STDERR'):
     """
     iterable >> Try(nut)
 
@@ -1063,43 +1064,64 @@ def Try(iterable, func, default='SKIP', handler=lambda x, e: print(x, ':', e)):
     Per default the exception and the value causing it are printed.
     Furthermore a default value can be specified that is returned instead
     of the nut output if an exception occurs. Per default no output is
-    returned (SKIP).
+    returned but an error message printed (STDERR).
+
+    NOTE: In the following examples 'STDOUT' is used only to verify the
+    error message within the doctest. In production code use the default
+    value of 'STDERR'.
 
     >>> from nutsflow import Try, Collect, nut_function  
 
-    >>> [1, 2, 3] >> Try(lambda x : int(6.0/x)) >> Collect()
-    [6, 3, 2]
-    >>> [1, 0, 3] >> Try(lambda x : int(6.0/x)) >> Collect()
-    0 : float division by zero
-    [6, 2]
+    >>> [10, 2, 1] >> Try(lambda x : 10/x) >> Collect()
+    [1, 5, 10]
+    >>> [10, 0, 1] >> Try(lambda x : 10/x, 'STDOUT') >> Collect()
+    ERROR: 0 : integer division or modulo by zero
+    [1, 10]
 
-    >>> Div = nut_function(lambda x : int(6.0/x))
-    >>> [1, 2, 3] >> Try(Div()) >> Collect()
-    [6, 3, 2]
-    >>> [1, 0, 3] >> Try(Div()) >> Collect()
-    0 : float division by zero
-    [6, 2]
-    >>> [1, 0, 3] >> Try(Div(), handler=None, default=0) >> Collect()
-    [6, 0, 2]
+    >>> Div = nut_function(lambda x : 10/x)
+    >>> [10, 2, 1] >> Try(Div()) >> Collect()
+    [1, 5, 10]
+    >>> [10, 0, 1] >> Try(Div(), 'STDOUT') >> Collect()
+    ERROR: 0 : integer division or modulo by zero
+    [1, 10]
+    >>> [10, 0, 1] >> Try(Div(), -1) >> Collect()
+    [1, -1, 10]
+
+    >>> handlezero = lambda x, e: 'FAILED: '+str(x)
+    >>> [10, 0, 1] >> Try(Div(), handlezero) >> Collect()
+    [1, 'FAILED: 0', 10]
+
+    >>> handlezero = lambda x, e: e
+    >>> [10, 0, 1] >> Try(Div(), handlezero) >> Collect()
+    [1, ZeroDivisionError('integer division or modulo by zero',), 10]
 
     :param iterable iterable: Iterable the nut operates on.
     :param function|NutFunction func: (Nut) function that is wrapped 
-       for exception handling. 
+       for exception handling. Can be a plain Python function/method as well.
     :param Object default: Return value if exception occurs. 
-       If default == "SKIP', no value is returned. 
-    :param function|None handler: Function that is called if exception occurs.
-       Function takes element x and exception e as parameters and the default
-       function prints x and e. For handler==None, no handler is called.
+       If default = 'IGNORE', no value is returned and no error is printed.
+       If default = 'STDERR', no value is returned, error is printed to stderr.
+       If default = 'STDOUT', no value is returned, error is printed to stdout.
+       If default is function that takes element x and  exception e
+          as parameters its result is returned and no error is printed.
+       Otherwise the default value is returned and no error is printed.
     :return: Iterator over input elements transformed by provided nut.
     :rtype: iterator
     """
-    if not isinstance(func, NutFunction) and not isfunction(func):
+    if not (isinstance(func, NutFunction) or isfunction(func) or
+                isbuiltin(func) or ismethod(func)):
         raise TypeError('Need (nut) function in Try() :' + str(func))
     for x in iterable:
         try:
             yield func(x)
         except Exception as e:
-            if handler is not None:
-                handler(x, e)
-            if default != 'SKIP':
+            if default == 'IGNORE':
+                pass
+            elif default == 'STDERR':
+                print('ERROR:', x, ':', e, file=sys.stderr)
+            elif default == 'STDOUT':
+                print('ERROR:', x, ':', e)
+            elif hasattr(default, '__call__'):
+                yield default(x, e)
+            else:
                 yield default
