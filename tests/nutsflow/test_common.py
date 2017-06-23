@@ -5,6 +5,8 @@
 
 from __future__ import print_function
 
+import sys
+
 from pytest import approx
 from time import sleep
 from nutsflow.common import (sec_to_hms, timestr, Redirect, as_tuple, as_set,
@@ -50,6 +52,9 @@ def test_Redirect():
         print('test')
     assert out.getvalue() == 'test\n'
 
+    with Redirect('STDERR') as out:
+        print('error', file=sys.stderr)
+    assert out.getvalue() == 'error\n'
 
 def test_StableRandom():
     rnd = StableRandom(1)

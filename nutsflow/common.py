@@ -110,25 +110,39 @@ def console(*args, **kwargs):
 
 class Redirect(object):
     """
-    Redirect stdout to string.
+    Redirect stdout or stderr to string.
 
     >>> with Redirect() as out:
     ...     print('test')
     >>> print(out.getvalue())
     test
     <BLANKLINE>
+
+    >>> with Redirect('STDERR') as out:
+    ...     print('error', file=sys.stderr)
+    >>> print(out.getvalue())
+    error
+    <BLANKLINE>
     """
 
-    def __init__(self):
-        self.oldstdout = sys.stdout
-        self.stdout = StringIO()
-        sys.stdout = self.stdout
+    def __init__(self, channel='STDOUT'):
+        self.channel = channel
+        self.oldout = sys.stderr if channel == 'STDERR' else sys.stdout
+        self.out = StringIO()
+        self.__set_channel(self.out)
+
+    def __set_channel(self, out):
+        if self.channel == 'STDERR':
+            sys.stderr = out
+        else:
+            sys.stdout = out
 
     def __enter__(self):
-        return self.stdout
+        return self.out
 
     def __exit__(self, *args):
-        sys.stdout = self.oldstdout
+        self.__set_channel(self.oldout)
+
 
 
 # Adopted from: https://en.wikipedia.org/wiki/Mersenne_Twister
