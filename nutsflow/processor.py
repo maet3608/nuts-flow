@@ -2,7 +2,7 @@
 .. module:: processor
    :synopsis: Nuts that process iterables and return iterables.
 """
-from __future__ import print_function
+from __future__ import print_function, division
 
 import tempfile
 import shutil
@@ -1072,13 +1072,13 @@ def Try(iterable, func, default='STDERR'):
 
     >>> from nutsflow import Try, Collect, nut_function  
 
-    >>> [10, 2, 1] >> Try(lambda x : 10/x) >> Collect()
+    >>> [10, 2, 1] >> Try(lambda x : 10//x) >> Collect()
     [1, 5, 10]
-    >>> [10, 0, 1] >> Try(lambda x : 10/x, 'STDOUT') >> Collect()
+    >>> [10, 0, 1] >> Try(lambda x : 10//x, 'STDOUT') >> Collect()
     ERROR: 0 : integer division or modulo by zero
     [1, 10]
 
-    >>> Div = nut_function(lambda x : 10/x)
+    >>> Div = nut_function(lambda x : 10//x)
     >>> [10, 2, 1] >> Try(Div()) >> Collect()
     [1, 5, 10]
     >>> [10, 0, 1] >> Try(Div(), 'STDOUT') >> Collect()

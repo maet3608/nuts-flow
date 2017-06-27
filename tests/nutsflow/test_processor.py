@@ -2,7 +2,7 @@
 .. module:: test_processor
    :synopsis: Unit tests for processor module
 """
-from __future__ import print_function
+from __future__ import print_function, division
 
 import pytest
 import os
@@ -384,7 +384,7 @@ def test_PrintProgress():
 
 
 def test_Try():
-    div = lambda x: 10 / x
+    div = lambda x: 10 // x
     Div = nut_function(div)
 
     assert [] >> Try(div) >> Collect() == []
