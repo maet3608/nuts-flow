@@ -894,7 +894,7 @@ class Cache(Nut):
     to file system and loads them the next time instead of recomputing.
     """
 
-    def __init__(self, cachepath=None):
+    def __init__(self, cachepath=None, clearcache=True):
         """
         iterable >> Cache()
 
@@ -930,12 +930,13 @@ class Cache(Nut):
            with all its contents will be deleted when the cache is deleted.
            For cachepath=None a temporary folder will be created. Path to
            this folder is available in cache.path.
+        :param bool clearcache: Clear left-over cache if it exists.
         :return: Iterator over elements
         :rtype: iterator
         """
         self.path = None
         self._cachepath = cachepath
-        if cachepath and os.path.exists(cachepath):  # Left-over cache!
+        if clearcache and cachepath and os.path.exists(cachepath):
             shutil.rmtree(cachepath)  # delete it.
 
     def clear(self):
