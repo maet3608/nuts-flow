@@ -988,13 +988,6 @@ class Cache(Nut):
         """
         self.clear()
 
-    def __del__(self):
-        """
-        Delete cache if Cache instance is deleted, e.g. if execution is stopped
-        and __exit__ is not called.
-        """
-        self.clear()
-
     def __rrshift__(self, iterable):
         """
         Return elements in iterable.
