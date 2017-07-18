@@ -894,7 +894,7 @@ class Cache(Nut):
     to file system and loads them the next time instead of recomputing.
     """
 
-    def __init__(self, storage='disk'):
+    def __init__(self, cachepath=None):
         """
         iterable >> Cache()
 
@@ -917,21 +917,31 @@ class Cache(Nut):
                 data >> expensive_op >> cache >> Collect()
             cache.clear()
 
+
+        .. code:: python
+
+            with Cache('path/to/mycache') as cache:
+                for _ in range(100)
+                    data >> expensive_op >> cache >> Collect()
+
         :param iterable iterable: Any iterable
-        :param string storage: Currently only 'disk' mode.
+        :param string cachepath: Path to a folder that stores the cached
+           objects. If the path does not exist it will be created. The path
+           with all its contents will be deleted when the cache is deleted.
+           For cachepath=None a temporary folder will be created. Path to
+           this folder is available in cache.path.
         :return: Iterator over elements
         :rtype: iterator
         """
-
-        self._dirpath = None
-        self.storage = storage  # currently not used. Could be 'disk', 'memory'
-        if storage != 'disk':
-            raise ValueError('Unsupported storage: ' + storage)
+        self.path = None
+        self._cachepath = cachepath
+        if cachepath and os.path.exists(cachepath):  # Left-over cache!
+            shutil.rmtree(cachepath)  # delete it.
 
     def clear(self):
         """Clear cache"""
-        shutil.rmtree(self._dirpath, ignore_errors=True)
-        self._dirpath = None
+        shutil.rmtree(self.path, ignore_errors=True)
+        self.path = None
 
     def _fpath(self, idx):
         """
@@ -941,7 +951,7 @@ class Cache(Nut):
         :rtype: str
         """
         fname = 'cache_{0:010d}.pkl'.format(idx)
-        fpath = osp.join(self._dirpath, fname)
+        fpath = osp.join(self.path, fname)
         return fpath
 
     def _cache_fpaths(self):
@@ -951,8 +961,17 @@ class Cache(Nut):
         :return: Filepaths to pickle files.
         :rtype: list of strings
         """
-        dirpath = self._dirpath
+        dirpath = self.path
         return sorted(osp.join(dirpath, name) for name in os.listdir(dirpath))
+
+    def _create_cache(self):
+        """
+        Create either user-defined cache path or temporary path for cache data.
+        """
+        if self._cachepath:  # user defined cache path.
+            if not os.path.exists(self._cachepath):
+                os.makedirs(self._cachepath)  # create cache
+        self.path = self._cachepath if self._cachepath else tempfile.mkdtemp()
 
     def __enter__(self):
         """
@@ -969,6 +988,13 @@ class Cache(Nut):
         """
         self.clear()
 
+    def __del__(self):
+        """
+        Delete cache if Cache instance is deleted, e.g. if execution is stopped
+        and __exit__ is not called.
+        """
+        self.clear()
+
     def __rrshift__(self, iterable):
         """
         Return elements in iterable.
@@ -977,12 +1003,12 @@ class Cache(Nut):
         :return: Iterable over same elements as input iterable.
         :rtype: iterable
         """
-        if self._dirpath:
+        if self.path:
             for fpath in self._cache_fpaths():
                 with open(fpath, 'rb') as f:
                     yield pickle.load(f)
         else:
-            self._dirpath = tempfile.mkdtemp()
+            self._create_cache()
             for i, e in enumerate(iterable):
                 with open(self._fpath(i), 'wb') as f:
                     pickle.dump(e, f, pickle.HIGHEST_PROTOCOL)

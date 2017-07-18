@@ -355,23 +355,31 @@ def test_Cache():
     data = [(3, 'a'), (1, 'b'), (2, 'c')]
     with Cache() as cache:
         it = iter(data)
-        assert cache._dirpath is None
+        assert cache.path is None
         assert it >> cache >> Collect() == data
-        dirpath = cache._dirpath
-        assert os.path.isdir(dirpath)
+        cachepath = cache.path
+        assert os.path.isdir(cachepath)
         assert it >> cache >> Collect() == data
-    assert not os.path.isdir(dirpath)
-    assert cache._dirpath is None
-
-    with pytest.raises(ValueError) as ex:
-        [1] >> Cache(storage='memory') >> Consume()
-    assert str(ex.value).startswith('Unsupported storage')
+    assert not os.path.isdir(cachepath)
+    assert cache.path is None
 
     data = list(range(100))
     with Cache() as cache:
         it = iter(data)
         assert it >> cache >> Collect() == data
         assert it >> cache >> Collect() == data
+
+    cache = Cache('tests/data/cache')
+    it = iter(data)
+    assert it >> cache >> Collect() == data
+    assert it >> cache >> Collect() == data
+    cache.clear()
+    assert not os.path.exists('tests/data/cache')
+
+    cache = Cache('tests/data/cache')
+    assert data >> cache >> Collect() == data
+    cache = Cache('tests/data/cache')
+    assert not os.path.exists('tests/data/cache')
 
 
 def test_PrintProgress():
@@ -389,7 +397,7 @@ def test_Try():
 
     assert [] >> Try(div) >> Collect() == []
     assert [10, 5, 1] >> Try(div) >> Collect() == [1, 2, 10]
-    assert [10, 0, 1] >> Try(Div(), -1) >> Collect() == [1,-1, 10]
+    assert [10, 0, 1] >> Try(Div(), -1) >> Collect() == [1, -1, 10]
     assert [10, 0, 1] >> Try(Div(), 'IGNORE') >> Collect() == [1, 10]
 
     ifzero = lambda x, e: str(x)
