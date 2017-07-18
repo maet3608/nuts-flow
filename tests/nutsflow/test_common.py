@@ -9,6 +9,7 @@ import sys
 
 from pytest import approx
 from time import sleep
+from nutsflow import MeanStd
 from nutsflow.common import (sec_to_hms, timestr, Redirect, as_tuple, as_set,
                              as_list, console, StableRandom)
 
@@ -56,6 +57,7 @@ def test_Redirect():
         print('error', file=sys.stderr)
     assert out.getvalue() == 'error\n'
 
+
 def test_StableRandom():
     rnd = StableRandom(1)
     assert rnd.randint(1, 10) == 5
@@ -92,3 +94,14 @@ def test_StableRandom():
     rnd2 = StableRandom()
     for _ in range(100):
         assert rnd1.random() != rnd2.random()
+
+    rnd = StableRandom()
+    numbers = [rnd._randbelow(10) for _ in range(1000)]
+    assert max(numbers) < 10
+    assert min(numbers) >= 0
+
+    rnd = StableRandom()
+    numbers = [rnd.gauss_next() for _ in range(10000)]
+    my, std = numbers >> MeanStd()
+    assert 0.0 == approx(my, abs=0.1)
+    assert 1.0 == approx(std, abs=0.1)
