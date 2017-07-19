@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nutsflow.processor &mdash; nutsflow 1.0.21 documentation</title>
+  <title>nutsflow.processor &mdash; nutsflow 1.0.23 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../../genindex.html"/>
         <link rel="search" title="Search" href="../../search.html"/>
-    <link rel="top" title="nutsflow 1.0.21 documentation" href="../../index.html"/>
+    <link rel="top" title="nutsflow 1.0.23 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                1.0.21
+                1.0.23
               </div>
             
           
@@ -165,7 +165,7 @@
 <span class="sd">.. module:: processor</span>
 <span class="sd">   :synopsis: Nuts that process iterables and return iterables.</span>
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">division</span>
 
 <span class="kn">import</span> <span class="nn">tempfile</span>
 <span class="kn">import</span> <span class="nn">shutil</span>
@@ -1057,7 +1057,7 @@
 <span class="sd">    to file system and loads them the next time instead of recomputing.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="Cache.__init__"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.processor.Cache.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">storage</span><span class="o">=</span><span class="s1">&#39;disk&#39;</span><span class="p">):</span>
+<div class="viewcode-block" id="Cache.__init__"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.processor.Cache.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cachepath</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">clearcache</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        iterable &gt;&gt; Cache()</span>
 
@@ -1080,21 +1080,32 @@
 <span class="sd">                data &gt;&gt; expensive_op &gt;&gt; cache &gt;&gt; Collect()</span>
 <span class="sd">            cache.clear()</span>
 
+
+<span class="sd">        .. code:: python</span>
+
+<span class="sd">            with Cache(&#39;path/to/mycache&#39;) as cache:</span>
+<span class="sd">                for _ in range(100)</span>
+<span class="sd">                    data &gt;&gt; expensive_op &gt;&gt; cache &gt;&gt; Collect()</span>
+
 <span class="sd">        :param iterable iterable: Any iterable</span>
-<span class="sd">        :param string storage: Currently only &#39;disk&#39; mode.</span>
+<span class="sd">        :param string cachepath: Path to a folder that stores the cached</span>
+<span class="sd">           objects. If the path does not exist it will be created. The path</span>
+<span class="sd">           with all its contents will be deleted when the cache is deleted.</span>
+<span class="sd">           For cachepath=None a temporary folder will be created. Path to</span>
+<span class="sd">           this folder is available in cache.path.</span>
+<span class="sd">        :param bool clearcache: Clear left-over cache if it exists.</span>
 <span class="sd">        :return: Iterator over elements</span>
 <span class="sd">        :rtype: iterator</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">_dirpath</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">storage</span> <span class="o">=</span> <span class="n">storage</span>  <span class="c1"># currently not used. Could be &#39;disk&#39;, &#39;memory&#39;</span>
-        <span class="k">if</span> <span class="n">storage</span> <span class="o">!=</span> <span class="s1">&#39;disk&#39;</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Unsupported storage: &#39;</span> <span class="o">+</span> <span class="n">storage</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cachepath</span> <span class="o">=</span> <span class="n">cachepath</span>
+        <span class="k">if</span> <span class="n">clearcache</span> <span class="ow">and</span> <span class="n">cachepath</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">cachepath</span><span class="p">):</span>
+            <span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="n">cachepath</span><span class="p">)</span>  <span class="c1"># delete it.</span></div>
 
 <div class="viewcode-block" id="Cache.clear"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.processor.Cache.clear">[docs]</a>    <span class="k">def</span> <span class="nf">clear</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Clear cache&quot;&quot;&quot;</span>
-        <span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dirpath</span><span class="p">,</span> <span class="n">ignore_errors</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_dirpath</span> <span class="o">=</span> <span class="kc">None</span></div>
+        <span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">,</span> <span class="n">ignore_errors</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="kc">None</span></div>
 
     <span class="k">def</span> <span class="nf">_fpath</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -1104,7 +1115,7 @@
 <span class="sd">        :rtype: str</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">fname</span> <span class="o">=</span> <span class="s1">&#39;cache_</span><span class="si">{0:010d}</span><span class="s1">.pkl&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span>
-        <span class="n">fpath</span> <span class="o">=</span> <span class="n">osp</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dirpath</span><span class="p">,</span> <span class="n">fname</span><span class="p">)</span>
+        <span class="n">fpath</span> <span class="o">=</span> <span class="n">osp</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">,</span> <span class="n">fname</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">fpath</span>
 
     <span class="k">def</span> <span class="nf">_cache_fpaths</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -1114,8 +1125,17 @@
 <span class="sd">        :return: Filepaths to pickle files.</span>
 <span class="sd">        :rtype: list of strings</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">dirpath</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dirpath</span>
+        <span class="n">dirpath</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">path</span>
         <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">osp</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dirpath</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">dirpath</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">_create_cache</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create either user-defined cache path or temporary path for cache data.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cachepath</span><span class="p">:</span>  <span class="c1"># user defined cache path.</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_cachepath</span><span class="p">):</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_cachepath</span><span class="p">)</span>  <span class="c1"># create cache</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cachepath</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cachepath</span> <span class="k">else</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">mkdtemp</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -1140,12 +1160,12 @@
 <span class="sd">        :return: Iterable over same elements as input iterable.</span>
 <span class="sd">        :rtype: iterable</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dirpath</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">fpath</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cache_fpaths</span><span class="p">():</span>
                 <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">fpath</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
                     <span class="k">yield</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_dirpath</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">mkdtemp</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_create_cache</span><span class="p">()</span>
             <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">e</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">iterable</span><span class="p">):</span>
                 <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_fpath</span><span class="p">(</span><span class="n">i</span><span class="p">),</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
                     <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">pickle</span><span class="o">.</span><span class="n">HIGHEST_PROTOCOL</span><span class="p">)</span>
@@ -1235,13 +1255,13 @@
 
 <span class="sd">    &gt;&gt;&gt; from nutsflow import Try, Collect, nut_function  </span>
 
-<span class="sd">    &gt;&gt;&gt; [10, 2, 1] &gt;&gt; Try(lambda x : 10/x) &gt;&gt; Collect()</span>
+<span class="sd">    &gt;&gt;&gt; [10, 2, 1] &gt;&gt; Try(lambda x : 10//x) &gt;&gt; Collect()</span>
 <span class="sd">    [1, 5, 10]</span>
-<span class="sd">    &gt;&gt;&gt; [10, 0, 1] &gt;&gt; Try(lambda x : 10/x, &#39;STDOUT&#39;) &gt;&gt; Collect()</span>
+<span class="sd">    &gt;&gt;&gt; [10, 0, 1] &gt;&gt; Try(lambda x : 10//x, &#39;STDOUT&#39;) &gt;&gt; Collect()</span>
 <span class="sd">    ERROR: 0 : integer division or modulo by zero</span>
 <span class="sd">    [1, 10]</span>
 
-<span class="sd">    &gt;&gt;&gt; Div = nut_function(lambda x : 10/x)</span>
+<span class="sd">    &gt;&gt;&gt; Div = nut_function(lambda x : 10//x)</span>
 <span class="sd">    &gt;&gt;&gt; [10, 2, 1] &gt;&gt; Try(Div()) &gt;&gt; Collect()</span>
 <span class="sd">    [1, 5, 10]</span>
 <span class="sd">    &gt;&gt;&gt; [10, 0, 1] &gt;&gt; Try(Div(), &#39;STDOUT&#39;) &gt;&gt; Collect()</span>
@@ -1303,7 +1323,7 @@
   <div role="contentinfo">
     <p>
         &copy; Copyright 2017, IBM Research Australia.
-      Last updated on Jun 23, 2017.
+      Last updated on Jul 20, 2017.
 
     </p>
   </div> 
@@ -1324,7 +1344,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'1.0.21',
+            VERSION:'1.0.23',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

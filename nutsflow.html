@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nutsflow package &mdash; nutsflow 1.0.21 documentation</title>
+  <title>nutsflow package &mdash; nutsflow 1.0.23 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="nutsflow 1.0.21 documentation" href="index.html"/>
+    <link rel="top" title="nutsflow 1.0.23 documentation" href="index.html"/>
         <link rel="next" title="nutsflow.examples package" href="nutsflow.examples.html"/>
         <link rel="prev" title="Links" href="links.html"/> 
 
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                1.0.21
+                1.0.23
               </div>
             
           
@@ -1636,13 +1636,13 @@ GPU to finish the batch.</p>
 <span id="nutsflow-processor-module"></span><h2>nutsflow.processor module<a class="headerlink" href="#module-nutsflow.processor" title="Permalink to this headline">¶</a></h2>
 <span class="target" id="module-processor"></span><dl class="class">
 <dt id="nutsflow.processor.Cache">
-<em class="property">class </em><code class="descname">Cache</code><span class="sig-paren">(</span><em>storage='disk'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/processor.html#Cache"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.processor.Cache" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descname">Cache</code><span class="sig-paren">(</span><em>cachepath=None</em>, <em>clearcache=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/processor.html#Cache"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.processor.Cache" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#nutsflow.base.Nut" title="nutsflow.base.Nut"><code class="xref py py-class docutils literal"><span class="pre">nutsflow.base.Nut</span></code></a></p>
 <p>A very naive implementation of a disk cache. Pickles elements of iterable
 to file system and loads them the next time instead of recomputing.</p>
 <dl class="method">
 <dt id="nutsflow.processor.Cache.__init__">
-<code class="descname">__init__</code><span class="sig-paren">(</span><em>storage='disk'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/processor.html#Cache.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.processor.Cache.__init__" title="Permalink to this definition">¶</a></dt>
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>cachepath=None</em>, <em>clearcache=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/processor.html#Cache.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.processor.Cache.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>iterable &gt;&gt; Cache()</p>
 <p>Cache elements of iterable to disk. Only worth it if elements of
 iterable are time-consuming to produce and can be loaded faster
@@ -1659,13 +1659,23 @@ from disk.</p>
 <span class="n">cache</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
 </pre></div>
 </div>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">Cache</span><span class="p">(</span><span class="s1">&#39;path/to/mycache&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">cache</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+        <span class="n">data</span> <span class="o">&gt;&gt;</span> <span class="n">expensive_op</span> <span class="o">&gt;&gt;</span> <span class="n">cache</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
+</pre></div>
+</div>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>iterable</strong> (<em>iterable</em>) &#8211; Any iterable</li>
-<li><strong>storage</strong> (<a class="reference external" href="https://docs.python.org/2/library/string.html#module-string" title="(in Python v2.7)"><em>string</em></a>) &#8211; Currently only &#8216;disk&#8217; mode.</li>
+<li><strong>cachepath</strong> (<a class="reference external" href="https://docs.python.org/2/library/string.html#module-string" title="(in Python v2.7)"><em>string</em></a>) &#8211; Path to a folder that stores the cached
+objects. If the path does not exist it will be created. The path
+with all its contents will be deleted when the cache is deleted.
+For cachepath=None a temporary folder will be created. Path to
+this folder is available in cache.path.</li>
+<li><strong>clearcache</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) &#8211; Clear left-over cache if it exists.</li>
 </ul>
 </td>
 </tr>
@@ -2679,14 +2689,14 @@ value of &#8216;STDERR&#8217;.</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nutsflow</span> <span class="k">import</span> <span class="n">Try</span><span class="p">,</span> <span class="n">Collect</span><span class="p">,</span> <span class="n">nut_function</span>  
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">Try</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span> <span class="p">:</span> <span class="mi">10</span><span class="o">/</span><span class="n">x</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">Try</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span> <span class="p">:</span> <span class="mi">10</span><span class="o">//</span><span class="n">x</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
 <span class="go">[1, 5, 10]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">Try</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span> <span class="p">:</span> <span class="mi">10</span><span class="o">/</span><span class="n">x</span><span class="p">,</span> <span class="s1">&#39;STDOUT&#39;</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">Try</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span> <span class="p">:</span> <span class="mi">10</span><span class="o">//</span><span class="n">x</span><span class="p">,</span> <span class="s1">&#39;STDOUT&#39;</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
 <span class="go">ERROR: 0 : integer division or modulo by zero</span>
 <span class="go">[1, 10]</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Div</span> <span class="o">=</span> <span class="n">nut_function</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span> <span class="p">:</span> <span class="mi">10</span><span class="o">/</span><span class="n">x</span><span class="p">)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Div</span> <span class="o">=</span> <span class="n">nut_function</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span> <span class="p">:</span> <span class="mi">10</span><span class="o">//</span><span class="n">x</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">Try</span><span class="p">(</span><span class="n">Div</span><span class="p">())</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
 <span class="go">[1, 5, 10]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">Try</span><span class="p">(</span><span class="n">Div</span><span class="p">(),</span> <span class="s1">&#39;STDOUT&#39;</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
@@ -3891,7 +3901,7 @@ See <a class="reference external" href="https://docs.python.org/2/library/csv.ht
   <div role="contentinfo">
     <p>
         &copy; Copyright 2017, IBM Research Australia.
-      Last updated on Jun 23, 2017.
+      Last updated on Jul 20, 2017.
 
     </p>
   </div> 
@@ -3912,7 +3922,7 @@ See <a class="reference external" href="https://docs.python.org/2/library/csv.ht
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'1.0.21',
+            VERSION:'1.0.23',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,
