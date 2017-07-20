@@ -936,6 +936,7 @@ class Cache(Nut):
         """
         self.path = None
         self._cachepath = cachepath
+        self._clearcache = clearcache
         if clearcache and cachepath and os.path.exists(cachepath):
             shutil.rmtree(cachepath)  # delete it.
 
@@ -952,8 +953,7 @@ class Cache(Nut):
         :rtype: str
         """
         fname = 'cache_{0:010d}.pkl'.format(idx)
-        fpath = osp.join(self.path, fname)
-        return fpath
+        return osp.join(self.path, fname)
 
     def _cache_fpaths(self):
         """
@@ -962,8 +962,8 @@ class Cache(Nut):
         :return: Filepaths to pickle files.
         :rtype: list of strings
         """
-        dirpath = self.path
-        return sorted(osp.join(dirpath, name) for name in os.listdir(dirpath))
+        path = self._cachepath if self._cachepath else self.path
+        return sorted(osp.join(path, n) for n in os.listdir(path))
 
     def _create_cache(self):
         """
@@ -997,7 +997,7 @@ class Cache(Nut):
         :return: Iterable over same elements as input iterable.
         :rtype: iterable
         """
-        if self.path:
+        if self.path or (self._cachepath and not self._clearcache):
             for fpath in self._cache_fpaths():
                 with open(fpath, 'rb') as f:
                     yield pickle.load(f)
