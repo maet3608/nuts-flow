@@ -14,5 +14,6 @@ install:
 script: 
   - py.test
   - coverage run --source=nutsflow setup.py test
+  - coverage report --fail-under=100
 after_success:
   - coveralls  
