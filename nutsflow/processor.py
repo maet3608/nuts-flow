@@ -989,18 +989,28 @@ class Cache(Nut):
         """
         self.clear()
 
+    def __iter__(self):
+        """
+        Return iterator over cached elements.
+
+        :return: Generator over cached elements
+        :rtype: Generator
+        """
+        for fpath in self._cache_fpaths():
+            with open(fpath, 'rb') as f:
+                yield pickle.load(f)
+
     def __rrshift__(self, iterable):
         """
         Return elements in iterable.
 
         :param iterable iterable: Any iterable
-        :return: Iterable over same elements as input iterable.
-        :rtype: iterable
+        :return: Generator over same elements as input iterable.
+        :rtype: Generator
         """
         if self.path or (self._cachepath and not self._clearcache):
-            for fpath in self._cache_fpaths():
-                with open(fpath, 'rb') as f:
-                    yield pickle.load(f)
+            for e in self.__iter__():
+                yield e
         else:
             self._create_cache()
             for i, e in enumerate(iterable):

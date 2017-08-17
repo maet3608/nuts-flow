@@ -368,6 +368,7 @@ def test_Cache():
         it = iter(data)
         assert it >> cache >> Collect() == data
         assert it >> cache >> Collect() == data
+        assert cache >> Collect() == data
 
     cache = Cache('tests/data/cache')
     it = iter(data)
