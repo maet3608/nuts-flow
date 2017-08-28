@@ -135,6 +135,10 @@ def test_Print():
         [(1, 2), (3, 4)] >> Print('{1}:{0}') >> Consume()
     assert out.getvalue() == '2:1\n4:3\n'
 
+    with Redirect() as out:
+        [{'num': 1}, {'num': 2}] >> Print('{num}') >> Consume()
+    assert out.getvalue() == '1\n2\n'
+
     with pytest.raises(ValueError) as ex:
         [1, 2, 3] >> Print(['invalid']) >> Consume()
     assert str(ex.value) == "Invalid format ['invalid']"

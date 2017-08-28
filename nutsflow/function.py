@@ -331,7 +331,11 @@ class Print(NutFunction):
         if not fmtfunc:
             console(x)
         elif isinstance(fmtfunc, str):
-            console(fmtfunc.format(*(x if hasattr(x, '__iter__') else [x])))
+            if isinstance(x, dict):
+                text = fmtfunc.format(**x)
+            else:
+                text = fmtfunc.format(*(x if hasattr(x, '__iter__') else [x]))
+            console(text)
         elif hasattr(fmtfunc, '__call__'):
             console(fmtfunc(x))
         else:
