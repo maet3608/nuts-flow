@@ -276,6 +276,10 @@ class Print(NutFunction):
         2
         4
 
+        >>> [{'val': 1}, {'val': 2}] >> Print('number={val}') >> Consume()
+        number=1
+        number=2
+
         >>> [[1, 2], [3, 4]] >> Print('number={1}:{0}') >> Consume()
         number=2:1
         number=4:3
