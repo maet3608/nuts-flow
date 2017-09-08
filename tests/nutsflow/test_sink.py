@@ -111,9 +111,13 @@ def test_CountValues():
     assert [] >> CountValues() == dict()
     assert 'abaacc' >> CountValues() == {'a': 3, 'b': 1, 'c': 2}
 
-    assert [] >> CountValues(True) == dict()
-    assert [2] >> CountValues(True) == {2: 1.0}
-    assert 'aabaab' >> CountValues(True) == {'a': 1.0, 'b': 0.5}
+    assert [] >> CountValues(relative=True) == dict()
+    assert [2] >> CountValues(relative=True) == {2: 1.0}
+    assert 'aabaab' >> CountValues(relative=True) == {'a': 1.0, 'b': 0.5}
+
+    data = [('a', 'X'), ('b', 'Y'), ('a', 'Y')]
+    assert data >> CountValues(column=0) == {'a': 2, 'b': 1}
+    assert data >> CountValues(column=1) == {'Y': 2, 'X': 1}
 
 
 def test_Collect():

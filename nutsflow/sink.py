@@ -389,7 +389,7 @@ def Tail(iterable, n, container=list):
 
 
 @nut_sink
-def CountValues(iterable, relative=False):
+def CountValues(iterable, column=None, relative=False):
     """
     iterable >> CountValues(relative=False)
 
@@ -399,15 +399,24 @@ def CountValues(iterable, relative=False):
     >>> 'abaacc' >> CountValues()  # doctest: +SKIP
     {'a': 3, 'b': 1, 'c': 2}
 
-    >>> 'aabaab' >> CountValues(True)  # doctest: +SKIP
+    >>> 'aabaab' >> CountValues(relative=True)  # doctest: +SKIP
     {'a': 1.0, 'b': 0.5}
 
+    >>> data = [('a', 'X'), ('b', 'Y'), ('a', 'Y')]
+    >>> data >> CountValues(column=0)  # doctest: +SKIP
+    {'a': 2, 'b': 1}
+    >>> data >> CountValues(column=1)  # doctest: +SKIP
+    {'Y': 2, 'X': 1}
+
     :param iterable iterable: Any iterable, e.g. list, range, ...
+    :param int|None column: Column of values in iterable to extract values from.
+       If colum=None the values in the iterable themselves will be counted.
     :param bool relative: True: return relative counts otherwise absolute counts
     :return: Dictionary with (relative) counts for elements in iterable.
     :rtype: dict
     """
-    cnts = dict(cl.Counter(iterable))
+    values = iterable if column is None else (i[column] for i in iterable)
+    cnts = dict(cl.Counter(values))
     if not relative or not cnts.values():
         return cnts
     max_cnt = max(cnts.values())
