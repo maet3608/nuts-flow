@@ -121,6 +121,9 @@ def GetCols(x, *columns):
     >>> [[1, 2, 3], [4, 5, 6]] >> GetCols(2, 0) >> Collect()
     [(3, 1), (6, 4)]
 
+    >>> [[1, 2, 3], [4, 5, 6]] >> GetCols((2, 0)) >> Collect()
+    [(3, 1), (6, 4)]
+
     >>> [(1, 2, 3), (4, 5, 6)] >> GetCols(2, 1, 0) >> Collect()
     [(3, 2, 1), (6, 5, 4)]
 
@@ -129,10 +132,13 @@ def GetCols(x, *columns):
 
     :param iterable iterable: Any iterable
     :param indexable container x: Any indexable input
-    :param int|tuple columns: Indicies of elements/columns in x to extract
+    :param int|tuple|args columns: Indicies of elements/columns in x to extract
+       or a tuple with these indices.
     :return: Extracted elements
     :rtype: tuple
     """
+    if len(columns) == 1 and isinstance(columns[0], tuple):
+        columns = columns[0]
     return tuple(x[i] for i in columns)
 
 

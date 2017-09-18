@@ -57,7 +57,9 @@ def test_Get():
 def test_GetCols():
     data = [[1, 2, 3], [4, 5, 6]]
     assert data >> GetCols(1) >> Collect() == [(2,), (5,)]
+    assert data >> GetCols((1,)) >> Collect() == [(2,), (5,)]
     assert data >> GetCols(2, 0) >> Collect() == [(3, 1), (6, 4)]
+    assert data >> GetCols((2, 0)) >> Collect() == [(3, 1), (6, 4)]
     assert data >> GetCols(2, 1, 0) >> Collect() == [(3, 2, 1), (6, 5, 4)]
     assert data >> GetCols(1, 1) >> Collect() == [(2, 2), (5, 5)]
 
