@@ -5,6 +5,7 @@
 from __future__ import print_function
 
 import sys
+import time
 import random
 
 from math import sqrt, log, cos, pi
@@ -219,7 +220,6 @@ class StableRandom(random.Random):
 
         :param None|int seed: Seed. If None the system time is used.
         """
-        import time
         if seed is None:
             seed = int(time.time() * 256)
         self._seed = seed

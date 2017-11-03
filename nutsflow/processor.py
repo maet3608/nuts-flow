@@ -601,7 +601,7 @@ def Drop(iterable, n):
 
 
 @nut_processor
-def Pick(iterable, p_n, rand=rnd.Random()):
+def Pick(iterable, p_n, rand=None):
     """
     iterable >> Pick(p_n)
 
@@ -610,7 +610,7 @@ def Pick(iterable, p_n, rand=rnd.Random()):
 
     >>> from nutsflow import Range, Collect
     >>> from nutsflow.common import StableRandom
-    
+
     >>> [1, 2, 3, 4] >> Pick(0.0) >> Collect()
     []
 
@@ -627,11 +627,12 @@ def Pick(iterable, p_n, rand=rnd.Random()):
     :param iterable iterable: Any iterable
     :param float|int p_n: Probability p in [0, 1] or
         integer n for every n-th element
-    :param Random rand: Random number generator to be used.
-        Don't use StableRandom, which is only for testing.
+    :param Random|None rand: Random number generator. If None, random.Random()
+        is used.
     :return: Iterator over picked elements.
     :rtype: iterator
     """
+    rand = rnd.Random() if rand is None else rand
     if isinstance(p_n, int):
         if p_n < 0:
             raise ValueError('p_n must not be negative ' + str(p_n))
@@ -751,7 +752,7 @@ def Clone(iterable, n):
 
 
 @nut_processor
-def Shuffle(iterable, buffersize, rand=rnd.Random()):
+def Shuffle(iterable, buffersize, rand=None):
     """
     iterable >> Shuffle(buffersize)
 
@@ -763,8 +764,9 @@ def Shuffle(iterable, buffersize, rand=rnd.Random()):
     Note that for buffersize = 1 no shuffling occurs.
 
     In the following example rand = StableRandom(0) is used to create a fixed
-    shuffle. Usually, this is not what you want. Use the default
-    rand=rnd.Random() instead.
+    sequence that stable across Python version 2.x and 3.x. Usually, this is
+    not what you want. Use the default rand=None which uses random.Random()
+    instead.
 
     >>> from nutsflow import Range, Collect
     >>> from nutsflow.common import StableRandom
@@ -777,10 +779,12 @@ def Shuffle(iterable, buffersize, rand=rnd.Random()):
 
     :param iterable iterable: Any iterable
     :param int buffersize: Number of elements stored in shuffle buffer.
-    :param random.Random rand: Random number generator.
+    :param Random|None rand: Random number generator. If None,
+           random.Random() is used.
     :return: Generator over shuffled elements
     :rtype: generator
     """
+    rand = rnd.Random() if rand is None else rand
     iterable = iter(iterable)
     buffer = list(itf.take(iterable, buffersize))
     rand.shuffle(buffer)
