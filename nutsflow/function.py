@@ -8,7 +8,7 @@ from __future__ import absolute_import
 import time
 import threading
 
-from .common import console
+from .common import console, is_iterable
 from .factory import nut_function, NutFunction
 
 
@@ -251,7 +251,7 @@ def Format(x, fmt):
     :return: Returns inputs as strings formatted as specified
     :rtype: str
     """
-    return fmt.format(*(x if hasattr(x, '__iter__') else [x]))
+    return fmt.format(*(x if is_iterable(x) else [x]))
 
 
 class Print(NutFunction):
@@ -344,7 +344,7 @@ class Print(NutFunction):
             if isinstance(x, dict):
                 text = fmtfunc.format(**x)
             else:
-                text = fmtfunc.format(*(x if hasattr(x, '__iter__') else [x]))
+                text = fmtfunc.format(*(x if is_iterable(x) else [x]))
             console(text)
         elif hasattr(fmtfunc, '__call__'):
             console(fmtfunc(x))

@@ -12,6 +12,16 @@ from math import sqrt, log, cos, pi
 from six.moves import cStringIO as StringIO
 
 
+def is_iterable(obj):
+    """
+    Return true if object has iterator but is not a string
+    :param object obj: Any object
+    :return: True if object is iterable but not a string.
+    :rtype: bool
+    """
+    return hasattr(obj, '__iter__') and not isinstance(obj, str)
+
+
 def as_tuple(x):
     """
     Return x as tuple.
@@ -23,7 +33,7 @@ def as_tuple(x):
     :return: tuple(x)
     :rtype: tuple
     """
-    return tuple(x) if hasattr(x, '__iter__') else (x,)
+    return tuple(x) if is_iterable(x) else (x,)
 
 
 def as_list(x):
@@ -37,7 +47,7 @@ def as_list(x):
     :return: list(x)
     :rtype: list
     """
-    return list(x) if hasattr(x, '__iter__') else [x]
+    return list(x) if is_iterable(x) else [x]
 
 
 def as_set(x):
@@ -51,7 +61,7 @@ def as_set(x):
     :return: set(x)
     :rtype: set
     """
-    return set(x) if hasattr(x, '__iter__') else (x,)
+    return set(x) if is_iterable(x) else (x,)
 
 
 def sec_to_hms(duration):
@@ -143,7 +153,6 @@ class Redirect(object):
 
     def __exit__(self, *args):
         self.__set_channel(self.oldout)
-
 
 
 # Adopted from: https://en.wikipedia.org/wiki/Mersenne_Twister

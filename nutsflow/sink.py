@@ -13,7 +13,7 @@ import collections as cl
 from six.moves import reduce, zip, range
 from .base import NutSink
 from .factory import nut_sink
-from .common import as_tuple
+from .common import as_tuple, is_iterable
 from .iterfunction import nth, consume, length, take
 
 
@@ -537,6 +537,6 @@ class WriteCSV(NutSink):
         for _ in range(self.skipheader):
             next(iterable)
         for row in iterable:
-            row = row if hasattr(row, '__iter__') else [row]
+            row = row if is_iterable(row) else [row]
             row = [row[i] for i in cols] if cols else row
             self.writer.writerow(map(self.fmtfunc, row))

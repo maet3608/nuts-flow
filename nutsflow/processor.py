@@ -22,7 +22,7 @@ from six.moves import cPickle as pickle
 from six.moves import map, filter, filterfalse, zip, range
 from . import iterfunction as itf
 from .base import Nut, NutFunction
-from .common import as_tuple, as_set, console, timestr
+from .common import as_tuple, as_set, console, timestr, is_iterable
 from .factory import nut_processor
 from .function import Identity
 from .sink import Consume, Collect
@@ -324,7 +324,7 @@ def FlattenCol(iterable, cols):
     Only one level is flattened.
 
     (1 3)  (5 7)
-    (2 4)  (6 8)   >> FlattenCols((0,1) >>   (1 3)  (2 4)  (5 7)  (6 8)
+    (2 4)  (6 8)   >> FlattenCol((0,1) >>   (1 3)  (2 4)  (5 7)  (6 8)
 
     If a column contains a single element (instead of an iterable) it is 
     wrapped into a repeater. This allows to flatten columns that are iterable
@@ -357,7 +357,7 @@ def FlattenCol(iterable, cols):
     :rtype: generator
     """
     cols = as_tuple(cols)
-    get = lambda e: e if hasattr(e, '__iter__') else itt.repeat(e)
+    get = lambda e: e if is_iterable(e) else itt.repeat(e)
     for es in iterable:
         for e in zip(*[get(es[c]) for c in cols]):
             yield e

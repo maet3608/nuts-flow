@@ -11,7 +11,12 @@ from pytest import approx
 from time import sleep
 from nutsflow import MeanStd
 from nutsflow.common import (sec_to_hms, timestr, Redirect, as_tuple, as_set,
-                             as_list, console, StableRandom)
+                             as_list, is_iterable, console, StableRandom)
+
+
+def test_is_iterable():
+    assert is_iterable([1, 2])
+    assert not is_iterable('12')
 
 
 def test_as_tuple():
