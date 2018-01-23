@@ -25,7 +25,7 @@ from .base import Nut, NutFunction
 from .common import as_tuple, as_list, as_set, console, timestr, is_iterable
 from .factory import nut_processor
 from .function import Identity
-from .sink import Consume, Collect
+from .sink import Consume, Collect, Head
 
 
 @nut_processor
@@ -75,6 +75,35 @@ def Slice(iterable, start=None, *args, **kwargs):
     :rtype: iterator
     """
     return itt.islice(iterable, start, *args, **kwargs)
+
+
+@nut_processor
+def Window(iterable, n=2):
+    """
+    iterable >> Window(n)
+
+    Sliding window of size n over elements in iterable.
+
+    >>> [1, 2, 3, 4] >> Window() >> Collect()
+    [(1, 2), (2, 3), (3, 4)]
+
+    >>> [1, 2, 3, 4] >> Window(3) >> Collect()
+    [(1, 2, 3), (2, 3, 4)]
+
+    >>> 'test' >> Window(2) >> Map(''.join) >> Collect()
+    ['te', 'es', 'st']
+
+    :param iterable iterable: Any iterable
+    :param int n: Size of window
+    :return: iterator with tuples of length n
+    :rtype: iterator over tuples
+    """
+    it = iter(iterable)
+    win = cl.deque(it >> Take(n), n)
+    yield tuple(win)
+    for e in it:
+        win.append(e)
+        yield tuple(win)
 
 
 @nut_processor
@@ -176,6 +205,8 @@ def Append(iterable, items):
     """
     iterable >> Append(items)
 
+    Append item(s) to lists/tuples in iterable.
+
     >>> [(1, 2), (3, 4)] >> Append('X') >> Collect()
     [(1, 2, 'X'), (3, 4, 'X')]
 
@@ -205,6 +236,8 @@ def Append(iterable, items):
 def Insert(iterable, index, items):
     """
     iterable >> Insert(index, items)
+
+    Insert item(s) into lists/tuples in iterable.
 
     >>> [(1, 2), (3, 4)] >> Insert(1, 'X') >> Collect()
     [(1, 'X', 2), (3, 'X', 4)]
