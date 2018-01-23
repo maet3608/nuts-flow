@@ -3,7 +3,7 @@ __version__ = '1.0.26'
 from nutsflow.source import Enumerate, Repeat, Product, Empty, Range, ReadCSV
 from nutsflow.processor import (Take, Slice, Concat, Interleave, Zip, ZipWith,
                                 Dedupe, Chunk, Cache, ChunkWhen, ChunkBy, Cycle,
-                                Flatten, FlattenCol, FlatMap, Map,
+                                Flatten, FlattenCol, FlatMap, Map, Window,
                                 Filter, FilterFalse, Partition, TakeWhile,
                                 DropWhile, Permutate, Append, Insert,
                                 Combine, Tee, If, Drop, Pick, GroupBy,

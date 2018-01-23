@@ -27,6 +27,16 @@ def test_Slice():
     assert [1, 2, 3, 4] >> Slice(0, 4, 2) >> Collect() == [1, 3]
 
 
+def test_Window():
+    assert [] >> Window() >> Collect() == [()]
+
+    expected = [(1, 2), (2, 3), (3, 4)]
+    assert [1, 2, 3, 4] >> Window() >> Collect() == expected
+
+    expected = [(1, 2, 3), (2, 3, 4)]
+    assert [1, 2, 3, 4] >> Window(3) >> Collect() == expected
+
+
 def test_Concat():
     assert [] >> Concat([]) >> Collect() == []
     assert [1, 2] >> Concat([]) >> Collect() == [1, 2]
