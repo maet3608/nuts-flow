@@ -60,6 +60,42 @@ def test_ZipWith():
     assert [1, 2] >> ZipWith(add3, [2, 3], [4, 5]) >> Collect() == [7, 10]
 
 
+def test_Append():
+    assert [] >> Append('X') >> Collect() == []
+
+    expected = [(1, 2, 'X'), (3, 4, 'X')]
+    assert [(1, 2), (3, 4)] >> Append('X') >> Collect() == expected
+
+    items = ['a', 'b']
+    expected = [(1, 2, 'a'), (3, 4, 'b')]
+    assert [(1, 2), (3, 4)] >> Append(items) >> Collect() == expected
+
+    items = [('a', 'b'), ('c', 'd')]
+    expected = [(1, 2, 'a', 'b'), (3, 4, 'c', 'd')]
+    assert [(1, 2), (3, 4)] >> Append(items) >> Collect() == expected
+
+    expected = [(1, 2, 0), (3, 4, 1)]
+    assert [(1, 2), (3, 4)] >> Append(Enumerate()) >> Collect() == expected
+
+
+def test_Insert():
+    assert [] >> Insert(1, 'X') >> Collect() == []
+
+    expected = [(1, 'X', 2), (3, 'X', 4)]
+    assert [(1, 2), (3, 4)] >> Insert(1, 'X') >> Collect() == expected
+
+    items = ['a', 'b']
+    expected = [(1, 2, 'a'), (3, 4, 'b')]
+    assert [(1, 2), (3, 4)] >> Insert(2, items) >> Collect() == expected
+
+    items = [('a', 'b'), ('c', 'd')]
+    expected = [(1, 'a', 'b', 2), (3, 'c', 'd', 4)]
+    assert [(1, 2), (3, 4)] >> Insert(1, items) >> Collect() == expected
+
+    expected = [(0, 1, 2), (1, 3, 4)]
+    assert [(1, 2), (3, 4)] >> Insert(0, Enumerate()) >> Collect() == expected
+
+
 def test_Dedupe():
     assert [] >> Dedupe() >> Collect() == []
     assert [2, 3, 1, 1, 2, 4] >> Dedupe() >> Collect() == [2, 3, 1, 4]

@@ -22,7 +22,7 @@ from six.moves import cPickle as pickle
 from six.moves import map, filter, filterfalse, zip, range
 from . import iterfunction as itf
 from .base import Nut, NutFunction
-from .common import as_tuple, as_set, console, timestr, is_iterable
+from .common import as_tuple, as_list, as_set, console, timestr, is_iterable
 from .factory import nut_processor
 from .function import Identity
 from .sink import Consume, Collect
@@ -169,6 +169,69 @@ def ZipWith(iterable, f, *iterables):
     """
     iterables = [iterable] + list(iterables)
     return itt.starmap(f, zip(*iterables))
+
+
+@nut_processor
+def Append(iterable, items):
+    """
+    iterable >> Append(items)
+
+    >>> [(1, 2), (3, 4)] >> Append('X') >> Collect()
+    [(1, 2, 'X'), (3, 4, 'X')]
+
+    >>> items = ['a', 'b']
+    >>> [(1, 2), (3, 4)] >> Append(items) >> Collect()
+    [(1, 2, 'a'), (3, 4, 'b')]
+
+    >>> items = [('a', 'b'), ('c', 'd')]
+    >>> [(1, 2), (3, 4)] >> Append(items) >> Collect()
+    [(1, 2, 'a', 'b'), (3, 4, 'c', 'd')]
+
+    >>> from nutsflow import Enumerate
+    >>> [(1, 2), (3, 4)] >> Append(Enumerate()) >> Collect()
+    [(1, 2, 0), (3, 4, 1)]
+
+    :param iterable iterable iterable: Any iterable over tuples or lists
+    :param iterable|object items: A single object or an iterable over objects.
+    :return: iterator where items are appended to the iterable elements.
+    :rtype: iterator over tuples
+    """
+    items = items if is_iterable(items) else itt.repeat(items)
+    for elem, item in zip(iterable, items):
+        yield tuple(elem) + as_tuple(item)
+
+
+@nut_processor
+def Insert(iterable, index, items):
+    """
+    iterable >> Insert(index, items)
+
+    >>> [(1, 2), (3, 4)] >> Insert(1, 'X') >> Collect()
+    [(1, 'X', 2), (3, 'X', 4)]
+
+    >>> items = ['a', 'b']
+    >>> [(1, 2), (3, 4)] >> Insert(2, items) >> Collect()
+    [(1, 2, 'a'), (3, 4, 'b')]
+
+    >>> items = [('a', 'b'), ('c', 'd')]
+    >>> [(1, 2), (3, 4)] >> Insert(1, items) >> Collect()
+    [(1, 'a', 'b', 2), (3, 'c', 'd', 4)]
+
+    >>> from nutsflow import Enumerate
+    >>> [(1, 2), (3, 4)] >> Insert(0, Enumerate()) >> Collect()
+    [(0, 1, 2), (1, 3, 4)]
+
+    :param iterable iterable iterable: Any iterable over tuples or lists
+    :param int index: Index at which position items are inserted.
+    :param iterable|object items: A single object or an iterable over objects.
+    :return: iterator where items are inserted into the iterable elements.
+    :rtype: iterator over tuples
+    """
+    items = items if is_iterable(items) else itt.repeat(items)
+    for elem, item in zip(iterable, items):
+        elem = list(elem)
+        head, tail = elem[:index], elem[index:]
+        yield tuple(head + as_list(item) + tail)
 
 
 Dedupe = nut_processor(itf.unique)
