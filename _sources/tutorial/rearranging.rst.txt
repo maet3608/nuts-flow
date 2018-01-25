@@ -53,6 +53,23 @@ A more interesting example might be the sum of the elements within each chunk
 [1, 5, 4]
 
 
+Window
+------
+
+``Window(n)`` provides a sliding window of size ``n`` over the elements
+in the input data. For example:
+
+>>> [1, 2, 3, 4, 5] >> Window(3) >> Collect()
+[(1, 2, 3), (2, 3, 4), (3, 4, 5)]
+
+This works for strings as well. We use ``Join()`` to convert the 
+individual characters in the generated windows to strings:
+
+>>> 'abcdefg' >> Window(4) >> Map(Join()) >> Collect()
+['abcd', 'bcde', 'cdef', 'defg']
+
+
+
 Cycle
 -----
 
