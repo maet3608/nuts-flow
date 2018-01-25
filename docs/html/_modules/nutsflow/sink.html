@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nutsflow.sink &mdash; nutsflow 1.0.23 documentation</title>
+  <title>nutsflow.sink &mdash; nutsflow 1.0.26 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../../genindex.html"/>
         <link rel="search" title="Search" href="../../search.html"/>
-    <link rel="top" title="nutsflow 1.0.23 documentation" href="../../index.html"/>
+    <link rel="top" title="nutsflow 1.0.26 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                1.0.23
+                1.0.26
               </div>
             
           
@@ -176,12 +176,12 @@
 <span class="kn">from</span> <span class="nn">six.moves</span> <span class="k">import</span> <span class="n">reduce</span><span class="p">,</span> <span class="nb">zip</span><span class="p">,</span> <span class="nb">range</span>
 <span class="kn">from</span> <span class="nn">.base</span> <span class="k">import</span> <span class="n">NutSink</span>
 <span class="kn">from</span> <span class="nn">.factory</span> <span class="k">import</span> <span class="n">nut_sink</span>
-<span class="kn">from</span> <span class="nn">.common</span> <span class="k">import</span> <span class="n">as_tuple</span>
+<span class="kn">from</span> <span class="nn">.common</span> <span class="k">import</span> <span class="n">as_tuple</span><span class="p">,</span> <span class="n">is_iterable</span>
 <span class="kn">from</span> <span class="nn">.iterfunction</span> <span class="k">import</span> <span class="n">nth</span><span class="p">,</span> <span class="n">consume</span><span class="p">,</span> <span class="n">length</span><span class="p">,</span> <span class="n">take</span>
 
 
-<span class="nd">@nut_sink</span>
-<div class="viewcode-block" id="Sort"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.sink.Sort">[docs]</a><span class="k">def</span> <span class="nf">Sort</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="Sort"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.sink.Sort">[docs]</a><span class="nd">@nut_sink</span>
+<span class="k">def</span> <span class="nf">Sort</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    iterable &gt;&gt; Sort()</span>
 
@@ -208,8 +208,8 @@
     <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">key</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="n">reverse</span><span class="p">)</span></div>
 
 
-<span class="nd">@nut_sink</span>
-<div class="viewcode-block" id="Sum"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.sink.Sum">[docs]</a><span class="k">def</span> <span class="nf">Sum</span><span class="p">(</span><span class="n">iterable</span><span class="p">):</span>
+<div class="viewcode-block" id="Sum"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.sink.Sum">[docs]</a><span class="nd">@nut_sink</span>
+<span class="k">def</span> <span class="nf">Sum</span><span class="p">(</span><span class="n">iterable</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    iterable &gt;&gt; Sum()</span>
 
@@ -225,8 +225,8 @@
     <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">iterable</span><span class="p">)</span></div>
 
 
-<span class="nd">@nut_sink</span>
-<div class="viewcode-block" id="Mean"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.sink.Mean">[docs]</a><span class="k">def</span> <span class="nf">Mean</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="Mean"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.sink.Mean">[docs]</a><span class="nd">@nut_sink</span>
+<span class="k">def</span> <span class="nf">Mean</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    iterable &gt;&gt; Mean(default=None)</span>
 
@@ -247,8 +247,8 @@
     <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="nb">sum</span><span class="p">)</span> <span class="o">/</span> <span class="n">n</span> <span class="k">if</span> <span class="n">n</span> <span class="k">else</span> <span class="n">default</span></div>
 
 
-<span class="nd">@nut_sink</span>
-<div class="viewcode-block" id="MeanStd"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.sink.MeanStd">[docs]</a><span class="k">def</span> <span class="nf">MeanStd</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ddof</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+<div class="viewcode-block" id="MeanStd"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.sink.MeanStd">[docs]</a><span class="nd">@nut_sink</span>
+<span class="k">def</span> <span class="nf">MeanStd</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ddof</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    iterable &gt;&gt; MeanStd(default=None)</span>
 
@@ -276,8 +276,8 @@
     <span class="k">return</span> <span class="n">avg</span><span class="p">,</span> <span class="n">dev</span></div>
 
 
-<span class="nd">@nut_sink</span>
-<div class="viewcode-block" id="Max"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.sink.Max">[docs]</a><span class="k">def</span> <span class="nf">Max</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="Max"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.sink.Max">[docs]</a><span class="nd">@nut_sink</span>
+<span class="k">def</span> <span class="nf">Max</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    iterable &gt;&gt; Max(key=func, default=None)</span>
 
@@ -304,8 +304,8 @@
         <span class="k">return</span> <span class="n">default</span></div>
 
 
-<span class="nd">@nut_sink</span>
-<div class="viewcode-block" id="Min"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.sink.Min">[docs]</a><span class="k">def</span> <span class="nf">Min</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="Min"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.sink.Min">[docs]</a><span class="nd">@nut_sink</span>
+<span class="k">def</span> <span class="nf">Min</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    iterable &gt;&gt; Min(key=func, default=None)</span>
 
@@ -332,8 +332,8 @@
         <span class="k">return</span> <span class="n">default</span></div>
 
 
-<span class="nd">@nut_sink</span>
-<div class="viewcode-block" id="ArgMax"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.sink.ArgMax">[docs]</a><span class="k">def</span> <span class="nf">ArgMax</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">retvalue</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="ArgMax"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.sink.ArgMax">[docs]</a><span class="nd">@nut_sink</span>
+<span class="k">def</span> <span class="nf">ArgMax</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">retvalue</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    iterable &gt;&gt; ArgMax(key=func, default=None, retvalue=False)</span>
 
@@ -370,8 +370,8 @@
         <span class="k">return</span> <span class="n">default</span></div>
 
 
-<span class="nd">@nut_sink</span>
-<div class="viewcode-block" id="ArgMin"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.sink.ArgMin">[docs]</a><span class="k">def</span> <span class="nf">ArgMin</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">retvalue</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="ArgMin"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.sink.ArgMin">[docs]</a><span class="nd">@nut_sink</span>
+<span class="k">def</span> <span class="nf">ArgMin</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">retvalue</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    iterable &gt;&gt; ArgMin(key=func, default=None, retvalue=True)</span>
 
@@ -492,8 +492,8 @@
 <span class="sd">&quot;&quot;&quot;</span>
 
 
-<span class="nd">@nut_sink</span>
-<div class="viewcode-block" id="Unzip"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.sink.Unzip">[docs]</a><span class="k">def</span> <span class="nf">Unzip</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">container</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="Unzip"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.sink.Unzip">[docs]</a><span class="nd">@nut_sink</span>
+<span class="k">def</span> <span class="nf">Unzip</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">container</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    iterable &gt;&gt; Unzip(container=None)</span>
 
@@ -512,8 +512,8 @@
     <span class="k">return</span> <span class="nb">map</span><span class="p">(</span><span class="n">container</span><span class="p">,</span> <span class="n">unzipped</span><span class="p">)</span> <span class="k">if</span> <span class="n">container</span> <span class="k">else</span> <span class="n">unzipped</span></div>
 
 
-<span class="nd">@nut_sink</span>
-<div class="viewcode-block" id="Head"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.sink.Head">[docs]</a><span class="k">def</span> <span class="nf">Head</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">container</span><span class="o">=</span><span class="nb">list</span><span class="p">):</span>
+<div class="viewcode-block" id="Head"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.sink.Head">[docs]</a><span class="nd">@nut_sink</span>
+<span class="k">def</span> <span class="nf">Head</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">container</span><span class="o">=</span><span class="nb">list</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    iterable &gt;&gt; Head(n, container=list)</span>
 
@@ -531,8 +531,8 @@
     <span class="k">return</span> <span class="n">container</span><span class="p">(</span><span class="n">take</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span></div>
 
 
-<span class="nd">@nut_sink</span>
-<div class="viewcode-block" id="Tail"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.sink.Tail">[docs]</a><span class="k">def</span> <span class="nf">Tail</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">container</span><span class="o">=</span><span class="nb">list</span><span class="p">):</span>
+<div class="viewcode-block" id="Tail"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.sink.Tail">[docs]</a><span class="nd">@nut_sink</span>
+<span class="k">def</span> <span class="nf">Tail</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">container</span><span class="o">=</span><span class="nb">list</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    iterable &gt;&gt; Tail(n, container=list)</span>
 
@@ -551,8 +551,8 @@
     <span class="k">return</span> <span class="n">container</span><span class="p">(</span><span class="n">cl</span><span class="o">.</span><span class="n">deque</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span></div>
 
 
-<span class="nd">@nut_sink</span>
-<div class="viewcode-block" id="CountValues"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.sink.CountValues">[docs]</a><span class="k">def</span> <span class="nf">CountValues</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">relative</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="CountValues"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.sink.CountValues">[docs]</a><span class="nd">@nut_sink</span>
+<span class="k">def</span> <span class="nf">CountValues</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">relative</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    iterable &gt;&gt; CountValues(relative=False)</span>
 
@@ -562,15 +562,24 @@
 <span class="sd">    &gt;&gt;&gt; &#39;abaacc&#39; &gt;&gt; CountValues()  # doctest: +SKIP</span>
 <span class="sd">    {&#39;a&#39;: 3, &#39;b&#39;: 1, &#39;c&#39;: 2}</span>
 
-<span class="sd">    &gt;&gt;&gt; &#39;aabaab&#39; &gt;&gt; CountValues(True)  # doctest: +SKIP</span>
+<span class="sd">    &gt;&gt;&gt; &#39;aabaab&#39; &gt;&gt; CountValues(relative=True)  # doctest: +SKIP</span>
 <span class="sd">    {&#39;a&#39;: 1.0, &#39;b&#39;: 0.5}</span>
 
+<span class="sd">    &gt;&gt;&gt; data = [(&#39;a&#39;, &#39;X&#39;), (&#39;b&#39;, &#39;Y&#39;), (&#39;a&#39;, &#39;Y&#39;)]</span>
+<span class="sd">    &gt;&gt;&gt; data &gt;&gt; CountValues(column=0)  # doctest: +SKIP</span>
+<span class="sd">    {&#39;a&#39;: 2, &#39;b&#39;: 1}</span>
+<span class="sd">    &gt;&gt;&gt; data &gt;&gt; CountValues(column=1)  # doctest: +SKIP</span>
+<span class="sd">    {&#39;Y&#39;: 2, &#39;X&#39;: 1}</span>
+
 <span class="sd">    :param iterable iterable: Any iterable, e.g. list, range, ...</span>
+<span class="sd">    :param int|None column: Column of values in iterable to extract values from.</span>
+<span class="sd">       If colum=None the values in the iterable themselves will be counted.</span>
 <span class="sd">    :param bool relative: True: return relative counts otherwise absolute counts</span>
 <span class="sd">    :return: Dictionary with (relative) counts for elements in iterable.</span>
 <span class="sd">    :rtype: dict</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">cnts</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">cl</span><span class="o">.</span><span class="n">Counter</span><span class="p">(</span><span class="n">iterable</span><span class="p">))</span>
+    <span class="n">values</span> <span class="o">=</span> <span class="n">iterable</span> <span class="k">if</span> <span class="n">column</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="p">(</span><span class="n">i</span><span class="p">[</span><span class="n">column</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">iterable</span><span class="p">)</span>
+    <span class="n">cnts</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">cl</span><span class="o">.</span><span class="n">Counter</span><span class="p">(</span><span class="n">values</span><span class="p">))</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">relative</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">cnts</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
         <span class="k">return</span> <span class="n">cnts</span>
     <span class="n">max_cnt</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">cnts</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
@@ -578,8 +587,8 @@
     <span class="k">return</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="o">/</span> <span class="n">n</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">six</span><span class="o">.</span><span class="n">iteritems</span><span class="p">(</span><span class="n">cnts</span><span class="p">)}</span></div>
 
 
-<span class="nd">@nut_sink</span>
-<div class="viewcode-block" id="Collect"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.sink.Collect">[docs]</a><span class="k">def</span> <span class="nf">Collect</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">container</span><span class="o">=</span><span class="nb">list</span><span class="p">):</span>
+<div class="viewcode-block" id="Collect"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.sink.Collect">[docs]</a><span class="nd">@nut_sink</span>
+<span class="k">def</span> <span class="nf">Collect</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">container</span><span class="o">=</span><span class="nb">list</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    iterable &gt;&gt; Collect(container)</span>
 
@@ -603,8 +612,8 @@
     <span class="k">return</span> <span class="n">container</span><span class="p">(</span><span class="n">iterable</span><span class="p">)</span></div>
 
 
-<span class="nd">@nut_sink</span>
-<div class="viewcode-block" id="Join"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.sink.Join">[docs]</a><span class="k">def</span> <span class="nf">Join</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">separator</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+<div class="viewcode-block" id="Join"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.sink.Join">[docs]</a><span class="nd">@nut_sink</span>
+<span class="k">def</span> <span class="nf">Join</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">separator</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    iterable &gt;&gt; Join(separator=&#39;&#39;)</span>
 
@@ -691,7 +700,7 @@
         <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">skipheader</span><span class="p">):</span>
             <span class="nb">next</span><span class="p">(</span><span class="n">iterable</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">iterable</span><span class="p">:</span>
-            <span class="n">row</span> <span class="o">=</span> <span class="n">row</span> <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="s1">&#39;__iter__&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="p">[</span><span class="n">row</span><span class="p">]</span>
+            <span class="n">row</span> <span class="o">=</span> <span class="n">row</span> <span class="k">if</span> <span class="n">is_iterable</span><span class="p">(</span><span class="n">row</span><span class="p">)</span> <span class="k">else</span> <span class="p">[</span><span class="n">row</span><span class="p">]</span>
             <span class="n">row</span> <span class="o">=</span> <span class="p">[</span><span class="n">row</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">cols</span><span class="p">]</span> <span class="k">if</span> <span class="n">cols</span> <span class="k">else</span> <span class="n">row</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fmtfunc</span><span class="p">,</span> <span class="n">row</span><span class="p">))</span></div></div>
 </pre></div>
@@ -709,7 +718,7 @@
   <div role="contentinfo">
     <p>
         &copy; Copyright 2017, IBM Research Australia.
-      Last updated on Aug 14, 2017.
+      Last updated on Jan 25, 2018.
 
     </p>
   </div> 
@@ -730,7 +739,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'1.0.23',
+            VERSION:'1.0.26',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

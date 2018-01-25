@@ -106,59 +106,6 @@ To iterate over all elements of a table individually use
 :ref:`Flatten`.  
 
 
-Append
-^^^^^^
-
-``Append(items)`` allows to append a single item or sequence
-of items to the rows of the input data. For instance, given the
-table above the following code adds an `x` to each row:
-
->>> table >> Append('x') >> Print() >> Consume()
-(1, 2, 'x')
-(3, 4, 'x')
-
-Appending (or merging) a column or table is equally easy:
-
->> new_col = ['a', 'b']
->> table >> Append(new_col) >> Print() >> Consume()
-(1, 2, 'a')
-(3, 4, 'b')
-
->>> table2 = [ ('a', 'c'), 
-...            ('b', 'd') ]
-
->>> table >> Append(table2) >> Print() >> Consume()
-(1, 2, 'a', 'c')
-(3, 4, 'b', 'd')
-
-
-Insert
-^^^^^^
-
-``Insert(column, items)`` operates just like ``Append`` but allows
-to specify the column where the new data is to be inserted:
-
->>> table >> Insert(1,'x') >> Print() >> Consume()
-(1, 'x', 2)
-(3, 'x', 4)
-
->>> table >> Insert(0,table2) >> Print() >> Consume()
-('a', 'c', 1, 2)
-('b', 'd', 3, 4)
-
-``Insert()`` and ``Append()`` are often useful to enumerate rows:
-
->>> table2 >> Insert(0, Enumerate()) >> Print() >> Consume()
-(0, 'a', 'c')
-(1, 'b', 'd')
-
-Note the difference to using ``Zip``, which nests the data:
-
->>> table2 >> Zip(Enumerate()) >> Print() >> Consume()
-(('a', 'c'), 0)
-(('b', 'd'), 1)
-
-
 Get
 ^^^
 
