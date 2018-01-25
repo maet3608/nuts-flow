@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nutsflow.processor &mdash; nutsflow 1.0.23 documentation</title>
+  <title>nutsflow.processor &mdash; nutsflow 1.0.26 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../../genindex.html"/>
         <link rel="search" title="Search" href="../../search.html"/>
-    <link rel="top" title="nutsflow 1.0.23 documentation" href="../../index.html"/>
+    <link rel="top" title="nutsflow 1.0.26 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                1.0.23
+                1.0.26
               </div>
             
           
@@ -185,14 +185,14 @@
 <span class="kn">from</span> <span class="nn">six.moves</span> <span class="k">import</span> <span class="nb">map</span><span class="p">,</span> <span class="nb">filter</span><span class="p">,</span> <span class="n">filterfalse</span><span class="p">,</span> <span class="nb">zip</span><span class="p">,</span> <span class="nb">range</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">iterfunction</span> <span class="k">as</span> <span class="n">itf</span>
 <span class="kn">from</span> <span class="nn">.base</span> <span class="k">import</span> <span class="n">Nut</span><span class="p">,</span> <span class="n">NutFunction</span>
-<span class="kn">from</span> <span class="nn">.common</span> <span class="k">import</span> <span class="n">as_tuple</span><span class="p">,</span> <span class="n">as_set</span><span class="p">,</span> <span class="n">console</span><span class="p">,</span> <span class="n">timestr</span>
+<span class="kn">from</span> <span class="nn">.common</span> <span class="k">import</span> <span class="n">as_tuple</span><span class="p">,</span> <span class="n">as_list</span><span class="p">,</span> <span class="n">as_set</span><span class="p">,</span> <span class="n">console</span><span class="p">,</span> <span class="n">timestr</span><span class="p">,</span> <span class="n">is_iterable</span>
 <span class="kn">from</span> <span class="nn">.factory</span> <span class="k">import</span> <span class="n">nut_processor</span>
 <span class="kn">from</span> <span class="nn">.function</span> <span class="k">import</span> <span class="n">Identity</span>
-<span class="kn">from</span> <span class="nn">.sink</span> <span class="k">import</span> <span class="n">Consume</span><span class="p">,</span> <span class="n">Collect</span>
+<span class="kn">from</span> <span class="nn">.sink</span> <span class="k">import</span> <span class="n">Consume</span><span class="p">,</span> <span class="n">Collect</span><span class="p">,</span> <span class="n">Head</span>
 
 
-<span class="nd">@nut_processor</span>
-<div class="viewcode-block" id="Take"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.processor.Take">[docs]</a><span class="k">def</span> <span class="nf">Take</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+<div class="viewcode-block" id="Take"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.processor.Take">[docs]</a><span class="nd">@nut_processor</span>
+<span class="k">def</span> <span class="nf">Take</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    iterable &gt;&gt; Take(n)</span>
 
@@ -211,8 +211,8 @@
     <span class="k">return</span> <span class="n">itf</span><span class="o">.</span><span class="n">take</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span></div>
 
 
-<span class="nd">@nut_processor</span>
-<div class="viewcode-block" id="Slice"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.processor.Slice">[docs]</a><span class="k">def</span> <span class="nf">Slice</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="Slice"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.processor.Slice">[docs]</a><span class="nd">@nut_processor</span>
+<span class="k">def</span> <span class="nf">Slice</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    iterable &gt;&gt; Slice([start,] stop[, stride])</span>
 
@@ -240,8 +240,37 @@
     <span class="k">return</span> <span class="n">itt</span><span class="o">.</span><span class="n">islice</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 
 
-<span class="nd">@nut_processor</span>
-<div class="viewcode-block" id="Concat"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.processor.Concat">[docs]</a><span class="k">def</span> <span class="nf">Concat</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="o">*</span><span class="n">iterables</span><span class="p">):</span>
+<div class="viewcode-block" id="Window"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.processor.Window">[docs]</a><span class="nd">@nut_processor</span>
+<span class="k">def</span> <span class="nf">Window</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    iterable &gt;&gt; Window(n)</span>
+
+<span class="sd">    Sliding window of size n over elements in iterable.</span>
+
+<span class="sd">    &gt;&gt;&gt; [1, 2, 3, 4] &gt;&gt; Window() &gt;&gt; Collect()</span>
+<span class="sd">    [(1, 2), (2, 3), (3, 4)]</span>
+
+<span class="sd">    &gt;&gt;&gt; [1, 2, 3, 4] &gt;&gt; Window(3) &gt;&gt; Collect()</span>
+<span class="sd">    [(1, 2, 3), (2, 3, 4)]</span>
+
+<span class="sd">    &gt;&gt;&gt; &#39;test&#39; &gt;&gt; Window(2) &gt;&gt; Map(&#39;&#39;.join) &gt;&gt; Collect()</span>
+<span class="sd">    [&#39;te&#39;, &#39;es&#39;, &#39;st&#39;]</span>
+
+<span class="sd">    :param iterable iterable: Any iterable</span>
+<span class="sd">    :param int n: Size of window</span>
+<span class="sd">    :return: iterator with tuples of length n</span>
+<span class="sd">    :rtype: iterator over tuples</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">it</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">iterable</span><span class="p">)</span>
+    <span class="n">win</span> <span class="o">=</span> <span class="n">cl</span><span class="o">.</span><span class="n">deque</span><span class="p">(</span><span class="n">it</span> <span class="o">&gt;&gt;</span> <span class="n">Take</span><span class="p">(</span><span class="n">n</span><span class="p">),</span> <span class="n">n</span><span class="p">)</span>
+    <span class="k">yield</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">win</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">it</span><span class="p">:</span>
+        <span class="n">win</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+        <span class="k">yield</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">win</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Concat"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.processor.Concat">[docs]</a><span class="nd">@nut_processor</span>
+<span class="k">def</span> <span class="nf">Concat</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="o">*</span><span class="n">iterables</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    iterable &gt;&gt; Concat(*iterables)</span>
 
@@ -263,8 +292,8 @@
     <span class="k">return</span> <span class="n">itt</span><span class="o">.</span><span class="n">chain</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="o">*</span><span class="n">iterables</span><span class="p">)</span></div>
 
 
-<span class="nd">@nut_processor</span>
-<div class="viewcode-block" id="Interleave"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.processor.Interleave">[docs]</a><span class="k">def</span> <span class="nf">Interleave</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="o">*</span><span class="n">iterables</span><span class="p">):</span>
+<div class="viewcode-block" id="Interleave"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.processor.Interleave">[docs]</a><span class="nd">@nut_processor</span>
+<span class="k">def</span> <span class="nf">Interleave</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="o">*</span><span class="n">iterables</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    iterable &gt;&gt; Interleave(*iterables)</span>
 
@@ -287,8 +316,8 @@
     <span class="k">return</span> <span class="n">itf</span><span class="o">.</span><span class="n">interleave</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="o">*</span><span class="n">iterables</span><span class="p">)</span></div>
 
 
-<span class="nd">@nut_processor</span>
-<div class="viewcode-block" id="Zip"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.processor.Zip">[docs]</a><span class="k">def</span> <span class="nf">Zip</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">iterable2</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="n">iterables</span><span class="p">):</span>
+<div class="viewcode-block" id="Zip"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.processor.Zip">[docs]</a><span class="nd">@nut_processor</span>
+<span class="k">def</span> <span class="nf">Zip</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">iterable2</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="n">iterables</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    iterable &gt;&gt; Zip(*iterables)</span>
 
@@ -313,8 +342,8 @@
     <span class="k">return</span> <span class="nb">zip</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">iterable2</span><span class="p">,</span> <span class="o">*</span><span class="n">iterables</span><span class="p">)</span></div>
 
 
-<span class="nd">@nut_processor</span>
-<div class="viewcode-block" id="ZipWith"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.processor.ZipWith">[docs]</a><span class="k">def</span> <span class="nf">ZipWith</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="o">*</span><span class="n">iterables</span><span class="p">):</span>
+<div class="viewcode-block" id="ZipWith"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.processor.ZipWith">[docs]</a><span class="nd">@nut_processor</span>
+<span class="k">def</span> <span class="nf">ZipWith</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="o">*</span><span class="n">iterables</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    iterable &gt;&gt; ZipWith(f, *iterables)</span>
 
@@ -332,6 +361,73 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">iterables</span> <span class="o">=</span> <span class="p">[</span><span class="n">iterable</span><span class="p">]</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="n">iterables</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">itt</span><span class="o">.</span><span class="n">starmap</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">iterables</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="Append"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.processor.Append">[docs]</a><span class="nd">@nut_processor</span>
+<span class="k">def</span> <span class="nf">Append</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">items</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    iterable &gt;&gt; Append(items)</span>
+
+<span class="sd">    Append item(s) to lists/tuples in iterable.</span>
+
+<span class="sd">    &gt;&gt;&gt; [(1, 2), (3, 4)] &gt;&gt; Append(&#39;X&#39;) &gt;&gt; Collect()</span>
+<span class="sd">    [(1, 2, &#39;X&#39;), (3, 4, &#39;X&#39;)]</span>
+
+<span class="sd">    &gt;&gt;&gt; items = [&#39;a&#39;, &#39;b&#39;]</span>
+<span class="sd">    &gt;&gt;&gt; [(1, 2), (3, 4)] &gt;&gt; Append(items) &gt;&gt; Collect()</span>
+<span class="sd">    [(1, 2, &#39;a&#39;), (3, 4, &#39;b&#39;)]</span>
+
+<span class="sd">    &gt;&gt;&gt; items = [(&#39;a&#39;, &#39;b&#39;), (&#39;c&#39;, &#39;d&#39;)]</span>
+<span class="sd">    &gt;&gt;&gt; [(1, 2), (3, 4)] &gt;&gt; Append(items) &gt;&gt; Collect()</span>
+<span class="sd">    [(1, 2, &#39;a&#39;, &#39;b&#39;), (3, 4, &#39;c&#39;, &#39;d&#39;)]</span>
+
+<span class="sd">    &gt;&gt;&gt; from nutsflow import Enumerate</span>
+<span class="sd">    &gt;&gt;&gt; [(1, 2), (3, 4)] &gt;&gt; Append(Enumerate()) &gt;&gt; Collect()</span>
+<span class="sd">    [(1, 2, 0), (3, 4, 1)]</span>
+
+<span class="sd">    :param iterable iterable iterable: Any iterable over tuples or lists</span>
+<span class="sd">    :param iterable|object items: A single object or an iterable over objects.</span>
+<span class="sd">    :return: iterator where items are appended to the iterable elements.</span>
+<span class="sd">    :rtype: iterator over tuples</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">items</span> <span class="o">=</span> <span class="n">items</span> <span class="k">if</span> <span class="n">is_iterable</span><span class="p">(</span><span class="n">items</span><span class="p">)</span> <span class="k">else</span> <span class="n">itt</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">items</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">elem</span><span class="p">,</span> <span class="n">item</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">items</span><span class="p">):</span>
+        <span class="k">yield</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">elem</span><span class="p">)</span> <span class="o">+</span> <span class="n">as_tuple</span><span class="p">(</span><span class="n">item</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Insert"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.processor.Insert">[docs]</a><span class="nd">@nut_processor</span>
+<span class="k">def</span> <span class="nf">Insert</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">items</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    iterable &gt;&gt; Insert(index, items)</span>
+
+<span class="sd">    Insert item(s) into lists/tuples in iterable.</span>
+
+<span class="sd">    &gt;&gt;&gt; [(1, 2), (3, 4)] &gt;&gt; Insert(1, &#39;X&#39;) &gt;&gt; Collect()</span>
+<span class="sd">    [(1, &#39;X&#39;, 2), (3, &#39;X&#39;, 4)]</span>
+
+<span class="sd">    &gt;&gt;&gt; items = [&#39;a&#39;, &#39;b&#39;]</span>
+<span class="sd">    &gt;&gt;&gt; [(1, 2), (3, 4)] &gt;&gt; Insert(2, items) &gt;&gt; Collect()</span>
+<span class="sd">    [(1, 2, &#39;a&#39;), (3, 4, &#39;b&#39;)]</span>
+
+<span class="sd">    &gt;&gt;&gt; items = [(&#39;a&#39;, &#39;b&#39;), (&#39;c&#39;, &#39;d&#39;)]</span>
+<span class="sd">    &gt;&gt;&gt; [(1, 2), (3, 4)] &gt;&gt; Insert(1, items) &gt;&gt; Collect()</span>
+<span class="sd">    [(1, &#39;a&#39;, &#39;b&#39;, 2), (3, &#39;c&#39;, &#39;d&#39;, 4)]</span>
+
+<span class="sd">    &gt;&gt;&gt; from nutsflow import Enumerate</span>
+<span class="sd">    &gt;&gt;&gt; [(1, 2), (3, 4)] &gt;&gt; Insert(0, Enumerate()) &gt;&gt; Collect()</span>
+<span class="sd">    [(0, 1, 2), (1, 3, 4)]</span>
+
+<span class="sd">    :param iterable iterable iterable: Any iterable over tuples or lists</span>
+<span class="sd">    :param int index: Index at which position items are inserted.</span>
+<span class="sd">    :param iterable|object items: A single object or an iterable over objects.</span>
+<span class="sd">    :return: iterator where items are inserted into the iterable elements.</span>
+<span class="sd">    :rtype: iterator over tuples</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">items</span> <span class="o">=</span> <span class="n">items</span> <span class="k">if</span> <span class="n">is_iterable</span><span class="p">(</span><span class="n">items</span><span class="p">)</span> <span class="k">else</span> <span class="n">itt</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">items</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">elem</span><span class="p">,</span> <span class="n">item</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">items</span><span class="p">):</span>
+        <span class="n">elem</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">elem</span><span class="p">)</span>
+        <span class="n">head</span><span class="p">,</span> <span class="n">tail</span> <span class="o">=</span> <span class="n">elem</span><span class="p">[:</span><span class="n">index</span><span class="p">],</span> <span class="n">elem</span><span class="p">[</span><span class="n">index</span><span class="p">:]</span>
+        <span class="k">yield</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">head</span> <span class="o">+</span> <span class="n">as_list</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="o">+</span> <span class="n">tail</span><span class="p">)</span></div>
 
 
 <span class="n">Dedupe</span> <span class="o">=</span> <span class="n">nut_processor</span><span class="p">(</span><span class="n">itf</span><span class="o">.</span><span class="n">unique</span><span class="p">)</span>
@@ -411,8 +507,8 @@
         <span class="k">return</span> <span class="n">iterable</span> <span class="o">&gt;&gt;</span> <span class="n">ChunkBy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_key</span><span class="p">)</span></div></div>
 
 
-<span class="nd">@nut_processor</span>
-<div class="viewcode-block" id="ChunkBy"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.processor.ChunkBy">[docs]</a><span class="k">def</span> <span class="nf">ChunkBy</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">func</span><span class="p">):</span>
+<div class="viewcode-block" id="ChunkBy"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.processor.ChunkBy">[docs]</a><span class="nd">@nut_processor</span>
+<span class="k">def</span> <span class="nf">ChunkBy</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">func</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    iterable &gt;&gt; ChunkBy(func)</span>
 
@@ -450,8 +546,8 @@
 <span class="sd">&quot;&quot;&quot;</span>
 
 
-<span class="nd">@nut_processor</span>
-<div class="viewcode-block" id="Flatten"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.processor.Flatten">[docs]</a><span class="k">def</span> <span class="nf">Flatten</span><span class="p">(</span><span class="n">iterable</span><span class="p">):</span>
+<div class="viewcode-block" id="Flatten"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.processor.Flatten">[docs]</a><span class="nd">@nut_processor</span>
+<span class="k">def</span> <span class="nf">Flatten</span><span class="p">(</span><span class="n">iterable</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    iterable &gt;&gt; Flatten()</span>
 
@@ -478,8 +574,8 @@
             <span class="k">yield</span> <span class="n">it</span></div>
 
 
-<span class="nd">@nut_processor</span>
-<div class="viewcode-block" id="FlattenCol"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.processor.FlattenCol">[docs]</a><span class="k">def</span> <span class="nf">FlattenCol</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">cols</span><span class="p">):</span>
+<div class="viewcode-block" id="FlattenCol"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.processor.FlattenCol">[docs]</a><span class="nd">@nut_processor</span>
+<span class="k">def</span> <span class="nf">FlattenCol</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">cols</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    iterable &gt;&gt; FlattenCol(cols)</span>
 
@@ -487,7 +583,7 @@
 <span class="sd">    Only one level is flattened.</span>
 
 <span class="sd">    (1 3)  (5 7)</span>
-<span class="sd">    (2 4)  (6 8)   &gt;&gt; FlattenCols((0,1) &gt;&gt;   (1 3)  (2 4)  (5 7)  (6 8)</span>
+<span class="sd">    (2 4)  (6 8)   &gt;&gt; FlattenCol((0,1) &gt;&gt;   (1 3)  (2 4)  (5 7)  (6 8)</span>
 
 <span class="sd">    If a column contains a single element (instead of an iterable) it is </span>
 <span class="sd">    wrapped into a repeater. This allows to flatten columns that are iterable</span>
@@ -520,7 +616,7 @@
 <span class="sd">    :rtype: generator</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">cols</span> <span class="o">=</span> <span class="n">as_tuple</span><span class="p">(</span><span class="n">cols</span><span class="p">)</span>
-    <span class="n">get</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">e</span><span class="p">:</span> <span class="n">e</span> <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="s1">&#39;__iter__&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="n">itt</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+    <span class="n">get</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">e</span><span class="p">:</span> <span class="n">e</span> <span class="k">if</span> <span class="n">is_iterable</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="k">else</span> <span class="n">itt</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">es</span> <span class="ow">in</span> <span class="n">iterable</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">get</span><span class="p">(</span><span class="n">es</span><span class="p">[</span><span class="n">c</span><span class="p">])</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">cols</span><span class="p">]):</span>
             <span class="k">yield</span> <span class="n">e</span></div>
@@ -637,8 +733,8 @@
 <span class="sd">&quot;&quot;&quot;</span>
 
 
-<span class="nd">@nut_processor</span>
-<div class="viewcode-block" id="DropWhile"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.processor.DropWhile">[docs]</a><span class="k">def</span> <span class="nf">DropWhile</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">func</span><span class="p">):</span>
+<div class="viewcode-block" id="DropWhile"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.processor.DropWhile">[docs]</a><span class="nd">@nut_processor</span>
+<span class="k">def</span> <span class="nf">DropWhile</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">func</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    iterable &gt;&gt; DropWhile(func)</span>
 
@@ -716,8 +812,8 @@
 <span class="sd">&quot;&quot;&quot;</span>
 
 
-<span class="nd">@nut_processor</span>
-<div class="viewcode-block" id="If"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.processor.If">[docs]</a><span class="k">def</span> <span class="nf">If</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">cond</span><span class="p">,</span> <span class="n">if_nut</span><span class="p">,</span> <span class="n">else_nut</span><span class="o">=</span><span class="n">Identity</span><span class="p">()):</span>
+<div class="viewcode-block" id="If"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.processor.If">[docs]</a><span class="nd">@nut_processor</span>
+<span class="k">def</span> <span class="nf">If</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">cond</span><span class="p">,</span> <span class="n">if_nut</span><span class="p">,</span> <span class="n">else_nut</span><span class="o">=</span><span class="n">Identity</span><span class="p">()):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    iterable &gt;&gt; If(cond, if_nut, [,else_nut])</span>
 
@@ -742,8 +838,8 @@
     <span class="k">return</span> <span class="n">iterable</span> <span class="o">&gt;&gt;</span> <span class="p">(</span><span class="n">if_nut</span> <span class="k">if</span> <span class="n">cond</span> <span class="k">else</span> <span class="n">else_nut</span><span class="p">)</span></div>
 
 
-<span class="nd">@nut_processor</span>
-<div class="viewcode-block" id="Drop"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.processor.Drop">[docs]</a><span class="k">def</span> <span class="nf">Drop</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+<div class="viewcode-block" id="Drop"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.processor.Drop">[docs]</a><span class="nd">@nut_processor</span>
+<span class="k">def</span> <span class="nf">Drop</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    iterable &gt;&gt; Drop(n)</span>
 
@@ -763,8 +859,8 @@
     <span class="k">return</span> <span class="n">it</span></div>
 
 
-<span class="nd">@nut_processor</span>
-<div class="viewcode-block" id="Pick"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.processor.Pick">[docs]</a><span class="k">def</span> <span class="nf">Pick</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">p_n</span><span class="p">,</span> <span class="n">rand</span><span class="o">=</span><span class="n">rnd</span><span class="o">.</span><span class="n">Random</span><span class="p">()):</span>
+<div class="viewcode-block" id="Pick"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.processor.Pick">[docs]</a><span class="nd">@nut_processor</span>
+<span class="k">def</span> <span class="nf">Pick</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">p_n</span><span class="p">,</span> <span class="n">rand</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    iterable &gt;&gt; Pick(p_n)</span>
 
@@ -773,7 +869,7 @@
 
 <span class="sd">    &gt;&gt;&gt; from nutsflow import Range, Collect</span>
 <span class="sd">    &gt;&gt;&gt; from nutsflow.common import StableRandom</span>
-<span class="sd">    </span>
+
 <span class="sd">    &gt;&gt;&gt; [1, 2, 3, 4] &gt;&gt; Pick(0.0) &gt;&gt; Collect()</span>
 <span class="sd">    []</span>
 
@@ -790,11 +886,12 @@
 <span class="sd">    :param iterable iterable: Any iterable</span>
 <span class="sd">    :param float|int p_n: Probability p in [0, 1] or</span>
 <span class="sd">        integer n for every n-th element</span>
-<span class="sd">    :param Random rand: Random number generator to be used.</span>
-<span class="sd">        Don&#39;t use StableRandom, which is only for testing.</span>
+<span class="sd">    :param Random|None rand: Random number generator. If None, random.Random()</span>
+<span class="sd">        is used.</span>
 <span class="sd">    :return: Iterator over picked elements.</span>
 <span class="sd">    :rtype: iterator</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">rand</span> <span class="o">=</span> <span class="n">rnd</span><span class="o">.</span><span class="n">Random</span><span class="p">()</span> <span class="k">if</span> <span class="n">rand</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">rand</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">p_n</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">p_n</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;p_n must not be negative &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">p_n</span><span class="p">))</span>
@@ -804,8 +901,8 @@
     <span class="k">return</span> <span class="nb">iter</span><span class="p">(</span><span class="n">e</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">iterable</span> <span class="k">if</span> <span class="n">rand</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">p_n</span><span class="p">)</span></div>
 
 
-<span class="nd">@nut_processor</span>
-<div class="viewcode-block" id="GroupBy"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.processor.GroupBy">[docs]</a><span class="k">def</span> <span class="nf">GroupBy</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">keycol</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span> <span class="n">nokey</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="GroupBy"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.processor.GroupBy">[docs]</a><span class="nd">@nut_processor</span>
+<span class="k">def</span> <span class="nf">GroupBy</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">keycol</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span> <span class="n">nokey</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    iterable &gt;&gt; GroupBy(keycol=lambda x: x, nokey=False)</span>
 
@@ -848,8 +945,8 @@
     <span class="k">return</span> <span class="n">six</span><span class="o">.</span><span class="n">itervalues</span><span class="p">(</span><span class="n">groups</span><span class="p">)</span> <span class="k">if</span> <span class="n">nokey</span> <span class="k">else</span> <span class="n">six</span><span class="o">.</span><span class="n">iteritems</span><span class="p">(</span><span class="n">groups</span><span class="p">)</span></div>
 
 
-<span class="nd">@nut_processor</span>
-<div class="viewcode-block" id="GroupBySorted"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.processor.GroupBySorted">[docs]</a><span class="k">def</span> <span class="nf">GroupBySorted</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">keycol</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span> <span class="n">nokey</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="GroupBySorted"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.processor.GroupBySorted">[docs]</a><span class="nd">@nut_processor</span>
+<span class="k">def</span> <span class="nf">GroupBySorted</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">keycol</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span> <span class="n">nokey</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    iterable &gt;&gt; GroupBySorted(prob, keycol=lambda x: x, nokey=False)</span>
 
@@ -889,8 +986,8 @@
     <span class="k">return</span> <span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">k_v</span><span class="p">:</span> <span class="n">k_v</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">groupiter</span><span class="p">)</span> <span class="k">if</span> <span class="n">nokey</span> <span class="k">else</span> <span class="n">groupiter</span></div>
 
 
-<span class="nd">@nut_processor</span>
-<div class="viewcode-block" id="Clone"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.processor.Clone">[docs]</a><span class="k">def</span> <span class="nf">Clone</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+<div class="viewcode-block" id="Clone"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.processor.Clone">[docs]</a><span class="nd">@nut_processor</span>
+<span class="k">def</span> <span class="nf">Clone</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    iterable &gt;&gt; Clone(n)</span>
 
@@ -913,8 +1010,8 @@
             <span class="k">yield</span> <span class="n">e</span></div>
 
 
-<span class="nd">@nut_processor</span>
-<div class="viewcode-block" id="Shuffle"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.processor.Shuffle">[docs]</a><span class="k">def</span> <span class="nf">Shuffle</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">buffersize</span><span class="p">,</span> <span class="n">rand</span><span class="o">=</span><span class="n">rnd</span><span class="o">.</span><span class="n">Random</span><span class="p">()):</span>
+<div class="viewcode-block" id="Shuffle"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.processor.Shuffle">[docs]</a><span class="nd">@nut_processor</span>
+<span class="k">def</span> <span class="nf">Shuffle</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">buffersize</span><span class="p">,</span> <span class="n">rand</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    iterable &gt;&gt; Shuffle(buffersize)</span>
 
@@ -926,8 +1023,9 @@
 <span class="sd">    Note that for buffersize = 1 no shuffling occurs.</span>
 
 <span class="sd">    In the following example rand = StableRandom(0) is used to create a fixed</span>
-<span class="sd">    shuffle. Usually, this is not what you want. Use the default</span>
-<span class="sd">    rand=rnd.Random() instead.</span>
+<span class="sd">    sequence that stable across Python version 2.x and 3.x. Usually, this is</span>
+<span class="sd">    not what you want. Use the default rand=None which uses random.Random()</span>
+<span class="sd">    instead.</span>
 
 <span class="sd">    &gt;&gt;&gt; from nutsflow import Range, Collect</span>
 <span class="sd">    &gt;&gt;&gt; from nutsflow.common import StableRandom</span>
@@ -940,10 +1038,12 @@
 
 <span class="sd">    :param iterable iterable: Any iterable</span>
 <span class="sd">    :param int buffersize: Number of elements stored in shuffle buffer.</span>
-<span class="sd">    :param random.Random rand: Random number generator.</span>
+<span class="sd">    :param Random|None rand: Random number generator. If None,</span>
+<span class="sd">           random.Random() is used.</span>
 <span class="sd">    :return: Generator over shuffled elements</span>
 <span class="sd">    :rtype: generator</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">rand</span> <span class="o">=</span> <span class="n">rnd</span><span class="o">.</span><span class="n">Random</span><span class="p">()</span> <span class="k">if</span> <span class="n">rand</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">rand</span>
     <span class="n">iterable</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">iterable</span><span class="p">)</span>
     <span class="n">buffer</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">itf</span><span class="o">.</span><span class="n">take</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">buffersize</span><span class="p">))</span>
     <span class="n">rand</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">buffer</span><span class="p">)</span>
@@ -956,8 +1056,8 @@
         <span class="k">yield</span> <span class="n">e</span></div>
 
 
-<span class="nd">@nut_processor</span>
-<div class="viewcode-block" id="MapCol"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.processor.MapCol">[docs]</a><span class="k">def</span> <span class="nf">MapCol</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">columns</span><span class="p">,</span> <span class="n">func</span><span class="p">):</span>
+<div class="viewcode-block" id="MapCol"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.processor.MapCol">[docs]</a><span class="nd">@nut_processor</span>
+<span class="k">def</span> <span class="nf">MapCol</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">columns</span><span class="p">,</span> <span class="n">func</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    iterable &gt;&gt; MapCol(columns, func)</span>
 
@@ -984,8 +1084,8 @@
         <span class="k">yield</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">func</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="k">if</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">colset</span> <span class="k">else</span> <span class="n">e</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">e</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">es</span><span class="p">))</span></div>
 
 
-<span class="nd">@nut_processor</span>
-<div class="viewcode-block" id="MapMulti"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.processor.MapMulti">[docs]</a><span class="k">def</span> <span class="nf">MapMulti</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="o">*</span><span class="n">funcs</span><span class="p">):</span>
+<div class="viewcode-block" id="MapMulti"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.processor.MapMulti">[docs]</a><span class="nd">@nut_processor</span>
+<span class="k">def</span> <span class="nf">MapMulti</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="o">*</span><span class="n">funcs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    iterable &gt;&gt; MapMulti(*funcs)</span>
 
@@ -1152,18 +1252,28 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
 
+    <span class="k">def</span> <span class="nf">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return iterator over cached elements.</span>
+
+<span class="sd">        :return: Generator over cached elements</span>
+<span class="sd">        :rtype: Generator</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">fpath</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cache_fpaths</span><span class="p">():</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">fpath</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                <span class="k">yield</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
 <div class="viewcode-block" id="Cache.__rrshift__"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.processor.Cache.__rrshift__">[docs]</a>    <span class="k">def</span> <span class="nf">__rrshift__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">iterable</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return elements in iterable.</span>
 
 <span class="sd">        :param iterable iterable: Any iterable</span>
-<span class="sd">        :return: Iterable over same elements as input iterable.</span>
-<span class="sd">        :rtype: iterable</span>
+<span class="sd">        :return: Generator over same elements as input iterable.</span>
+<span class="sd">        :rtype: Generator</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">path</span> <span class="ow">or</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_cachepath</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_clearcache</span><span class="p">):</span>
-            <span class="k">for</span> <span class="n">fpath</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cache_fpaths</span><span class="p">():</span>
-                <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">fpath</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-                    <span class="k">yield</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="fm">__iter__</span><span class="p">():</span>
+                <span class="k">yield</span> <span class="n">e</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_create_cache</span><span class="p">()</span>
             <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">e</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">iterable</span><span class="p">):</span>
@@ -1172,8 +1282,8 @@
                 <span class="k">yield</span> <span class="n">e</span></div></div>
 
 
-<span class="nd">@nut_processor</span>
-<div class="viewcode-block" id="Prefetch"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.processor.Prefetch">[docs]</a><span class="k">def</span> <span class="nf">Prefetch</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">num_prefetch</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+<div class="viewcode-block" id="Prefetch"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.processor.Prefetch">[docs]</a><span class="nd">@nut_processor</span>
+<span class="k">def</span> <span class="nf">Prefetch</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">num_prefetch</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    iterable &gt;&gt; Prefetch(num_prefetch=1)</span>
 
@@ -1237,8 +1347,8 @@
         <span class="n">console</span><span class="p">(</span><span class="n">text</span><span class="p">)</span></div></div>
 
 
-<span class="nd">@nut_processor</span>
-<div class="viewcode-block" id="Try"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.processor.Try">[docs]</a><span class="k">def</span> <span class="nf">Try</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">func</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;STDERR&#39;</span><span class="p">):</span>
+<div class="viewcode-block" id="Try"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.processor.Try">[docs]</a><span class="nd">@nut_processor</span>
+<span class="k">def</span> <span class="nf">Try</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">func</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;STDERR&#39;</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    iterable &gt;&gt; Try(nut)</span>
 
@@ -1323,7 +1433,7 @@
   <div role="contentinfo">
     <p>
         &copy; Copyright 2017, IBM Research Australia.
-      Last updated on Aug 14, 2017.
+      Last updated on Jan 25, 2018.
 
     </p>
   </div> 
@@ -1344,7 +1454,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'1.0.23',
+            VERSION:'1.0.26',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

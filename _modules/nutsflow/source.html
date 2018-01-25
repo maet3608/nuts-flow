@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nutsflow.source &mdash; nutsflow 1.0.23 documentation</title>
+  <title>nutsflow.source &mdash; nutsflow 1.0.26 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../../genindex.html"/>
         <link rel="search" title="Search" href="../../search.html"/>
-    <link rel="top" title="nutsflow 1.0.23 documentation" href="../../index.html"/>
+    <link rel="top" title="nutsflow 1.0.26 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                1.0.23
+                1.0.26
               </div>
             
           
@@ -178,8 +178,8 @@
 <span class="kn">from</span> <span class="nn">.common</span> <span class="k">import</span> <span class="n">as_tuple</span>
 
 
-<span class="nd">@nut_source</span>
-<div class="viewcode-block" id="Enumerate"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.source.Enumerate">[docs]</a><span class="k">def</span> <span class="nf">Enumerate</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+<div class="viewcode-block" id="Enumerate"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.source.Enumerate">[docs]</a><span class="nd">@nut_source</span>
+<span class="k">def</span> <span class="nf">Enumerate</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Enumerate(start=0 [, step])</span>
 
@@ -201,8 +201,8 @@
     <span class="k">return</span> <span class="n">itt</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="n">step</span><span class="p">)</span></div>
 
 
-<span class="nd">@nut_source</span>
-<div class="viewcode-block" id="Repeat"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.source.Repeat">[docs]</a><span class="k">def</span> <span class="nf">Repeat</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="Repeat"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.source.Repeat">[docs]</a><span class="nd">@nut_source</span>
+<span class="k">def</span> <span class="nf">Repeat</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Repeat(value [, n])</span>
 
@@ -224,8 +224,8 @@
     <span class="k">return</span> <span class="n">itt</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span> <span class="k">if</span> <span class="n">n</span> <span class="k">else</span> <span class="n">itt</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">value</span><span class="p">)</span></div>
 
 
-<span class="nd">@nut_source</span>
-<div class="viewcode-block" id="Product"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.source.Product">[docs]</a><span class="k">def</span> <span class="nf">Product</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">):</span>
+<div class="viewcode-block" id="Product"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.source.Product">[docs]</a><span class="nd">@nut_source</span>
+<span class="k">def</span> <span class="nf">Product</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Product(*iterables [, repeat])</span>
 
@@ -252,8 +252,8 @@
     <span class="k">return</span> <span class="n">itt</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">)</span></div>
 
 
-<span class="nd">@nut_source</span>
-<div class="viewcode-block" id="Empty"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.source.Empty">[docs]</a><span class="k">def</span> <span class="nf">Empty</span><span class="p">():</span>
+<div class="viewcode-block" id="Empty"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.source.Empty">[docs]</a><span class="nd">@nut_source</span>
+<span class="k">def</span> <span class="nf">Empty</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Empty()</span>
 
@@ -389,7 +389,7 @@
   <div role="contentinfo">
     <p>
         &copy; Copyright 2017, IBM Research Australia.
-      Last updated on Aug 14, 2017.
+      Last updated on Jan 25, 2018.
 
     </p>
   </div> 
@@ -410,7 +410,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'1.0.23',
+            VERSION:'1.0.26',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,
