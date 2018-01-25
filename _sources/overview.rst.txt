@@ -160,6 +160,9 @@ Click on a nut name for more details.
 
   [1, 2, 3, 4] >> Take(2) >> Collect()   --> [1, 2]
 
+- :class:`Append <nutsflow.processor.Append>` :
+  append to the elements of the iterable.  
+  
 - :class:`Cache <nutsflow.processor.Cache>` :
   caches elements on disk.
 
@@ -217,6 +220,9 @@ Click on a nut name for more details.
 - :class:`If <nutsflow.processor.If>` :
   executes nut depending on condition.
 
+- :class:`Insert <nutsflow.processor.Insert>` :
+  insert into the elements of the iterable.  
+  
 - :class:`Interleave <nutsflow.processor.Interleave>` :
   interleaves elements of multiple iterables.
 
@@ -265,6 +271,9 @@ Click on a nut name for more details.
 - :class:`Try <nutsflow.processor.Try>` :
   handle exceptions.
 
+- :class:`Window <nutsflow.processor.Window>` :
+  return sliding window over elements of iterable.
+  
 - :class:`Zip <nutsflow.processor.Zip>` :
   zip elements from multiple iterables.
 
