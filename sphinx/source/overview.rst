@@ -106,6 +106,9 @@ Click on a nut name for more details.
 
 - :class:`Reduce <nutsflow.sink.Reduce>` :
   reduce inputs with a given function.
+  
+- :class:`Sort <nutsflow.sink.Sort>` :
+  return sorted list of elements.
 
 - :class:`Sum <nutsflow.sink.Sum>` :
   return sum of elements.
