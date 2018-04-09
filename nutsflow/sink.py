@@ -22,7 +22,7 @@ def Sort(iterable, key=None, reverse=False):
     """
     iterable >> Sort()
 
-    Sorts iterable with respect to key function
+    Sorts iterable with respect to key function.
 
     >>> [3, 1, 2] >> Sort()
     [1, 2, 3]
