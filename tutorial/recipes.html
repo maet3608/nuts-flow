@@ -25,27 +25,19 @@
   
 
   
-  
     <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  
-
-  
-
-  
-        <link rel="index" title="Index"
-              href="../genindex.html"/>
-        <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="nutsflow 1.0.27 documentation" href="../index.html"/>
-        <link rel="up" title="Tutorial" href="introduction.html"/>
-        <link rel="next" title="Practice problems" href="practice_problems.html"/>
-        <link rel="prev" title="Performance" href="performance.html"/> 
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Practice problems" href="practice_problems.html" />
+    <link rel="prev" title="Performance" href="performance.html" /> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
 
 </head>
 
-<body class="wy-body-for-nav" role="document">
+<body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
@@ -132,7 +124,7 @@
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
       
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+      <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../index.html">nutsflow</a>
@@ -140,9 +132,10 @@
       </nav>
 
 
-      
       <div class="wy-nav-content">
+        
         <div class="rst-content">
+        
           
 
 
@@ -191,7 +184,7 @@
 <p>A collection of common problems with solutions. Make sure <strong>nutsflow</strong> has been imported.</p>
 <div class="section" id="write-csv-file-with-column-names">
 <h2>Write CSV file with column names<a class="headerlink" href="#write-csv-file-with-column-names" title="Permalink to this headline">¶</a></h2>
-<div class="code Python highlight-default"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">WriteCSV</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span> <span class="k">as</span> <span class="n">writer</span><span class="p">:</span>
+<div class="code Python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">WriteCSV</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span> <span class="k">as</span> <span class="n">writer</span><span class="p">:</span>
     <span class="p">[(</span><span class="s1">&#39;Col1&#39;</span><span class="p">,</span> <span class="s1">&#39;Col2&#39;</span><span class="p">)]</span> <span class="o">&gt;&gt;</span> <span class="n">writer</span>
     <span class="p">[(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)]</span> <span class="o">&gt;&gt;</span> <span class="n">writer</span>
 </pre></div>
@@ -202,7 +195,7 @@
 <p>From a file with two columns create a directory that maps
 values in one column to the other. For instance, the following
 file contains Arabic numbers and their Roman counterparts.</p>
-<div class="code highlight-default"><div class="highlight"><pre><span></span><span class="n">arab</span><span class="p">,</span><span class="n">roman</span>
+<div class="code highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">arab</span><span class="p">,</span><span class="n">roman</span>
 <span class="mi">1</span><span class="p">,</span><span class="n">I</span>
 <span class="mi">2</span><span class="p">,</span><span class="n">II</span>
 <span class="mi">3</span><span class="p">,</span><span class="n">III</span>
@@ -212,16 +205,16 @@ file contains Arabic numbers and their Roman counterparts.</p>
 loading the CSV file, dropping the header line, converting Arabic numbers
 (that are loaded as strings) to integers and collecting the results in
 a dictionary</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nutsflow</span> <span class="k">import</span> <span class="o">*</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nutsflow</span> <span class="k">import</span> <span class="o">*</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">fpath</span> <span class="o">=</span> <span class="s1">&#39;tests/data/arab2num.csv&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">arab2roman</span> <span class="o">=</span> <span class="n">ReadCSV</span><span class="p">(</span><span class="n">fpath</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Drop</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">MapCol</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">(</span><span class="nb">dict</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">arab2roman</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
 <span class="go">&#39;II&#39;</span>
 </pre></div>
 </div>
-<p>For the reversed mapping (Roman to Arabic), we just flip the columns via <code class="docutils literal"><span class="pre">GetCols</span></code>
-and use <code class="docutils literal"><span class="pre">skipheader=1</span></code> to skip the header line</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">roman2arab</span> <span class="o">=</span> <span class="p">(</span><span class="n">ReadCSV</span><span class="p">(</span><span class="n">fpath</span><span class="p">,</span> <span class="n">skipheader</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">MapCol</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span> <span class="o">&gt;&gt;</span>
+<p>For the reversed mapping (Roman to Arabic), we just flip the columns via <code class="docutils literal notranslate"><span class="pre">GetCols</span></code>
+and use <code class="docutils literal notranslate"><span class="pre">skipheader=1</span></code> to skip the header line</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">roman2arab</span> <span class="o">=</span> <span class="p">(</span><span class="n">ReadCSV</span><span class="p">(</span><span class="n">fpath</span><span class="p">,</span> <span class="n">skipheader</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">MapCol</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span> <span class="o">&gt;&gt;</span>
 <span class="gp">... </span><span class="n">GetCols</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">(</span><span class="nb">dict</span><span class="p">))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">roman2arab</span><span class="p">[</span><span class="s1">&#39;III&#39;</span><span class="p">]</span>
 <span class="go">3</span>
@@ -232,9 +225,7 @@ and use <code class="docutils literal"><span class="pre">skipheader=1</span></co
 
 
            </div>
-           <div class="articleComments">
-            
-           </div>
+           
           </div>
           <footer>
   
@@ -253,7 +244,7 @@ and use <code class="docutils literal"><span class="pre">skipheader=1</span></co
   <div role="contentinfo">
     <p>
         &copy; Copyright 2017, IBM Research Australia.
-      Last updated on Jan 25, 2018.
+      Last updated on Apr 10, 2018.
 
     </p>
   </div> 
@@ -275,6 +266,7 @@ and use <code class="docutils literal"><span class="pre">skipheader=1</span></co
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
             VERSION:'1.0.27',
+            LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,
@@ -292,14 +284,13 @@ and use <code class="docutils literal"><span class="pre">skipheader=1</span></co
     <script type="text/javascript" src="../_static/js/theme.js"></script>
   
 
-  
-  
   <script type="text/javascript">
       jQuery(function () {
-          SphinxRtdTheme.StickyNav.enable();
+          
+          SphinxRtdTheme.Navigation.enableSticky();
+          
       });
-  </script>
-   
+  </script> 
 
 </body>
 </html>

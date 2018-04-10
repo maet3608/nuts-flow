@@ -25,27 +25,19 @@
   
 
   
-  
     <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  
-
-  
-
-  
-        <link rel="index" title="Index"
-              href="../genindex.html"/>
-        <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="nutsflow 1.0.27 documentation" href="../index.html"/>
-        <link rel="up" title="Tutorial" href="introduction.html"/>
-        <link rel="next" title="Filtering" href="filtering.html"/>
-        <link rel="prev" title="Nuts basics" href="nuts_basics.html"/> 
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Filtering" href="filtering.html" />
+    <link rel="prev" title="Nuts basics" href="nuts_basics.html" /> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
 
 </head>
 
-<body class="wy-body-for-nav" role="document">
+<body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
@@ -135,7 +127,7 @@
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
       
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+      <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../index.html">nutsflow</a>
@@ -143,9 +135,10 @@
       </nav>
 
 
-      
       <div class="wy-nav-content">
+        
         <div class="rst-content">
+        
           
 
 
@@ -197,55 +190,55 @@ is often necessary. <strong>nuts-flow</strong> provides methods for this purpose
 <h2>Print<a class="headerlink" href="#print" title="Permalink to this headline">¶</a></h2>
 <p>Typical data flows are largely composed of pure functions without
 side-effects and only the final result is accessible.
-To display intermediate results the <code class="docutils literal"><span class="pre">Print</span></code> nut can be used:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nutsflow</span> <span class="k">import</span> <span class="o">*</span>
+To display intermediate results the <code class="docutils literal notranslate"><span class="pre">Print</span></code> nut can be used:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nutsflow</span> <span class="k">import</span> <span class="o">*</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Print</span><span class="p">()</span> <span class="o">&gt;&gt;</span> <span class="n">Consume</span><span class="p">()</span>
 <span class="go">0</span>
 <span class="go">1</span>
 <span class="go">2</span>
 </pre></div>
 </div>
-<p><code class="docutils literal"><span class="pre">Print</span></code> takes a format parameter (either a
+<p><code class="docutils literal notranslate"><span class="pre">Print</span></code> takes a format parameter (either a
 <a class="reference external" href="https://docs.python.org/2/library/string.html#formatstrings">format string</a>
 or a function) that allows to tailor its output</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Print</span><span class="p">(</span><span class="s1">&#39;number: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Consume</span><span class="p">()</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Print</span><span class="p">(</span><span class="s1">&#39;number: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Consume</span><span class="p">()</span>
 <span class="go">number: 0</span>
 <span class="go">number: 1</span>
 <span class="go">number: 2</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Print</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="s1">&#39;odd : </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">bool</span><span class="p">(</span><span class="n">x</span> <span class="o">%</span> <span class="mi">2</span><span class="p">))</span> <span class="o">&gt;&gt;</span> <span class="n">Consume</span><span class="p">()</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Print</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="s1">&#39;odd : </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">bool</span><span class="p">(</span><span class="n">x</span> <span class="o">%</span> <span class="mi">2</span><span class="p">))</span> <span class="o">&gt;&gt;</span> <span class="n">Consume</span><span class="p">()</span>
 <span class="go">odd : False</span>
 <span class="go">odd : True</span>
 <span class="go">odd : False</span>
 </pre></div>
 </div>
-<p><code class="docutils literal"><span class="pre">Print</span></code> furthermore supports to print every <em>n-ths</em> element, print at
+<p><code class="docutils literal notranslate"><span class="pre">Print</span></code> furthermore supports to print every <em>n-ths</em> element, print at
 certain time intervals, or filter for the elements to be displayed:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Print</span><span class="p">(</span><span class="n">every_n</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Consume</span><span class="p">()</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Print</span><span class="p">(</span><span class="n">every_n</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Consume</span><span class="p">()</span>
 <span class="go">1</span>
 <span class="go">3</span>
 <span class="go">5</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Sleep</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Print</span><span class="p">(</span><span class="n">every_sec</span><span class="o">=</span><span class="mf">1.5</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Consume</span><span class="p">()</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Sleep</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Print</span><span class="p">(</span><span class="n">every_sec</span><span class="o">=</span><span class="mf">1.5</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Consume</span><span class="p">()</span>
 <span class="go">1</span>
 <span class="go">3</span>
 <span class="go">5</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Print</span><span class="p">(</span><span class="n">filterfunc</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Consume</span><span class="p">()</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Print</span><span class="p">(</span><span class="n">filterfunc</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Consume</span><span class="p">()</span>
 <span class="go">3</span>
 <span class="go">4</span>
 <span class="go">5</span>
 </pre></div>
 </div>
-<p><code class="docutils literal"><span class="pre">Sleep()</span></code> waits for the given time in seconds and allows to slow
+<p><code class="docutils literal notranslate"><span class="pre">Sleep()</span></code> waits for the given time in seconds and allows to slow
 down the processing.</p>
 <p>For long running flows printing progress information can be displayed
-by inserting a <code class="docutils literal"><span class="pre">PrintProgress</span></code> nut. It, however, requires that the
+by inserting a <code class="docutils literal notranslate"><span class="pre">PrintProgress</span></code> nut. It, however, requires that the
 number of elements to be processed is known beforehand.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">n</span> <span class="o">=</span> <span class="mi">10</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">n</span> <span class="o">=</span> <span class="mi">10</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">PrintProgress</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">update</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Consume</span><span class="p">()</span> 
 <span class="go">progress: 100%</span>
 </pre></div>
@@ -255,34 +248,34 @@ number of elements to be processed is known beforehand.</p>
 <h2>Limit data<a class="headerlink" href="#limit-data" title="Permalink to this headline">¶</a></h2>
 <p>Instead of printing intermediate results the size of data flow
 can be limited by processing only a portion of the data. The
-<code class="docutils literal"><span class="pre">Take(n)</span></code> nut takes the first <em>n</em> elements only:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Take</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
+<code class="docutils literal notranslate"><span class="pre">Take(n)</span></code> nut takes the first <em>n</em> elements only:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Take</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
 <span class="go">[0, 1, 2]</span>
 </pre></div>
 </div>
-<p>Alternatively the <code class="docutils literal"><span class="pre">Head(n)</span></code> nut can be used that takes <em>n</em>
+<p>Alternatively the <code class="docutils literal notranslate"><span class="pre">Head(n)</span></code> nut can be used that takes <em>n</em>
 elements and collects them:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Head</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Head</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
 <span class="go">[0, 1, 2]</span>
 </pre></div>
 </div>
-<p>The last elements of a flow can be captured by <code class="docutils literal"><span class="pre">Tail</span></code> but note
+<p>The last elements of a flow can be captured by <code class="docutils literal notranslate"><span class="pre">Tail</span></code> but note
 that the entire flow is consumed:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Tail</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Tail</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
 <span class="go">[997, 998, 999]</span>
 </pre></div>
 </div>
-<p>Finally, <code class="docutils literal"><span class="pre">Pick(n)</span></code> allows to pick every <em>n-th</em> element:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Pick</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
+<p>Finally, <code class="docutils literal notranslate"><span class="pre">Pick(n)</span></code> allows to pick every <em>n-th</em> element:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Pick</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
 <span class="go">[0, 100, 200, 300, 400, 500, 600, 700, 800, 900]</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="no-operation">
 <h2>No Operation<a class="headerlink" href="#no-operation" title="Permalink to this headline">¶</a></h2>
-<p><strong>nuts-flow</strong> provides a <code class="docutils literal"><span class="pre">NOP(nut)</span></code> nut that can be used to quickly
+<p><strong>nuts-flow</strong> provides a <code class="docutils literal notranslate"><span class="pre">NOP(nut)</span></code> nut that can be used to quickly
 and temporarily disable the evaluation of a nut in a flow.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Square</span><span class="p">()</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>  <span class="c1"># compute squares</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Square</span><span class="p">()</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>  <span class="c1"># compute squares</span>
 <span class="go">[0, 1, 4, 9, 16]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">NOP</span><span class="p">(</span><span class="n">Square</span><span class="p">())</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>  <span class="c1"># Square disabled</span>
 <span class="go">[0, 1, 2, 3, 4]</span>
@@ -295,14 +288,14 @@ can be disabled with this method.</p>
 <div class="section" id="conditional">
 <h2>Conditional<a class="headerlink" href="#conditional" title="Permalink to this headline">¶</a></h2>
 <p>Individual nuts in a flow can also be disabled/enabled or replaced
-depending on a boolean flag using the <code class="docutils literal"><span class="pre">If(cond,</span> <span class="pre">if_nut,</span> <span class="pre">else_nut)</span></code> nut:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">If</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">Square</span><span class="p">())</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
+depending on a boolean flag using the <code class="docutils literal notranslate"><span class="pre">If(cond,</span> <span class="pre">if_nut,</span> <span class="pre">else_nut)</span></code> nut:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">If</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">Square</span><span class="p">())</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
 <span class="go">[1, 4, 9]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">If</span><span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="n">Square</span><span class="p">())</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
 <span class="go">[1, 2, 3]</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">If</span><span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="n">Square</span><span class="p">(),</span> <span class="n">Take</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">If</span><span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="n">Square</span><span class="p">(),</span> <span class="n">Take</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
 <span class="go">[1]</span>
 </pre></div>
 </div>
@@ -312,34 +305,32 @@ operate on single nuts.</p>
 <div class="section" id="counter">
 <h2>Counter<a class="headerlink" href="#counter" title="Permalink to this headline">¶</a></h2>
 <p>Sometimes only the number of elements processed at a certain stage
-is of interest. <code class="docutils literal"><span class="pre">Counter</span></code> is a nut with the needed side-effect:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">count</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="s1">&#39;cnt&#39;</span><span class="p">)</span>
+is of interest. <code class="docutils literal notranslate"><span class="pre">Counter</span></code> is a nut with the needed side-effect:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">count</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="s1">&#39;cnt&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">count</span> <span class="o">&gt;&gt;</span> <span class="n">Square</span><span class="p">()</span> <span class="o">&gt;&gt;</span> <span class="n">Sum</span><span class="p">()</span>
 <span class="go">285</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">count</span><span class="o">.</span><span class="n">value</span>
 <span class="go">10</span>
 </pre></div>
 </div>
-<p>Note that <code class="docutils literal"><span class="pre">Counter</span></code> does not modify the data flow. <code class="docutils literal"><span class="pre">Counter</span></code> also
+<p>Note that <code class="docutils literal notranslate"><span class="pre">Counter</span></code> does not modify the data flow. <code class="docutils literal notranslate"><span class="pre">Counter</span></code> also
 has a filter function to count only certain elements:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">greater5</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="s1">&#39;gt5&#39;</span><span class="p">,</span> <span class="n">filterfunc</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">5</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">greater5</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="s1">&#39;gt5&#39;</span><span class="p">,</span> <span class="n">filterfunc</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">5</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Square</span><span class="p">()</span> <span class="o">&gt;&gt;</span> <span class="n">greater5</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
 <span class="go">[0, 1, 4, 9, 16, 25, 36, 49, 64, 81]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">greater5</span>
 <span class="go">gt5 = 7</span>
 </pre></div>
 </div>
-<p>Note that the actual value of the counter is stored in <code class="docutils literal"><span class="pre">value</span></code> and can
-be printed but for conveniency <code class="docutils literal"><span class="pre">print</span> <span class="pre">greater5</span></code> prints the name of the
+<p>Note that the actual value of the counter is stored in <code class="docutils literal notranslate"><span class="pre">value</span></code> and can
+be printed but for conveniency <code class="docutils literal notranslate"><span class="pre">print</span> <span class="pre">greater5</span></code> prints the name of the
 counter and its value as well.</p>
 </div>
 </div>
 
 
            </div>
-           <div class="articleComments">
-            
-           </div>
+           
           </div>
           <footer>
   
@@ -358,7 +349,7 @@ counter and its value as well.</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2017, IBM Research Australia.
-      Last updated on Jan 25, 2018.
+      Last updated on Apr 10, 2018.
 
     </p>
   </div> 
@@ -380,6 +371,7 @@ counter and its value as well.</p>
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
             VERSION:'1.0.27',
+            LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,
@@ -397,14 +389,13 @@ counter and its value as well.</p>
     <script type="text/javascript" src="../_static/js/theme.js"></script>
   
 
-  
-  
   <script type="text/javascript">
       jQuery(function () {
-          SphinxRtdTheme.StickyNav.enable();
+          
+          SphinxRtdTheme.Navigation.enableSticky();
+          
       });
-  </script>
-   
+  </script> 
 
 </body>
 </html>

@@ -26,24 +26,17 @@
   
 
   
-  
     <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  
-
-  
-
-  
-        <link rel="index" title="Index"
-              href="#"/>
-        <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="nutsflow 1.0.27 documentation" href="index.html"/> 
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="#" />
+    <link rel="search" title="Search" href="search.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
 
 </head>
 
-<body class="wy-body-for-nav" role="document">
+<body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
@@ -108,7 +101,7 @@
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
       
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+      <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="index.html">nutsflow</a>
@@ -116,9 +109,10 @@
       </nav>
 
 
-      
       <div class="wy-nav-content">
+        
         <div class="rst-content">
+        
           
 
 
@@ -384,6 +378,8 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="nutsflow.html#nutsflow.processor.Cache">Cache (class in nutsflow.processor)</a>
 </li>
+      <li><a href="nutsflow.html#nutsflow.processor.Chunk">Chunk (in module nutsflow.processor)</a>
+</li>
       <li><a href="nutsflow.html#nutsflow.processor.ChunkBy">ChunkBy (class in nutsflow.processor)</a>
 </li>
       <li><a href="nutsflow.html#nutsflow.iterfunction.chunked">chunked() (in module nutsflow.iterfunction)</a>
@@ -400,9 +396,11 @@
         <li><a href="nutsflow.html#nutsflow.sink.WriteCSV.close">(WriteCSV method)</a>
 </li>
       </ul></li>
+      <li><a href="nutsflow.html#nutsflow.sink.Collect">Collect (class in nutsflow.sink)</a>
+</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="nutsflow.html#nutsflow.sink.Collect">Collect (class in nutsflow.sink)</a>
+      <li><a href="nutsflow.html#nutsflow.processor.Combine">Combine (in module nutsflow.processor)</a>
 </li>
       <li><a href="nutsflow.html#module-common">common (module)</a>
 </li>
@@ -420,16 +418,20 @@
 </li>
       <li><a href="nutsflow.html#nutsflow.sink.CountValues">CountValues (class in nutsflow.sink)</a>
 </li>
+      <li><a href="nutsflow.html#nutsflow.processor.Cycle">Cycle (in module nutsflow.processor)</a>
+</li>
   </ul></td>
 </tr></table>
 
 <h2 id="D">D</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="nutsflow.html#nutsflow.processor.Drop">Drop (class in nutsflow.processor)</a>
+      <li><a href="nutsflow.html#nutsflow.processor.Dedupe">Dedupe (in module nutsflow.processor)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="nutsflow.html#nutsflow.processor.Drop">Drop (class in nutsflow.processor)</a>
+</li>
       <li><a href="nutsflow.html#nutsflow.processor.DropWhile">DropWhile (class in nutsflow.processor)</a>
 </li>
   </ul></td>
@@ -452,12 +454,18 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="nutsflow.html#module-factory">factory (module)</a>
 </li>
-      <li><a href="nutsflow.html#nutsflow.iterfunction.flatmap">flatmap() (in module nutsflow.iterfunction)</a>
+      <li><a href="nutsflow.html#nutsflow.processor.Filter">Filter (in module nutsflow.processor)</a>
 </li>
-      <li><a href="nutsflow.html#nutsflow.processor.Flatten">Flatten (class in nutsflow.processor)</a>
+      <li><a href="nutsflow.html#nutsflow.processor.FilterFalse">FilterFalse (in module nutsflow.processor)</a>
+</li>
+      <li><a href="nutsflow.html#nutsflow.processor.FlatMap">FlatMap (in module nutsflow.processor)</a>
+</li>
+      <li><a href="nutsflow.html#nutsflow.iterfunction.flatmap">flatmap() (in module nutsflow.iterfunction)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="nutsflow.html#nutsflow.processor.Flatten">Flatten (class in nutsflow.processor)</a>
+</li>
       <li><a href="nutsflow.html#nutsflow.iterfunction.flatten">flatten() (in module nutsflow.iterfunction)</a>
 </li>
       <li><a href="nutsflow.html#nutsflow.processor.FlattenCol">FlattenCol (class in nutsflow.processor)</a>
@@ -542,6 +550,8 @@
 <h2 id="M">M</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="nutsflow.html#nutsflow.processor.Map">Map (in module nutsflow.processor)</a>
+</li>
       <li><a href="nutsflow.html#nutsflow.processor.MapCol">MapCol (class in nutsflow.processor)</a>
 </li>
       <li><a href="nutsflow.html#nutsflow.processor.MapMulti">MapMulti (class in nutsflow.processor)</a>
@@ -554,10 +564,10 @@
 </li>
       <li><a href="nutsflow.html#nutsflow.sink.MeanStd">MeanStd (class in nutsflow.sink)</a>
 </li>
-      <li><a href="nutsflow.html#nutsflow.sink.Min">Min (class in nutsflow.sink)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="nutsflow.html#nutsflow.sink.Min">Min (class in nutsflow.sink)</a>
+</li>
       <li><a href="nutsflow.examples.html#nutsflow.examples.examples.MyClone">MyClone (class in nutsflow.examples.examples)</a>
 </li>
       <li><a href="nutsflow.examples.html#nutsflow.examples.examples.MyCollect">MyCollect (class in nutsflow.examples.examples)</a>
@@ -638,16 +648,20 @@
 <h2 id="P">P</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="nutsflow.html#nutsflow.processor.Partition">Partition (in module nutsflow.processor)</a>
+</li>
       <li><a href="nutsflow.html#nutsflow.iterfunction.partition">partition() (in module nutsflow.iterfunction)</a>
+</li>
+      <li><a href="nutsflow.html#nutsflow.processor.Permutate">Permutate (in module nutsflow.processor)</a>
 </li>
       <li><a href="nutsflow.html#nutsflow.processor.Pick">Pick (class in nutsflow.processor)</a>
 </li>
       <li><a href="nutsflow.html#nutsflow.processor.Prefetch">Prefetch (class in nutsflow.processor)</a>
 </li>
-      <li><a href="nutsflow.html#nutsflow.iterfunction.PrefetchIterator">PrefetchIterator (class in nutsflow.iterfunction)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="nutsflow.html#nutsflow.iterfunction.PrefetchIterator">PrefetchIterator (class in nutsflow.iterfunction)</a>
+</li>
       <li><a href="nutsflow.html#nutsflow.function.Print">Print (class in nutsflow.function)</a>
 </li>
       <li><a href="nutsflow.html#nutsflow.processor.PrintProgress">PrintProgress (class in nutsflow.processor)</a>
@@ -726,9 +740,13 @@
 </li>
       <li><a href="nutsflow.html#nutsflow.processor.Take">Take (class in nutsflow.processor)</a>
 </li>
+      <li><a href="nutsflow.html#nutsflow.iterfunction.take">take() (in module nutsflow.iterfunction)</a>
+</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="nutsflow.html#nutsflow.iterfunction.take">take() (in module nutsflow.iterfunction)</a>
+      <li><a href="nutsflow.html#nutsflow.processor.TakeWhile">TakeWhile (in module nutsflow.processor)</a>
+</li>
+      <li><a href="nutsflow.html#nutsflow.processor.Tee">Tee (in module nutsflow.processor)</a>
 </li>
       <li><a href="nutsflow.html#nutsflow.common.timestr">timestr() (in module nutsflow.common)</a>
 </li>
@@ -778,9 +796,7 @@
 
 
            </div>
-           <div class="articleComments">
-            
-           </div>
+           
           </div>
           <footer>
   
@@ -790,7 +806,7 @@
   <div role="contentinfo">
     <p>
         &copy; Copyright 2017, IBM Research Australia.
-      Last updated on Jan 25, 2018.
+      Last updated on Apr 10, 2018.
 
     </p>
   </div> 
@@ -812,6 +828,7 @@
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
             VERSION:'1.0.27',
+            LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,
@@ -829,14 +846,13 @@
     <script type="text/javascript" src="_static/js/theme.js"></script>
   
 
-  
-  
   <script type="text/javascript">
       jQuery(function () {
-          SphinxRtdTheme.StickyNav.enable();
+          
+          SphinxRtdTheme.Navigation.enableSticky();
+          
       });
-  </script>
-   
+  </script> 
 
 </body>
 </html>
