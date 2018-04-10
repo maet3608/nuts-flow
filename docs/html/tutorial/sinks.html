@@ -25,27 +25,19 @@
   
 
   
-  
     <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  
-
-  
-
-  
-        <link rel="index" title="Index"
-              href="../genindex.html"/>
-        <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="nutsflow 1.0.27 documentation" href="../index.html"/>
-        <link rel="up" title="Tutorial" href="introduction.html"/>
-        <link rel="next" title="Handling exceptions" href="exceptions.html"/>
-        <link rel="prev" title="Reading from Sources" href="sources.html"/> 
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Handling exceptions" href="exceptions.html" />
+    <link rel="prev" title="Reading from Sources" href="sources.html" /> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
 
 </head>
 
-<body class="wy-body-for-nav" role="document">
+<body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
@@ -141,7 +133,7 @@
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
       
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+      <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../index.html">nutsflow</a>
@@ -149,9 +141,10 @@
       </nav>
 
 
-      
       <div class="wy-nav-content">
+        
         <div class="rst-content">
+        
           
 
 
@@ -202,11 +195,11 @@ the flow. Without a sink the flow is not processing any data.</p>
 <div class="section" id="python-functions">
 <h2>Python functions<a class="headerlink" href="#python-functions" title="Permalink to this headline">¶</a></h2>
 <p>All Python functions that accept iterators or iterables can
-serve as sinks, e.g. <code class="docutils literal"><span class="pre">list</span></code>, <code class="docutils literal"><span class="pre">set</span></code>, <code class="docutils literal"><span class="pre">dict</span></code>, <code class="docutils literal"><span class="pre">sum</span></code>,
-<code class="docutils literal"><span class="pre">file.writelines</span></code>, …,  but since they are not nuts
-they do not support the <code class="docutils literal"><span class="pre">&gt;&gt;</span></code> operator and need to be
+serve as sinks, e.g. <code class="docutils literal notranslate"><span class="pre">list</span></code>, <code class="docutils literal notranslate"><span class="pre">set</span></code>, <code class="docutils literal notranslate"><span class="pre">dict</span></code>, <code class="docutils literal notranslate"><span class="pre">sum</span></code>,
+<code class="docutils literal notranslate"><span class="pre">file.writelines</span></code>, …,  but since they are not nuts
+they do not support the <code class="docutils literal notranslate"><span class="pre">&gt;&gt;</span></code> operator and need to be
 called as functions. Here some examples</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nutsflow</span> <span class="k">import</span> <span class="o">*</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nutsflow</span> <span class="k">import</span> <span class="o">*</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nutsflow</span> <span class="k">import</span> <span class="n">_</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">Range</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Filter</span><span class="p">(</span><span class="n">_</span> <span class="o">&lt;</span> <span class="mi">4</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Square</span><span class="p">())</span>
 <span class="go">[0, 1, 4, 9]</span>
@@ -216,7 +209,7 @@ called as functions. Here some examples</p>
 <span class="go">{&#39;four&#39;: 4, &#39;one&#39;: 1}</span>
 </pre></div>
 </div>
-<div class="code highlight-default"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+<div class="code highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
     <span class="n">f</span><span class="o">.</span><span class="n">writelines</span><span class="p">(</span><span class="n">Range</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Square</span><span class="p">()</span> <span class="o">&gt;&gt;</span> <span class="n">Format</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">&#39;</span><span class="p">))</span>
 </pre></div>
 </div>
@@ -225,55 +218,55 @@ called as functions. Here some examples</p>
 <h2>Nuts<a class="headerlink" href="#nuts" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="collect">
 <h3>Collect<a class="headerlink" href="#collect" title="Permalink to this headline">¶</a></h3>
-<p>The most commonly used sink is <code class="docutils literal"><span class="pre">Collect</span></code>,
+<p>The most commonly used sink is <code class="docutils literal notranslate"><span class="pre">Collect</span></code>,
 which collects all elements of the input iterable in a list.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Filter</span><span class="p">(</span><span class="n">_</span> <span class="o">&lt;</span> <span class="mi">4</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Filter</span><span class="p">(</span><span class="n">_</span> <span class="o">&lt;</span> <span class="mi">4</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
 <span class="go">[0, 1, 2, 3]</span>
 </pre></div>
 </div>
-<p><code class="docutils literal"><span class="pre">Collect(container)</span></code> also allows to specify a container to collect
+<p><code class="docutils literal notranslate"><span class="pre">Collect(container)</span></code> also allows to specify a container to collect
 the data in. Any Python function that accept iterators or iterables
 is a valid container, e.g.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">Square</span><span class="p">()</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">(</span><span class="nb">set</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">Square</span><span class="p">()</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">(</span><span class="nb">set</span><span class="p">)</span>
 <span class="go">set([1, 4, 9])</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[(</span><span class="s1">&#39;one&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;four&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)]</span> <span class="o">&gt;&gt;</span> <span class="n">MapCol</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">Square</span><span class="p">())</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">(</span><span class="nb">dict</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[(</span><span class="s1">&#39;one&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;four&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)]</span> <span class="o">&gt;&gt;</span> <span class="n">MapCol</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">Square</span><span class="p">())</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">(</span><span class="nb">dict</span><span class="p">)</span>
 <span class="go">{&#39;four&#39;: 4, &#39;one&#39;: 1}</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Square</span><span class="p">()</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">(</span><span class="nb">sum</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Square</span><span class="p">()</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">(</span><span class="nb">sum</span><span class="p">)</span>
 <span class="go">285</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Map</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Map</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">)</span>
 <span class="go">&#39;0:1:2:3:4&#39;</span>
 </pre></div>
 </div>
-<p><code class="docutils literal"><span class="pre">Collect</span></code> stores all data in memory and is not suitable
+<p><code class="docutils literal notranslate"><span class="pre">Collect</span></code> stores all data in memory and is not suitable
 for large data sets. In such a case use <a class="reference internal" href="#writecsv"><span class="std std-ref">WriteCSV</span></a>
 to write data to the file system.</p>
 </div>
 <div class="section" id="head-and-tail">
 <h3>Head and Tail<a class="headerlink" href="#head-and-tail" title="Permalink to this headline">¶</a></h3>
 <p><a class="reference internal" href="#collect"><span class="std std-ref">Collect</span></a> collects <strong>all</strong> elements of the input. Often only
-the first or last <em>n</em> elements are needed. <code class="docutils literal"><span class="pre">Head(n)</span></code> collects
-the first <em>n</em> elements and <code class="docutils literal"><span class="pre">Tail(n)</span></code> the last <em>n</em> elements</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Head</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+the first or last <em>n</em> elements are needed. <code class="docutils literal notranslate"><span class="pre">Head(n)</span></code> collects
+the first <em>n</em> elements and <code class="docutils literal notranslate"><span class="pre">Tail(n)</span></code> the last <em>n</em> elements</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Head</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
 <span class="go">[0, 1, 2, 3]</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Tail</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Tail</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
 <span class="go">[6, 7, 8, 9]</span>
 </pre></div>
 </div>
-<p>Similar to <a class="reference internal" href="#collect"><span class="std std-ref">Collect</span></a>,  <code class="docutils literal"><span class="pre">Head</span></code>  and <code class="docutils literal"><span class="pre">Tail</span></code> allow to
+<p>Similar to <a class="reference internal" href="#collect"><span class="std std-ref">Collect</span></a>,  <code class="docutils literal notranslate"><span class="pre">Head</span></code>  and <code class="docutils literal notranslate"><span class="pre">Tail</span></code> allow to
 specify a container to store the result in</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">Head</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="nb">set</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">Head</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="nb">set</span><span class="p">)</span>
 <span class="go">set([1, 2])</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Tail</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="nb">sum</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Tail</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="nb">sum</span><span class="p">)</span>
 <span class="go">24</span>
 </pre></div>
 </div>
@@ -281,54 +274,54 @@ specify a container to store the result in</p>
 <div class="section" id="common-nuts">
 <h3>Common nuts<a class="headerlink" href="#common-nuts" title="Permalink to this headline">¶</a></h3>
 <p><strong>nuts-flow</strong> provides nuts for common aggregator functions
-such as <code class="docutils literal"><span class="pre">Sum</span></code>, <code class="docutils literal"><span class="pre">Min</span></code>, <code class="docutils literal"><span class="pre">Max</span></code>, <code class="docutils literal"><span class="pre">ArgMax</span></code>, <code class="docutils literal"><span class="pre">ArgMin</span></code>,
-and <code class="docutils literal"><span class="pre">Join</span></code>. For instance, instead of writing</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">(</span><span class="nb">sum</span><span class="p">)</span>
+such as <code class="docutils literal notranslate"><span class="pre">Sum</span></code>, <code class="docutils literal notranslate"><span class="pre">Min</span></code>, <code class="docutils literal notranslate"><span class="pre">Max</span></code>, <code class="docutils literal notranslate"><span class="pre">ArgMax</span></code>, <code class="docutils literal notranslate"><span class="pre">ArgMin</span></code>,
+and <code class="docutils literal notranslate"><span class="pre">Join</span></code>. For instance, instead of writing</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">(</span><span class="nb">sum</span><span class="p">)</span>
 <span class="go">45</span>
 </pre></div>
 </div>
 <p>one can simply write</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Sum</span><span class="p">()</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Sum</span><span class="p">()</span>
 <span class="go">45</span>
 </pre></div>
 </div>
-<p><code class="docutils literal"><span class="pre">Join</span></code> is the nuts equivalent of Python’s <code class="docutils literal"><span class="pre">join</span></code> method
+<p><code class="docutils literal notranslate"><span class="pre">Join</span></code> is the nuts equivalent of Python’s <code class="docutils literal notranslate"><span class="pre">join</span></code> method
 but automatically converts numbers to strings</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Join</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Join</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)</span>
 <span class="go">&#39;0:1:2:3:4&#39;</span>
 </pre></div>
 </div>
-<p><code class="docutils literal"><span class="pre">Min</span></code> and <code class="docutils literal"><span class="pre">Max</span></code> return the minimum or the maximum element
+<p><code class="docutils literal notranslate"><span class="pre">Min</span></code> and <code class="docutils literal notranslate"><span class="pre">Max</span></code> return the minimum or the maximum element
 of a data flow and allow to specify a key function and a
 default value in case of an empty data stream. For instance,
 find the longest string</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;123&#39;</span><span class="p">,</span> <span class="s1">&#39;12&#39;</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">Max</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="nb">len</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;123&#39;</span><span class="p">,</span> <span class="s1">&#39;12&#39;</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">Max</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="nb">len</span><span class="p">)</span>
 <span class="go">&#39;123&#39;</span>
 </pre></div>
 </div>
 <p>and return the empty string if there is no data</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[]</span> <span class="o">&gt;&gt;</span> <span class="n">Max</span><span class="p">(</span><span class="nb">len</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[]</span> <span class="o">&gt;&gt;</span> <span class="n">Max</span><span class="p">(</span><span class="nb">len</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
 <span class="go">&#39;&#39;</span>
 </pre></div>
 </div>
-<p><code class="docutils literal"><span class="pre">ArgMin</span></code> and <code class="docutils literal"><span class="pre">ArgMax</span></code> return the <strong>index</strong> of the smallest or
+<p><code class="docutils literal notranslate"><span class="pre">ArgMin</span></code> and <code class="docutils literal notranslate"><span class="pre">ArgMax</span></code> return the <strong>index</strong> of the smallest or
 largest element and possibly the element itself. For example,
 the index of the longest string</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="s1">&#39;12&#39;</span><span class="p">,</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;123&#39;</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">ArgMax</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="nb">len</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="s1">&#39;12&#39;</span><span class="p">,</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;123&#39;</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">ArgMax</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="nb">len</span><span class="p">)</span>
 <span class="go">2</span>
 </pre></div>
 </div>
 <p>or the index and the string itself</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="s1">&#39;12&#39;</span><span class="p">,</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;123&#39;</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">ArgMax</span><span class="p">(</span><span class="nb">len</span><span class="p">,</span> <span class="n">retvalue</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="s1">&#39;12&#39;</span><span class="p">,</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;123&#39;</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">ArgMax</span><span class="p">(</span><span class="nb">len</span><span class="p">,</span> <span class="n">retvalue</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="go">(2, &#39;123&#39;)</span>
 </pre></div>
 </div>
 <p>A default value is also supported to deal with empty input data</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[]</span> <span class="o">&gt;&gt;</span> <span class="n">ArgMax</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span> <span class="n">retvalue</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[]</span> <span class="o">&gt;&gt;</span> <span class="n">ArgMax</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span> <span class="n">retvalue</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="go">(0, None)</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[]</span> <span class="o">&gt;&gt;</span> <span class="n">ArgMax</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s1">&#39;empty&#39;</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[]</span> <span class="o">&gt;&gt;</span> <span class="n">ArgMax</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s1">&#39;empty&#39;</span><span class="p">)</span>
 <span class="go">&#39;empty&#39;</span>
 </pre></div>
 </div>
@@ -336,45 +329,45 @@ the index of the longest string</p>
 <div class="section" id="count-and-countvalues">
 <h3>Count and CountValues<a class="headerlink" href="#count-and-countvalues" title="Permalink to this headline">¶</a></h3>
 <p>To count the number of elements in a flow or the numbers of
-different elements in a flow <code class="docutils literal"><span class="pre">Count</span></code> and <code class="docutils literal"><span class="pre">CountValues</span></code>
+different elements in a flow <code class="docutils literal notranslate"><span class="pre">Count</span></code> and <code class="docutils literal notranslate"><span class="pre">CountValues</span></code>
 are provided.</p>
-<p><code class="docutils literal"><span class="pre">Count</span></code> simply consumes the data flow and counts the number
+<p><code class="docutils literal notranslate"><span class="pre">Count</span></code> simply consumes the data flow and counts the number
 of elements</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">Count</span><span class="p">()</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">Count</span><span class="p">()</span>
 <span class="go">5</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="s1">&#39;abaacc&#39;</span> <span class="o">&gt;&gt;</span> <span class="n">Count</span><span class="p">()</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="s1">&#39;abaacc&#39;</span> <span class="o">&gt;&gt;</span> <span class="n">Count</span><span class="p">()</span>
 <span class="go">6</span>
 </pre></div>
 </div>
-<p>while <code class="docutils literal"><span class="pre">CountValues</span></code> counts the frequencies of the different values
+<p>while <code class="docutils literal notranslate"><span class="pre">CountValues</span></code> counts the frequencies of the different values
 and returns a dictionary</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="s1">&#39;abaacc&#39;</span> <span class="o">&gt;&gt;</span> <span class="n">CountValues</span><span class="p">()</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="s1">&#39;abaacc&#39;</span> <span class="o">&gt;&gt;</span> <span class="n">CountValues</span><span class="p">()</span>
 <span class="go">{&#39;a&#39;: 3, &#39;c&#39;: 2, &#39;b&#39;: 1}</span>
 </pre></div>
 </div>
-<p><code class="docutils literal"><span class="pre">CountValues</span></code> can also return the <em>relative frequencies</em> instead
+<p><code class="docutils literal notranslate"><span class="pre">CountValues</span></code> can also return the <em>relative frequencies</em> instead
 of the <em>absolute counts</em></p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="s1">&#39;aabaab&#39;</span> <span class="o">&gt;&gt;</span> <span class="n">CountValues</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="s1">&#39;aabaab&#39;</span> <span class="o">&gt;&gt;</span> <span class="n">CountValues</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
 <span class="go">{&#39;a&#39;: 1.0, &#39;b&#39;: 0.5}</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="reduce">
 <h3>Reduce<a class="headerlink" href="#reduce" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal"><span class="pre">Reduce(func</span> <span class="pre">[,initiaizer])</span></code> reduces a flow of data elements to a
-single element, using a given function. <code class="docutils literal"><span class="pre">Reduce</span></code> is a thin wrapper around
+<p><code class="docutils literal notranslate"><span class="pre">Reduce(func</span> <span class="pre">[,initiaizer])</span></code> reduces a flow of data elements to a
+single element, using a given function. <code class="docutils literal notranslate"><span class="pre">Reduce</span></code> is a thin wrapper around
 Python’s <a class="reference external" href="https://docs.python.org/2/library/functions.html#reduce">reduce</a>
 function.</p>
 <p>The following example computes the product of a list of numbers</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">Reduce</span><span class="p">(</span><span class="k">lambda</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="n">a</span> <span class="o">*</span> <span class="n">b</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">Reduce</span><span class="p">(</span><span class="k">lambda</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="n">a</span> <span class="o">*</span> <span class="n">b</span><span class="p">)</span>
 <span class="go">6</span>
 </pre></div>
 </div>
-<p><code class="docutils literal"><span class="pre">Reduce</span></code> can be called with an initalizer, which specifies the first
+<p><code class="docutils literal notranslate"><span class="pre">Reduce</span></code> can be called with an initalizer, which specifies the first
 element used in the reduction</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="s1">&#39;one&#39;</span><span class="p">,</span> <span class="s1">&#39;two&#39;</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">Reduce</span><span class="p">(</span><span class="k">lambda</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">,</span> <span class="s1">&#39;start&#39;</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="s1">&#39;one&#39;</span><span class="p">,</span> <span class="s1">&#39;two&#39;</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">Reduce</span><span class="p">(</span><span class="k">lambda</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">,</span> <span class="s1">&#39;start&#39;</span><span class="p">)</span>
 <span class="go">&#39;startonetwo&#39;</span>
 </pre></div>
 </div>
@@ -382,23 +375,23 @@ element used in the reduction</p>
 <div class="section" id="consume">
 <h3>Consume<a class="headerlink" href="#consume" title="Permalink to this headline">¶</a></h3>
 <p>If a data flow has side effects (e.g. printing, writing to a file)
-but no interesting result itself the <code class="docutils literal"><span class="pre">Consume</span></code> nut can be used.
+but no interesting result itself the <code class="docutils literal notranslate"><span class="pre">Consume</span></code> nut can be used.
 It drives a data flow but does not collect or discards any
 of its results. For instance, the following flow has the
 side effect of printing numbers:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Print</span><span class="p">()</span> <span class="o">&gt;&gt;</span> <span class="n">Consume</span><span class="p">()</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Print</span><span class="p">()</span> <span class="o">&gt;&gt;</span> <span class="n">Consume</span><span class="p">()</span>
 <span class="go">0</span>
 <span class="go">1</span>
 <span class="go">2</span>
 </pre></div>
 </div>
 <p>In contrast, the following flow processes data but returns nothing</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Square</span><span class="p">()</span> <span class="o">&gt;&gt;</span> <span class="n">Consume</span><span class="p">()</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Square</span><span class="p">()</span> <span class="o">&gt;&gt;</span> <span class="n">Consume</span><span class="p">()</span>
 </pre></div>
 </div>
 <p>while the next flow has no sink and therefore only returns an iterator
 object but does not process any data</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Square</span><span class="p">()</span> <span class="o">&gt;&gt;</span> <span class="n">Print</span><span class="p">()</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Square</span><span class="p">()</span> <span class="o">&gt;&gt;</span> <span class="n">Print</span><span class="p">()</span>
 <span class="go">&lt;itertools.imap object at ...&gt;</span>
 </pre></div>
 </div>
@@ -407,69 +400,69 @@ because there is no sink that drives the flow.</p>
 </div>
 <div class="section" id="writecsv">
 <h3>WriteCSV<a class="headerlink" href="#writecsv" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal"><span class="pre">WriteCSV(filepath,</span> <span class="pre">cols,</span> <span class="pre">skipheader,</span> <span class="pre">fmtfunc,</span> <span class="pre">**kwargs)</span></code> writes
+<p><code class="docutils literal notranslate"><span class="pre">WriteCSV(filepath,</span> <span class="pre">cols,</span> <span class="pre">skipheader,</span> <span class="pre">fmtfunc,</span> <span class="pre">**kwargs)</span></code> writes
 data in <em>Comma Separated Values format</em> (CSV) to the specified file.
 For instance,</p>
-<div class="code highlight-default"><div class="highlight"><pre><span></span><span class="p">[(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)]</span> <span class="o">&gt;&gt;</span> <span class="n">WriteCSV</span><span class="p">(</span><span class="s1">&#39;data.csv&#39;</span><span class="p">)</span>
+<div class="code highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)]</span> <span class="o">&gt;&gt;</span> <span class="n">WriteCSV</span><span class="p">(</span><span class="s1">&#39;data.csv&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>would create the file <code class="docutils literal"><span class="pre">data.csv</span></code> with the following content</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span>
+<p>would create the file <code class="docutils literal notranslate"><span class="pre">data.csv</span></code> with the following content</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span>
 <span class="mi">3</span><span class="p">,</span><span class="mi">4</span>
 </pre></div>
 </div>
 <p>However, to ensure that files are closed safely it is preferable to
-use <code class="docutils literal"><span class="pre">WriteCSV</span></code> in conjunction with the <code class="docutils literal"><span class="pre">with</span></code> statement</p>
-<div class="code highlight-default"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">WriteCSV</span><span class="p">(</span><span class="s1">&#39;data.csv&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">writer</span><span class="p">:</span>
+use <code class="docutils literal notranslate"><span class="pre">WriteCSV</span></code> in conjunction with the <code class="docutils literal notranslate"><span class="pre">with</span></code> statement</p>
+<div class="code highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">WriteCSV</span><span class="p">(</span><span class="s1">&#39;data.csv&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">writer</span><span class="p">:</span>
    <span class="p">[(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)]</span> <span class="o">&gt;&gt;</span> <span class="n">writer</span>
 </pre></div>
 </div>
 <p>It is possible to select the columns to write and to skip a given
 number of header lines if needed. For example,</p>
-<div class="code highlight-default"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">WriteCSV</span><span class="p">(</span><span class="s1">&#39;data.csv&#39;</span><span class="p">,</span> <span class="n">cols</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span> <span class="n">skipheader</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="k">as</span> <span class="n">writer</span><span class="p">:</span>
+<div class="code highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">WriteCSV</span><span class="p">(</span><span class="s1">&#39;data.csv&#39;</span><span class="p">,</span> <span class="n">cols</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span> <span class="n">skipheader</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="k">as</span> <span class="n">writer</span><span class="p">:</span>
    <span class="p">[(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">)]</span> <span class="o">&gt;&gt;</span> <span class="n">writer</span>
 </pre></div>
 </div>
-<p>will write the following data to  <code class="docutils literal"><span class="pre">data.csv</span></code>:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span>
+<p>will write the following data to  <code class="docutils literal notranslate"><span class="pre">data.csv</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span>
 <span class="mi">5</span><span class="p">,</span><span class="mi">4</span>
 </pre></div>
 </div>
 <p>while</p>
-<div class="code highlight-default"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">WriteCSV</span><span class="p">(</span><span class="s1">&#39;data.csv&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">writer</span><span class="p">:</span>
+<div class="code highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">WriteCSV</span><span class="p">(</span><span class="s1">&#39;data.csv&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">writer</span><span class="p">:</span>
    <span class="p">[(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">)]</span> <span class="o">&gt;&gt;</span> <span class="n">writer</span>
 </pre></div>
 </div>
 <p>will write</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">c</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">c</span>
 <span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span>
 <span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span>
 </pre></div>
 </div>
 <p>In addition to CSV other formats such as <em>Tab Separated Values</em> (TSV)
 can be written by providing the appropriate delimiter</p>
-<div class="code highlight-default"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">WriteCSV</span><span class="p">(</span><span class="s1">&#39;data.csv&#39;</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">writer</span><span class="p">:</span>
+<div class="code highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">WriteCSV</span><span class="p">(</span><span class="s1">&#39;data.csv&#39;</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">writer</span><span class="p">:</span>
    <span class="p">[(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">)]</span> <span class="o">&gt;&gt;</span> <span class="n">writer</span>
 </pre></div>
 </div>
-<p>and values can be formatted using <code class="docutils literal"><span class="pre">fmtfunc</span></code>. For example,</p>
-<div class="code highlight-default"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">WriteCSV</span><span class="p">(</span><span class="s1">&#39;data.csv&#39;</span><span class="p">,</span> <span class="n">fmtfunc</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="s1">&#39;num:&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">))</span> <span class="k">as</span> <span class="n">writer</span><span class="p">:</span>
+<p>and values can be formatted using <code class="docutils literal notranslate"><span class="pre">fmtfunc</span></code>. For example,</p>
+<div class="code highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">WriteCSV</span><span class="p">(</span><span class="s1">&#39;data.csv&#39;</span><span class="p">,</span> <span class="n">fmtfunc</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="s1">&#39;num:&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">))</span> <span class="k">as</span> <span class="n">writer</span><span class="p">:</span>
    <span class="p">[(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">)]</span> <span class="o">&gt;&gt;</span> <span class="n">writer</span>
 </pre></div>
 </div>
 <p>will output</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">num</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="n">num</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span><span class="n">num</span><span class="p">:</span><span class="mi">3</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">num</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="n">num</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span><span class="n">num</span><span class="p">:</span><span class="mi">3</span>
 <span class="n">num</span><span class="p">:</span><span class="mi">4</span><span class="p">,</span><span class="n">num</span><span class="p">:</span><span class="mi">5</span><span class="p">,</span><span class="n">num</span><span class="p">:</span><span class="mi">6</span>
 </pre></div>
 </div>
 <p>Note that data does not need to be organized in tuples. Simple
 data streams can be written as well:</p>
-<div class="code highlight-default"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">WriteCSV</span><span class="p">(</span><span class="s1">&#39;data.csv&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">writer</span><span class="p">:</span>
+<div class="code highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">WriteCSV</span><span class="p">(</span><span class="s1">&#39;data.csv&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">writer</span><span class="p">:</span>
     <span class="n">Range</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">writer</span>
 </pre></div>
 </div>
-<p><code class="docutils literal"><span class="pre">WriteCSV</span></code> is a thin wrapper around Pythons <code class="docutils literal"><span class="pre">csv.writer</span></code> and
-the <code class="docutils literal"><span class="pre">kwargs</span></code> of <code class="docutils literal"><span class="pre">WriteCSV</span></code> are passed on to <code class="docutils literal"><span class="pre">csv.writer</span></code>.
+<p><code class="docutils literal notranslate"><span class="pre">WriteCSV</span></code> is a thin wrapper around Pythons <code class="docutils literal notranslate"><span class="pre">csv.writer</span></code> and
+the <code class="docutils literal notranslate"><span class="pre">kwargs</span></code> of <code class="docutils literal notranslate"><span class="pre">WriteCSV</span></code> are passed on to <code class="docutils literal notranslate"><span class="pre">csv.writer</span></code>.
 See <a class="reference external" href="https://docs.python.org/2/library/csv.html">https://docs.python.org/2/library/csv.html</a> for more details.</p>
 </div>
 </div>
@@ -477,9 +470,7 @@ See <a class="reference external" href="https://docs.python.org/2/library/csv.ht
 
 
            </div>
-           <div class="articleComments">
-            
-           </div>
+           
           </div>
           <footer>
   
@@ -498,7 +489,7 @@ See <a class="reference external" href="https://docs.python.org/2/library/csv.ht
   <div role="contentinfo">
     <p>
         &copy; Copyright 2017, IBM Research Australia.
-      Last updated on Jan 25, 2018.
+      Last updated on Apr 10, 2018.
 
     </p>
   </div> 
@@ -520,6 +511,7 @@ See <a class="reference external" href="https://docs.python.org/2/library/csv.ht
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
             VERSION:'1.0.27',
+            LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,
@@ -537,14 +529,13 @@ See <a class="reference external" href="https://docs.python.org/2/library/csv.ht
     <script type="text/javascript" src="../_static/js/theme.js"></script>
   
 
-  
-  
   <script type="text/javascript">
       jQuery(function () {
-          SphinxRtdTheme.StickyNav.enable();
+          
+          SphinxRtdTheme.Navigation.enableSticky();
+          
       });
-  </script>
-   
+  </script> 
 
 </body>
 </html>
