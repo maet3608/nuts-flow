@@ -13,14 +13,14 @@ import collections as cl
 from six.moves import reduce, zip, range
 from .base import NutSink
 from .factory import nut_sink
-from .common import as_tuple, is_iterable
+from .common import as_tuple, is_iterable, colfunc
 from .iterfunction import nth, consume, length, take
 
 
 @nut_sink
 def Sort(iterable, key=None, reverse=False):
     """
-    iterable >> Sort()
+    iterable >> Sort(key=None, reverse=False)
 
     Sorts iterable with respect to key function.
 
@@ -33,7 +33,13 @@ def Sort(iterable, key=None, reverse=False):
     >>> ['a3', 'c1', 'b2'] >> Sort(key=lambda s: s[0])
     ['a3', 'b2', 'c1']
 
-    >>> ['a3', 'c1', 'b2'] >> Sort(key=lambda s: s[1])
+    >>> ['a3', 'c1', 'b2'] >> Sort(key=0)
+    ['a3', 'b2', 'c1']
+
+    >>> ['a3', 'c1', 'b2'] >> Sort(key=1)
+    ['c1', 'b2', 'a3']
+
+    >>> ['a3', 'c1', 'b2'] >> Sort(key=(1,0))
     ['c1', 'b2', 'a3']
 
     :param iterable iterable: Iterable
@@ -42,67 +48,98 @@ def Sort(iterable, key=None, reverse=False):
     :return: Sorted iterable
     :rtype: list
     """
-    return sorted(iterable, key=key, reverse=reverse)
+    return sorted(iterable, key=colfunc(key), reverse=reverse)
 
 
 @nut_sink
-def Sum(iterable):
+def Sum(iterable, key=None):
     """
-    iterable >> Sum()
+    iterable >> Sum(key=None)
 
-    Return sum over inputs.
+    Return sum over inputs (transformed or extracted by key function)
 
     >>> [1, 2, 3] >> Sum()
     6
 
+    >>> [1, 2, 3] >> Sum(lambda x: x*x)
+    14
+
+    >>> data = [(1, 10), (2, 20), (3, 30)]
+    >>> data >> Sum(key=0)
+    6
+    >>> data >> Sum(key=1)
+    60
+
     :param iterable iterable: Iterable over numbers
+    :param int|tuple|function|None key: Key function to extract elements.
     :return: Sum of numbers
     :rtype: number
     """
-    return sum(iterable)
+    return sum(map(colfunc(key), iterable))
 
 
 @nut_sink
-def Mean(iterable, default=None):
+def Mean(iterable, key=None, default=None):
     """
-    iterable >> Mean(default=None)
+    iterable >> Mean(key=None, default=None)
 
-    Return mean value of inputs.
+    Return mean value of inputs (transformed or extracted by key function).
 
     >>> [1, 2, 3] >> Mean()
     2.0
 
+    >>> [] >> Mean(default=0)
+    0
+
+    >>> data = [(1, 10), (2, 20), (3, 30)]
+    >>> data >> Mean(key=0)
+    2.0
+    >>> data >> Mean(key=1)
+    20.0
+
     :param iterable iterable: Iterable over numbers
     :param object default: Value returned if iterable is empty.
+    :param int|tuple|function|None key: Key function to extract elements.
     :return: Mean of numbers or default value
     :rtype: number
     """
+    f = colfunc(key)
     sum, n = 0, 0
     for e in iterable:
-        sum += e
+        sum += f(e)
         n += 1
     return float(sum) / n if n else default
 
 
 @nut_sink
-def MeanStd(iterable, default=None, ddof=1):
+def MeanStd(iterable, key=None, default=None, ddof=1):
     """
-    iterable >> MeanStd(default=None)
+    iterable >> MeanStd(key=None, default=None, ddof=1)
 
-    Return mean and standard deviation of inputs.
+    Return mean and standard deviation of inputs (transformed or extracted
+    by key function).
     Standard deviation is with degrees of freedom = 1
 
     >>> [1, 2, 3] >> MeanStd()
     (2.0, 1.0)
 
+    >>> data = [(1, 10), (2, 20), (3, 30)]
+    >>> data >> MeanStd(key=0)
+    (2.0, 1.0)
+    >>> data >> MeanStd(key=1)
+    (20.0, 10.0)
+
     :param iterable iterable: Iterable over numbers
     :param object default: Value returned if iterable is empty.
+    :param int|tuple|function|None key: Key function to extract elements.
     :param int ddof: Delta degrees of freedom (should 0 or 1)
     :return: Mean and standard deviation of numbers or default value
     :rtype: tuple (mean, std)
     """
+    f = colfunc(key)
     sume, sqre, n = 0.0, 0.0, 0.0
     for e in iterable:
+        e = f(e)
         sume += e
         sqre += e * e
         n += 1.0
@@ -114,11 +151,11 @@ def MeanStd(iterable, default=None, ddof=1):
 
 
 @nut_sink
-def Max(iterable, key=lambda x: x, default=None):
+def Max(iterable, key=None, default=None):
     """
-    iterable >> Max(key=func, default=None)
+    iterable >> Max(key=None, default=None)
 
-    Return maximum of inputs.
+    Return maximum of inputs (transformed or extracted by key function).
 
     >>> [1, 2, 3, 2] >> Max()
     3
@@ -129,24 +166,33 @@ def Max(iterable, key=lambda x: x, default=None):
     >>> [] >> Max(default=0)
     0
 
+    >>> data = [(3, 10), (2, 20), (1, 30)]
+    >>> data >> Max(key=0)
+    (3, 10)
+
+    >>> data >> Max(key=1)
+    (1, 30)
+
+
     :param iterable iterable: Iterable over numbers
-    :param func key: Function maximum is based on
+    :param int|tuple|function|None key: Key function to extract or
+           transform elements. None = identity function.
     :param object default: Value returned if iterable is empty.
     :return: largest element according to key function
     :rtype: object
     """
     try:
-        return max(iterable, key=key)
+        return max(iterable, key=colfunc(key))
     except Exception:
         return default
 
 
 @nut_sink
-def Min(iterable, key=lambda x: x, default=None):
+def Min(iterable, key=None, default=None):
     """
-    iterable >> Min(key=func, default=None)
+    iterable >> Min(key=None, default=None)
 
-    Return minimum of inputs.
+    Return minimum of inputs (transformed or extracted by key function).
 
     >>> [1, 2, 3, 2] >> Min()
     1
@@ -157,24 +203,34 @@ def Min(iterable, key=lambda x: x, default=None):
     >>> [] >> Min(default=0)
     0
 
+    >>> data = [(3, 10), (2, 20), (1, 30)]
+    >>> data >> Min(key=0)
+    (1, 30)
+
+    >>> data >> Min(key=1)
+    (3, 10)
+
+
     :param iterable iterable: Iterable over numbers
-    :param func key: Function minimum is based on
+    :param int|tuple|function|None key: Key function to extract or
+           transform elements. None = identity function.
     :param object default: Value returned if iterable is empty.
     :return: smallest element according to key function
     :rtype: object
     """
     try:
-        return min(iterable, key=key)
+        return min(iterable, key=colfunc(key))
     except Exception:
         return default
 
 
 @nut_sink
-def ArgMax(iterable, key=lambda x: x, default=None, retvalue=False):
+def ArgMax(iterable, key=None, default=None, retvalue=False):
     """
-    iterable >> ArgMax(key=func, default=None, retvalue=False)
+    iterable >> ArgMax(key=None, default=None, retvalue=False)
 
-    Return index of first maximum element (and maximum) in input.
+    Return index of first maximum element (and maximum) in input
+    (transformed or extracted by key function).
 
     >>> [1, 2, 0, 2] >> ArgMax()
     1
@@ -191,8 +247,15 @@ def ArgMax(iterable, key=lambda x: x, default=None, retvalue=False):
     >>> [] >> ArgMax(default=(None, 0), retvalue=True)
     (None, 0)
 
+    >>> data = [(3, 10), (2, 20), (1, 30)]
+    >>> data >> ArgMax(key=0)
+    0
+    >>> data >> ArgMax(key=1)
+    2
+
     :param iterable iterable: Iterable over numbers
-    :param func key: Function maximum is based on
+    :param int|tuple|function|None key: Key function to extract or
+           transform elements. None = identity function.
     :param object default: Value returned if iterable is empty.
     :param bool retvalue: If True the index and the value of the
            maximum element is returned.
@@ -201,18 +264,20 @@ def ArgMax(iterable, key=lambda x: x, default=None, retvalue=False):
     :rtype: object | tuple
     """
     try:
-        i, v = max(enumerate(iterable), key=lambda i_e: key(i_e[1]))
+        f = colfunc(key)
+        i, v = max(enumerate(iterable), key=lambda i_e: f(i_e[1]))
         return (i, v) if retvalue else i
     except Exception:
         return default
 
 
 @nut_sink
-def ArgMin(iterable, key=lambda x: x, default=None, retvalue=False):
+def ArgMin(iterable, key=None, default=None, retvalue=False):
     """
-    iterable >> ArgMin(key=func, default=None, retvalue=True)
+    iterable >> ArgMin(key=None, default=None, retvalue=True)
 
-    Return index of first minimum element (and minimum) in input.
+    Return index of first minimum element (and minimum) in input
+    (transformed or extracted by key function).
 
     >>> [1, 2, 0, 2] >> ArgMin()
     2
@@ -229,8 +294,16 @@ def ArgMin(iterable, key=lambda x: x, default=None, retvalue=False):
     >>> [] >> ArgMin(default=(None, 0), retvalue=True)
     (None, 0)
 
+    >>> data = [(3, 10), (2, 20), (1, 30)]
+    >>> data >> ArgMin(key=0)
+    2
+    >>> data >> ArgMin(key=1)
+    0
+
+
     :param iterable iterable: Iterable over numbers
-    :param func key: Function minimum is based on
+    :param int|tuple|function|None key: Key function to extract or
+           transform elements. None = identity function.
     :param object default: Value returned if iterable is empty.
     :param bool retvalue: If True the index and the value of the
            minimum element is returned.
@@ -239,7 +312,8 @@ def ArgMin(iterable, key=lambda x: x, default=None, retvalue=False):
     :rtype: object | tuple
     """
     try:
-        i, v = min(enumerate(iterable), key=lambda i_e1: key(i_e1[1]))
+        f = colfunc(key)
+        i, v = min(enumerate(iterable), key=lambda i_e1: f(i_e1[1]))
         return (i, v) if retvalue else i
     except Exception:
         return default

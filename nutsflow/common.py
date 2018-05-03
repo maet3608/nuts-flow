@@ -15,6 +15,7 @@ from six.moves import cStringIO as StringIO
 def is_iterable(obj):
     """
     Return true if object has iterator but is not a string
+
     :param object obj: Any object
     :return: True if object is iterable but not a string.
     :rtype: bool
@@ -100,6 +101,37 @@ def timestr(duration, fmt='{:d}:{:02d}:{:02d}'):
         return ''
     h, m, s = sec_to_hms(duration)
     return fmt.format(h, m, s)
+
+
+def colfunc(key):
+    """
+    Return function that extracts element from columns.
+
+    Used to create key functions when only column index or tuple of column
+    indices is given. For instance:
+
+    >>> data = ['a3', 'c1', 'b2']
+    >>> sorted(data, key=colfunc(0))  # == sorted(data, key=lamda s:s[0])
+    ['a3', 'b2', 'c1']
+
+    >>> sorted(data, key=colfunc(1))
+    ['c1', 'b2', 'a3']
+
+    >>> list(map(colfunc((1,0)), data))
+    [['3', 'a'], ['1', 'c'], ['2', 'b']]
+
+    :param function|None key: function or None. If None the identity function
+            is returned
+    :return: Column extraction function.
+    :rtype: function
+    """
+    if key is None:
+        return lambda x: x
+    if isinstance(key, int):
+        return lambda x: x[key]
+    if isinstance(key, tuple):
+        return lambda x: [x[i] for i in key]
+    return key
 
 
 def console(*args, **kwargs):

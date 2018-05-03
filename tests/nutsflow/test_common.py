@@ -11,7 +11,8 @@ from pytest import approx
 from time import sleep
 from nutsflow import MeanStd
 from nutsflow.common import (sec_to_hms, timestr, Redirect, as_tuple, as_set,
-                             as_list, is_iterable, console, StableRandom)
+                             as_list, is_iterable, colfunc, console,
+                             StableRandom)
 
 
 def test_is_iterable():
@@ -47,7 +48,16 @@ def test_timestr():
     assert timestr('80') == '0:01:20'
 
 
-def test_output():
+def test_colfunc():
+    data = ['a3', 'b2', 'c1']
+    assert list(map(colfunc(None), data)) == data
+    assert list(map(colfunc(0), data)) == ['a', 'b', 'c']
+    assert list(map(colfunc(1), data)) == ['3', '2', '1']
+    expected = [['3', 'a'], ['2', 'b'], ['1', 'c']]
+    assert list(map(colfunc((1, 0)), data)) == expected
+
+
+def test_console():
     with Redirect() as out:
         console('test')
     assert out.getvalue() == 'test\n'

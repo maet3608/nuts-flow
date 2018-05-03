@@ -18,13 +18,21 @@ def test_Sort():
     assert [] >> Sort() == []
     assert [3, 1, 2] >> Sort() == [1, 2, 3]
     assert [3, 1, 2] >> Sort(reverse=True) == [3, 2, 1]
-    assert ['a3', 'c1', 'b2'] >> Sort(key=lambda s: s[0]) == ['a3', 'b2', 'c1']
-    assert ['a3', 'c1', 'b2'] >> Sort(key=lambda s: s[1]) == ['c1', 'b2', 'a3']
+    assert ['a3', 'c1', 'b2'] >> Sort(key=0) == ['a3', 'b2', 'c1']
+    assert ['a3', 'c1', 'b2'] >> Sort(key=1) == ['c1', 'b2', 'a3']
 
 
 def test_Sum():
     assert [] >> Sum() == 0
-    assert [0, 1, 2] >> Sum() == 3
+
+    data = [1, 2, 3]
+    assert data >> Sum() == 6
+    assert data >> Sum(key=lambda x: x * x) == 14
+
+    data = [(1, 10), (2, 20), (3, 30)]
+    assert data >> Sum(key=0) == 6
+    assert data >> Sum(key=1) == 60
+    assert data >> Sum(key=lambda x: x[0] + x[1]) == 66
 
 
 def test_Mean():
@@ -32,13 +40,22 @@ def test_Mean():
     assert [] >> Mean(default=0) == 0
     assert [1, 2, 3] >> Mean() == pytest.approx(2.0, rel=1e-2)
 
+    data = [(1, 10), (2, 20), (3, 30)]
+    assert data >> Mean(key=0) == pytest.approx(2.0, rel=1e-2)
+    assert data >> Mean(key=1) == pytest.approx(20.0, rel=1e-2)
+
 
 def test_MeanStd():
     assert [] >> MeanStd() is None
     assert [] >> MeanStd(ddof=1) is None
     assert [] >> MeanStd(default=0) == 0
+
     assert [1, 2, 3] >> MeanStd() == pytest.approx([2.0, 1.0], rel=1e-2)
     assert [1, 2, 3] >> MeanStd(ddof=0) == pytest.approx([2.0, 0.81], rel=1e-2)
+
+    data = [(1, 10), (2, 20), (3, 30)]
+    assert data >> MeanStd(key=0) == pytest.approx([2.0, 1.0], rel=1e-2)
+    assert data >> MeanStd(key=1) == pytest.approx([20.0, 10.0], rel=1e-2)
 
 
 def test_Max():
@@ -46,26 +63,47 @@ def test_Max():
     assert [0, 3, 2] >> Max() == 3
     assert ['1', '123', '12'] >> Max(key=len) == '123'
 
+    data = [(3, 10), (2, 20), (1, 30)]
+    assert data >> Max(key=0) == (3, 10)
+    assert data >> Max(key=1) == (1, 30)
+
 
 def test_Min():
     assert [] >> Min(default=0) == 0
     assert [3, 1, 2] >> Min() == 1
     assert ['123', '1', '12'] >> Min(key=len) == '1'
 
+    data = [(3, 10), (2, 20), (1, 30)]
+    assert data >> Min(key=0) == (1, 30)
+    assert data >> Min(key=1) == (3, 10)
+
 
 def test_ArgMax():
     assert [] >> ArgMax(default=0) == 0
     assert [] >> ArgMax(default=(None, 0)) == (None, 0)
+
     assert [0, 3, 2] >> ArgMax() == 1
+
     assert ['1', '123', '12'] >> ArgMax(key=len) == 1
     assert ['1', '123', '12'] >> ArgMax(key=len, retvalue=True) == (1, '123')
 
+    data = [(3, 10), (2, 20), (1, 30)]
+    assert data >> ArgMax(key=0) == 0
+    assert data >> ArgMax(key=1) == 2
+
 
 def test_ArgMin():
+    assert [] >> ArgMin(default=0) == 0
     assert [] >> ArgMin(default=(None, 0)) == (None, 0)
+
     assert [3, 1, 2] >> ArgMin() == 1
+
     assert ['123', '1', '12'] >> ArgMin(key=len) == 1
     assert ['123', '1', '12'] >> ArgMin(key=len, retvalue=True) == (1, '1')
+
+    data = [(3, 10), (2, 20), (1, 30)]
+    assert data >> ArgMin(key=0) == 2
+    assert data >> ArgMin(key=1) == 0
 
 
 def test_Reduce():
