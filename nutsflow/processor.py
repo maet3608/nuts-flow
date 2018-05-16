@@ -290,44 +290,76 @@ if iterable is long and many elements are unique!
 :rtype: Iterator
 """
 
-Chunk = nut_processor(itf.chunked)
-"""
-iterable >> Chunk(n)
 
-Split iterable in chunks of size n, where each chunk is also an iterator.
-see also GroupBySorted(), ChunkWhen(), ChunkBy()
+@nut_processor
+def Chunk(iterable, n, container=None):
+    """
+    iterable >> Chunk(n, container=None)
 
->>> for chunk in Range(5) >> Chunk(2):
->>> ... print list(chunk)
-[0, 1]
-[2, 3]
-[4]
+    Split iterable in chunks of size n, where each chunk is also an iterator
+    if no container is provided.
+    see also GroupBySorted(), ChunkWhen(), ChunkBy()
 
-:param iterable iterable: Any iterable, e.g. list, range, ...
-:param int n: Chunk size
-:return: Chunked iterable
-:rtype: Iterator over iterators
-"""
+    >>> from nutsflow import Range, Map, Print, Join, Consume, Collect
+    >>> Range(5) >> Chunk(2) >> Map(list) >> Print() >> Consume()
+    [0, 1]
+    [2, 3]
+    [4]
+
+    The code can be shortend by providing a container in Chunk():
+
+    >>> Range(5) >> Chunk(2, list) >> Print() >> Consume()
+    [0, 1]
+    [2, 3]
+    [4]
+
+    >>> Range(6) >> Chunk(3, Join('_')) >> Print() >> Consume()
+    0_1_2
+    3_4_5
+
+    >>> Range(6) >> Chunk(3, sum) >> Collect()
+    [3, 12]
+
+    :param iterable iterable: Any iterable, e.g. list, range, ...
+    :param int n: Chunk size
+    :param container container: Some container, e.g. list, set, dict
+           that can be filled from an iterable
+    :return: Chunked iterable
+    :rtype: Iterator over iterators or containers
+    """
+    chunks = itf.chunked(iterable, n)
+    return map(container, chunks) if container else chunks
 
 
 class ChunkWhen(Nut):
-    def __init__(self, func):
+    def __init__(self, func, container=None):
         """
-        iterable >> ChunkWhen(func)
+        iterable >> ChunkWhen(func, container=None)
 
         Chunk iterable and create new chunk every time func returns True.
         see also GroupBySorted(), Chunk(), ChunkBy()
 
         >>> from nutsflow import Map, Join, Collect
+        >>> func = lambda x: x == 1
+        >>> [1,2,1,3,1,4,5] >> ChunkWhen(func, tuple) >> Collect()
+        [(1, 2), (1, 3), (1, 4, 5)]
+
+        >>> func = lambda x: x == 1
+        >>> [1,2,1,3,1,4,5] >> ChunkWhen(func, sum) >> Collect()
+        [3, 4, 10]
+
         >>> func = lambda x: x == '|'
-        >>> '0|12|345|6' >> ChunkWhen(func) >> Map(Join()) >> Collect()
+        >>> '0|12|345|6' >> ChunkWhen(func, Join()) >> Collect()
         ['0', '|12', '|345', '|6']
 
         :param function func: Boolean function that indicates chunks.
             New chunk is created if return value is True.
+        :param container container: Some container, e.g. list, set, dict
+           that can be filled from an iterable
         """
         self.cnt = 0
         self.func = func
+        self.container = container
 
     def _key(self, x):
         """ Return keys (= counter) for groups (=chunks)"""
@@ -338,33 +370,37 @@ class ChunkWhen(Nut):
     def __rrshift__(self, iterable):
         """
         :param any iterable iterable: iterable to create chunks for.
-        :return: Iterator over chunks, where each chunk is an iterator itself.
-        :rtype: iterator over iterators
+        :return: Iterator over chunks, where each chunk is an iterator itself
+                 if no container is provided
+        :rtype: iterator over iterators or containers
         """
-        return iterable >> ChunkBy(self._key)
+        return iterable >> ChunkBy(self._key, self.container)
 
 
 @nut_processor
-def ChunkBy(iterable, func):
+def ChunkBy(iterable, func, container=None):
     """
-    iterable >> ChunkBy(func)
+    iterable >> ChunkBy(func, container=None)
 
     Chunk iterable and create chunk every time func changes its return value.
     see also GroupBySorted(), Chunk(), ChunkWhen()
 
-    >>> [1,1, 2, 3,3,3] >> ChunkBy(lambda x: x) >> Map(list) >> Collect()
-    [[1, 1], [2], [3, 3, 3]]
+    >>> [1,1, 2, 3,3,3] >> ChunkBy(lambda x: x, tuple) >> Collect()
+    [(1, 1), (2,), (3, 3, 3)]
 
-    >>> [1,1, 2, 3,3,3] >> ChunkBy(lambda x: x < 3) >> Map(list) >> Collect()
-    [[1, 1, 2], [3, 3, 3]]
+    >>> [1,1, 2, 3,3,3] >> ChunkBy(lambda x: x < 3, tuple)  >> Collect()
+    [(1, 1, 2), (3, 3, 3)]
 
     :param iterable iterable: Any iterable, e.g. list, range, ...
-    :param function func: Functions the iterable is chunked by 
+    :param function func: Functions the iterable is chunked by
+    :param container container: Some container, e.g. list, set, dict
+           that can be filled from an iterable
     :return: Chunked iterable
-    :rtype: Iterator over iterators
+    :rtype: Iterator over iterators or containers
     """
     groupiter = itt.groupby(iterable, func)
-    return map(lambda t: t[1], groupiter)
+    chunks = map(lambda t: t[1], groupiter)
+    return map(container, chunks) if container else chunks
 
 
 Cycle = nut_processor(itt.cycle)

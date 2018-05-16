@@ -125,6 +125,7 @@ def test_Chunk():
     assert [] >> Chunk(2) >> Collect() == []
     expected = [(0, 1), (2, 3), (4, 5), (6,)]
     assert Range(7) >> Chunk(2) >> Map(tuple) >> Collect() == expected
+    assert Range(7) >> Chunk(2, tuple) >> Collect() == expected
 
 
 def test_ChunkWhen():
@@ -132,8 +133,10 @@ def test_ChunkWhen():
     assert [] >> ChunkWhen(func) >> Map(list) >> Collect() == []
     expected = ['|12', '|345', '|6']
     '|12|345|6' >> ChunkWhen(func) >> Map(''.join) >> Collect() == expected
+    '|12|345|6' >> ChunkWhen(func, ''.join) >> Collect() == expected
     expected = ['123456']
     assert '123456' >> ChunkWhen(func) >> Map(''.join) >> Collect() == expected
+    assert '123456' >> ChunkWhen(func, ''.join) >> Collect() == expected
 
 
 def test_ChunkBy():
@@ -141,11 +144,12 @@ def test_ChunkBy():
     assert [] >> ChunkBy(func) >> Map(list) >> Collect() == []
     expected = [[1, 1], [2], [3, 3, 3]]
     [1, 1, 2, 3, 3, 3] >> ChunkBy(func) >> Map(list) >> Collect() == expected
+    [1, 1, 2, 3, 3, 3] >> ChunkBy(func, list) >> Collect() == expected
     func = lambda x: x < 3
     expected = [[1, 1, 2], [3, 3, 3]]
-    [1, 1, 2, 3, 3, 3] >> ChunkBy(func) >> Map(list) >> Collect() == expected
+    [1, 1, 2, 3, 3, 3] >> ChunkBy(func, list) >> Collect() == expected
     expected = [[1, 2], [3], [1, 2], [3]]
-    [1, 2, 3, 1, 2, 3] >> ChunkBy(func) >> Map(list) >> Collect() == expected
+    [1, 2, 3, 1, 2, 3] >> ChunkBy(func, list) >> Collect() == expected
 
 
 def test_Flatten():
