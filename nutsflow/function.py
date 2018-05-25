@@ -260,7 +260,7 @@ class Print(NutFunction):
     """
 
     def __init__(self, fmtfunc=None, every_sec=0, every_n=0,
-                 filterfunc=lambda x: True):
+                 filterfunc=lambda x: True, end='\n'):
         """
         iterable >> Print(fmtfunc=None, every_sec=0, every_n=0,
                           filterfunc=lambda x: True)
@@ -295,6 +295,10 @@ class Print(NutFunction):
         char=A
         char=B
 
+        >>> range(5) >> Print('. ', end='') >> Consume()
+        . . . . .
+
+
         :param object x: Any input
 
         :param string|function fmtfunc: Format string or function.
@@ -304,6 +308,7 @@ class Print(NutFunction):
         :param float every_sec: Print every given second, e.g. to print
                 every 2.5 sec every_sec = 2.5
         :param int every_n: Print every n-th call.
+        :param str end: Ending of text printed.
         :param function filterfunc: Boolean function to filter print.
         :return: Returns input unaltered
         :rtype: object
@@ -313,6 +318,7 @@ class Print(NutFunction):
         self.every_sec = every_sec
         self.every_n = every_n
         self.filterfunc = filterfunc
+        self.end = end
         self.cnt = 0
         self.time = time.time()
 
@@ -339,16 +345,16 @@ class Print(NutFunction):
         if hasattr(x, 'ndim'):  # is it a numpy array?
             x = x.tolist() if x.ndim else x.item()
         if not fmtfunc:
-            console(x)
+            text = x
         elif isinstance(fmtfunc, str):
             if isinstance(x, dict):
                 text = fmtfunc.format(**x)
             else:
                 text = fmtfunc.format(*(x if is_iterable(x) else [x]))
-            console(text)
         elif hasattr(fmtfunc, '__call__'):
-            console(fmtfunc(x))
+            text = fmtfunc(x)
         else:
             raise ValueError('Invalid format ' + str(fmtfunc))
+        console(text, end=self.end)
 
         return x
