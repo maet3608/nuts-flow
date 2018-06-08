@@ -613,4 +613,4 @@ class WriteCSV(NutSink):
         for row in iterable:
             row = row if is_iterable(row) else [row]
             row = [row[i] for i in cols] if cols else row
-            self.writer.writerow(map(self.fmtfunc, row))
+            self.writer.writerow([self.fmtfunc(r) for r in  row])
