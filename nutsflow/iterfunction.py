@@ -248,6 +248,7 @@ class PrefetchIterator(t.Thread, six.Iterator):
         self.queue = q.Queue(num_prefetch)
         self.iterable = iterable
         self.daemon = True
+        self.lock = t.Lock()
         self.start()
 
     def run(self):
@@ -265,10 +266,11 @@ class PrefetchIterator(t.Thread, six.Iterator):
         :return: element from iterator
         :rtype: same as element type of input iterable.
         """
-        next_item = self.queue.get()
-        if next_item is None:
-            raise StopIteration
-        return next_item
+        with self.lock:
+            next_item = self.queue.get()
+            if next_item is None:
+                raise StopIteration
+            return next_item
 
     def __iter__(self):
         """

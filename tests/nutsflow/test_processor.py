@@ -392,13 +392,17 @@ def test_MapPar():
 
 
 def test_Prefetch():
-    it = iter([1, 2, 3, 4])
+    data = [1, 2, 3, 4]
+    it = iter(data)
     assert it >> Prefetch() >> Take(1) >> Collect() == [1]
     assert next(it) == 3
 
-    it = iter([1, 2, 3, 4])
+    it = iter(data)
     assert it >> Prefetch() >> Take(2) >> Collect() == [1, 2]
     assert next(it) == 4
+
+    it = iter(data)
+    assert it >> Prefetch() >> Prefetch(2) >> Collect() == data
 
 
 def test_Cache():
