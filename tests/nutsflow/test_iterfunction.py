@@ -86,7 +86,7 @@ def test_partition():
     assert list(larger) == [6, 7, 8, 9]
 
 
-def test_prefetch_iterator():
+def test_prefetch_iterator_speed():
     def sleep():
         time.sleep(0.01)
 
@@ -106,3 +106,14 @@ def test_prefetch_iterator():
     duration2 = time.time() - start
 
     assert duration2 < duration1
+
+
+def test_prefetch_iterator_thread_safe():
+    from concurrent.futures import ThreadPoolExecutor
+
+    data = set(range(100))
+    prefetch_it = itf.PrefetchIterator(data)
+
+    with ThreadPoolExecutor(max_workers=1) as executor:
+        result = {e for e in executor.map(lambda x: 2*x-x, prefetch_it)}
+        assert result == data
