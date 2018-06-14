@@ -109,11 +109,13 @@ def test_prefetch_iterator_speed():
 
 
 def test_prefetch_iterator_thread_safe():
-    from concurrent.futures import ThreadPoolExecutor
+    from multiprocessing.pool import ThreadPool
 
     data = set(range(100))
     prefetch_it = itf.PrefetchIterator(data)
 
-    with ThreadPoolExecutor(max_workers=1) as executor:
-        result = {e for e in executor.map(lambda x: 2*x-x, prefetch_it)}
-        assert result == data
+    pool = ThreadPool()
+    result = set(pool.map(lambda x: 2 * x - x, prefetch_it))
+    assert result == data
+
+
