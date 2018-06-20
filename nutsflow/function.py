@@ -295,7 +295,7 @@ class Print(NutFunction):
         char=A
         char=B
 
-        >>> range(5) >> Print('. ', end='') >> Consume()
+        >>> range(5) >> Print('.', end=' ') >> Consume()
         . . . . .
 
 
