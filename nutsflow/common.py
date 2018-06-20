@@ -141,7 +141,7 @@ def console(*args, **kwargs):
     Wrapper around Python's print function that ensures flushing after each
     call.
 
-    >>> print('test')
+    >>> console('test')
     test
 
     :param args: Arguments
