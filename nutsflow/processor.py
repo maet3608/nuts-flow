@@ -1257,9 +1257,9 @@ def Try(iterable, func, default='STDERR'):
     >>> [10, 0, 1] >> Try(Div(), handlezero) >> Collect()
     [1, 'FAILED: 0', 10]
 
-    >>> handlezero = lambda x, e: e
+    >>> handlezero = lambda x, e: str(e)
     >>> [10, 0, 1] >> Try(Div(), handlezero) >> Collect()
-    [1, ZeroDivisionError('integer division or modulo by zero',), 10]
+    [1, 'integer division or modulo by zero', 10]
 
     :param iterable iterable: Iterable the nut operates on.
     :param function|NutFunction func: (Nut) function that is wrapped 
