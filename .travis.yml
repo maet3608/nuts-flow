@@ -1,21 +1,28 @@
 sudo: true
+
 dist: xenial
+
 language: python
+
 python:
   - "2.7"
   - "3.4"
   - "3.5"
   - "3.6"
   - "3.7"
+
 before_install:
   - pip install pytest pytest-cov
   - pip install coveralls
   - pip install six
+
 install: 
   - pip install nutsflow
+
 script: 
   - py.test
   - coverage run --source=nutsflow setup.py test
   - coverage report --fail-under=100
+
 after_success:
   - coveralls  
