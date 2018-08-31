@@ -22,7 +22,7 @@ def Sort(iterable, key=None, reverse=False):
     """
     iterable >> Sort(key=None, reverse=False)
 
-    Sorts iterable with respect to key function.
+    Sorts iterable with respect to key function or column index(es).
 
     >>> [3, 1, 2] >> Sort()
     [1, 2, 3]
@@ -30,20 +30,24 @@ def Sort(iterable, key=None, reverse=False):
     >>> [3, 1, 2] >> Sort(reverse=True)
     [3, 2, 1]
 
+     >>> [(1,'c'), (2,'b'), (3,'a')] >> Sort(1)
+    [(3, 'a'), (2, 'b'), (1, 'c')]
+
     >>> ['a3', 'c1', 'b2'] >> Sort(key=lambda s: s[0])
     ['a3', 'b2', 'c1']
 
     >>> ['a3', 'c1', 'b2'] >> Sort(key=0)
     ['a3', 'b2', 'c1']
 
-    >>> ['a3', 'c1', 'b2'] >> Sort(key=1)
+    >>> ['a3', 'c1', 'b2'] >> Sort(1)
     ['c1', 'b2', 'a3']
 
-    >>> ['a3', 'c1', 'b2'] >> Sort(key=(1,0))
+    >>> ['a3', 'c1', 'b2'] >> Sort((1,0))
     ['c1', 'b2', 'a3']
 
     :param iterable iterable: Iterable
-    :param function|None key: key to sort iterable with.
+    :param int|tuple|function|None key: function to sort based on or
+           column index(es) tuples/vectors/strings are sorted by.
     :param boolean reverse: True: reverse order.
     :return: Sorted iterable
     :rtype: list
@@ -126,7 +130,7 @@ def MeanStd(iterable, key=None, default=None, ddof=1):
     >>> data = [(1, 10), (2, 20), (3, 30)]
     >>> data >> MeanStd(key=0)
     (2.0, 1.0)
-    >>> data >> MeanStd(key=1)
+    >>> data >> MeanStd(1)
     (20.0, 10.0)
 
     :param iterable iterable: Iterable over numbers
@@ -170,7 +174,7 @@ def Max(iterable, key=None, default=None):
     >>> data >> Max(key=0)
     (3, 10)
 
-    >>> data >> Max(key=1)
+    >>> data >> Max(1)
     (1, 30)
 
 
@@ -207,7 +211,7 @@ def Min(iterable, key=None, default=None):
     >>> data >> Min(key=0)
     (1, 30)
 
-    >>> data >> Min(key=1)
+    >>> data >> Min(1)
     (3, 10)
 
 
@@ -250,7 +254,7 @@ def ArgMax(iterable, key=None, default=None, retvalue=False):
     >>> data = [(3, 10), (2, 20), (1, 30)]
     >>> data >> ArgMax(key=0)
     0
-    >>> data >> ArgMax(key=1)
+    >>> data >> ArgMax(1)
     2
 
     :param iterable iterable: Iterable over numbers
@@ -297,7 +301,7 @@ def ArgMin(iterable, key=None, default=None, retvalue=False):
     >>> data = [(3, 10), (2, 20), (1, 30)]
     >>> data >> ArgMin(key=0)
     2
-    >>> data >> ArgMin(key=1)
+    >>> data >> ArgMin(1)
     0
 
 
