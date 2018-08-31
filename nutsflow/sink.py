@@ -30,7 +30,7 @@ def Sort(iterable, key=None, reverse=False):
     >>> [3, 1, 2] >> Sort(reverse=True)
     [3, 2, 1]
 
-     >>> [(1,'c'), (2,'b'), (3,'a')] >> Sort(1)
+    >>> [(1,'c'), (2,'b'), (3,'a')] >> Sort(1)
     [(3, 'a'), (2, 'b'), (1, 'c')]
 
     >>> ['a3', 'c1', 'b2'] >> Sort(key=lambda s: s[0])

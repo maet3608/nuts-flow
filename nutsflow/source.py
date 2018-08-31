@@ -9,10 +9,10 @@ import csv
 import itertools as itt
 import nutsflow.iterfunction as itf
 
-from six.moves import range
+from six.moves import range, zip_longest
 from .base import NutSource
 from .factory import nut_source
-from .common import as_tuple
+from .common import as_tuple, is_iterable
 
 
 @nut_source
@@ -144,7 +144,7 @@ class ReadCSV(NutSource):
     """
 
     def __init__(self, filepath, columns=None, skipheader=0,
-                 fmtfunc=lambda x: x, **kwargs):
+                 fmtfunc=None, **kwargs):
         """
         ReadCSV(filepath, columns, skipheader, fmtfunc, **kwargs)
 
@@ -156,13 +156,26 @@ class ReadCSV(NutSource):
 
         >>> from nutsflow import Collect
         >>> filepath = 'tests/data/data.csv'
+
+        >>> with ReadCSV(filepath, skipheader=1) as reader:
+        ...     reader >> Collect()
+        [('1', '2', '3'), ('4', '5', '6')]
+
         >>> with ReadCSV(filepath, skipheader=1, fmtfunc=int) as reader:
         ...     reader >> Collect()
         [(1, 2, 3), (4, 5, 6)]
 
+        >>> with ReadCSV(filepath, skipheader=1, fmtfunc=(int,str,float)) as reader:
+        ...     reader >> Collect()
+        [(1, '2', 3.0), (4, '5', 6.0)]
+
         >>> with ReadCSV(filepath, (2, 1), 1, int) as reader:
         ...     reader >> Collect()
         [(3, 2), (6, 5)]
+
+        >>> with ReadCSV(filepath, (2, 1), 1, (str,int)) as reader:
+        ...     reader >> Collect()
+        [('3', 2), ('6', 5)]
 
         >>> with ReadCSV(filepath, 2, 1, int) as reader:
         ...     reader >> Collect()
@@ -178,13 +191,15 @@ class ReadCSV(NutSource):
         :param tuple columns: Indices of the columns to read.
                               If None all columns are read.
         :param int skipheader: Number of header lines to skip.
-        :param function fmtfunc: Function to apply to the elements of each row.
+        :param tuple|function fmtfunc: Function or functions to apply to the
+                              column elements of each row.
         :param kwargs kwargs: Keyword arguments for Python's CSV reader.
                               See https://docs.python.org/2/library/csv.html
         """
         self.csvfile = open(filepath, 'r')
         self.columns = columns if columns is None else as_tuple(columns)
-        self.fmtfunc = fmtfunc
+        self.fmtfunc = (lambda x: x) if fmtfunc is None else fmtfunc
+        self.is_functions = is_iterable(self.fmtfunc)
         for _ in range(skipheader):
             next(self.csvfile)
         itf.take(self.csvfile, skipheader)
@@ -195,6 +210,16 @@ class ReadCSV(NutSource):
         """Close reader"""
         self.csvfile.close()
         self.reader = None
+
+    def __fmt(self, row):
+        """Format column values in row with format function(s)"""
+        fmtfunc = self.fmtfunc
+        if self.is_functions:
+            assert len(fmtfunc) == len(row), \
+                "Number of format functions and data columns don't match"
+            return [f(r) for f, r in zip(fmtfunc, row)]
+        else:
+            return [fmtfunc(r) for r in row]
 
     def __enter__(self):
         """Implementation of context manager API"""
@@ -209,5 +234,5 @@ class ReadCSV(NutSource):
         cols = self.columns
         for row in self.reader:
             row = [row[i] for i in cols] if cols else row
-            row = [self.fmtfunc(r) for r in row]
+            row = self.__fmt(row)
             yield tuple(row) if len(row) > 1 else row[0]

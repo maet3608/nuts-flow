@@ -49,11 +49,14 @@ def test_ReadCSV():
                                        ('4', '5', '6')]
     with ReadCSV(filepath, skipheader=1, fmtfunc=int) as reader:
         assert reader >> Collect() == [(1, 2, 3), (4, 5, 6)]
+    with ReadCSV(filepath, skipheader=1, fmtfunc=(int,str,float)) as reader:
+        assert reader >> Collect() == [(1, '2', 3.), (4, '5', 6.)]
     with ReadCSV(filepath, columns=(2, 1)) as reader:
         assert reader >> Collect() == [('c', ' '), ('3', '2'), ('6', '5')]
     with ReadCSV(filepath, columns=0) as reader:
         assert reader >> Collect() == ['a', '1', '4']
-
+    with ReadCSV(filepath, columns=0, skipheader=1,  fmtfunc=(int,)) as reader:
+        assert reader >> Collect() == [1, 4]
 
 def test_ReadCSV_tsv():
     filepath = 'tests/data/data.tsv'
