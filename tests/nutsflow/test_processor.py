@@ -202,6 +202,18 @@ def test_FilterFalse():
     assert [0, 1, 2, 3] >> FilterFalse(_ < 0) >> Collect() == [0, 1, 2, 3]
 
 
+def test_FilterCol():
+    is_even = lambda n: n % 2 == 0
+    data = [(0, 'e'), (1, 'o'), (2, 'e')]
+    expected = [(0, 'e'), (2, 'e')]
+    assert data >> FilterCol(0, is_even) >> Collect() == expected
+
+    def same(s): return s[0] == s[1]
+    data = ['a_a', 'a_b', 'b_b']
+    expected = ['a_a', 'b_b']
+    assert data >> FilterCol((0, 2), same) >> Collect() == expected
+
+
 def test_Partition():
     smaller, larger = Range(5) >> Partition(_ < 3)
     assert smaller >> Collect() == [0, 1, 2]

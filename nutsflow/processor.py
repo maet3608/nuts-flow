@@ -571,6 +571,35 @@ See https://docs.python.org/2/library/itertools.html#itertools.ifilterfalse
 :rtype: Iterator
 """
 
+@nut_processor
+def FilterCol(iterable, columns, func):
+    """
+    iterable >> FilterCol(columns, func)
+
+    Filter elements from iterable based on predicate function and
+    specified column(s).
+
+    >>> is_even = lambda n: n % 2 == 0
+    >>> [(0, 'e'), (1, 'o'), (2, 'e')] >> FilterCol(0, is_even) >> Collect()
+    [(0, 'e'), (2, 'e')]
+
+
+    :param iterable iterable: Any iterable
+    :param int|tuple columns: Column or columns to extract from each
+        element before passing it on to the predicate function.
+    :param function func: Predicate function. Element is removed if False.
+    :return: Filtered iterable
+    :rtype: Iterator
+    """
+    cols = as_tuple(columns)
+    if len(cols) == 1:
+        extract = lambda es: es[columns]
+    else:
+        extract = lambda es: [es[i] for i, e in enumerate(es) if i in cols]
+    for es in iterable:
+        if func(extract(es)):
+            yield es
+
 Partition = nut_processor(itf.partition)
 """
 partition1, partition2 = iterable >> Partition(func)
