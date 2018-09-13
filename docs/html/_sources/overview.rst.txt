@@ -16,7 +16,7 @@ Click on a nut name for more details.
 
 - :func:`nut_filterfalse <nutsflow.factory.nut_filterfalse>` :
   wrapper to create nut filters with inversed logic.
-
+  
 - :func:`nut_function <nutsflow.factory.nut_function>` :
   wrapper for nut functions that operate on elements.
 
@@ -200,10 +200,13 @@ Click on a nut name for more details.
   drops first elements while predicate function is true.
 
 - :class:`Filter <nutsflow.processor.Filter>` :
-  drops elements predicate function is false.
+  drops elements if predicate function is false.
+  
+- :class:`FilterCol <nutsflow.processor.FilterCol>` :
+  extract given columns and drops elements if predicate function is false.  
 
 - :class:`FilterFalse <nutsflow.processor.FilterFalse>` :
-  drops elements predicate function is true.
+  drops elements if predicate function is true.
 
 - :class:`FlatMap <nutsflow.processor.FlatMap>` :
   maps function on elements and flattens result.

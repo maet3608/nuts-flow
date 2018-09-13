@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nutsflow package &mdash; nutsflow 1.0.27 documentation</title>
+  <title>nutsflow package &mdash; nutsflow 1.0.30 documentation</title>
   
 
   
@@ -24,8 +24,7 @@
 
   
 
-  
-    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -59,7 +58,7 @@
             
             
               <div class="version">
-                1.0.27
+                1.0.30
               </div>
             
           
@@ -195,7 +194,7 @@
 <span class="target" id="module-base"></span><dl class="class">
 <dt id="nutsflow.base.Nut">
 <em class="property">class </em><code class="descname">Nut</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/base.html#Nut"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.base.Nut" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Base class for all Nuts. Iterables or functions wrapped in Nuts can be
 chained using the ‘&gt;&gt;’ operator. The aim is code with an explicit
 data flow. See the following example using Python iterators versus Nuts:</p>
@@ -383,7 +382,7 @@ Do not override! Override __iter__() instead.</p>
 <span class="target" id="module-common"></span><dl class="class">
 <dt id="nutsflow.common.Redirect">
 <em class="property">class </em><code class="descname">Redirect</code><span class="sig-paren">(</span><em>channel='STDOUT'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/common.html#Redirect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.common.Redirect" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Redirect stdout or stderr to string.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">Redirect</span><span class="p">()</span> <span class="k">as</span> <span class="n">out</span><span class="p">:</span>
 <span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;test&#39;</span><span class="p">)</span>
@@ -452,7 +451,7 @@ methods of the base class.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Random number sampled from gaussian distribution.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)">float</a></td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)">float</a></td>
 </tr>
 </tbody>
 </table>
@@ -468,7 +467,7 @@ methods of the base class.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Index and Mersenne Twister array.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.6)">tuple</a></td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.7)">tuple</a></td>
 </tr>
 </tbody>
 </table>
@@ -482,7 +481,7 @@ methods of the base class.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>n</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a>) – Distance to jump.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>n</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Distance to jump.</td>
 </tr>
 </tbody>
 </table>
@@ -516,7 +515,7 @@ methods of the base class.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>state</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.6)"><em>tuple</em></a>) – State to set as produced by getstate()</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>state</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.7)"><em>tuple</em></a>) – State to set as produced by getstate()</td>
 </tr>
 </tbody>
 </table>
@@ -538,7 +537,7 @@ changed to a list, e.g. tuple =&gt; list</p>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">list(x)</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.6)">list</a></td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)">list</a></td>
 </tr>
 </tbody>
 </table>
@@ -558,7 +557,7 @@ changed to a set, e.g. list =&gt; set</p>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">set(x)</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#set" title="(in Python v3.6)">set</a></td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#set" title="(in Python v3.7)">set</a></td>
 </tr>
 </tbody>
 </table>
@@ -578,7 +577,41 @@ changed to a tuple, e.g. list =&gt; tuple</p>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">tuple(x)</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.6)">tuple</a></td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.7)">tuple</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="nutsflow.common.colfunc">
+<code class="descname">colfunc</code><span class="sig-paren">(</span><em>key</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/common.html#colfunc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.common.colfunc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return function that extracts element from columns.</p>
+<p>Used to create key functions when only column index or tuple of column
+indices is given. For instance:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;a3&#39;</span><span class="p">,</span> <span class="s1">&#39;c1&#39;</span><span class="p">,</span> <span class="s1">&#39;b2&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">sorted</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">colfunc</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>  <span class="c1"># == sorted(data, key=lamda s:s[0])</span>
+<span class="go">[&#39;a3&#39;, &#39;b2&#39;, &#39;c1&#39;]</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">sorted</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">colfunc</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+<span class="go">[&#39;c1&#39;, &#39;b2&#39;, &#39;a3&#39;]</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">colfunc</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">)),</span> <span class="n">data</span><span class="p">))</span>
+<span class="go">[[&#39;3&#39;, &#39;a&#39;], [&#39;1&#39;, &#39;c&#39;], [&#39;2&#39;, &#39;b&#39;]]</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>key</strong> (<em>function|None</em>) – function or None. If None the identity function
+is returned</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Column extraction function.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">function</td>
 </tr>
 </tbody>
 </table>
@@ -590,7 +623,7 @@ changed to a tuple, e.g. list =&gt; tuple</p>
 <dd><p>Print to stdout and flush.</p>
 <p>Wrapper around Python’s print function that ensures flushing after each
 call.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;test&#39;</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">console</span><span class="p">(</span><span class="s1">&#39;test&#39;</span><span class="p">)</span>
 <span class="go">test</span>
 </pre></div>
 </div>
@@ -611,10 +644,19 @@ call.</p>
 <dl class="function">
 <dt id="nutsflow.common.is_iterable">
 <code class="descname">is_iterable</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/common.html#is_iterable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.common.is_iterable" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return true if object has iterator but is not a string
-:param object obj: Any object
-:return: True if object is iterable but not a string.
-:rtype: bool</p>
+<dd><p>Return true if object has iterator but is not a string</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>obj</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><em>object</em></a>) – Any object</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">True if object is iterable but not a string.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)">bool</a></td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
@@ -633,7 +675,7 @@ call.</p>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">tuple (hours, minutes, seconds)</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">(<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)">int</a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)">int</a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)">int</a>)</td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">(<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)">int</a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)">int</a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)">int</a>)</td>
 </tr>
 </tbody>
 </table>
@@ -861,7 +903,7 @@ processing of data. The function has side-effects but is thread-safe.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>x</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.6)"><em>object</em></a>) – Element in iterable</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>x</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><em>object</em></a>) – Element in iterable</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Unchanged element</td>
 </tr>
@@ -888,9 +930,9 @@ iterable &gt;&gt; counter</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – Name of the counter</li>
+<li><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Name of the counter</li>
 <li><strong>filterfunc</strong> (<em>func</em>) – Filter function.</li>
-<li><strong>value</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a>) – Initial value
+<li><strong>value</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Initial value
 Count only elements where func returns True.</li>
 </ul>
 </td>
@@ -907,7 +949,7 @@ Count only elements where func returns True.</li>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>value</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a>) – Reset value</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>value</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Reset value</td>
 </tr>
 </tbody>
 </table>
@@ -944,7 +986,7 @@ Count only elements where func returns True.</li>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Returns inputs as strings formatted as specified</p>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)">str</a></p>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)">str</a></p>
 </td>
 </tr>
 </tbody>
@@ -989,10 +1031,10 @@ but per element of the iterable.</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>iterable</strong> (<em>iterable</em>) – Any iterable</li>
 <li><strong>x</strong> (<em>indexable</em>) – Any indexable input</li>
-<li><strong>start</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a>) – Start index for columns to extract from x
+<li><strong>start</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Start index for columns to extract from x
 If start = None, x is returned</li>
-<li><strong>end</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a>) – End index (not inclusive)</li>
-<li><strong>step</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a>) – Step index (same as slicing)</li>
+<li><strong>end</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – End index (not inclusive)</li>
+<li><strong>step</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Step index (same as slicing)</li>
 </ul>
 </td>
 </tr>
@@ -1056,7 +1098,7 @@ or a tuple with these indices.</li>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Extracted elements</p>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.6)">tuple</a></p>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.7)">tuple</a></p>
 </td>
 </tr>
 </tbody>
@@ -1092,7 +1134,7 @@ or a tuple with these indices.</li>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Returns input unaltered</p>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.6)">object</a></p>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)">object</a></p>
 </td>
 </tr>
 </tbody>
@@ -1122,7 +1164,7 @@ or removing it from a pipeline.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>iterable</strong> (<em>iterable</em>) – Any iterable</li>
-<li><strong>x</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.6)"><em>object</em></a>) – Any object</li>
+<li><strong>x</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><em>object</em></a>) – Any object</li>
 <li><strong>args</strong> (<em>args</em>) – Additional args are ignored.</li>
 </ul>
 </td>
@@ -1144,7 +1186,7 @@ or removing it from a pipeline.</p>
 
 <dl class="class">
 <dt id="nutsflow.function.Print">
-<em class="property">class </em><code class="descname">Print</code><span class="sig-paren">(</span><em>fmtfunc=None</em>, <em>every_sec=0</em>, <em>every_n=0</em>, <em>filterfunc=&lt;function Print.&lt;lambda&gt;&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/function.html#Print"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.function.Print" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descname">Print</code><span class="sig-paren">(</span><em>fmtfunc=None</em>, <em>every_sec=0</em>, <em>every_n=0</em>, <em>filterfunc=&lt;function Print.&lt;lambda&gt;&gt;</em>, <em>end='n'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/function.html#Print"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.function.Print" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#nutsflow.base.NutFunction" title="nutsflow.base.NutFunction"><code class="xref py py-class docutils literal notranslate"><span class="pre">nutsflow.base.NutFunction</span></code></a></p>
 <p>Print elements in iterable.</p>
 <dl class="method">
@@ -1155,7 +1197,7 @@ or removing it from a pipeline.</p>
 
 <dl class="method">
 <dt id="nutsflow.function.Print.__init__">
-<code class="descname">__init__</code><span class="sig-paren">(</span><em>fmtfunc=None</em>, <em>every_sec=0</em>, <em>every_n=0</em>, <em>filterfunc=&lt;function Print.&lt;lambda&gt;&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/function.html#Print.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.function.Print.__init__" title="Permalink to this definition">¶</a></dt>
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>fmtfunc=None</em>, <em>every_sec=0</em>, <em>every_n=0</em>, <em>filterfunc=&lt;function Print.&lt;lambda&gt;&gt;</em>, <em>end='\n'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/function.html#Print.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.function.Print.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="docutils">
 <dt>iterable &gt;&gt; Print(fmtfunc=None, every_sec=0, every_n=0,</dt>
 <dd>filterfunc=lambda x: True)</dd>
@@ -1195,19 +1237,24 @@ or removing it from a pipeline.</p>
 <span class="go">char=B</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Print</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Consume</span><span class="p">()</span>
+<span class="go">. . . . .</span>
+</pre></div>
+</div>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>x</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.6)"><em>object</em></a>) – Any input</li>
+<li><strong>x</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><em>object</em></a>) – Any input</li>
 <li><strong>fmtfunc</strong> (<em>string|function</em>) – Format string or function.
 fmtfunc is a standard Python str.format() string,
 see <a class="reference external" href="https://docs.python.org/2/library/string.html">https://docs.python.org/2/library/string.html</a>
 or a function that returns a string.</li>
-<li><strong>every_sec</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a>) – Print every given second, e.g. to print
+<li><strong>every_sec</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Print every given second, e.g. to print
 every 2.5 sec every_sec = 2.5</li>
-<li><strong>every_n</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a>) – Print every n-th call.</li>
+<li><strong>every_n</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Print every n-th call.</li>
+<li><strong>end</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Ending of text printed.</li>
 <li><strong>filterfunc</strong> (<em>function</em>) – Boolean function to filter print.</li>
 </ul>
 </td>
@@ -1215,7 +1262,7 @@ every 2.5 sec every_sec = 2.5</li>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Returns input unaltered</p>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.6)">object</a></p>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)">object</a></p>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Raise:</th><td class="field-body"><p class="first last">ValueError if fmtfunc is not string or function</p>
@@ -1244,15 +1291,15 @@ every 2.5 sec every_sec = 2.5</li>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>iterable</strong> (<em>iterable</em>) – Any iterable</li>
-<li><strong>x</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.6)"><em>object</em></a>) – Any input</li>
-<li><strong>duration</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a>) – Sleeping time in seconds.</li>
+<li><strong>x</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><em>object</em></a>) – Any input</li>
+<li><strong>duration</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Sleeping time in seconds.</li>
 </ul>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Returns input unaltered</p>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.6)">object</a></p>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)">object</a></p>
 </td>
 </tr>
 </tbody>
@@ -1306,7 +1353,7 @@ every 2.5 sec every_sec = 2.5</li>
 <span class="target" id="module-iterfunction"></span><dl class="class">
 <dt id="nutsflow.iterfunction.PrefetchIterator">
 <em class="property">class </em><code class="descname">PrefetchIterator</code><span class="sig-paren">(</span><em>iterable</em>, <em>num_prefetch=1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/iterfunction.html#PrefetchIterator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.iterfunction.PrefetchIterator" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/threading.html#threading.Thread" title="(in Python v3.6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">threading.Thread</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/threading.html#threading.Thread" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">threading.Thread</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Wrap an iterable in an iterator that prefetches elements.</p>
 <p>Typically used to fetch samples or batches while the the GPU processes
 the batch. Keeps the CPU busy pre-processing data and not waiting for the
@@ -1330,7 +1377,7 @@ GPU to finish the batch.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>iterable</strong> (<em>iterable</em>) – Iterable elements are fetched from.</li>
-<li><strong>num_prefetch</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a>) – Number of elements to pre-fetch.</li>
+<li><strong>num_prefetch</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Number of elements to pre-fetch.</li>
 </ul>
 </td>
 </tr>
@@ -1505,7 +1552,7 @@ GPU to finish the batch.</p>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Length of iterable.</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)">int</a></td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)">int</a></td>
 </tr>
 </tbody>
 </table>
@@ -1594,7 +1641,7 @@ GPU to finish the batch.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>iterable</strong> (<em>iterable</em>) – Any iterable, e.g. list, range, …</li>
-<li><strong>n</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a>) – Number of elements to take</li>
+<li><strong>n</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Number of elements to take</li>
 </ul>
 </td>
 </tr>
@@ -1739,7 +1786,7 @@ objects. If the path does not exist it will be created. The path
 with all its contents will be deleted when the cache is deleted.
 For cachepath=None a temporary folder will be created. Path to
 this folder is available in cache.path.</li>
-<li><strong>clearcache</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.6)"><em>bool</em></a>) – Clear left-over cache if it exists.</li>
+<li><strong>clearcache</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – Clear left-over cache if it exists.</li>
 </ul>
 </td>
 </tr>
@@ -1779,25 +1826,77 @@ this folder is available in cache.path.</li>
 
 </dd></dl>
 
-<dl class="attribute">
+<dl class="class">
 <dt id="nutsflow.processor.Chunk">
-<code class="descname">Chunk</code><a class="headerlink" href="#nutsflow.processor.Chunk" title="Permalink to this definition">¶</a></dt>
-<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">nutsflow.iterfunction._create_nut_wrapper.&lt;locals&gt;.Wrapper</span></code></p>
+<em class="property">class </em><code class="descname">Chunk</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/processor.html#Chunk"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.processor.Chunk" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#nutsflow.base.Nut" title="nutsflow.base.Nut"><code class="xref py py-class docutils literal notranslate"><span class="pre">nutsflow.base.Nut</span></code></a></p>
+<p>iterable &gt;&gt; Chunk(n, container=None)</p>
+<p>Split iterable in chunks of size n, where each chunk is also an iterator
+if no container is provided.
+see also GroupBySorted(), ChunkWhen(), ChunkBy()</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nutsflow</span> <span class="k">import</span> <span class="n">Range</span><span class="p">,</span> <span class="n">Map</span><span class="p">,</span> <span class="n">Print</span><span class="p">,</span> <span class="n">Join</span><span class="p">,</span> <span class="n">Consume</span><span class="p">,</span> <span class="n">Collect</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Chunk</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Map</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Print</span><span class="p">()</span> <span class="o">&gt;&gt;</span> <span class="n">Consume</span><span class="p">()</span>
+<span class="go">[0, 1]</span>
+<span class="go">[2, 3]</span>
+<span class="go">[4]</span>
+</pre></div>
+</div>
+<p>The code can be shortend by providing a container in Chunk():</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Chunk</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Print</span><span class="p">()</span> <span class="o">&gt;&gt;</span> <span class="n">Consume</span><span class="p">()</span>
+<span class="go">[0, 1]</span>
+<span class="go">[2, 3]</span>
+<span class="go">[4]</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Chunk</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">Join</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">))</span> <span class="o">&gt;&gt;</span> <span class="n">Print</span><span class="p">()</span> <span class="o">&gt;&gt;</span> <span class="n">Consume</span><span class="p">()</span>
+<span class="go">0_1_2</span>
+<span class="go">3_4_5</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Chunk</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="nb">sum</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
+<span class="go">[3, 12]</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>iterable</strong> (<em>iterable</em>) – Any iterable, e.g. list, range, …</li>
+<li><strong>n</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Chunk size</li>
+<li><strong>container</strong> (<em>container</em>) – Some container, e.g. list, set, dict
+that can be filled from an iterable</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Chunked iterable</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">Iterator over iterators or containers</p>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="nutsflow.processor.Chunk.__rrshift__">
+<code class="descname">__rrshift__</code><span class="sig-paren">(</span><em>iterable</em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.processor.Chunk.__rrshift__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 <dl class="class">
 <dt id="nutsflow.processor.ChunkBy">
 <em class="property">class </em><code class="descname">ChunkBy</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/processor.html#ChunkBy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.processor.ChunkBy" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#nutsflow.base.Nut" title="nutsflow.base.Nut"><code class="xref py py-class docutils literal notranslate"><span class="pre">nutsflow.base.Nut</span></code></a></p>
-<p>iterable &gt;&gt; ChunkBy(func)</p>
+<p>iterable &gt;&gt; ChunkBy(func, container=None)</p>
 <p>Chunk iterable and create chunk every time func changes its return value.
 see also GroupBySorted(), Chunk(), ChunkWhen()</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">ChunkBy</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Map</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
-<span class="go">[[1, 1], [2], [3, 3, 3]]</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">ChunkBy</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
+<span class="go">[(1, 1), (2,), (3, 3, 3)]</span>
 </pre></div>
 </div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">ChunkBy</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Map</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
-<span class="go">[[1, 1, 2], [3, 3, 3]]</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">ChunkBy</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)</span>  <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
+<span class="go">[(1, 1, 2), (3, 3, 3)]</span>
 </pre></div>
 </div>
 <table class="docutils field-list" frame="void" rules="none">
@@ -1807,13 +1906,15 @@ see also GroupBySorted(), Chunk(), ChunkWhen()</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>iterable</strong> (<em>iterable</em>) – Any iterable, e.g. list, range, …</li>
 <li><strong>func</strong> (<em>function</em>) – Functions the iterable is chunked by</li>
+<li><strong>container</strong> (<em>container</em>) – Some container, e.g. list, set, dict
+that can be filled from an iterable</li>
 </ul>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Chunked iterable</p>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">Iterator over iterators</p>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">Iterator over iterators or containers</p>
 </td>
 </tr>
 </tbody>
@@ -1827,17 +1928,27 @@ see also GroupBySorted(), Chunk(), ChunkWhen()</p>
 
 <dl class="class">
 <dt id="nutsflow.processor.ChunkWhen">
-<em class="property">class </em><code class="descname">ChunkWhen</code><span class="sig-paren">(</span><em>func</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/processor.html#ChunkWhen"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.processor.ChunkWhen" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descname">ChunkWhen</code><span class="sig-paren">(</span><em>func</em>, <em>container=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/processor.html#ChunkWhen"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.processor.ChunkWhen" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#nutsflow.base.Nut" title="nutsflow.base.Nut"><code class="xref py py-class docutils literal notranslate"><span class="pre">nutsflow.base.Nut</span></code></a></p>
 <dl class="method">
 <dt id="nutsflow.processor.ChunkWhen.__init__">
-<code class="descname">__init__</code><span class="sig-paren">(</span><em>func</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/processor.html#ChunkWhen.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.processor.ChunkWhen.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>iterable &gt;&gt; ChunkWhen(func)</p>
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>func</em>, <em>container=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/processor.html#ChunkWhen.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.processor.ChunkWhen.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>iterable &gt;&gt; ChunkWhen(func, container=None)</p>
 <p>Chunk iterable and create new chunk every time func returns True.
 see also GroupBySorted(), Chunk(), ChunkBy()</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nutsflow</span> <span class="k">import</span> <span class="n">Map</span><span class="p">,</span> <span class="n">Join</span><span class="p">,</span> <span class="n">Collect</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">func</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">==</span> <span class="s1">&#39;|&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="s1">&#39;0|12|345|6&#39;</span> <span class="o">&gt;&gt;</span> <span class="n">ChunkWhen</span><span class="p">(</span><span class="n">func</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Map</span><span class="p">(</span><span class="n">Join</span><span class="p">())</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">func</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">==</span> <span class="mi">1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">ChunkWhen</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
+<span class="go">[(1, 2), (1, 3), (1, 4, 5)]</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">func</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">==</span> <span class="mi">1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">ChunkWhen</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="nb">sum</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
+<span class="go">[3, 4, 10]</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">func</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">==</span> <span class="s1">&#39;|&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="s1">&#39;0|12|345|6&#39;</span> <span class="o">&gt;&gt;</span> <span class="n">ChunkWhen</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">Join</span><span class="p">())</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
 <span class="go">[&#39;0&#39;, &#39;|12&#39;, &#39;|345&#39;, &#39;|6&#39;]</span>
 </pre></div>
 </div>
@@ -1845,8 +1956,13 @@ see also GroupBySorted(), Chunk(), ChunkBy()</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>func</strong> (<em>function</em>) – Boolean function that indicates chunks.
-New chunk is created if return value is True.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>func</strong> (<em>function</em>) – Boolean function that indicates chunks.
+New chunk is created if return value is True.</li>
+<li><strong>container</strong> (<em>container</em>) – Some container, e.g. list, set, dict
+that can be filled from an iterable</li>
+</ul>
+</td>
 </tr>
 </tbody>
 </table>
@@ -1861,9 +1977,10 @@ New chunk is created if return value is True.</td>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>iterable iterable</strong> (<em>any</em>) – iterable to create chunks for.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Iterator over chunks, where each chunk is an iterator itself.</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Iterator over chunks, where each chunk is an iterator itself
+if no container is provided</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">iterator over iterators</td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">iterator over iterators or containers</td>
 </tr>
 </tbody>
 </table>
@@ -1987,7 +2104,7 @@ New chunk is created if return value is True.</td>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>iterable</strong> (<em>iterable</em>) – Any iterable</li>
-<li><strong>n</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a>) – Number of elements to drop</li>
+<li><strong>n</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Number of elements to drop</li>
 </ul>
 </td>
 </tr>
@@ -2046,6 +2163,45 @@ New chunk is created if return value is True.</td>
 <dt id="nutsflow.processor.Filter">
 <code class="descname">Filter</code><a class="headerlink" href="#nutsflow.processor.Filter" title="Permalink to this definition">¶</a></dt>
 <dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">builtins._create_nut_wrapper.&lt;locals&gt;.Wrapper</span></code></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="nutsflow.processor.FilterCol">
+<em class="property">class </em><code class="descname">FilterCol</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/processor.html#FilterCol"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.processor.FilterCol" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#nutsflow.base.Nut" title="nutsflow.base.Nut"><code class="xref py py-class docutils literal notranslate"><span class="pre">nutsflow.base.Nut</span></code></a></p>
+<p>iterable &gt;&gt; FilterCol(columns, func)</p>
+<p>Filter elements from iterable based on predicate function and
+specified column(s).</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">is_even</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">n</span><span class="p">:</span> <span class="n">n</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;e&#39;</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;o&#39;</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;e&#39;</span><span class="p">)]</span> <span class="o">&gt;&gt;</span> <span class="n">FilterCol</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">is_even</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
+<span class="go">[(0, &#39;e&#39;), (2, &#39;e&#39;)]</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>iterable</strong> (<em>iterable</em>) – Any iterable</li>
+<li><strong>columns</strong> (<em>int|tuple</em>) – Column or columns to extract from each
+element before passing it on to the predicate function.</li>
+<li><strong>func</strong> (<em>function</em>) – Predicate function. Element is removed if False.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Filtered iterable</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">Iterator</p>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="nutsflow.processor.FilterCol.__rrshift__">
+<code class="descname">__rrshift__</code><span class="sig-paren">(</span><em>iterable</em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.processor.FilterCol.__rrshift__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 <dl class="attribute">
@@ -2196,7 +2352,7 @@ see also Chunk(), ChunkWhen(), ChunkBy()</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>iterable</strong> (<em>iterable</em>) – Any iterable</li>
 <li><strong>keycol</strong> (<em>int|function</em>) – Column index or key function.</li>
-<li><strong>nokey</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.6)"><em>bool</em></a>) – True: results will not contain keys for groups, only
+<li><strong>nokey</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – True: results will not contain keys for groups, only
 the groups themselves.</li>
 </ul>
 </td>
@@ -2255,7 +2411,7 @@ see also Chunk(), ChunkWhen(), ChunkBy()</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>iterable</strong> (<em>iterable</em>) – Any iterable</li>
 <li><strong>keycol</strong> (<em>int|function</em>) – Column index or key function.</li>
-<li><strong>nokey</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.6)"><em>bool</em></a>) – True: results will not contain keys for groups, only
+<li><strong>nokey</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – True: results will not contain keys for groups, only
 the groups themselves.</li>
 </ul>
 </td>
@@ -2299,7 +2455,7 @@ conditional flows.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>iterable</strong> (<em>iterable</em>) – Any iterable</li>
-<li><strong>cond</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.6)"><em>bool</em></a>) – Boolean conditional value.</li>
+<li><strong>cond</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – Boolean conditional value.</li>
 <li><strong>if_nut</strong> (<a class="reference internal" href="#nutsflow.base.Nut" title="nutsflow.base.Nut"><em>Nut</em></a>) – Nut to be executed if cond == True</li>
 <li><strong>else_nut</strong> (<a class="reference internal" href="#nutsflow.base.Nut" title="nutsflow.base.Nut"><em>Nut</em></a>) – Nut to be executed if cond == False</li>
 </ul>
@@ -2351,7 +2507,7 @@ conditional flows.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>iterable iterable</strong> (<em>iterable</em>) – Any iterable over tuples or lists</li>
-<li><strong>index</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a>) – Index at which position items are inserted.</li>
+<li><strong>index</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Index at which position items are inserted.</li>
 <li><strong>items</strong> (<em>iterable|object</em>) – A single object or an iterable over objects.</li>
 </ul>
 </td>
@@ -2537,7 +2693,7 @@ and only top level functions (not class methods) are pickable. See
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>iterable</strong> (<em>iterable</em>) – Any iterable</li>
 <li><strong>func</strong> (<em>function</em>) – Function to map</li>
-<li><strong>chunksize</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a>) – Number of parallel processes to use for mapping.</li>
+<li><strong>chunksize</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Number of parallel processes to use for mapping.</li>
 </ul>
 </td>
 </tr>
@@ -2664,7 +2820,7 @@ Typically used to keep the CPU busy while the GPU is crunching.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>iterable</strong> (<em>iterable</em>) – Any iterable</li>
-<li><strong>num_prefetch</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a>) – Number of elements to prefetch.</li>
+<li><strong>num_prefetch</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Number of elements to prefetch.</li>
 </ul>
 </td>
 </tr>
@@ -2702,10 +2858,10 @@ printed as well</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>iterable</strong> (<em>iterable</em>) – Any iterable</li>
-<li><strong>data</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a>) – Number of elements in iterable or realized iterable.
+<li><strong>data</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Number of elements in iterable or realized iterable.
 If data is provided it must not be an iterator since it will be
 consumed!</li>
-<li><strong>every_sec</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a>) – Progress is printed every ‘every_sec’ seconds.</li>
+<li><strong>every_sec</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Progress is printed every ‘every_sec’ seconds.</li>
 </ul>
 </td>
 </tr>
@@ -2777,7 +2933,7 @@ instead.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>iterable</strong> (<em>iterable</em>) – Any iterable</li>
-<li><strong>buffersize</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a>) – Number of elements stored in shuffle buffer.</li>
+<li><strong>buffersize</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Number of elements stored in shuffle buffer.</li>
 <li><strong>rand</strong> (<em>Random|None</em>) – Random number generator. If None,
 random.Random() is used.</li>
 </ul>
@@ -2826,9 +2982,9 @@ See <a class="reference external" href="https://docs.python.org/2/library/iterto
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>iterable</strong> (<em>iterable</em>) – Any iterable</li>
-<li><strong>start</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a>) – Start index of slice.</li>
-<li><strong>stop</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a>) – End index of slice.</li>
-<li><strong>step</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a>) – Step size of slice.</li>
+<li><strong>start</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Start index of slice.</li>
+<li><strong>stop</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – End index of slice.</li>
+<li><strong>step</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Step size of slice.</li>
 </ul>
 </td>
 </tr>
@@ -2866,7 +3022,7 @@ See <a class="reference external" href="https://docs.python.org/2/library/iterto
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>iterable</strong> (<em>iterable</em>) – Any iterable</li>
-<li><strong>n</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a>) – Number of elements to take</li>
+<li><strong>n</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Number of elements to take</li>
 </ul>
 </td>
 </tr>
@@ -2936,9 +3092,9 @@ value of ‘STDERR’.</p>
 <span class="go">[1, &#39;FAILED: 0&#39;, 10]</span>
 </pre></div>
 </div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">handlezero</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span> <span class="n">e</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">handlezero</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">Try</span><span class="p">(</span><span class="n">Div</span><span class="p">(),</span> <span class="n">handlezero</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
-<span class="go">[1, ZeroDivisionError(&#39;integer division or modulo by zero&#39;,), 10]</span>
+<span class="go">[1, &#39;integer division or modulo by zero&#39;, 10]</span>
 </pre></div>
 </div>
 <table class="docutils field-list" frame="void" rules="none">
@@ -3000,7 +3156,7 @@ If default is function that takes element x and  exception e</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>iterable</strong> (<em>iterable</em>) – Any iterable</li>
-<li><strong>n</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a>) – Size of window</li>
+<li><strong>n</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Size of window</li>
 </ul>
 </td>
 </tr>
@@ -3108,8 +3264,9 @@ And <a class="reference external" href="https://docs.python.org/2/library/iterto
 <dt id="nutsflow.sink.ArgMax">
 <em class="property">class </em><code class="descname">ArgMax</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/sink.html#ArgMax"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.sink.ArgMax" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#nutsflow.base.NutSink" title="nutsflow.base.NutSink"><code class="xref py py-class docutils literal notranslate"><span class="pre">nutsflow.base.NutSink</span></code></a></p>
-<p>iterable &gt;&gt; ArgMax(key=func, default=None, retvalue=False)</p>
-<p>Return index of first maximum element (and maximum) in input.</p>
+<p>iterable &gt;&gt; ArgMax(key=None, default=None, retvalue=False)</p>
+<p>Return index of first maximum element (and maximum) in input
+(transformed or extracted by key function).</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">ArgMax</span><span class="p">()</span>
 <span class="go">1</span>
 </pre></div>
@@ -3130,15 +3287,23 @@ And <a class="reference external" href="https://docs.python.org/2/library/iterto
 <span class="go">(None, 0)</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">20</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">30</span><span class="p">)]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">&gt;&gt;</span> <span class="n">ArgMax</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="go">0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">&gt;&gt;</span> <span class="n">ArgMax</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="go">2</span>
+</pre></div>
+</div>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>iterable</strong> (<em>iterable</em>) – Iterable over numbers</li>
-<li><strong>key</strong> (<em>func</em>) – Function maximum is based on</li>
-<li><strong>default</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.6)"><em>object</em></a>) – Value returned if iterable is empty.</li>
-<li><strong>retvalue</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.6)"><em>bool</em></a>) – If True the index and the value of the
+<li><strong>key</strong> (<em>int|tuple|function|None</em>) – Key function to extract or
+transform elements. None = identity function.</li>
+<li><strong>default</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><em>object</em></a>) – Value returned if iterable is empty.</li>
+<li><strong>retvalue</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – If True the index and the value of the
 maximum element is returned.</li>
 </ul>
 </td>
@@ -3163,8 +3328,9 @@ and the largest element itself if retvalue==True</p>
 <dt id="nutsflow.sink.ArgMin">
 <em class="property">class </em><code class="descname">ArgMin</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/sink.html#ArgMin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.sink.ArgMin" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#nutsflow.base.NutSink" title="nutsflow.base.NutSink"><code class="xref py py-class docutils literal notranslate"><span class="pre">nutsflow.base.NutSink</span></code></a></p>
-<p>iterable &gt;&gt; ArgMin(key=func, default=None, retvalue=True)</p>
-<p>Return index of first minimum element (and minimum) in input.</p>
+<p>iterable &gt;&gt; ArgMin(key=None, default=None, retvalue=True)</p>
+<p>Return index of first minimum element (and minimum) in input
+(transformed or extracted by key function).</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">ArgMin</span><span class="p">()</span>
 <span class="go">2</span>
 </pre></div>
@@ -3185,15 +3351,23 @@ and the largest element itself if retvalue==True</p>
 <span class="go">(None, 0)</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">20</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">30</span><span class="p">)]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">&gt;&gt;</span> <span class="n">ArgMin</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="go">2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">&gt;&gt;</span> <span class="n">ArgMin</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="go">0</span>
+</pre></div>
+</div>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>iterable</strong> (<em>iterable</em>) – Iterable over numbers</li>
-<li><strong>key</strong> (<em>func</em>) – Function minimum is based on</li>
-<li><strong>default</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.6)"><em>object</em></a>) – Value returned if iterable is empty.</li>
-<li><strong>retvalue</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.6)"><em>bool</em></a>) – If True the index and the value of the
+<li><strong>key</strong> (<em>int|tuple|function|None</em>) – Key function to extract or
+transform elements. None = identity function.</li>
+<li><strong>default</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><em>object</em></a>) – Value returned if iterable is empty.</li>
+<li><strong>retvalue</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – If True the index and the value of the
 minimum element is returned.</li>
 </ul>
 </td>
@@ -3300,14 +3474,14 @@ in the input iterable.</p>
 <li><strong>iterable</strong> (<em>iterable</em>) – Any iterable, e.g. list, range, …</li>
 <li><strong>column</strong> (<em>int|None</em>) – Column of values in iterable to extract values from.
 If colum=None the values in the iterable themselves will be counted.</li>
-<li><strong>relative</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.6)"><em>bool</em></a>) – True: return relative counts otherwise absolute counts</li>
+<li><strong>relative</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – True: return relative counts otherwise absolute counts</li>
 </ul>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Dictionary with (relative) counts for elements in iterable.</p>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.6)">dict</a></p>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.7)">dict</a></p>
 </td>
 </tr>
 </tbody>
@@ -3335,7 +3509,7 @@ If colum=None the values in the iterable themselves will be counted.</li>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>iterable</strong> (<em>iterable</em>) – Any iterable, e.g. list, range, …</li>
-<li><strong>n</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a>) – Number of elements to take.</li>
+<li><strong>n</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Number of elements to take.</li>
 <li><strong>container</strong> (<em>container</em>) – Container to collect elements in, e.g. list, set</li>
 </ul>
 </td>
@@ -3377,7 +3551,7 @@ to strings.</p>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">String of with concatenated elements of iterable.</p>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)">str</a></p>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)">str</a></p>
 </td>
 </tr>
 </tbody>
@@ -3393,8 +3567,8 @@ to strings.</p>
 <dt id="nutsflow.sink.Max">
 <em class="property">class </em><code class="descname">Max</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/sink.html#Max"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.sink.Max" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#nutsflow.base.NutSink" title="nutsflow.base.NutSink"><code class="xref py py-class docutils literal notranslate"><span class="pre">nutsflow.base.NutSink</span></code></a></p>
-<p>iterable &gt;&gt; Max(key=func, default=None)</p>
-<p>Return maximum of inputs.</p>
+<p>iterable &gt;&gt; Max(key=None, default=None)</p>
+<p>Return maximum of inputs (transformed or extracted by key function).</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">Max</span><span class="p">()</span>
 <span class="go">3</span>
 </pre></div>
@@ -3407,21 +3581,31 @@ to strings.</p>
 <span class="go">0</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">20</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">30</span><span class="p">)]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">&gt;&gt;</span> <span class="n">Max</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="go">(3, 10)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">&gt;&gt;</span> <span class="n">Max</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="go">(1, 30)</span>
+</pre></div>
+</div>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>iterable</strong> (<em>iterable</em>) – Iterable over numbers</li>
-<li><strong>key</strong> (<em>func</em>) – Function maximum is based on</li>
-<li><strong>default</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.6)"><em>object</em></a>) – Value returned if iterable is empty.</li>
+<li><strong>key</strong> (<em>int|tuple|function|None</em>) – Key function to extract or
+transform elements. None = identity function.</li>
+<li><strong>default</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><em>object</em></a>) – Value returned if iterable is empty.</li>
 </ul>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">largest element according to key function</p>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.6)">object</a></p>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)">object</a></p>
 </td>
 </tr>
 </tbody>
@@ -3437,10 +3621,21 @@ to strings.</p>
 <dt id="nutsflow.sink.Mean">
 <em class="property">class </em><code class="descname">Mean</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/sink.html#Mean"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.sink.Mean" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#nutsflow.base.NutSink" title="nutsflow.base.NutSink"><code class="xref py py-class docutils literal notranslate"><span class="pre">nutsflow.base.NutSink</span></code></a></p>
-<p>iterable &gt;&gt; Mean(default=None)</p>
-<p>Return mean value of inputs.</p>
+<p>iterable &gt;&gt; Mean(key=None, default=None)</p>
+<p>Return mean value of inputs (transformed or extracted by key function).</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">Mean</span><span class="p">()</span>
 <span class="go">2.0</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[]</span> <span class="o">&gt;&gt;</span> <span class="n">Mean</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="go">0</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">20</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">30</span><span class="p">)]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">&gt;&gt;</span> <span class="n">Mean</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="go">2.0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">&gt;&gt;</span> <span class="n">Mean</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="go">20.0</span>
 </pre></div>
 </div>
 <table class="docutils field-list" frame="void" rules="none">
@@ -3449,7 +3644,8 @@ to strings.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>iterable</strong> (<em>iterable</em>) – Iterable over numbers</li>
-<li><strong>default</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.6)"><em>object</em></a>) – Value returned if iterable is empty.</li>
+<li><strong>default</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><em>object</em></a>) – Value returned if iterable is empty.</li>
+<li><strong>key</strong> (<em>int|tuple|function|None</em>) – Key function to extract elements.</li>
 </ul>
 </td>
 </tr>
@@ -3472,11 +3668,19 @@ to strings.</p>
 <dt id="nutsflow.sink.MeanStd">
 <em class="property">class </em><code class="descname">MeanStd</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/sink.html#MeanStd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.sink.MeanStd" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#nutsflow.base.NutSink" title="nutsflow.base.NutSink"><code class="xref py py-class docutils literal notranslate"><span class="pre">nutsflow.base.NutSink</span></code></a></p>
-<p>iterable &gt;&gt; MeanStd(default=None)</p>
-<p>Return mean and standard deviation of inputs.
+<p>iterable &gt;&gt; MeanStd(key=None, default=None, ddof=1)</p>
+<p>Return mean and standard deviation of inputs (transformed or extracted
+by key function).
 Standard deviation is with degrees of freedom = 1</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">MeanStd</span><span class="p">()</span>
 <span class="go">(2.0, 1.0)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">20</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">30</span><span class="p">)]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">&gt;&gt;</span> <span class="n">MeanStd</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="go">(2.0, 1.0)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">&gt;&gt;</span> <span class="n">MeanStd</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="go">(20.0, 10.0)</span>
 </pre></div>
 </div>
 <table class="docutils field-list" frame="void" rules="none">
@@ -3485,15 +3689,16 @@ Standard deviation is with degrees of freedom = 1</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>iterable</strong> (<em>iterable</em>) – Iterable over numbers</li>
-<li><strong>default</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.6)"><em>object</em></a>) – Value returned if iterable is empty.</li>
-<li><strong>ddof</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a>) – Delta degrees of freedom (should 0 or 1)</li>
+<li><strong>default</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><em>object</em></a>) – Value returned if iterable is empty.</li>
+<li><strong>key</strong> (<em>int|tuple|function|None</em>) – Key function to extract elements.</li>
+<li><strong>ddof</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Delta degrees of freedom (should 0 or 1)</li>
 </ul>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Mean and standard deviation of numbers or default value</p>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.6)">tuple</a> (mean, std)</p>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.7)">tuple</a> (mean, std)</p>
 </td>
 </tr>
 </tbody>
@@ -3509,8 +3714,8 @@ Standard deviation is with degrees of freedom = 1</p>
 <dt id="nutsflow.sink.Min">
 <em class="property">class </em><code class="descname">Min</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/sink.html#Min"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.sink.Min" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#nutsflow.base.NutSink" title="nutsflow.base.NutSink"><code class="xref py py-class docutils literal notranslate"><span class="pre">nutsflow.base.NutSink</span></code></a></p>
-<p>iterable &gt;&gt; Min(key=func, default=None)</p>
-<p>Return minimum of inputs.</p>
+<p>iterable &gt;&gt; Min(key=None, default=None)</p>
+<p>Return minimum of inputs (transformed or extracted by key function).</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">Min</span><span class="p">()</span>
 <span class="go">1</span>
 </pre></div>
@@ -3523,21 +3728,31 @@ Standard deviation is with degrees of freedom = 1</p>
 <span class="go">0</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">20</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">30</span><span class="p">)]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">&gt;&gt;</span> <span class="n">Min</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="go">(1, 30)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">&gt;&gt;</span> <span class="n">Min</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="go">(3, 10)</span>
+</pre></div>
+</div>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>iterable</strong> (<em>iterable</em>) – Iterable over numbers</li>
-<li><strong>key</strong> (<em>func</em>) – Function minimum is based on</li>
-<li><strong>default</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.6)"><em>object</em></a>) – Value returned if iterable is empty.</li>
+<li><strong>key</strong> (<em>int|tuple|function|None</em>) – Key function to extract or
+transform elements. None = identity function.</li>
+<li><strong>default</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><em>object</em></a>) – Value returned if iterable is empty.</li>
 </ul>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">smallest element according to key function</p>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.6)">object</a></p>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)">object</a></p>
 </td>
 </tr>
 </tbody>
@@ -3571,8 +3786,8 @@ Standard deviation is with degrees of freedom = 1</p>
 <dt id="nutsflow.sink.Sort">
 <em class="property">class </em><code class="descname">Sort</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/sink.html#Sort"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.sink.Sort" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#nutsflow.base.NutSink" title="nutsflow.base.NutSink"><code class="xref py py-class docutils literal notranslate"><span class="pre">nutsflow.base.NutSink</span></code></a></p>
-<p>iterable &gt;&gt; Sort()</p>
-<p>Sorts iterable with respect to key function.</p>
+<p>iterable &gt;&gt; Sort(key=None, reverse=False)</p>
+<p>Sorts iterable with respect to key function or column index(es).</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">Sort</span><span class="p">()</span>
 <span class="go">[1, 2, 3]</span>
 </pre></div>
@@ -3581,11 +3796,23 @@ Standard deviation is with degrees of freedom = 1</p>
 <span class="go">[3, 2, 1]</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[(</span><span class="mi">1</span><span class="p">,</span><span class="s1">&#39;c&#39;</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="s1">&#39;a&#39;</span><span class="p">)]</span> <span class="o">&gt;&gt;</span> <span class="n">Sort</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="go">[(3, &#39;a&#39;), (2, &#39;b&#39;), (1, &#39;c&#39;)]</span>
+</pre></div>
+</div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="s1">&#39;a3&#39;</span><span class="p">,</span> <span class="s1">&#39;c1&#39;</span><span class="p">,</span> <span class="s1">&#39;b2&#39;</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">Sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">s</span><span class="p">:</span> <span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 <span class="go">[&#39;a3&#39;, &#39;b2&#39;, &#39;c1&#39;]</span>
 </pre></div>
 </div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="s1">&#39;a3&#39;</span><span class="p">,</span> <span class="s1">&#39;c1&#39;</span><span class="p">,</span> <span class="s1">&#39;b2&#39;</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">Sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">s</span><span class="p">:</span> <span class="n">s</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="s1">&#39;a3&#39;</span><span class="p">,</span> <span class="s1">&#39;c1&#39;</span><span class="p">,</span> <span class="s1">&#39;b2&#39;</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">Sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="go">[&#39;a3&#39;, &#39;b2&#39;, &#39;c1&#39;]</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="s1">&#39;a3&#39;</span><span class="p">,</span> <span class="s1">&#39;c1&#39;</span><span class="p">,</span> <span class="s1">&#39;b2&#39;</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">Sort</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="go">[&#39;c1&#39;, &#39;b2&#39;, &#39;a3&#39;]</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="s1">&#39;a3&#39;</span><span class="p">,</span> <span class="s1">&#39;c1&#39;</span><span class="p">,</span> <span class="s1">&#39;b2&#39;</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">Sort</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">))</span>
 <span class="go">[&#39;c1&#39;, &#39;b2&#39;, &#39;a3&#39;]</span>
 </pre></div>
 </div>
@@ -3595,7 +3822,8 @@ Standard deviation is with degrees of freedom = 1</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>iterable</strong> (<em>iterable</em>) – Iterable</li>
-<li><strong>key</strong> (<em>function|None</em>) – key to sort iterable with.</li>
+<li><strong>key</strong> (<em>int|tuple|function|None</em>) – function to sort based on or
+column index(es) tuples/vectors/strings are sorted by.</li>
 <li><strong>reverse</strong> (<em>boolean</em>) – True: reverse order.</li>
 </ul>
 </td>
@@ -3603,7 +3831,7 @@ Standard deviation is with degrees of freedom = 1</p>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Sorted iterable</p>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.6)">list</a></p>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)">list</a></p>
 </td>
 </tr>
 </tbody>
@@ -3619,21 +3847,38 @@ Standard deviation is with degrees of freedom = 1</p>
 <dt id="nutsflow.sink.Sum">
 <em class="property">class </em><code class="descname">Sum</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/sink.html#Sum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.sink.Sum" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#nutsflow.base.NutSink" title="nutsflow.base.NutSink"><code class="xref py py-class docutils literal notranslate"><span class="pre">nutsflow.base.NutSink</span></code></a></p>
-<p>iterable &gt;&gt; Sum()</p>
-<p>Return sum over inputs.</p>
+<p>iterable &gt;&gt; Sum(key=None)</p>
+<p>Return sum over inputs (transformed or extracted by key function)</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">Sum</span><span class="p">()</span>
 <span class="go">6</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">Sum</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">*</span><span class="n">x</span><span class="p">)</span>
+<span class="go">14</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">20</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">30</span><span class="p">)]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">&gt;&gt;</span> <span class="n">Sum</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="go">6</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">&gt;&gt;</span> <span class="n">Sum</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="go">60</span>
 </pre></div>
 </div>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>iterable</strong> (<em>iterable</em>) – Iterable over numbers</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>iterable</strong> (<em>iterable</em>) – Iterable over numbers</li>
+<li><strong>key</strong> (<em>int|tuple|function|None</em>) – Key function to extract elements.</li>
+</ul>
+</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Sum of numbers</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Sum of numbers</p>
+</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">number</td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">number</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -3661,7 +3906,7 @@ the iterable completely!</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>iterable</strong> (<em>iterable</em>) – Any iterable, e.g. list, range, …</li>
-<li><strong>n</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a>) – Number of elements to take.</li>
+<li><strong>n</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Number of elements to take.</li>
 <li><strong>container</strong> (<em>container</em>) – Container to collect elements in, e.g. list, set</li>
 </ul>
 </td>
@@ -3757,9 +4002,9 @@ and ReadCSV.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>filepath</strong> (<em>string</em>) – Path to file in CSV format.</li>
-<li><strong>cols</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.6)"><em>tuple</em></a>) – Indices of the columns to write.
+<li><strong>cols</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.7)"><em>tuple</em></a>) – Indices of the columns to write.
 If None all columns are written.</li>
-<li><strong>skipheader</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a>) – Number of header rows to skip.</li>
+<li><strong>skipheader</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Number of header rows to skip.</li>
 <li><strong>fmtfunc</strong> (<em>function</em>) – Function to apply to the elements of each row.</li>
 <li><strong>kwargs</strong> (<em>kwargs</em>) – Keyword arguments for Python’s CSV writer.
 See <a class="reference external" href="https://docs.python.org/2/library/csv.html">https://docs.python.org/2/library/csv.html</a></li>
@@ -3830,8 +4075,8 @@ See <a class="reference external" href="https://docs.python.org/2/library/csv.ht
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>start</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a>) – Start of integer sequence</li>
-<li><strong>step</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a>) – Step of sequence</li>
+<li><strong>start</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Start of integer sequence</li>
+<li><strong>step</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Step of sequence</li>
 </ul>
 </td>
 </tr>
@@ -3872,7 +4117,7 @@ See <a class="reference external" href="https://docs.python.org/2/library/csv.ht
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>iterables</strong> (<em>iterables</em>) – Collections of iterables to create cartesian
 product from.</li>
-<li><strong>repeat</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a>) – Repeat a single iterable ‘repeat’ times, e.g.
+<li><strong>repeat</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Repeat a single iterable ‘repeat’ times, e.g.
 Procuct([1,2], [1,2]) is equal to Product([1,2], repeat=2)</li>
 </ul>
 </td>
@@ -3911,9 +4156,9 @@ Procuct([1,2], [1,2]) is equal to Product([1,2], repeat=2)</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>start</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a>) – Start of range.</li>
-<li><strong>end</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a>) – End of range. Not inclusive. Optional.</li>
-<li><strong>step</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a>) – Step size. Optional.</li>
+<li><strong>start</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Start of range.</li>
+<li><strong>end</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – End of range. Not inclusive. Optional.</li>
+<li><strong>step</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Step size. Optional.</li>
 </ul>
 </td>
 </tr>
@@ -3931,13 +4176,13 @@ Procuct([1,2], [1,2]) is equal to Product([1,2], repeat=2)</li>
 
 <dl class="class">
 <dt id="nutsflow.source.ReadCSV">
-<em class="property">class </em><code class="descname">ReadCSV</code><span class="sig-paren">(</span><em>filepath</em>, <em>columns=None</em>, <em>skipheader=0</em>, <em>fmtfunc=&lt;function ReadCSV.&lt;lambda&gt;&gt;</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/source.html#ReadCSV"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.source.ReadCSV" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descname">ReadCSV</code><span class="sig-paren">(</span><em>filepath</em>, <em>columns=None</em>, <em>skipheader=0</em>, <em>fmtfunc=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/source.html#ReadCSV"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.source.ReadCSV" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#nutsflow.base.NutSource" title="nutsflow.base.NutSource"><code class="xref py py-class docutils literal notranslate"><span class="pre">nutsflow.base.NutSource</span></code></a></p>
 <p>Read data from a CSV file using Python’s CSV reader.
 See: <a class="reference external" href="https://docs.python.org/2/library/csv.html">https://docs.python.org/2/library/csv.html</a></p>
 <dl class="method">
 <dt id="nutsflow.source.ReadCSV.__init__">
-<code class="descname">__init__</code><span class="sig-paren">(</span><em>filepath</em>, <em>columns=None</em>, <em>skipheader=0</em>, <em>fmtfunc=&lt;function ReadCSV.&lt;lambda&gt;&gt;</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/source.html#ReadCSV.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.source.ReadCSV.__init__" title="Permalink to this definition">¶</a></dt>
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>filepath</em>, <em>columns=None</em>, <em>skipheader=0</em>, <em>fmtfunc=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/source.html#ReadCSV.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.source.ReadCSV.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>ReadCSV(filepath, columns, skipheader, fmtfunc, <a href="#id21"><span class="problematic" id="id22">**</span></a>kwargs)</p>
 <p>Read data in Comma Separated Format (CSV) from file.
 See also CSVWriter.
@@ -3946,14 +4191,31 @@ corresponding delimiter. Note that in the docstring below
 delimiter is ‘t’ but in code it should be ‘    ‘. See unit tests.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nutsflow</span> <span class="k">import</span> <span class="n">Collect</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">filepath</span> <span class="o">=</span> <span class="s1">&#39;tests/data/data.csv&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">ReadCSV</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="n">skipheader</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">fmtfunc</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span> <span class="k">as</span> <span class="n">reader</span><span class="p">:</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">ReadCSV</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="n">skipheader</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="k">as</span> <span class="n">reader</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">reader</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
+<span class="go">[(&#39;1&#39;, &#39;2&#39;, &#39;3&#39;), (&#39;4&#39;, &#39;5&#39;, &#39;6&#39;)]</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">ReadCSV</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="n">skipheader</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">fmtfunc</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span> <span class="k">as</span> <span class="n">reader</span><span class="p">:</span>
 <span class="gp">... </span>    <span class="n">reader</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
 <span class="go">[(1, 2, 3), (4, 5, 6)]</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">ReadCSV</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="n">skipheader</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">fmtfunc</span><span class="o">=</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span><span class="nb">str</span><span class="p">,</span><span class="nb">float</span><span class="p">))</span> <span class="k">as</span> <span class="n">reader</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">reader</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
+<span class="go">[(1, &#39;2&#39;, 3.0), (4, &#39;5&#39;, 6.0)]</span>
 </pre></div>
 </div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">ReadCSV</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="mi">1</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span> <span class="k">as</span> <span class="n">reader</span><span class="p">:</span>
 <span class="gp">... </span>    <span class="n">reader</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
 <span class="go">[(3, 2), (6, 5)]</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">ReadCSV</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span><span class="nb">int</span><span class="p">))</span> <span class="k">as</span> <span class="n">reader</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">reader</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
+<span class="go">[(&#39;3&#39;, 2), (&#39;6&#39;, 5)]</span>
 </pre></div>
 </div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">ReadCSV</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span> <span class="k">as</span> <span class="n">reader</span><span class="p">:</span>
@@ -3974,10 +4236,11 @@ delimiter is ‘t’ but in code it should be ‘    ‘. See unit tests.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>filepath</strong> (<em>string</em>) – Path to file in CSV format.</li>
-<li><strong>columns</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.6)"><em>tuple</em></a>) – Indices of the columns to read.
+<li><strong>columns</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.7)"><em>tuple</em></a>) – Indices of the columns to read.
 If None all columns are read.</li>
-<li><strong>skipheader</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a>) – Number of header lines to skip.</li>
-<li><strong>fmtfunc</strong> (<em>function</em>) – Function to apply to the elements of each row.</li>
+<li><strong>skipheader</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Number of header lines to skip.</li>
+<li><strong>fmtfunc</strong> (<em>tuple|function</em>) – Function or functions to apply to the
+column elements of each row.</li>
 <li><strong>kwargs</strong> (<em>kwargs</em>) – Keyword arguments for Python’s CSV reader.
 See <a class="reference external" href="https://docs.python.org/2/library/csv.html">https://docs.python.org/2/library/csv.html</a></li>
 </ul>
@@ -4016,8 +4279,8 @@ See <a class="reference external" href="https://docs.python.org/2/library/csv.ht
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>value</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.6)"><em>object</em></a>) – Value to repeat</li>
-<li><strong>times</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a>) – Optional parameter. Object is repeated ‘n’ times.</li>
+<li><strong>value</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><em>object</em></a>) – Value to repeat</li>
+<li><strong>times</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Optional parameter. Object is repeated ‘n’ times.</li>
 </ul>
 </td>
 </tr>
@@ -4061,7 +4324,7 @@ See <a class="reference external" href="https://docs.python.org/2/library/csv.ht
   <div role="contentinfo">
     <p>
         &copy; Copyright 2017, IBM Research Australia.
-      Last updated on Apr 10, 2018.
+      Last updated on Sep 13, 2018.
 
     </p>
   </div> 
@@ -4082,7 +4345,7 @@ See <a class="reference external" href="https://docs.python.org/2/library/csv.ht
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'1.0.27',
+            VERSION:'1.0.30',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
@@ -4096,16 +4359,11 @@ See <a class="reference external" href="https://docs.python.org/2/library/csv.ht
 
   
 
-  
-  
-    <script type="text/javascript" src="_static/js/theme.js"></script>
-  
+  <script type="text/javascript" src="_static/js/theme.js"></script>
 
   <script type="text/javascript">
       jQuery(function () {
-          
-          SphinxRtdTheme.Navigation.enableSticky();
-          
+          SphinxRtdTheme.Navigation.enable(true);
       });
   </script> 
 
