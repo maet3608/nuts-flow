@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Overview &mdash; nutsflow 1.0.27 documentation</title>
+  <title>Overview &mdash; nutsflow 1.0.30 documentation</title>
   
 
   
@@ -24,8 +24,7 @@
 
   
 
-  
-    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -59,7 +58,7 @@
             
             
               <div class="version">
-                1.0.27
+                1.0.30
               </div>
             
           
@@ -295,9 +294,11 @@ drops first n elements.</li>
 <li><a class="reference internal" href="nutsflow.html#nutsflow.processor.DropWhile" title="nutsflow.processor.DropWhile"><code class="xref py py-class docutils literal notranslate"><span class="pre">DropWhile</span></code></a> :
 drops first elements while predicate function is true.</li>
 <li><a class="reference internal" href="nutsflow.html#nutsflow.processor.Filter" title="nutsflow.processor.Filter"><code class="xref py py-class docutils literal notranslate"><span class="pre">Filter</span></code></a> :
-drops elements predicate function is false.</li>
+drops elements if predicate function is false.</li>
+<li><a class="reference internal" href="nutsflow.html#nutsflow.processor.FilterCol" title="nutsflow.processor.FilterCol"><code class="xref py py-class docutils literal notranslate"><span class="pre">FilterCol</span></code></a> :
+extract given columns and drops elements if predicate function is false.</li>
 <li><a class="reference internal" href="nutsflow.html#nutsflow.processor.FilterFalse" title="nutsflow.processor.FilterFalse"><code class="xref py py-class docutils literal notranslate"><span class="pre">FilterFalse</span></code></a> :
-drops elements predicate function is true.</li>
+drops elements if predicate function is true.</li>
 <li><a class="reference internal" href="nutsflow.html#nutsflow.processor.FlatMap" title="nutsflow.processor.FlatMap"><code class="xref py py-class docutils literal notranslate"><span class="pre">FlatMap</span></code></a> :
 maps function on elements and flattens result.</li>
 <li><a class="reference internal" href="nutsflow.html#nutsflow.processor.Flatten" title="nutsflow.processor.Flatten"><code class="xref py py-class docutils literal notranslate"><span class="pre">Flatten</span></code></a> :
@@ -374,7 +375,7 @@ zips elements from multiple iterables with a given function.</li>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2017, IBM Research Australia.
-      Last updated on Apr 10, 2018.
+      Last updated on Sep 13, 2018.
 
     </p>
   </div> 
@@ -395,7 +396,7 @@ zips elements from multiple iterables with a given function.</li>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'1.0.27',
+            VERSION:'1.0.30',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
@@ -409,16 +410,11 @@ zips elements from multiple iterables with a given function.</li>
 
   
 
-  
-  
-    <script type="text/javascript" src="_static/js/theme.js"></script>
-  
+  <script type="text/javascript" src="_static/js/theme.js"></script>
 
   <script type="text/javascript">
       jQuery(function () {
-          
-          SphinxRtdTheme.Navigation.enableSticky();
-          
+          SphinxRtdTheme.Navigation.enable(true);
       });
   </script> 
 

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nutsflow.sink &mdash; nutsflow 1.0.27 documentation</title>
+  <title>nutsflow.sink &mdash; nutsflow 1.0.30 documentation</title>
   
 
   
@@ -24,8 +24,7 @@
 
   
 
-  
-    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
@@ -57,7 +56,7 @@
             
             
               <div class="version">
-                1.0.27
+                1.0.30
               </div>
             
           
@@ -167,16 +166,16 @@
 <span class="kn">from</span> <span class="nn">six.moves</span> <span class="k">import</span> <span class="n">reduce</span><span class="p">,</span> <span class="nb">zip</span><span class="p">,</span> <span class="nb">range</span>
 <span class="kn">from</span> <span class="nn">.base</span> <span class="k">import</span> <span class="n">NutSink</span>
 <span class="kn">from</span> <span class="nn">.factory</span> <span class="k">import</span> <span class="n">nut_sink</span>
-<span class="kn">from</span> <span class="nn">.common</span> <span class="k">import</span> <span class="n">as_tuple</span><span class="p">,</span> <span class="n">is_iterable</span>
+<span class="kn">from</span> <span class="nn">.common</span> <span class="k">import</span> <span class="n">as_tuple</span><span class="p">,</span> <span class="n">is_iterable</span><span class="p">,</span> <span class="n">colfunc</span>
 <span class="kn">from</span> <span class="nn">.iterfunction</span> <span class="k">import</span> <span class="n">nth</span><span class="p">,</span> <span class="n">consume</span><span class="p">,</span> <span class="n">length</span><span class="p">,</span> <span class="n">take</span>
 
 
 <div class="viewcode-block" id="Sort"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.sink.Sort">[docs]</a><span class="nd">@nut_sink</span>
 <span class="k">def</span> <span class="nf">Sort</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    iterable &gt;&gt; Sort()</span>
+<span class="sd">    iterable &gt;&gt; Sort(key=None, reverse=False)</span>
 
-<span class="sd">    Sorts iterable with respect to key function.</span>
+<span class="sd">    Sorts iterable with respect to key function or column index(es).</span>
 
 <span class="sd">    &gt;&gt;&gt; [3, 1, 2] &gt;&gt; Sort()</span>
 <span class="sd">    [1, 2, 3]</span>
@@ -184,79 +183,120 @@
 <span class="sd">    &gt;&gt;&gt; [3, 1, 2] &gt;&gt; Sort(reverse=True)</span>
 <span class="sd">    [3, 2, 1]</span>
 
+<span class="sd">    &gt;&gt;&gt; [(1,&#39;c&#39;), (2,&#39;b&#39;), (3,&#39;a&#39;)] &gt;&gt; Sort(1)</span>
+<span class="sd">    [(3, &#39;a&#39;), (2, &#39;b&#39;), (1, &#39;c&#39;)]</span>
+
 <span class="sd">    &gt;&gt;&gt; [&#39;a3&#39;, &#39;c1&#39;, &#39;b2&#39;] &gt;&gt; Sort(key=lambda s: s[0])</span>
 <span class="sd">    [&#39;a3&#39;, &#39;b2&#39;, &#39;c1&#39;]</span>
 
-<span class="sd">    &gt;&gt;&gt; [&#39;a3&#39;, &#39;c1&#39;, &#39;b2&#39;] &gt;&gt; Sort(key=lambda s: s[1])</span>
+<span class="sd">    &gt;&gt;&gt; [&#39;a3&#39;, &#39;c1&#39;, &#39;b2&#39;] &gt;&gt; Sort(key=0)</span>
+<span class="sd">    [&#39;a3&#39;, &#39;b2&#39;, &#39;c1&#39;]</span>
+
+<span class="sd">    &gt;&gt;&gt; [&#39;a3&#39;, &#39;c1&#39;, &#39;b2&#39;] &gt;&gt; Sort(1)</span>
+<span class="sd">    [&#39;c1&#39;, &#39;b2&#39;, &#39;a3&#39;]</span>
+
+<span class="sd">    &gt;&gt;&gt; [&#39;a3&#39;, &#39;c1&#39;, &#39;b2&#39;] &gt;&gt; Sort((1,0))</span>
 <span class="sd">    [&#39;c1&#39;, &#39;b2&#39;, &#39;a3&#39;]</span>
 
 <span class="sd">    :param iterable iterable: Iterable</span>
-<span class="sd">    :param function|None key: key to sort iterable with.</span>
+<span class="sd">    :param int|tuple|function|None key: function to sort based on or</span>
+<span class="sd">           column index(es) tuples/vectors/strings are sorted by.</span>
 <span class="sd">    :param boolean reverse: True: reverse order.</span>
 <span class="sd">    :return: Sorted iterable</span>
 <span class="sd">    :rtype: list</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">key</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="n">reverse</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">colfunc</span><span class="p">(</span><span class="n">key</span><span class="p">),</span> <span class="n">reverse</span><span class="o">=</span><span class="n">reverse</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="Sum"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.sink.Sum">[docs]</a><span class="nd">@nut_sink</span>
-<span class="k">def</span> <span class="nf">Sum</span><span class="p">(</span><span class="n">iterable</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">Sum</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    iterable &gt;&gt; Sum()</span>
+<span class="sd">    iterable &gt;&gt; Sum(key=None)</span>
 
-<span class="sd">    Return sum over inputs.</span>
+<span class="sd">    Return sum over inputs (transformed or extracted by key function)</span>
 
 <span class="sd">    &gt;&gt;&gt; [1, 2, 3] &gt;&gt; Sum()</span>
 <span class="sd">    6</span>
 
+<span class="sd">    &gt;&gt;&gt; [1, 2, 3] &gt;&gt; Sum(lambda x: x*x)</span>
+<span class="sd">    14</span>
+
+<span class="sd">    &gt;&gt;&gt; data = [(1, 10), (2, 20), (3, 30)]</span>
+<span class="sd">    &gt;&gt;&gt; data &gt;&gt; Sum(key=0)</span>
+<span class="sd">    6</span>
+<span class="sd">    &gt;&gt;&gt; data &gt;&gt; Sum(key=1)</span>
+<span class="sd">    60</span>
+
 <span class="sd">    :param iterable iterable: Iterable over numbers</span>
+<span class="sd">    :param int|tuple|function|None key: Key function to extract elements.</span>
 <span class="sd">    :return: Sum of numbers</span>
 <span class="sd">    :rtype: number</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">iterable</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">colfunc</span><span class="p">(</span><span class="n">key</span><span class="p">),</span> <span class="n">iterable</span><span class="p">))</span></div>
 
 
 <div class="viewcode-block" id="Mean"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.sink.Mean">[docs]</a><span class="nd">@nut_sink</span>
-<span class="k">def</span> <span class="nf">Mean</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">Mean</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    iterable &gt;&gt; Mean(default=None)</span>
+<span class="sd">    iterable &gt;&gt; Mean(key=None, default=None)</span>
 
-<span class="sd">    Return mean value of inputs.</span>
+<span class="sd">    Return mean value of inputs (transformed or extracted by key function).</span>
 
 <span class="sd">    &gt;&gt;&gt; [1, 2, 3] &gt;&gt; Mean()</span>
 <span class="sd">    2.0</span>
 
+<span class="sd">    &gt;&gt;&gt; [] &gt;&gt; Mean(default=0)</span>
+<span class="sd">    0</span>
+
+<span class="sd">    &gt;&gt;&gt; data = [(1, 10), (2, 20), (3, 30)]</span>
+<span class="sd">    &gt;&gt;&gt; data &gt;&gt; Mean(key=0)</span>
+<span class="sd">    2.0</span>
+<span class="sd">    &gt;&gt;&gt; data &gt;&gt; Mean(key=1)</span>
+<span class="sd">    20.0</span>
+
 <span class="sd">    :param iterable iterable: Iterable over numbers</span>
 <span class="sd">    :param object default: Value returned if iterable is empty.</span>
+<span class="sd">    :param int|tuple|function|None key: Key function to extract elements.</span>
 <span class="sd">    :return: Mean of numbers or default value</span>
 <span class="sd">    :rtype: number</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="n">colfunc</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
     <span class="nb">sum</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
     <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">iterable</span><span class="p">:</span>
-        <span class="nb">sum</span> <span class="o">+=</span> <span class="n">e</span>
+        <span class="nb">sum</span> <span class="o">+=</span> <span class="n">f</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
         <span class="n">n</span> <span class="o">+=</span> <span class="mi">1</span>
     <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="nb">sum</span><span class="p">)</span> <span class="o">/</span> <span class="n">n</span> <span class="k">if</span> <span class="n">n</span> <span class="k">else</span> <span class="n">default</span></div>
 
 
 <div class="viewcode-block" id="MeanStd"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.sink.MeanStd">[docs]</a><span class="nd">@nut_sink</span>
-<span class="k">def</span> <span class="nf">MeanStd</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ddof</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">MeanStd</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ddof</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    iterable &gt;&gt; MeanStd(default=None)</span>
+<span class="sd">    iterable &gt;&gt; MeanStd(key=None, default=None, ddof=1)</span>
 
-<span class="sd">    Return mean and standard deviation of inputs.</span>
+<span class="sd">    Return mean and standard deviation of inputs (transformed or extracted</span>
+<span class="sd">    by key function).</span>
 <span class="sd">    Standard deviation is with degrees of freedom = 1</span>
 
 <span class="sd">    &gt;&gt;&gt; [1, 2, 3] &gt;&gt; MeanStd()</span>
 <span class="sd">    (2.0, 1.0)</span>
 
+<span class="sd">    &gt;&gt;&gt; data = [(1, 10), (2, 20), (3, 30)]</span>
+<span class="sd">    &gt;&gt;&gt; data &gt;&gt; MeanStd(key=0)</span>
+<span class="sd">    (2.0, 1.0)</span>
+<span class="sd">    &gt;&gt;&gt; data &gt;&gt; MeanStd(1)</span>
+<span class="sd">    (20.0, 10.0)</span>
+
 <span class="sd">    :param iterable iterable: Iterable over numbers</span>
 <span class="sd">    :param object default: Value returned if iterable is empty.</span>
+<span class="sd">    :param int|tuple|function|None key: Key function to extract elements.</span>
 <span class="sd">    :param int ddof: Delta degrees of freedom (should 0 or 1)</span>
 <span class="sd">    :return: Mean and standard deviation of numbers or default value</span>
 <span class="sd">    :rtype: tuple (mean, std)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="n">colfunc</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
     <span class="n">sume</span><span class="p">,</span> <span class="n">sqre</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span>
     <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">iterable</span><span class="p">:</span>
+        <span class="n">e</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
         <span class="n">sume</span> <span class="o">+=</span> <span class="n">e</span>
         <span class="n">sqre</span> <span class="o">+=</span> <span class="n">e</span> <span class="o">*</span> <span class="n">e</span>
         <span class="n">n</span> <span class="o">+=</span> <span class="mf">1.0</span>
@@ -268,11 +308,11 @@
 
 
 <div class="viewcode-block" id="Max"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.sink.Max">[docs]</a><span class="nd">@nut_sink</span>
-<span class="k">def</span> <span class="nf">Max</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">Max</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    iterable &gt;&gt; Max(key=func, default=None)</span>
+<span class="sd">    iterable &gt;&gt; Max(key=None, default=None)</span>
 
-<span class="sd">    Return maximum of inputs.</span>
+<span class="sd">    Return maximum of inputs (transformed or extracted by key function).</span>
 
 <span class="sd">    &gt;&gt;&gt; [1, 2, 3, 2] &gt;&gt; Max()</span>
 <span class="sd">    3</span>
@@ -283,24 +323,33 @@
 <span class="sd">    &gt;&gt;&gt; [] &gt;&gt; Max(default=0)</span>
 <span class="sd">    0</span>
 
+<span class="sd">    &gt;&gt;&gt; data = [(3, 10), (2, 20), (1, 30)]</span>
+<span class="sd">    &gt;&gt;&gt; data &gt;&gt; Max(key=0)</span>
+<span class="sd">    (3, 10)</span>
+
+<span class="sd">    &gt;&gt;&gt; data &gt;&gt; Max(1)</span>
+<span class="sd">    (1, 30)</span>
+
+
 <span class="sd">    :param iterable iterable: Iterable over numbers</span>
-<span class="sd">    :param func key: Function maximum is based on</span>
+<span class="sd">    :param int|tuple|function|None key: Key function to extract or</span>
+<span class="sd">           transform elements. None = identity function.</span>
 <span class="sd">    :param object default: Value returned if iterable is empty.</span>
 <span class="sd">    :return: largest element according to key function</span>
 <span class="sd">    :rtype: object</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="k">return</span> <span class="nb">max</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">key</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">max</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">colfunc</span><span class="p">(</span><span class="n">key</span><span class="p">))</span>
     <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">default</span></div>
 
 
 <div class="viewcode-block" id="Min"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.sink.Min">[docs]</a><span class="nd">@nut_sink</span>
-<span class="k">def</span> <span class="nf">Min</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">Min</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    iterable &gt;&gt; Min(key=func, default=None)</span>
+<span class="sd">    iterable &gt;&gt; Min(key=None, default=None)</span>
 
-<span class="sd">    Return minimum of inputs.</span>
+<span class="sd">    Return minimum of inputs (transformed or extracted by key function).</span>
 
 <span class="sd">    &gt;&gt;&gt; [1, 2, 3, 2] &gt;&gt; Min()</span>
 <span class="sd">    1</span>
@@ -311,24 +360,34 @@
 <span class="sd">    &gt;&gt;&gt; [] &gt;&gt; Min(default=0)</span>
 <span class="sd">    0</span>
 
+<span class="sd">    &gt;&gt;&gt; data = [(3, 10), (2, 20), (1, 30)]</span>
+<span class="sd">    &gt;&gt;&gt; data &gt;&gt; Min(key=0)</span>
+<span class="sd">    (1, 30)</span>
+
+<span class="sd">    &gt;&gt;&gt; data &gt;&gt; Min(1)</span>
+<span class="sd">    (3, 10)</span>
+
+
 <span class="sd">    :param iterable iterable: Iterable over numbers</span>
-<span class="sd">    :param func key: Function minimum is based on</span>
+<span class="sd">    :param int|tuple|function|None key: Key function to extract or</span>
+<span class="sd">           transform elements. None = identity function.</span>
 <span class="sd">    :param object default: Value returned if iterable is empty.</span>
 <span class="sd">    :return: smallest element according to key function</span>
 <span class="sd">    :rtype: object</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="k">return</span> <span class="nb">min</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">key</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">min</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">colfunc</span><span class="p">(</span><span class="n">key</span><span class="p">))</span>
     <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">default</span></div>
 
 
 <div class="viewcode-block" id="ArgMax"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.sink.ArgMax">[docs]</a><span class="nd">@nut_sink</span>
-<span class="k">def</span> <span class="nf">ArgMax</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">retvalue</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">ArgMax</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">retvalue</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    iterable &gt;&gt; ArgMax(key=func, default=None, retvalue=False)</span>
+<span class="sd">    iterable &gt;&gt; ArgMax(key=None, default=None, retvalue=False)</span>
 
-<span class="sd">    Return index of first maximum element (and maximum) in input.</span>
+<span class="sd">    Return index of first maximum element (and maximum) in input</span>
+<span class="sd">    (transformed or extracted by key function).</span>
 
 <span class="sd">    &gt;&gt;&gt; [1, 2, 0, 2] &gt;&gt; ArgMax()</span>
 <span class="sd">    1</span>
@@ -345,8 +404,15 @@
 <span class="sd">    &gt;&gt;&gt; [] &gt;&gt; ArgMax(default=(None, 0), retvalue=True)</span>
 <span class="sd">    (None, 0)</span>
 
+<span class="sd">    &gt;&gt;&gt; data = [(3, 10), (2, 20), (1, 30)]</span>
+<span class="sd">    &gt;&gt;&gt; data &gt;&gt; ArgMax(key=0)</span>
+<span class="sd">    0</span>
+<span class="sd">    &gt;&gt;&gt; data &gt;&gt; ArgMax(1)</span>
+<span class="sd">    2</span>
+
 <span class="sd">    :param iterable iterable: Iterable over numbers</span>
-<span class="sd">    :param func key: Function maximum is based on</span>
+<span class="sd">    :param int|tuple|function|None key: Key function to extract or</span>
+<span class="sd">           transform elements. None = identity function.</span>
 <span class="sd">    :param object default: Value returned if iterable is empty.</span>
 <span class="sd">    :param bool retvalue: If True the index and the value of the</span>
 <span class="sd">           maximum element is returned.</span>
@@ -355,18 +421,20 @@
 <span class="sd">    :rtype: object | tuple</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="n">i</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">enumerate</span><span class="p">(</span><span class="n">iterable</span><span class="p">),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">i_e</span><span class="p">:</span> <span class="n">key</span><span class="p">(</span><span class="n">i_e</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="n">colfunc</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+        <span class="n">i</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">enumerate</span><span class="p">(</span><span class="n">iterable</span><span class="p">),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">i_e</span><span class="p">:</span> <span class="n">f</span><span class="p">(</span><span class="n">i_e</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
         <span class="k">return</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="k">if</span> <span class="n">retvalue</span> <span class="k">else</span> <span class="n">i</span>
     <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">default</span></div>
 
 
 <div class="viewcode-block" id="ArgMin"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.sink.ArgMin">[docs]</a><span class="nd">@nut_sink</span>
-<span class="k">def</span> <span class="nf">ArgMin</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">retvalue</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">ArgMin</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">retvalue</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    iterable &gt;&gt; ArgMin(key=func, default=None, retvalue=True)</span>
+<span class="sd">    iterable &gt;&gt; ArgMin(key=None, default=None, retvalue=True)</span>
 
-<span class="sd">    Return index of first minimum element (and minimum) in input.</span>
+<span class="sd">    Return index of first minimum element (and minimum) in input</span>
+<span class="sd">    (transformed or extracted by key function).</span>
 
 <span class="sd">    &gt;&gt;&gt; [1, 2, 0, 2] &gt;&gt; ArgMin()</span>
 <span class="sd">    2</span>
@@ -383,8 +451,16 @@
 <span class="sd">    &gt;&gt;&gt; [] &gt;&gt; ArgMin(default=(None, 0), retvalue=True)</span>
 <span class="sd">    (None, 0)</span>
 
+<span class="sd">    &gt;&gt;&gt; data = [(3, 10), (2, 20), (1, 30)]</span>
+<span class="sd">    &gt;&gt;&gt; data &gt;&gt; ArgMin(key=0)</span>
+<span class="sd">    2</span>
+<span class="sd">    &gt;&gt;&gt; data &gt;&gt; ArgMin(1)</span>
+<span class="sd">    0</span>
+
+
 <span class="sd">    :param iterable iterable: Iterable over numbers</span>
-<span class="sd">    :param func key: Function minimum is based on</span>
+<span class="sd">    :param int|tuple|function|None key: Key function to extract or</span>
+<span class="sd">           transform elements. None = identity function.</span>
 <span class="sd">    :param object default: Value returned if iterable is empty.</span>
 <span class="sd">    :param bool retvalue: If True the index and the value of the</span>
 <span class="sd">           minimum element is returned.</span>
@@ -393,7 +469,8 @@
 <span class="sd">    :rtype: object | tuple</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="n">i</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="nb">enumerate</span><span class="p">(</span><span class="n">iterable</span><span class="p">),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">i_e1</span><span class="p">:</span> <span class="n">key</span><span class="p">(</span><span class="n">i_e1</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="n">colfunc</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+        <span class="n">i</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="nb">enumerate</span><span class="p">(</span><span class="n">iterable</span><span class="p">),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">i_e1</span><span class="p">:</span> <span class="n">f</span><span class="p">(</span><span class="n">i_e1</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
         <span class="k">return</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="k">if</span> <span class="n">retvalue</span> <span class="k">else</span> <span class="n">i</span>
     <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">default</span></div>
@@ -693,7 +770,7 @@
         <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">iterable</span><span class="p">:</span>
             <span class="n">row</span> <span class="o">=</span> <span class="n">row</span> <span class="k">if</span> <span class="n">is_iterable</span><span class="p">(</span><span class="n">row</span><span class="p">)</span> <span class="k">else</span> <span class="p">[</span><span class="n">row</span><span class="p">]</span>
             <span class="n">row</span> <span class="o">=</span> <span class="p">[</span><span class="n">row</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">cols</span><span class="p">]</span> <span class="k">if</span> <span class="n">cols</span> <span class="k">else</span> <span class="n">row</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fmtfunc</span><span class="p">,</span> <span class="n">row</span><span class="p">))</span></div></div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">fmtfunc</span><span class="p">(</span><span class="n">r</span><span class="p">)</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span>  <span class="n">row</span><span class="p">])</span></div></div>
 </pre></div>
 
            </div>
@@ -707,7 +784,7 @@
   <div role="contentinfo">
     <p>
         &copy; Copyright 2017, IBM Research Australia.
-      Last updated on Apr 10, 2018.
+      Last updated on Sep 13, 2018.
 
     </p>
   </div> 
@@ -728,7 +805,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'1.0.27',
+            VERSION:'1.0.30',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
@@ -742,16 +819,11 @@
 
   
 
-  
-  
-    <script type="text/javascript" src="../../_static/js/theme.js"></script>
-  
+  <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
   <script type="text/javascript">
       jQuery(function () {
-          
-          SphinxRtdTheme.Navigation.enableSticky();
-          
+          SphinxRtdTheme.Navigation.enable(true);
       });
   </script> 
 

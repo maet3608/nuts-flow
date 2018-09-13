@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nutsflow.source &mdash; nutsflow 1.0.27 documentation</title>
+  <title>nutsflow.source &mdash; nutsflow 1.0.30 documentation</title>
   
 
   
@@ -24,8 +24,7 @@
 
   
 
-  
-    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
@@ -57,7 +56,7 @@
             
             
               <div class="version">
-                1.0.27
+                1.0.30
               </div>
             
           
@@ -163,10 +162,10 @@
 <span class="kn">import</span> <span class="nn">itertools</span> <span class="k">as</span> <span class="nn">itt</span>
 <span class="kn">import</span> <span class="nn">nutsflow.iterfunction</span> <span class="k">as</span> <span class="nn">itf</span>
 
-<span class="kn">from</span> <span class="nn">six.moves</span> <span class="k">import</span> <span class="nb">range</span>
+<span class="kn">from</span> <span class="nn">six.moves</span> <span class="k">import</span> <span class="nb">range</span><span class="p">,</span> <span class="n">zip_longest</span>
 <span class="kn">from</span> <span class="nn">.base</span> <span class="k">import</span> <span class="n">NutSource</span>
 <span class="kn">from</span> <span class="nn">.factory</span> <span class="k">import</span> <span class="n">nut_source</span>
-<span class="kn">from</span> <span class="nn">.common</span> <span class="k">import</span> <span class="n">as_tuple</span>
+<span class="kn">from</span> <span class="nn">.common</span> <span class="k">import</span> <span class="n">as_tuple</span><span class="p">,</span> <span class="n">is_iterable</span>
 
 
 <div class="viewcode-block" id="Enumerate"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.source.Enumerate">[docs]</a><span class="nd">@nut_source</span>
@@ -298,7 +297,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
 <div class="viewcode-block" id="ReadCSV.__init__"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.source.ReadCSV.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filepath</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">skipheader</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-                 <span class="n">fmtfunc</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+                 <span class="n">fmtfunc</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        ReadCSV(filepath, columns, skipheader, fmtfunc, **kwargs)</span>
 
@@ -310,13 +309,26 @@
 
 <span class="sd">        &gt;&gt;&gt; from nutsflow import Collect</span>
 <span class="sd">        &gt;&gt;&gt; filepath = &#39;tests/data/data.csv&#39;</span>
+
+<span class="sd">        &gt;&gt;&gt; with ReadCSV(filepath, skipheader=1) as reader:</span>
+<span class="sd">        ...     reader &gt;&gt; Collect()</span>
+<span class="sd">        [(&#39;1&#39;, &#39;2&#39;, &#39;3&#39;), (&#39;4&#39;, &#39;5&#39;, &#39;6&#39;)]</span>
+
 <span class="sd">        &gt;&gt;&gt; with ReadCSV(filepath, skipheader=1, fmtfunc=int) as reader:</span>
 <span class="sd">        ...     reader &gt;&gt; Collect()</span>
 <span class="sd">        [(1, 2, 3), (4, 5, 6)]</span>
 
+<span class="sd">        &gt;&gt;&gt; with ReadCSV(filepath, skipheader=1, fmtfunc=(int,str,float)) as reader:</span>
+<span class="sd">        ...     reader &gt;&gt; Collect()</span>
+<span class="sd">        [(1, &#39;2&#39;, 3.0), (4, &#39;5&#39;, 6.0)]</span>
+
 <span class="sd">        &gt;&gt;&gt; with ReadCSV(filepath, (2, 1), 1, int) as reader:</span>
 <span class="sd">        ...     reader &gt;&gt; Collect()</span>
 <span class="sd">        [(3, 2), (6, 5)]</span>
+
+<span class="sd">        &gt;&gt;&gt; with ReadCSV(filepath, (2, 1), 1, (str,int)) as reader:</span>
+<span class="sd">        ...     reader &gt;&gt; Collect()</span>
+<span class="sd">        [(&#39;3&#39;, 2), (&#39;6&#39;, 5)]</span>
 
 <span class="sd">        &gt;&gt;&gt; with ReadCSV(filepath, 2, 1, int) as reader:</span>
 <span class="sd">        ...     reader &gt;&gt; Collect()</span>
@@ -332,13 +344,15 @@
 <span class="sd">        :param tuple columns: Indices of the columns to read.</span>
 <span class="sd">                              If None all columns are read.</span>
 <span class="sd">        :param int skipheader: Number of header lines to skip.</span>
-<span class="sd">        :param function fmtfunc: Function to apply to the elements of each row.</span>
+<span class="sd">        :param tuple|function fmtfunc: Function or functions to apply to the</span>
+<span class="sd">                              column elements of each row.</span>
 <span class="sd">        :param kwargs kwargs: Keyword arguments for Python&#39;s CSV reader.</span>
 <span class="sd">                              See https://docs.python.org/2/library/csv.html</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">csvfile</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">columns</span> <span class="k">if</span> <span class="n">columns</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">as_tuple</span><span class="p">(</span><span class="n">columns</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">fmtfunc</span> <span class="o">=</span> <span class="n">fmtfunc</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fmtfunc</span> <span class="o">=</span> <span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">)</span> <span class="k">if</span> <span class="n">fmtfunc</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">fmtfunc</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">is_functions</span> <span class="o">=</span> <span class="n">is_iterable</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fmtfunc</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">skipheader</span><span class="p">):</span>
             <span class="nb">next</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">csvfile</span><span class="p">)</span>
         <span class="n">itf</span><span class="o">.</span><span class="n">take</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">csvfile</span><span class="p">,</span> <span class="n">skipheader</span><span class="p">)</span>
@@ -349,6 +363,16 @@
         <span class="sd">&quot;&quot;&quot;Close reader&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">csvfile</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">reader</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+    <span class="k">def</span> <span class="nf">__fmt</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">row</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Format column values in row with format function(s)&quot;&quot;&quot;</span>
+        <span class="n">fmtfunc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fmtfunc</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_functions</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">fmtfunc</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">row</span><span class="p">),</span> \
+                <span class="s2">&quot;Number of format functions and data columns don&#39;t match&quot;</span>
+            <span class="k">return</span> <span class="p">[</span><span class="n">f</span><span class="p">(</span><span class="n">r</span><span class="p">)</span> <span class="k">for</span> <span class="n">f</span><span class="p">,</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">fmtfunc</span><span class="p">,</span> <span class="n">row</span><span class="p">)]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[</span><span class="n">fmtfunc</span><span class="p">(</span><span class="n">r</span><span class="p">)</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">row</span><span class="p">]</span>
 
     <span class="k">def</span> <span class="nf">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Implementation of context manager API&quot;&quot;&quot;</span>
@@ -363,7 +387,7 @@
         <span class="n">cols</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">columns</span>
         <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">reader</span><span class="p">:</span>
             <span class="n">row</span> <span class="o">=</span> <span class="p">[</span><span class="n">row</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">cols</span><span class="p">]</span> <span class="k">if</span> <span class="n">cols</span> <span class="k">else</span> <span class="n">row</span>
-            <span class="n">row</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">fmtfunc</span><span class="p">(</span><span class="n">r</span><span class="p">)</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">row</span><span class="p">]</span>
+            <span class="n">row</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__fmt</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
             <span class="k">yield</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">row</span><span class="p">)</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">row</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="k">else</span> <span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span></div>
 </pre></div>
 
@@ -378,7 +402,7 @@
   <div role="contentinfo">
     <p>
         &copy; Copyright 2017, IBM Research Australia.
-      Last updated on Apr 10, 2018.
+      Last updated on Sep 13, 2018.
 
     </p>
   </div> 
@@ -399,7 +423,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'1.0.27',
+            VERSION:'1.0.30',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
@@ -413,16 +437,11 @@
 
   
 
-  
-  
-    <script type="text/javascript" src="../../_static/js/theme.js"></script>
-  
+  <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
   <script type="text/javascript">
       jQuery(function () {
-          
-          SphinxRtdTheme.Navigation.enableSticky();
-          
+          SphinxRtdTheme.Navigation.enable(true);
       });
   </script> 
 
