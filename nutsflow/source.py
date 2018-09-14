@@ -39,26 +39,37 @@ def Enumerate(start=0, step=1):
 
 
 @nut_source
-def Repeat(value, n=None):
+def Repeat(obj, *args, **kwargs):
     """
-    Repeat(value [, n])
+    Repeat(obj)
 
-    Return given value repeatedly. See itertools.repeat
-    
-    >>> from nutsflow import Take, Collect
+    Return given obj indefinitely.
 
-    >>> Repeat(1, 3) >> Collect()
+    >>> from nutsflow import Head, Collect
+
+    >>> Repeat(1) >> Head(3)
     [1, 1, 1]
 
-    >>> Repeat(1) >> Take(4) >> Collect()
-    [1, 1, 1, 1]
 
-    :param object value: Value to repeat
-    :param int times: Optional parameter. Object is repeated 'n' times.
+    >>> from nutsflow.common import StableRandom
+    >>> rand = StableRandom(0)
+    >>> Repeat(rand.random) >> Head(3)
+    [0.5488135024320365, 0.5928446165269344, 0.715189365138111]
+
+    >>> rand = StableRandom(0)
+    >>> Repeat(rand.randint, 1, 6) >> Head(10)
+    [4, 4, 5, 6, 4, 6, 4, 6, 3, 4]
+
+
+    :param object|func obj: Object/value to repeat. Obj can be function
+            that is repeatedly called.
+    :param  args args: Arguments passed on to obj if obj is callable
+    :param kwargs kwargs: Keyword args passed on to obj if obj is callable
     :return: Iterator of repeated objects
     :rtype: iterable over object
     """
-    return itt.repeat(value, n) if n else itt.repeat(value)
+    while True:
+        yield obj(*args, **kwargs) if callable(obj) else obj
 
 
 @nut_source

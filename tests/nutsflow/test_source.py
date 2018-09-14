@@ -14,7 +14,9 @@ def test_Enumerate():
 
 def test_Repeat():
     assert Repeat(1) >> Take(4) >> Collect() == [1, 1, 1, 1]
-    assert Repeat(1, 3) >> Collect() == [1, 1, 1]
+
+    fx = lambda x: x
+    assert Repeat(fx, 2) >> Take(3) >> Collect() == [2, 2, 2]
 
 
 def test_Product():
