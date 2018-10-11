@@ -85,4 +85,4 @@ ENV/
 *.npy
 
 # pytest
-.pytest_cache/
+.pytest_cache
