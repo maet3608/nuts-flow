@@ -551,10 +551,10 @@ class WriteCSV(NutSink):
     See: https://docs.python.org/2/library/csv.html
     """
 
-    def __init__(self, filepath, cols=None, skipheader=0,
+    def __init__(self, filepath, cols=None, skipheader=0, flush=False,
                  fmtfunc=lambda x: x, **kwargs):
         """
-        WriteCSV(filepath, cols, skipheader, fmtfunc, **kwargs)
+        WriteCSV(filepath, cols, skipheader, flush, fmtfunc, **kwargs)
 
         Write data in Comma Separated Values format (CSV) and other formats
         to file. Tab Separated Values (TSV) files can be written by
@@ -585,12 +585,14 @@ class WriteCSV(NutSink):
         :param tuple cols: Indices of the columns to write.
                            If None all columns are written.
         :param int skipheader: Number of header rows to skip.
+        :param bool flush: If True flush after every line written.
         :param function fmtfunc: Function to apply to the elements of each row.
         :param kwargs kwargs: Keyword arguments for Python's CSV writer.
                               See https://docs.python.org/2/library/csv.html
         """
         self.csvfile = open(filepath, 'w')
         self.columns = cols if cols is None else as_tuple(cols)
+        self.flush = flush
         self.fmtfunc = fmtfunc
         self.skipheader = skipheader
         self.writer = csv.writer(self.csvfile, lineterminator='\n', **kwargs)
@@ -617,4 +619,6 @@ class WriteCSV(NutSink):
         for row in iterable:
             row = row if is_iterable(row) else [row]
             row = [row[i] for i in cols] if cols else row
-            self.writer.writerow([self.fmtfunc(r) for r in  row])
+            self.writer.writerow([self.fmtfunc(r) for r in row])
+            if self.flush:
+                self.csvfile.flush()
