@@ -53,11 +53,9 @@ coverage.xml
 *.mo
 *.pot
 
-
 # Flask stuff:
 instance/
 .webassets-cache
-
 
 # Sphinx documentation
 docs/_build/
@@ -85,3 +83,6 @@ ENV/
 *.pkl
 *.npz
 *.npy
+
+#pytest
+.pytest_cache/
