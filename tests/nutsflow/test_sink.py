@@ -201,6 +201,7 @@ def test_WriteCSV():
 
     os.remove(filepath)
 
+
 def test_WriteCSV_flush():
     filepath = 'tests/data/data_out.tsv'
     data = [[1, 2], [3, 4]]
@@ -210,6 +211,7 @@ def test_WriteCSV_flush():
         assert_equal_text(open(filepath).read(), '1\t2\n3\t4\n')
 
     os.remove(filepath)
+
 
 def test_WriteCSV_tsv():
     filepath = 'tests/data/data_out.tsv'
