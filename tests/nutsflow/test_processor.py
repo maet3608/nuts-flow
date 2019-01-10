@@ -452,9 +452,9 @@ def test_Cache():
 def test_PrintProgress():
     with Redirect() as out:
         numbers = range(3)
-        numbers >> PrintProgress(numbers, 0) >> Consume()
+        numbers >> PrintProgress(numbers, 'nums:', 0) >> Consume()
     expected = \
-        '\rprogress: 0% \rprogress: 50% \rprogress: 100% \rprogress: 100% \n'
+        '\rnums: 0% \rnums: 50% \rnums: 100% \rnums: 100% \n'
     assert out.getvalue() == expected
 
 

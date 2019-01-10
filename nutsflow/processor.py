@@ -1207,7 +1207,7 @@ def Prefetch(iterable, num_prefetch=1):
 
 
 class PrintProgress(Nut):
-    def __init__(self, data, every_sec=10.0):
+    def __init__(self, data, title='progress:', every_sec=10.0):
         """
         iterable >> PrintProgress(data, every_sec=10.0)
 
@@ -1216,17 +1216,20 @@ class PrintProgress(Nut):
         For long running computations and Estimated time of arrival (eta) is
         printed as well
 
-        range(10) >> PrintProgress(10, 0) >> Consume()
+        range(10) >> PrintProgress(10, 'numbers:', 0) >> Consume()
 
         :param iterable iterable: Any iterable
         :param int data: Number of elements in iterable or realized iterable.
                If data is provided it must not be an iterator since it will be
                consumed!
+        :param str title: Title of progress print out (prefix text)
         :param float every_sec: Progress is printed every 'every_sec' seconds.
+
         :return: Iterator over input elements
         :rtype: iterator
         """
         self.n = (data if isinstance(data, int) else len(data)) - 1
+        self.title = title
         self.every_sec = every_sec
 
     def __rrshift__(self, iterable):
@@ -1241,11 +1244,11 @@ class PrintProgress(Nut):
                 sec_consumed = int(time.clock() - start_time)
                 eta = sec_consumed * (self.n / float(i) - 1) if i else 0
                 tstr = timestr(eta, etafmt)
-                text = '\rprogress: {}% {}'.format(per_done, tstr)
+                text = '\r{} {}% {}'.format(self.title, per_done, tstr)
                 console(text, end='')
             yield e
         duration = int(time.clock() - start_time)
-        text = '\rprogress: 100% {}'.format(timestr(duration, endfmt))
+        text = '\r{} 100% {}'.format(self.title, timestr(duration, endfmt))
         console(text)
 
 
