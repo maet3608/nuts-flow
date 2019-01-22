@@ -1,7 +1,12 @@
 Release notes
 =============
 
-1.0.30
+1.0.32
+------
+
+
+
+1.0.31
 ------
 
 - Title parameter added to PrintProgress
