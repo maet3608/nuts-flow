@@ -47,7 +47,7 @@ setup(
     author_email='stefan.maetschke@gmail.com',
     description='A simple data-flow framework based on iterator chaining',
     install_requires=['six >= 1.10.0'],
-    tests_require=['pytest-cov < 2.6.0', 'pytest >= 3.0.3'],
+    tests_require=['pytest-cov', 'pytest'],
     packages=find_packages(exclude=['setup']),
     include_package_data=True,
     platforms='any',
