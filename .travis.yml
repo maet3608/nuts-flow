@@ -11,9 +11,7 @@ matrix:
       dist: xenial
       sudo: true
 before_install:
-  - pip install pytest-cov<2.6
-  - pip install pytest
-  - pip install coveralls
+  - pip install pytest coveralls pytest-cov==2.5.0
   - pip install six
 install: 
   - pip install nutsflow
