@@ -1,4 +1,4 @@
-__version__ = '1.0.32'
+__version__ = '1.0.33'
 
 from nutsflow.source import Enumerate, Repeat, Product, Empty, Range, ReadCSV
 from nutsflow.processor import (Take, Slice, Concat, Interleave, Zip, ZipWith,
