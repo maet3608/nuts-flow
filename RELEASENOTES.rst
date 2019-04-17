@@ -4,7 +4,7 @@ Release notes
 1.0.33
 ------
 
-
+- deprecated time.clock() replaced
 
 1.0.32
 ------

@@ -1235,19 +1235,19 @@ class PrintProgress(Nut):
     def __rrshift__(self, iterable):
         etafmt = '(eta: {:d}:{:02d}:{:02d})'
         endfmt = '(took: {:d}:{:02d}:{:02d})'
-        start_time = time.clock()
-        up_time = time.clock()
+        start_time = time.process_time()
+        up_time = time.process_time()
         for i, e in enumerate(iterable):
-            if (time.clock() - up_time) >= self.every_sec:
-                up_time = time.clock()
+            if (time.process_time() - up_time) >= self.every_sec:
+                up_time = time.process_time()
                 per_done = int(100 * i / self.n)
-                sec_consumed = int(time.clock() - start_time)
+                sec_consumed = int(time.process_time() - start_time)
                 eta = sec_consumed * (self.n / float(i) - 1) if i else 0
                 tstr = timestr(eta, etafmt)
                 text = '\r{} {}% {}'.format(self.title, per_done, tstr)
                 console(text, end='')
             yield e
-        duration = int(time.clock() - start_time)
+        duration = int(time.process_time() - start_time)
         text = '\r{} 100% {}'.format(self.title, timestr(duration, endfmt))
         console(text)
 
