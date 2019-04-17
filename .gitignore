@@ -1,6 +1,5 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
-.pytest_cache/
 *.py[cod]
 *$py.class
 
@@ -87,3 +86,4 @@ ENV/
 
 # pytest
 .pytest_cache/
+nodeids
