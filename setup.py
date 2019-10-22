@@ -37,6 +37,11 @@ class PyTest(TestCommand):
         sys.exit(errcode)
 
 
+def load_readme():
+    with open('README.rst', encoding='utf-8') as f:
+        return f.read()
+
+
 setup(
     name='nutsflow',
     version=nutsflow.__version__,
@@ -46,6 +51,8 @@ setup(
     author='Stefan Maetschke',
     author_email='stefan.maetschke@gmail.com',
     description='A simple data-flow framework based on iterator chaining',
+    long_description=load_readme(),
+    long_description_content_type='text/x-rst',
     install_requires=['six >= 1.10.0'],
     tests_require=['pytest-cov', 'pytest >= 3.0.3'],
     packages=find_packages(exclude=['setup']),
