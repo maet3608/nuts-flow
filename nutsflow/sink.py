@@ -552,7 +552,7 @@ class WriteCSV(NutSink):
     """
 
     def __init__(self, filepath, cols=None, skipheader=0, flush=False,
-                 fmtfunc=lambda x: x, **kwargs):
+                 encoding="utf-8", fmtfunc=lambda x: x, **kwargs):
         """
         WriteCSV(filepath, cols, skipheader, flush, fmtfunc, **kwargs)
 
@@ -590,7 +590,7 @@ class WriteCSV(NutSink):
         :param kwargs kwargs: Keyword arguments for Python's CSV writer.
                               See https://docs.python.org/2/library/csv.html
         """
-        self.csvfile = open(filepath, 'w')
+        self.csvfile = open(filepath, 'w', encoding=encoding)
         self.columns = cols if cols is None else as_tuple(cols)
         self.flush = flush
         self.fmtfunc = fmtfunc

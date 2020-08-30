@@ -3,6 +3,7 @@ Release notes
 
 1.0.36
 ------
+- encoding added to WriteCSV
 
 1.0.35
 ------
