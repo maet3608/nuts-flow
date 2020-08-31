@@ -618,9 +618,10 @@ class WriteCSV(NutSink):
         for _ in range(self.skipheader):
             next(iterable)
         for row in iterable:
+            unicode = lambda e: six.u(e) if isinstance(e, str) else e
             row = row if is_iterable(row) else [row]
             row = [row[i] for i in cols] if cols else row
-            row = [six.u(self.fmtfunc(r)) for r in row]
+            row = [unicode(self.fmtfunc(r)) for r in row]
             self.writer.writerow(row)
             if self.flush:
                 self.csvfile.flush()
