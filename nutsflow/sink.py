@@ -6,6 +6,7 @@ from __future__ import absolute_import
 
 import csv
 import math
+import io
 import six
 
 import collections as cl
@@ -590,7 +591,7 @@ class WriteCSV(NutSink):
         :param kwargs kwargs: Keyword arguments for Python's CSV writer.
                               See https://docs.python.org/2/library/csv.html
         """
-        self.csvfile = open(filepath, 'w', encoding=encoding)
+        self.csvfile = io.open(filepath, 'w', encoding=encoding)
         self.columns = cols if cols is None else as_tuple(cols)
         self.flush = flush
         self.fmtfunc = fmtfunc
