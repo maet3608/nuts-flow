@@ -620,6 +620,7 @@ class WriteCSV(NutSink):
         for row in iterable:
             row = row if is_iterable(row) else [row]
             row = [row[i] for i in cols] if cols else row
-            self.writer.writerow([self.fmtfunc(r) for r in row])
+            row = [six.u(self.fmtfunc(r)) for r in row]
+            self.writer.writerow(row)
             if self.flush:
                 self.csvfile.flush()
