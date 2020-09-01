@@ -593,10 +593,10 @@ class WriteCSV(NutSink):
         :param kwargs kwargs: Keyword arguments for Python's CSV writer.
                               See https://docs.python.org/2/library/csv.html
         """
-        if sys.version_info >= (3, 0):
-            self.csvfile = open(filepath, 'w', encoding=encoding)
-        else:
-            self.csvfile = open(filepath, 'w')
+        open2 = lambda fp: open(fp, 'w')
+        open3 = lambda fp: open(fp, 'w', encoding=encoding)
+        is_py3 = sys.version_info >= (3, 0)
+        self.csvfile = open3(filepath) if is_py3 else open2(filepath)
         self.columns = cols if cols is None else as_tuple(cols)
         self.flush = flush
         self.fmtfunc = fmtfunc
