@@ -4,6 +4,7 @@
 """
 from __future__ import absolute_import
 
+import sys
 import csv
 import math
 import io
@@ -553,7 +554,7 @@ class WriteCSV(NutSink):
     """
 
     def __init__(self, filepath, cols=None, skipheader=0, flush=False,
-                 encoding="utf-8", fmtfunc=lambda x: x, **kwargs):
+                 encoding=None, fmtfunc=lambda x: x, **kwargs):
         """
         WriteCSV(filepath, cols, skipheader, flush, fmtfunc, **kwargs)
 
@@ -587,6 +588,8 @@ class WriteCSV(NutSink):
                            If None all columns are written.
         :param int skipheader: Number of header rows to skip.
         :param bool flush: If True flush after every line written.
+        :param str encoding: Character encoding, e.g. "utf-8"
+                             Ignored for Python 2.x!
         :param function fmtfunc: Function to apply to the elements of each row.
         :param kwargs kwargs: Keyword arguments for Python's CSV writer.
                               See https://docs.python.org/2/library/csv.html
