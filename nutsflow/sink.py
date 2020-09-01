@@ -7,7 +7,6 @@ from __future__ import absolute_import
 import sys
 import csv
 import math
-import io
 import six
 
 import collections as cl
@@ -594,7 +593,10 @@ class WriteCSV(NutSink):
         :param kwargs kwargs: Keyword arguments for Python's CSV writer.
                               See https://docs.python.org/2/library/csv.html
         """
-        self.csvfile = io.open(filepath, 'w', encoding=encoding)
+        if sys.version_info >= (3, 0):
+            self.csvfile = open(filepath, 'w', encoding=encoding)
+        else:
+            self.csvfile = open(filepath, 'w')
         self.columns = cols if cols is None else as_tuple(cols)
         self.flush = flush
         self.fmtfunc = fmtfunc
@@ -621,10 +623,9 @@ class WriteCSV(NutSink):
         for _ in range(self.skipheader):
             next(iterable)
         for row in iterable:
-            unicode = lambda e: six.u(e) if isinstance(e, str) else e
             row = row if is_iterable(row) else [row]
             row = [row[i] for i in cols] if cols else row
-            row = [unicode(self.fmtfunc(r)) for r in row]
+            row = [self.fmtfunc(r) for r in row]
             self.writer.writerow(row)
             if self.flush:
                 self.csvfile.flush()
