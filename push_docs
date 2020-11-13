@@ -3,6 +3,12 @@
 # http://www.willmcginnis.com/2016/02/29/automating-documentation-workflow-with-sphinx-and-github-pages/
 # Run this script in the root
 
+# Windows:
+# use make tool from gnuwin32 and add tu system path
+# http://gnuwin32.sourceforge.net/packages/make.htm
+# and use Windows git shell to run script
+# https://gitforwindows.org/
+
 # build the docs
 cd sphinx
 make clean
