@@ -231,8 +231,8 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Decorator for Nut processors.</span>
 
-<span class="sd">    Example on how to define a custom processor nut.</span>
-<span class="sd">    Not that a processor reads an iterable and must return</span>
+<span class="sd">    Examples on how to define a custom processor nut.</span>
+<span class="sd">    Note that a processor reads an iterable and must return</span>
 <span class="sd">    an iterable/generator</span>
 
 <span class="sd">    .. code::</span>
@@ -296,6 +296,19 @@
 
 <span class="sd">      range(5) &gt;&gt; MyCollect(tuple)  --&gt;   (0, 1, 2, 3, 4)</span>
 
+
+<span class="sd">    .. code::</span>
+
+<span class="sd">      @nut_sink</span>
+<span class="sd">      def MyProd(iterable):</span>
+<span class="sd">          p = 1</span>
+<span class="sd">          for e in iterable:</span>
+<span class="sd">              p = p*e</span>
+<span class="sd">          return p</span>
+
+<span class="sd">      [1, 2, 3] &gt;&gt; MyProd()  --&gt; 12</span>
+
+
 <span class="sd">    :param function func: Function to decorate</span>
 <span class="sd">    :param iterpos: Position of iterable in function arguments</span>
 <span class="sd">    :return: Nut sink for given function</span>
@@ -338,7 +351,8 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Decorator for Nut sources.</span>
 
-<span class="sd">    Example on how to define a custom source nut:</span>
+<span class="sd">    Example on how to define a custom source nut. Note that a source</span>
+<span class="sd">    must return an iterable/generator and does not read any input.</span>
 
 <span class="sd">    .. code::</span>
 
