@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nutsflow.sink &mdash; nutsflow 1.0.30 documentation</title>
+  <title>nutsflow.sink &mdash; nutsflow 1.0.38 documentation</title>
   
 
   
@@ -17,32 +17,34 @@
   
 
   
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
-
-  
-  <script src="../../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -56,7 +58,7 @@
             
             
               <div class="version">
-                1.0.30
+                1.0.38
               </div>
             
           
@@ -155,19 +157,20 @@
 <span class="sd">.. module:: sink</span>
 <span class="sd">   :synopsis: Nuts that reads streams and potentially produce non-stream output.</span>
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">absolute_import</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">absolute_import</span>
 
+<span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">csv</span>
 <span class="kn">import</span> <span class="nn">math</span>
 <span class="kn">import</span> <span class="nn">six</span>
 
 <span class="kn">import</span> <span class="nn">collections</span> <span class="k">as</span> <span class="nn">cl</span>
 
-<span class="kn">from</span> <span class="nn">six.moves</span> <span class="k">import</span> <span class="n">reduce</span><span class="p">,</span> <span class="nb">zip</span><span class="p">,</span> <span class="nb">range</span>
-<span class="kn">from</span> <span class="nn">.base</span> <span class="k">import</span> <span class="n">NutSink</span>
-<span class="kn">from</span> <span class="nn">.factory</span> <span class="k">import</span> <span class="n">nut_sink</span>
-<span class="kn">from</span> <span class="nn">.common</span> <span class="k">import</span> <span class="n">as_tuple</span><span class="p">,</span> <span class="n">is_iterable</span><span class="p">,</span> <span class="n">colfunc</span>
-<span class="kn">from</span> <span class="nn">.iterfunction</span> <span class="k">import</span> <span class="n">nth</span><span class="p">,</span> <span class="n">consume</span><span class="p">,</span> <span class="n">length</span><span class="p">,</span> <span class="n">take</span>
+<span class="kn">from</span> <span class="nn">six.moves</span> <span class="kn">import</span> <span class="n">reduce</span><span class="p">,</span> <span class="nb">zip</span><span class="p">,</span> <span class="nb">range</span>
+<span class="kn">from</span> <span class="nn">.base</span> <span class="kn">import</span> <span class="n">NutSink</span>
+<span class="kn">from</span> <span class="nn">.factory</span> <span class="kn">import</span> <span class="n">nut_sink</span>
+<span class="kn">from</span> <span class="nn">.common</span> <span class="kn">import</span> <span class="n">as_tuple</span><span class="p">,</span> <span class="n">is_iterable</span><span class="p">,</span> <span class="n">colfunc</span>
+<span class="kn">from</span> <span class="nn">.iterfunction</span> <span class="kn">import</span> <span class="n">nth</span><span class="p">,</span> <span class="n">consume</span><span class="p">,</span> <span class="n">length</span><span class="p">,</span> <span class="n">take</span>
 
 
 <div class="viewcode-block" id="Sort"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.sink.Sort">[docs]</a><span class="nd">@nut_sink</span>
@@ -704,10 +707,10 @@
 <span class="sd">    See: https://docs.python.org/2/library/csv.html</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="WriteCSV.__init__"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.sink.WriteCSV.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filepath</span><span class="p">,</span> <span class="n">cols</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">skipheader</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-                 <span class="n">fmtfunc</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="WriteCSV.__init__"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.sink.WriteCSV.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filepath</span><span class="p">,</span> <span class="n">cols</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">skipheader</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">flush</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                 <span class="n">encoding</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">fmtfunc</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        WriteCSV(filepath, cols, skipheader, fmtfunc, **kwargs)</span>
+<span class="sd">        WriteCSV(filepath, cols, skipheader, flush, fmtfunc, **kwargs)</span>
 
 <span class="sd">        Write data in Comma Separated Values format (CSV) and other formats</span>
 <span class="sd">        to file. Tab Separated Values (TSV) files can be written by</span>
@@ -738,12 +741,19 @@
 <span class="sd">        :param tuple cols: Indices of the columns to write.</span>
 <span class="sd">                           If None all columns are written.</span>
 <span class="sd">        :param int skipheader: Number of header rows to skip.</span>
+<span class="sd">        :param bool flush: If True flush after every line written.</span>
+<span class="sd">        :param str encoding: Character encoding, e.g. &quot;utf-8&quot;</span>
+<span class="sd">                             Ignored for Python 2.x!</span>
 <span class="sd">        :param function fmtfunc: Function to apply to the elements of each row.</span>
 <span class="sd">        :param kwargs kwargs: Keyword arguments for Python&#39;s CSV writer.</span>
 <span class="sd">                              See https://docs.python.org/2/library/csv.html</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">csvfile</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>
+        <span class="n">open2</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">fp</span><span class="p">:</span> <span class="nb">open</span><span class="p">(</span><span class="n">fp</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>
+        <span class="n">open3</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">fp</span><span class="p">:</span> <span class="nb">open</span><span class="p">(</span><span class="n">fp</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="n">encoding</span><span class="p">)</span>
+        <span class="n">is_py3</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">version_info</span> <span class="o">&gt;=</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">csvfile</span> <span class="o">=</span> <span class="n">open3</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span> <span class="k">if</span> <span class="n">is_py3</span> <span class="k">else</span> <span class="n">open2</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">cols</span> <span class="k">if</span> <span class="n">cols</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">as_tuple</span><span class="p">(</span><span class="n">cols</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">flush</span> <span class="o">=</span> <span class="n">flush</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">fmtfunc</span> <span class="o">=</span> <span class="n">fmtfunc</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">skipheader</span> <span class="o">=</span> <span class="n">skipheader</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">writer</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">writer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">csvfile</span><span class="p">,</span> <span class="n">lineterminator</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
@@ -753,15 +763,15 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">csvfile</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">writer</span> <span class="o">=</span> <span class="kc">None</span></div>
 
-    <span class="k">def</span> <span class="nf">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Implementation of context manager API&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span>
 
-    <span class="k">def</span> <span class="nf">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Implementation of context manager API&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 
-<div class="viewcode-block" id="WriteCSV.__rrshift__"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.sink.WriteCSV.__rrshift__">[docs]</a>    <span class="k">def</span> <span class="nf">__rrshift__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">iterable</span><span class="p">):</span>
+<div class="viewcode-block" id="WriteCSV.__rrshift__"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.sink.WriteCSV.__rrshift__">[docs]</a>    <span class="k">def</span> <span class="fm">__rrshift__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">iterable</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Write elements of iterable to file&quot;&quot;&quot;</span>
         <span class="n">cols</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">columns</span>
         <span class="n">iterable</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">iterable</span><span class="p">)</span>
@@ -770,7 +780,10 @@
         <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">iterable</span><span class="p">:</span>
             <span class="n">row</span> <span class="o">=</span> <span class="n">row</span> <span class="k">if</span> <span class="n">is_iterable</span><span class="p">(</span><span class="n">row</span><span class="p">)</span> <span class="k">else</span> <span class="p">[</span><span class="n">row</span><span class="p">]</span>
             <span class="n">row</span> <span class="o">=</span> <span class="p">[</span><span class="n">row</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">cols</span><span class="p">]</span> <span class="k">if</span> <span class="n">cols</span> <span class="k">else</span> <span class="n">row</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">fmtfunc</span><span class="p">(</span><span class="n">r</span><span class="p">)</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span>  <span class="n">row</span><span class="p">])</span></div></div>
+            <span class="n">row</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">fmtfunc</span><span class="p">(</span><span class="n">r</span><span class="p">)</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">row</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">flush</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">csvfile</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span></div></div>
 </pre></div>
 
            </div>
@@ -783,8 +796,10 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2017, IBM Research Australia.
-      Last updated on Sep 13, 2018.
+        &copy; Copyright 2017, IBM Research Australia
+      <span class="lastupdated">
+        Last updated on Nov 13, 2020.
+      </span>
 
     </p>
   </div> 
@@ -800,32 +815,16 @@
   
 
 
-  
-
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'../../',
-            VERSION:'1.0.30',
-            LANGUAGE:'None',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
-        };
-    </script>
-      <script type="text/javascript" src="../../_static/jquery.js"></script>
-      <script type="text/javascript" src="../../_static/underscore.js"></script>
-      <script type="text/javascript" src="../../_static/doctools.js"></script>
-
-  
-
-  <script type="text/javascript" src="../../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>
