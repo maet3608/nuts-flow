@@ -81,6 +81,17 @@ def nut_processor(func, iterpos=0):
     .. code::
 
       @nut_processor
+      def Twice(iterable):
+          for e in iterable:
+              yield e
+              yield e
+
+      [1, 2, 3] >> Twice() >> Collect()  --> [1, 1, 2, 2, 3, 3]
+
+
+    .. code::
+
+      @nut_processor
       def Clone(iterable, n):
           for e in iterable:
               for _ in xrange(p):
@@ -105,10 +116,19 @@ def nut_sink(func, iterpos=0):
     .. code::
 
       @nut_sink
-      def Collect(iterable, container):
+      def ToList(iterable):
+          return list(iterable)
+
+      range(5) >> ToList()  -->   [0, 1, 2, 3, 4]
+
+
+    .. code::
+
+      @nut_sink
+      def MyCollect(iterable, container):
           return container(iterable)
 
-      xrange(5) >> Collect(tuple)  -->   (0, 1, 2, 3, 4)
+      range(5) >> MyCollect(tuple)  -->   (0, 1, 2, 3, 4)
 
     :param function func: Function to decorate
     :param iterpos: Position of iterable in function arguments
@@ -157,10 +177,20 @@ def nut_source(func):
     .. code::
 
       @nut_source
-      def Range(start, end):
-          return xrange(start, end)
+      def MyRange(start, end):
+          return range(start, end)
 
-      Range(0, 5) >> Collect()  --> [0, 1, 2, 3, 4]
+      MyRange(0, 5) >> Collect()  --> [0, 1, 2, 3, 4]
+
+
+    .. code::
+
+      @nut_source
+      def MyRange2(start, end):
+          for i in range(start, end):
+              yield i*2
+
+      MyRange2(0, 5) >> Collect()  --> [0, 2, 4, 6, 8]
 
     :param function func: Function to decorate
     :return: Nut source for given function
@@ -184,6 +214,15 @@ def nut_filter(func):
 
     Also see nut_filerfalse().
     Example on how to define a custom filter nut:
+
+    .. code::
+
+      @nut_filter
+      def Positive(x):
+          return x > 0
+
+      [-1, 1, -2, 2] >> Positive() >> Collect()  --> [1, 2]
+
 
     .. code::
 
