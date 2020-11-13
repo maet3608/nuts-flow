@@ -95,9 +95,9 @@ def nut_processor(func, iterpos=0):
 
       @nut_processor
       def Odd(iterable):
-          return (e for e in iterable if e % 2 )
+          return (e for e in iterable if e % 2)
 
-      [1, 2, 3, 4, 5] >> Odd() >> Collect()  --> [1, 3,5]
+      [1, 2, 3, 4, 5] >> Odd() >> Collect()  --> [1, 3, 5]
 
 
     .. code::
