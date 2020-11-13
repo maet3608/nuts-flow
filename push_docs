@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 # based on
 # http://www.willmcginnis.com/2016/02/29/automating-documentation-workflow-with-sphinx-and-github-pages/
-# Run this script in the root
+# Run this script in the project root
 
 # Windows:
 # use make tool from gnuwin32 and add tu system path
 # http://gnuwin32.sourceforge.net/packages/make.htm
-# and use Windows git shell to run script
-# https://gitforwindows.org/
+# and use Windows git shell (https://gitforwindows.org/) to run script as
+# ./push_docs
 
 # build the docs
 cd sphinx
