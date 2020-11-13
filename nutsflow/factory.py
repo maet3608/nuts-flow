@@ -148,7 +148,7 @@ def nut_sink(func, iterpos=0):
       def MyProd(iterable):
           p = 1
           for e in iterable:
-              p = p*e
+              p *= e
           return p
 
       [1, 2, 3] >> MyProd()  --> 12
@@ -213,7 +213,7 @@ def nut_source(func):
       @nut_source
       def MyRange2(start, end):
           for i in range(start, end):
-              yield i*2
+              yield i * 2
 
       MyRange2(0, 5) >> Collect()  --> [0, 2, 4, 6, 8]
 
