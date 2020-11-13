@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nutsflow.base &mdash; nutsflow 1.0.30 documentation</title>
+  <title>nutsflow.base &mdash; nutsflow 1.0.38 documentation</title>
   
 
   
@@ -17,32 +17,34 @@
   
 
   
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
-
-  
-  <script src="../../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -56,7 +58,7 @@
             
             
               <div class="version">
-                1.0.30
+                1.0.38
               </div>
             
           
@@ -156,7 +158,7 @@
 <span class="sd">   :synopsis: Base classes and functions.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="kn">from</span> <span class="nn">six.moves</span> <span class="k">import</span> <span class="nb">map</span>
+<span class="kn">from</span> <span class="nn">six.moves</span> <span class="kn">import</span> <span class="nb">map</span>
 
 
 <div class="viewcode-block" id="Nut"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.base.Nut">[docs]</a><span class="k">class</span> <span class="nc">Nut</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
@@ -175,7 +177,7 @@
 <span class="sd">    [6, 7, 8]</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="Nut.__init__"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.base.Nut.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="Nut.__init__"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.base.Nut.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Constructor. Nuts (and derived classes) can have arbitrary arguments.</span>
 
@@ -185,7 +187,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">args</span> <span class="o">=</span> <span class="n">args</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span> <span class="o">=</span> <span class="n">kwargs</span></div>
 
-<div class="viewcode-block" id="Nut.__call__"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.base.Nut.__call__">[docs]</a>    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">iterable</span><span class="p">):</span>
+<div class="viewcode-block" id="Nut.__call__"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.base.Nut.__call__">[docs]</a>    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">iterable</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Nut (processor) can be called as a function and mapped on</span>
 <span class="sd">        iterable elements within an iterable.</span>
@@ -196,7 +198,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="fm">__rrshift__</span><span class="p">(</span><span class="n">iterable</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Nut.__rrshift__"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.base.Nut.__rrshift__">[docs]</a>    <span class="k">def</span> <span class="nf">__rrshift__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">iterable</span><span class="p">):</span>
+<div class="viewcode-block" id="Nut.__rrshift__"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.base.Nut.__rrshift__">[docs]</a>    <span class="k">def</span> <span class="fm">__rrshift__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">iterable</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Chaining operator for Nuts. Needs to be overridden!</span>
 
@@ -224,7 +226,7 @@
 <span class="sd">    [1, 4, 9]</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="NutFunction.__call__"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.base.NutFunction.__call__">[docs]</a>    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">):</span>
+<div class="viewcode-block" id="NutFunction.__call__"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.base.NutFunction.__call__">[docs]</a>    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Override this method to transform the elements of an iterable.</span>
 
@@ -236,7 +238,7 @@
         <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
             <span class="s1">&#39;Needs to implement  __call__() : &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="NutFunction.__rrshift__"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.base.NutFunction.__rrshift__">[docs]</a>    <span class="k">def</span> <span class="nf">__rrshift__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">iterable</span><span class="p">):</span>
+<div class="viewcode-block" id="NutFunction.__rrshift__"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.base.NutFunction.__rrshift__">[docs]</a>    <span class="k">def</span> <span class="fm">__rrshift__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">iterable</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Map function onto iterable and return transformed iterable.</span>
 <span class="sd">        Do not override!</span>
@@ -254,7 +256,7 @@
 <span class="sd">    iterable.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="NutSource.__rrshift__"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.base.NutSource.__rrshift__">[docs]</a>    <span class="k">def</span> <span class="nf">__rrshift__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">iterable</span><span class="p">):</span>
+<div class="viewcode-block" id="NutSource.__rrshift__"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.base.NutSource.__rrshift__">[docs]</a>    <span class="k">def</span> <span class="fm">__rrshift__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">iterable</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Raises an exception when called. Sources have not input!</span>
 <span class="sd">        Do not override! Override __iter__() instead.</span>
@@ -265,7 +267,7 @@
         <span class="k">raise</span> <span class="ne">SyntaxError</span><span class="p">(</span>
             <span class="s2">&quot;Sources don&#39;t have inputs: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">))</span></div>
 
-    <span class="k">def</span> <span class="nf">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return iterator over some data. Needs to be overridden!</span>
 
@@ -286,7 +288,7 @@
 <span class="sd">    Need to override __rrshift__()!</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Raises an exception when called. Sinks should not serve as sources.</span>
 
@@ -295,7 +297,7 @@
         <span class="k">raise</span> <span class="ne">SyntaxError</span><span class="p">(</span>
             <span class="s1">&#39;Sinks cannot be inputs: &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">))</span>
 
-<div class="viewcode-block" id="NutSink.__call__"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.base.NutSink.__call__">[docs]</a>    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">iterable</span><span class="p">):</span>
+<div class="viewcode-block" id="NutSink.__call__"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.base.NutSink.__call__">[docs]</a>    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">iterable</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sinks can serve as functions applied to iterables within a flow.</span>
 
@@ -316,8 +318,10 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2017, IBM Research Australia.
-      Last updated on Sep 13, 2018.
+        &copy; Copyright 2017, IBM Research Australia
+      <span class="lastupdated">
+        Last updated on Nov 13, 2020.
+      </span>
 
     </p>
   </div> 
@@ -333,32 +337,16 @@
   
 
 
-  
-
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'../../',
-            VERSION:'1.0.30',
-            LANGUAGE:'None',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
-        };
-    </script>
-      <script type="text/javascript" src="../../_static/jquery.js"></script>
-      <script type="text/javascript" src="../../_static/underscore.js"></script>
-      <script type="text/javascript" src="../../_static/doctools.js"></script>
-
-  
-
-  <script type="text/javascript" src="../../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

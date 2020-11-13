@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Prerequisites &mdash; nutsflow 1.0.30 documentation</title>
+  <title>Prerequisites &mdash; nutsflow 1.0.38 documentation</title>
   
 
   
@@ -17,34 +17,36 @@
   
 
   
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Nuts basics" href="nuts_basics.html" />
     <link rel="prev" title="Tutorial" href="introduction.html" /> 
-
-  
-  <script src="../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -58,7 +60,7 @@
             
             
               <div class="version">
-                1.0.30
+                1.0.38
               </div>
             
           
@@ -186,15 +188,19 @@ If you are already familiar with these concepts go ahead and skip this section.<
 <h2>Lambda functions<a class="headerlink" href="#lambda-functions" title="Permalink to this headline">¶</a></h2>
 <p>Commonly functions are defined via the <code class="docutils literal notranslate"><span class="pre">def</span></code> keyword and a function name,
 e.g.:</p>
+<div class="highlight-pythonun notranslate"><div class="highlight"><pre><span></span>def add(a, b):
+    return a + b
+</pre></div>
+</div>
 <p><em>Lambda</em> functions or so called <em>anonymous</em> functions are an alternative method
 to define very short functions (without a name) that are typically used only once.
 For instance, the <code class="docutils literal notranslate"><span class="pre">add</span></code> function above can be written as follows</p>
-<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">lambda</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">lambda</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
 </pre></div>
 </div>
 <p>Since functions are first class citizens in Python they can be assigned
 to variables and called by name as well</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">add</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">add</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">add</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
 <span class="go">3</span>
 </pre></div>
@@ -202,7 +208,7 @@ to variables and called by name as well</p>
 <p>The most common use case, however, is as a anonymous function for other
 functions such as <code class="docutils literal notranslate"><span class="pre">sorted</span></code>, <code class="docutils literal notranslate"><span class="pre">max</span></code> or <code class="docutils literal notranslate"><span class="pre">filter</span></code>.  For example,
 to extract numbers greater than 2 from a list we could write</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">numbers</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">numbers</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">,</span> <span class="n">numbers</span><span class="p">)</span>
 <span class="go">[3, 4]</span>
 </pre></div>
@@ -211,7 +217,7 @@ to extract numbers greater than 2 from a list we could write</p>
 following the <em>underscore notation</em> from <a class="reference external" href="https://www.scala-lang.org/">Scala</a>.
 Using the underscore, the above filtering can be expressed
 even more succinctly as</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nutsflow</span> <span class="k">import</span> <span class="n">_</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nutsflow</span> <span class="kn">import</span> <span class="n">_</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">filter</span><span class="p">(</span><span class="n">_</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">,</span> <span class="n">numbers</span><span class="p">)</span>
 <span class="go">[3, 4]</span>
 </pre></div>
@@ -230,12 +236,12 @@ as counters or random numbers.</p>
 provides a <code class="docutils literal notranslate"><span class="pre">next</span></code> method, which returns elements when called and raises a
 <code class="docutils literal notranslate"><span class="pre">StopIteration</span></code> exception when depleted. Here an iterator that returns
 even numbers up to a given maximum</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">Even</span><span class="p">():</span>
-<span class="gp">... </span>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">maximum</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">Even</span><span class="p">():</span>
+<span class="gp">... </span>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">maximum</span><span class="p">):</span>
 <span class="gp">... </span>        <span class="bp">self</span><span class="o">.</span><span class="n">counter</span> <span class="o">=</span> <span class="mi">0</span>
 <span class="gp">... </span>        <span class="bp">self</span><span class="o">.</span><span class="n">maximum</span> <span class="o">=</span> <span class="n">maximum</span>
 <span class="gp">...</span>
-<span class="gp">... </span>    <span class="k">def</span> <span class="nf">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="gp">... </span>        <span class="k">return</span> <span class="bp">self</span>
 <span class="gp">...</span>
 <span class="gp">... </span>    <span class="k">def</span> <span class="nf">next</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -249,7 +255,7 @@ even numbers up to a given maximum</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">__iter__</span></code> method make the iterator <em>iterable</em> and enables
 its usage in <code class="docutils literal notranslate"><span class="pre">for</span></code> loops, list comprehensions or functions
 that take iterables</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">even</span> <span class="o">=</span> <span class="n">Even</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">even</span> <span class="o">=</span> <span class="n">Even</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">even</span><span class="p">:</span>
 <span class="gp">... </span>    <span class="nb">print</span> <span class="n">e</span>
 <span class="go">2</span>
@@ -265,18 +271,18 @@ create any numbers.</p>
 <p>Secondly, an iterator has state and subsequent calls will advance its state.
 Thirdly, once an iterator is depleted it needs to be recreated to be used
 again</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">even</span> <span class="o">=</span> <span class="n">Even</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">even</span> <span class="o">=</span> <span class="n">Even</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="n">e</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">even</span><span class="p">]</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="n">e</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">even</span><span class="p">]</span>
 <span class="go">[2, 4, 6, 8, 10]</span>
 </pre></div>
 </div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="n">e</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">even</span><span class="p">]</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="n">e</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">even</span><span class="p">]</span>
 <span class="go">[]</span>
 </pre></div>
 </div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">even</span> <span class="o">=</span> <span class="n">Even</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">even</span> <span class="o">=</span> <span class="n">Even</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="n">e</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">even</span><span class="p">]</span>
 <span class="go">[2, 4, 6, 8, 10]</span>
 </pre></div>
@@ -287,7 +293,7 @@ that consume very little memory. Python’s
 library provides many functions for this purpose. The following toy
 example uses itertools to extract the first three integers greater
 than five in the interval [0..8[</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">itertools</span> <span class="k">import</span> <span class="n">islice</span><span class="p">,</span> <span class="n">ifilter</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">islice</span><span class="p">,</span> <span class="n">ifilter</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">islice</span><span class="p">(</span><span class="n">ifilter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">5</span><span class="p">,</span> <span class="n">xrange</span><span class="p">(</span><span class="mi">8</span><span class="p">)),</span> <span class="mi">3</span><span class="p">))</span>
 <span class="go">[6, 7]</span>
 </pre></div>
@@ -295,7 +301,7 @@ than five in the interval [0..8[</p>
 <p><strong>nuts-flow</strong> is largely based on Python’s itertools but aims to
 make the data flow more explict and readable by introducing
 the  <code class="docutils literal notranslate"><span class="pre">&gt;&gt;</span></code> operator for chaining</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nutsflow</span> <span class="k">import</span> <span class="n">Range</span><span class="p">,</span> <span class="n">Filter</span><span class="p">,</span> <span class="n">Take</span><span class="p">,</span> <span class="n">Collect</span><span class="p">,</span> <span class="n">_</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nutsflow</span> <span class="kn">import</span> <span class="n">Range</span><span class="p">,</span> <span class="n">Filter</span><span class="p">,</span> <span class="n">Take</span><span class="p">,</span> <span class="n">Collect</span><span class="p">,</span> <span class="n">_</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Filter</span><span class="p">(</span><span class="n">_</span> <span class="o">&gt;</span> <span class="mi">5</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Take</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
 <span class="go">[6, 7]</span>
 </pre></div>
@@ -314,7 +320,7 @@ the  <code class="docutils literal notranslate"><span class="pre">&gt;&gt;</span
         <a href="nuts_basics.html" class="btn btn-neutral float-right" title="Nuts basics" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="introduction.html" class="btn btn-neutral" title="Tutorial" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="introduction.html" class="btn btn-neutral float-left" title="Tutorial" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -323,8 +329,10 @@ the  <code class="docutils literal notranslate"><span class="pre">&gt;&gt;</span
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2017, IBM Research Australia.
-      Last updated on Sep 13, 2018.
+        &copy; Copyright 2017, IBM Research Australia
+      <span class="lastupdated">
+        Last updated on Nov 13, 2020.
+      </span>
 
     </p>
   </div> 
@@ -340,32 +348,16 @@ the  <code class="docutils literal notranslate"><span class="pre">&gt;&gt;</span
   
 
 
-  
-
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'../',
-            VERSION:'1.0.30',
-            LANGUAGE:'None',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
-        };
-    </script>
-      <script type="text/javascript" src="../_static/jquery.js"></script>
-      <script type="text/javascript" src="../_static/underscore.js"></script>
-      <script type="text/javascript" src="../_static/doctools.js"></script>
-
-  
-
-  <script type="text/javascript" src="../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

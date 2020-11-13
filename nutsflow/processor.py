@@ -1301,7 +1301,7 @@ def Try(iterable, func, default='STDERR'):
        If default = 'STDERR', no value is returned, error is printed to stderr.
        If default = 'STDOUT', no value is returned, error is printed to stdout.
        If default is function that takes element x and  exception e
-          as parameters its result is returned and no error is printed.
+       as parameters its result is returned and no error is printed.
        Otherwise the default value is returned and no error is printed.
     :return: Iterator over input elements transformed by provided nut.
     :rtype: iterator

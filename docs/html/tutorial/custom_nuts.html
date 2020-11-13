@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Custom nuts &mdash; nutsflow 1.0.30 documentation</title>
+  <title>Custom nuts &mdash; nutsflow 1.0.38 documentation</title>
   
 
   
@@ -17,34 +17,36 @@
   
 
   
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Underscore syntax" href="underscore.html" />
     <link rel="prev" title="Handling exceptions" href="exceptions.html" /> 
-
-  
-  <script src="../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -58,7 +60,7 @@
             
             
               <div class="version">
-                1.0.30
+                1.0.38
               </div>
             
           
@@ -190,27 +192,27 @@
 <p><strong>nuts-flow</strong> can easily be extended with custom nuts using wrappers,
 decorators or derived classes. To clarify the differences between the
 approaches let us start with a simple filter. First, import <strong>nutsflow</strong></p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nutsflow</span> <span class="k">import</span> <span class="o">*</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nutsflow</span> <span class="kn">import</span> <span class="o">*</span>
 </pre></div>
 </div>
 <p>then define a <code class="docutils literal notranslate"><span class="pre">lambda</span></code> function that returns <code class="docutils literal notranslate"><span class="pre">True</span></code> for elements
 greater than five</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">greater_than_5</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">5</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">greater_than_5</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">5</span>
 </pre></div>
 </div>
 <p>and finally filter numbers using <code class="docutils literal notranslate"><span class="pre">Filter</span></code> and the defined <code class="docutils literal notranslate"><span class="pre">lambda</span></code>
 predicate</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Filter</span><span class="p">(</span><span class="n">greater_than_5</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Filter</span><span class="p">(</span><span class="n">greater_than_5</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
 <span class="go">[6, 7, 8, 9]</span>
 </pre></div>
 </div>
 <p>By wrapping the lambda function via <code class="docutils literal notranslate"><span class="pre">nut_filter</span></code> a custom
 filter nut can be created</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">GreaterThan5</span> <span class="o">=</span> <span class="n">nut_filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">5</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">GreaterThan5</span> <span class="o">=</span> <span class="n">nut_filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">5</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>that operates the same way but can be directly used as a nut</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">GreaterThan5</span><span class="p">()</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">GreaterThan5</span><span class="p">()</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
 <span class="go">[6, 7, 8, 9]</span>
 </pre></div>
 </div>
@@ -223,7 +225,7 @@ in lowercase, without brackets and passed on as parameters to nuts.</p>
 <p>For instance, both of the following examples are <strong>invalid</strong>. Here
 <code class="docutils literal notranslate"><span class="pre">greater_than_5</span></code> is confused as nut and invoked with brackets
 instead of being passed as a value to <code class="docutils literal notranslate"><span class="pre">Filter</span></code></p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Filter</span><span class="p">(</span><span class="n">greater_than_5</span><span class="p">())</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Filter</span><span class="p">(</span><span class="n">greater_than_5</span><span class="p">())</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
 <span class="gt">Traceback (most recent call last):</span>
 <span class="c">...</span>
 <span class="gr">TypeError</span>: <span class="n">&lt;lambda&gt;() takes exactly 1 argument (0 given)</span>
@@ -231,7 +233,7 @@ instead of being passed as a value to <code class="docutils literal notranslate"
 </div>
 <p>Similarily in the following example <code class="docutils literal notranslate"><span class="pre">GreaterThan5</span></code> is invoked
 without brackets</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">GreaterThan5</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">GreaterThan5</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
 <span class="gt">Traceback (most recent call last):</span>
 <span class="c">...</span>
 <span class="gr">TypeError</span>: <span class="n">unsupported operand type(s) for &gt;&gt;: &#39;Range&#39; and &#39;type&#39;</span>
@@ -240,12 +242,12 @@ without brackets</p>
 <p><cite>Wrappers</cite> such as <code class="docutils literal notranslate"><span class="pre">nut_filter(...)</span></code> are suitable for simple one-line
 functions with a single parameter but become less readable when
 additional parameters are required,  e.g. filtering with a given threshold</p>
-<div class="code highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">GreaterThan</span> <span class="o">=</span> <span class="n">nut_filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">threshold</span><span class="p">:</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="n">threshold</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">GreaterThan</span> <span class="o">=</span> <span class="n">nut_filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">threshold</span><span class="p">:</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="n">threshold</span><span class="p">)</span>
 <span class="n">Range</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">GreaterThan</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
 </pre></div>
 </div>
 <p>In this case <cite>decorators</cite> are a better solution</p>
-<div class="code highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@nut_filter</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@nut_filter</span>
 <span class="k">def</span> <span class="nf">GreaterThan</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">threshold</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="n">threshold</span>
 
@@ -255,15 +257,15 @@ additional parameters are required,  e.g. filtering with a given threshold</p>
 <p>Note that for wrappers and decorators there is a difference in the
 arguments depending on whether the nut is <em>defined</em> or <em>invoked</em></p>
 <p><strong>definitions:</strong></p>
-<div class="code highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">GreaterThan</span> <span class="o">=</span> <span class="n">nut_filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">threshold</span><span class="p">:</span> <span class="o">...</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">GreaterThan</span> <span class="o">=</span> <span class="n">nut_filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">threshold</span><span class="p">:</span> <span class="o">...</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="code highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@nut_filter</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@nut_filter</span>
 <span class="k">def</span> <span class="nf">GreaterThan</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">threshold</span><span class="p">):</span> <span class="o">...</span>
 </pre></div>
 </div>
 <p><strong>invokation:</strong></p>
-<div class="code highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">&gt;&gt;</span> <span class="n">GreaterThan</span><span class="p">(</span><span class="n">threshold</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">&gt;&gt;</span> <span class="n">GreaterThan</span><span class="p">(</span><span class="n">threshold</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>When <em>invoked</em> the first argument of the nut (here <code class="docutils literal notranslate"><span class="pre">x</span></code>) appears as input
@@ -272,11 +274,11 @@ appear in brackets.</p>
 <p>In rare (more advanced) cases custom nuts can be implemented
 as classes derived from the relevant base classes (see <code class="docutils literal notranslate"><span class="pre">base.py</span></code>).
 Here an example implementation of the <code class="docutils literal notranslate"><span class="pre">GreaterThan</span></code> nut as a class</p>
-<div class="code highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">GreaterThan</span><span class="p">(</span><span class="n">Nut</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">threshold</span><span class="p">):</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">GreaterThan</span><span class="p">(</span><span class="n">Nut</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">threshold</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">threshold</span> <span class="o">=</span> <span class="n">threshold</span>
 
-    <span class="k">def</span> <span class="nf">__rrshift__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">iterable</span><span class="p">):</span>  <span class="c1"># &gt;&gt; operator</span>
+    <span class="k">def</span> <span class="fm">__rrshift__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">iterable</span><span class="p">):</span>  <span class="c1"># &gt;&gt; operator</span>
         <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">iterable</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">threshold</span><span class="p">:</span>
                 <span class="k">yield</span> <span class="n">x</span>
@@ -288,12 +290,12 @@ and the preferred method to implement custom nuts.</p>
 <h2>Nut types<a class="headerlink" href="#nut-types" title="Permalink to this headline">¶</a></h2>
 <p><strong>nuts-flow</strong> provides six different types of wrappers/decorators</p>
 <ul class="simple">
-<li><a class="reference internal" href="#nut-source"><span class="std std-ref">nut_source</span></a></li>
-<li><a class="reference internal" href="#nut-sink"><span class="std std-ref">nut_sink</span></a></li>
-<li><a class="reference internal" href="#nut-function"><span class="std std-ref">nut_function</span></a></li>
-<li><a class="reference internal" href="#nut-processor"><span class="std std-ref">nut_processor</span></a></li>
-<li><a class="reference internal" href="#nut-filter"><span class="std std-ref">nut_filter</span></a></li>
-<li><a class="reference internal" href="#nut-filterfalse"><span class="std std-ref">nut_filterfalse</span></a></li>
+<li><p><a class="reference internal" href="#nut-source"><span class="std std-ref">nut_source</span></a></p></li>
+<li><p><a class="reference internal" href="#nut-sink"><span class="std std-ref">nut_sink</span></a></p></li>
+<li><p><a class="reference internal" href="#nut-function"><span class="std std-ref">nut_function</span></a></p></li>
+<li><p><a class="reference internal" href="#nut-processor"><span class="std std-ref">nut_processor</span></a></p></li>
+<li><p><a class="reference internal" href="#nut-filter"><span class="std std-ref">nut_filter</span></a></p></li>
+<li><p><a class="reference internal" href="#nut-filterfalse"><span class="std std-ref">nut_filterfalse</span></a></p></li>
 </ul>
 <div class="section" id="nut-source">
 <h3>nut_source<a class="headerlink" href="#nut-source" title="Permalink to this headline">¶</a></h3>
@@ -301,17 +303,17 @@ and the preferred method to implement custom nuts.</p>
 in specific formats or wrappers around databases. Here
 two toy examples for a wrapper and a decorator around a nut
 that generates <code class="docutils literal notranslate"><span class="pre">n</span></code> even numbers. First the wrapper approach</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">EvenNumbers</span> <span class="o">=</span> <span class="n">nut_source</span><span class="p">(</span><span class="k">lambda</span> <span class="n">n</span><span class="p">:</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">xrange</span><span class="p">(</span><span class="n">n</span><span class="p">)))</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">EvenNumbers</span> <span class="o">=</span> <span class="n">nut_source</span><span class="p">(</span><span class="k">lambda</span> <span class="n">n</span><span class="p">:</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">xrange</span><span class="p">(</span><span class="n">n</span><span class="p">)))</span>
 </pre></div>
 </div>
 <p>and here the decorator</p>
-<div class="code highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@nut_source</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@nut_source</span>
 <span class="k">def</span> <span class="nf">EvenNumbers</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
     <span class="k">return</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">xrange</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
 </pre></div>
 </div>
 <p>Both can be used as follows</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">EvenNumbers</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">EvenNumbers</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
 <span class="go">[0, 2, 4, 6]</span>
 </pre></div>
 </div>
@@ -321,22 +323,22 @@ that generates <code class="docutils literal notranslate"><span class="pre">n</s
 <p>Sinks receive an iterable and can return any result (not necessarily
 an iterable). The following example re-implements the <code class="docutils literal notranslate"><span class="pre">Join</span></code> sink
 that already exists in <strong>nuts-flow</strong> using a wrapper</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Join</span> <span class="o">=</span> <span class="n">nut_sink</span><span class="p">(</span><span class="k">lambda</span> <span class="n">it</span><span class="p">,</span> <span class="n">sep</span><span class="p">:</span> <span class="n">sep</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">it</span><span class="p">)))</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Join</span> <span class="o">=</span> <span class="n">nut_sink</span><span class="p">(</span><span class="k">lambda</span> <span class="n">it</span><span class="p">,</span> <span class="n">sep</span><span class="p">:</span> <span class="n">sep</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">it</span><span class="p">)))</span>
 </pre></div>
 </div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Join</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Join</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)</span>
 <span class="go">&#39;0:1:2:3:4&#39;</span>
 </pre></div>
 </div>
 <p>or using the decorator method</p>
-<div class="code highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@nut_sink</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@nut_sink</span>
 <span class="k">def</span> <span class="nf">Join</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">sep</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">sep</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">iterable</span><span class="p">))</span>
 </pre></div>
 </div>
 <p>Note that while <code class="docutils literal notranslate"><span class="pre">Join</span></code> is a sink it returns an iterable (here a string)
 and can therefore serve as input to other nuts</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Join</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Count</span><span class="p">()</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Join</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Count</span><span class="p">()</span>
 <span class="go">9</span>
 </pre></div>
 </div>
@@ -353,17 +355,17 @@ flow and returns a result for each element. Consequently, when a nut
 function is applied to a data flow the values of the elements change but
 not their number. The following example function multiplies each element of
 the data flow by <code class="docutils literal notranslate"><span class="pre">n</span></code></p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Times</span> <span class="o">=</span> <span class="n">nut_function</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">n</span><span class="p">:</span> <span class="n">x</span> <span class="o">*</span> <span class="n">n</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Times</span> <span class="o">=</span> <span class="n">nut_function</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">n</span><span class="p">:</span> <span class="n">x</span> <span class="o">*</span> <span class="n">n</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>and here the same function via a decorator</p>
-<div class="code highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@nut_function</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@nut_function</span>
 <span class="k">def</span> <span class="nf">Times</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">x</span> <span class="o">*</span> <span class="n">n</span>
 </pre></div>
 </div>
 <p>Usage is identical for both the wrapper and the decorator</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Times</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Times</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
 <span class="go">[0, 2, 4, 6, 8]</span>
 </pre></div>
 </div>
@@ -375,12 +377,12 @@ number of elements in the output iterable can differ - this is different
 to a <a class="reference internal" href="#nut-function"><span class="std std-ref">nut_function</span></a>.  If the numbers don’t change both methods
 can be used but a <a class="reference internal" href="#nut-function"><span class="std std-ref">nut_function</span></a> will be simpler. For instance,
 here the <code class="docutils literal notranslate"><span class="pre">Times</span></code> nut re-implemented as a processor:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Times</span> <span class="o">=</span> <span class="n">nut_processor</span><span class="p">(</span><span class="k">lambda</span> <span class="n">iterable</span><span class="p">,</span> <span class="n">n</span><span class="p">:</span> <span class="p">(</span><span class="n">x</span> <span class="o">*</span> <span class="n">n</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">iterable</span><span class="p">))</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Times</span> <span class="o">=</span> <span class="n">nut_processor</span><span class="p">(</span><span class="k">lambda</span> <span class="n">iterable</span><span class="p">,</span> <span class="n">n</span><span class="p">:</span> <span class="p">(</span><span class="n">x</span> <span class="o">*</span> <span class="n">n</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">iterable</span><span class="p">))</span>
 </pre></div>
 </div>
 <p>Processors are needed if the number of elements in the flow changes, e.g.
 here a processor nut that duplicates each element of the flow</p>
-<div class="code highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@nut_processor</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@nut_processor</span>
 <span class="k">def</span> <span class="nf">Duplicate</span><span class="p">(</span><span class="n">iterable</span><span class="p">):</span>
     <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">iterable</span><span class="p">:</span>
         <span class="k">yield</span> <span class="n">e</span>
@@ -391,7 +393,7 @@ here a processor nut that duplicates each element of the flow</p>
 </pre></div>
 </div>
 <p>or more generic, a processor that clones each element <code class="docutils literal notranslate"><span class="pre">n</span></code> times</p>
-<div class="code highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@nut_processor</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@nut_processor</span>
 <span class="k">def</span> <span class="nf">Clone</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
     <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">iterable</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">xrange</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
@@ -409,17 +411,17 @@ and easier to implement.</p>
 <h3>nut_filter<a class="headerlink" href="#nut-filter" title="Permalink to this headline">¶</a></h3>
 <p>As described above, <em>nut filters</em> extract elements from a data flow.
 Here a nut that extracts all numbers that are in a given interval</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">InInterval</span> <span class="o">=</span> <span class="n">nut_filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="n">a</span> <span class="o">&lt;=</span> <span class="n">x</span> <span class="o">&lt;=</span> <span class="n">b</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">InInterval</span> <span class="o">=</span> <span class="n">nut_filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="n">a</span> <span class="o">&lt;=</span> <span class="n">x</span> <span class="o">&lt;=</span> <span class="n">b</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>and the same filter implemented using the decorator</p>
-<div class="code highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@nut_filter</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@nut_filter</span>
 <span class="k">def</span> <span class="nf">InInterval</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">a</span> <span class="o">&lt;=</span> <span class="n">x</span> <span class="o">&lt;=</span> <span class="n">b</span>
 </pre></div>
 </div>
 <p>and how it is used</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">InInterval</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">InInterval</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
 <span class="go">[3, 4, 5, 6]</span>
 </pre></div>
 </div>
@@ -431,28 +433,28 @@ element that are <strong>not</strong> meeting a given condition. The
 <code class="docutils literal notranslate"><span class="pre">nut_filterfalse</span></code> wrapper/decorator is available for this
 use case. For instance, the following nut filters out all
 elements that are <strong>not</strong> equal to given value</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Not</span> <span class="o">=</span> <span class="n">nut_filterfalse</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">val</span><span class="p">:</span> <span class="n">x</span> <span class="o">==</span> <span class="n">val</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Not</span> <span class="o">=</span> <span class="n">nut_filterfalse</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">val</span><span class="p">:</span> <span class="n">x</span> <span class="o">==</span> <span class="n">val</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>or implemented via the decorator</p>
-<div class="code highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@nut_filterfalse</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@nut_filterfalse</span>
 <span class="k">def</span> <span class="nf">Not</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">x</span> <span class="o">==</span> <span class="n">val</span>
 </pre></div>
 </div>
 <p>and a usage example</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">Not</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">Not</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
 <span class="go">[1, 3, 4]</span>
 </pre></div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">nut_filterfalse</span></code> is largely used to wrap existing predicate
 functions as nuts. For example, given a function <code class="docutils literal notranslate"><span class="pre">isnull(x)</span></code>
 we can simply write</p>
-<div class="code highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">IsValid</span> <span class="o">=</span> <span class="n">nut_filterfalse</span><span class="p">(</span><span class="n">isnull</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">IsValid</span> <span class="o">=</span> <span class="n">nut_filterfalse</span><span class="p">(</span><span class="n">isnull</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>which is shorter and more readable than</p>
-<div class="code highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">IsValid</span> <span class="o">=</span> <span class="n">nut_filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="ow">not</span> <span class="n">isnull</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">IsValid</span> <span class="o">=</span> <span class="n">nut_filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="ow">not</span> <span class="n">isnull</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -470,7 +472,7 @@ we can simply write</p>
         <a href="underscore.html" class="btn btn-neutral float-right" title="Underscore syntax" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="exceptions.html" class="btn btn-neutral" title="Handling exceptions" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="exceptions.html" class="btn btn-neutral float-left" title="Handling exceptions" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -479,8 +481,10 @@ we can simply write</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2017, IBM Research Australia.
-      Last updated on Sep 13, 2018.
+        &copy; Copyright 2017, IBM Research Australia
+      <span class="lastupdated">
+        Last updated on Nov 13, 2020.
+      </span>
 
     </p>
   </div> 
@@ -496,32 +500,16 @@ we can simply write</p>
   
 
 
-  
-
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'../',
-            VERSION:'1.0.30',
-            LANGUAGE:'None',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
-        };
-    </script>
-      <script type="text/javascript" src="../_static/jquery.js"></script>
-      <script type="text/javascript" src="../_static/underscore.js"></script>
-      <script type="text/javascript" src="../_static/doctools.js"></script>
-
-  
-
-  <script type="text/javascript" src="../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>
