@@ -76,7 +76,9 @@ def nut_processor(func, iterpos=0):
     """
     Decorator for Nut processors.
 
-    Example on how to define a custom processor nut:
+    Example on how to define a custom processor nut.
+    Not that a processor reads an iterable and must return
+    an iterable/generator
 
     .. code::
 
@@ -92,9 +94,18 @@ def nut_processor(func, iterpos=0):
     .. code::
 
       @nut_processor
+      def Odd(iterable):
+          return (e for e in iterable if e % 2 )
+
+      [1, 2, 3, 4, 5] >> Odd() >> Collect()  --> [1, 3,5]
+
+
+    .. code::
+
+      @nut_processor
       def Clone(iterable, n):
           for e in iterable:
-              for _ in xrange(p):
+              for _ in range(p):
                   yield e
 
       [1, 2, 3] >> Clone(2) >> Collect()  --> [1, 1, 2, 2, 3, 3]
