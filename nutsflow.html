@@ -831,7 +831,7 @@ an iterable/generator</p>
 <span class="k">def</span> <span class="nf">MyProd</span><span class="p">(</span><span class="n">iterable</span><span class="p">):</span>
     <span class="n">p</span> <span class="o">=</span> <span class="mi">1</span>
     <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">iterable</span><span class="p">:</span>
-        <span class="n">p</span> <span class="o">=</span> <span class="n">p</span><span class="o">*</span><span class="n">e</span>
+        <span class="n">p</span> <span class="o">*=</span> <span class="n">e</span>
     <span class="k">return</span> <span class="n">p</span>
 
 <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">MyProd</span><span class="p">()</span>  <span class="o">--&gt;</span> <span class="mi">12</span>
@@ -869,7 +869,7 @@ must return an iterable/generator and does not read any input.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@nut_source</span>
 <span class="k">def</span> <span class="nf">MyRange2</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">):</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">):</span>
-        <span class="k">yield</span> <span class="n">i</span><span class="o">*</span><span class="mi">2</span>
+        <span class="k">yield</span> <span class="n">i</span> <span class="o">*</span> <span class="mi">2</span>
 
 <span class="n">MyRange2</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>  <span class="o">--&gt;</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">]</span>
 </pre></div>

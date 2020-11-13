@@ -303,7 +303,7 @@
 <span class="sd">      def MyProd(iterable):</span>
 <span class="sd">          p = 1</span>
 <span class="sd">          for e in iterable:</span>
-<span class="sd">              p = p*e</span>
+<span class="sd">              p *= e</span>
 <span class="sd">          return p</span>
 
 <span class="sd">      [1, 2, 3] &gt;&gt; MyProd()  --&gt; 12</span>
@@ -368,7 +368,7 @@
 <span class="sd">      @nut_source</span>
 <span class="sd">      def MyRange2(start, end):</span>
 <span class="sd">          for i in range(start, end):</span>
-<span class="sd">              yield i*2</span>
+<span class="sd">              yield i * 2</span>
 
 <span class="sd">      MyRange2(0, 5) &gt;&gt; Collect()  --&gt; [0, 2, 4, 6, 8]</span>
 
