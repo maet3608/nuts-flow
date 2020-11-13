@@ -76,8 +76,8 @@ def nut_processor(func, iterpos=0):
     """
     Decorator for Nut processors.
 
-    Example on how to define a custom processor nut.
-    Not that a processor reads an iterable and must return
+    Examples on how to define a custom processor nut.
+    Note that a processor reads an iterable and must return
     an iterable/generator
 
     .. code::
@@ -141,6 +141,19 @@ def nut_sink(func, iterpos=0):
 
       range(5) >> MyCollect(tuple)  -->   (0, 1, 2, 3, 4)
 
+
+    .. code::
+
+      @nut_sink
+      def MyProd(iterable):
+          p = 1
+          for e in iterable:
+              p = p*e
+          return p
+
+      [1, 2, 3] >> MyProd()  --> 12
+
+
     :param function func: Function to decorate
     :param iterpos: Position of iterable in function arguments
     :return: Nut sink for given function
@@ -183,7 +196,8 @@ def nut_source(func):
     """
     Decorator for Nut sources.
 
-    Example on how to define a custom source nut:
+    Example on how to define a custom source nut. Note that a source
+    must return an iterable/generator and does not read any input.
 
     .. code::
 
