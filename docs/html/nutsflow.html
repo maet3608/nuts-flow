@@ -764,8 +764,8 @@ Example on how to define a custom filter-false nut:</p>
 <dt id="nutsflow.factory.nut_processor">
 <code class="sig-name descname">nut_processor</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">func</span></em>, <em class="sig-param"><span class="n">iterpos</span><span class="o">=</span><span class="default_value">0</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/factory.html#nut_processor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.factory.nut_processor" title="Permalink to this definition">¶</a></dt>
 <dd><p>Decorator for Nut processors.</p>
-<p>Example on how to define a custom processor nut.
-Not that a processor reads an iterable and must return
+<p>Examples on how to define a custom processor nut.
+Note that a processor reads an iterable and must return
 an iterable/generator</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@nut_processor</span>
 <span class="k">def</span> <span class="nf">Twice</span><span class="p">(</span><span class="n">iterable</span><span class="p">):</span>
@@ -827,6 +827,16 @@ an iterable/generator</p>
 <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">MyCollect</span><span class="p">(</span><span class="nb">tuple</span><span class="p">)</span>  <span class="o">--&gt;</span>   <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@nut_sink</span>
+<span class="k">def</span> <span class="nf">MyProd</span><span class="p">(</span><span class="n">iterable</span><span class="p">):</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">iterable</span><span class="p">:</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">p</span><span class="o">*</span><span class="n">e</span>
+    <span class="k">return</span> <span class="n">p</span>
+
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">MyProd</span><span class="p">()</span>  <span class="o">--&gt;</span> <span class="mi">12</span>
+</pre></div>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -847,7 +857,8 @@ an iterable/generator</p>
 <dt id="nutsflow.factory.nut_source">
 <code class="sig-name descname">nut_source</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">func</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/factory.html#nut_source"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.factory.nut_source" title="Permalink to this definition">¶</a></dt>
 <dd><p>Decorator for Nut sources.</p>
-<p>Example on how to define a custom source nut:</p>
+<p>Example on how to define a custom source nut. Note that a source
+must return an iterable/generator and does not read any input.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@nut_source</span>
 <span class="k">def</span> <span class="nf">MyRange</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">):</span>
     <span class="k">return</span> <span class="nb">range</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
