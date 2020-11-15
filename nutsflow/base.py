@@ -126,9 +126,9 @@ class NutSource(Nut):
 
 class NutSink(Nut):
     """
-    Sinks are nuts that do not guarantee to produce an iterable output.
+    Sinks are nuts that typically consume the entire input stream.
 
-    Sinks are typically at the end of a flow and typically aggregate the flow
+    Sinks are typically at the end of a flow and aggregate the flow
     to a single output, e.g. the sum of its elements.
     Need to override __rrshift__()!
     """
