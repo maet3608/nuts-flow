@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nutsflow package &mdash; nutsflow 1.0.38 documentation</title>
+  <title>nutsflow package &mdash; nutsflow 1.0.39 documentation</title>
   
 
   
@@ -60,7 +60,7 @@
             
             
               <div class="version">
-                1.0.38
+                1.0.39
               </div>
             
           
@@ -323,8 +323,8 @@ Do not override!</p>
 <dt id="nutsflow.base.NutSink">
 <em class="property">class </em><code class="sig-name descname">NutSink</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/base.html#NutSink"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.base.NutSink" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#nutsflow.base.Nut" title="nutsflow.base.Nut"><code class="xref py py-class docutils literal notranslate"><span class="pre">nutsflow.base.Nut</span></code></a></p>
-<p>Sinks are nuts that do not guarantee to produce an iterable output.</p>
-<p>Sinks are typically at the end of a flow and typically aggregate the flow
+<p>Sinks are nuts that typically consume the entire input stream.</p>
+<p>Sinks are typically at the end of a flow and aggregate the flow
 to a single output, e.g. the sum of its elements.
 Need to override __rrshift__()!</p>
 <dl class="py method">
@@ -623,6 +623,36 @@ call.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)">bool</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="nutsflow.common.itemize">
+<code class="sig-name descname">itemize</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/common.html#itemize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.common.itemize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extract item from a list/tuple with only one item.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">itemize</span><span class="p">([</span><span class="mi">3</span><span class="p">])</span>
+<span class="go">3</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">itemize</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="go">[3, 2, 1]</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">itemize</span><span class="p">([])</span>
+<span class="go">[]</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>x</strong> (<em>list|tuple</em>) – An indexable collection</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Return item in collection if there is only one, else
+returns the collection.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>object|list|tuple</p>
 </dd>
 </dl>
 </dd></dl>
@@ -4889,7 +4919,7 @@ that is repeatedly called.</p></li>
     <p>
         &copy; Copyright 2017, IBM Research Australia
       <span class="lastupdated">
-        Last updated on Nov 13, 2020.
+        Last updated on Nov 18, 2020.
       </span>
 
     </p>

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nutsflow.base &mdash; nutsflow 1.0.38 documentation</title>
+  <title>nutsflow.base &mdash; nutsflow 1.0.39 documentation</title>
   
 
   
@@ -58,7 +58,7 @@
             
             
               <div class="version">
-                1.0.38
+                1.0.39
               </div>
             
           
@@ -281,9 +281,9 @@
 
 <div class="viewcode-block" id="NutSink"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.base.NutSink">[docs]</a><span class="k">class</span> <span class="nc">NutSink</span><span class="p">(</span><span class="n">Nut</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Sinks are nuts that do not guarantee to produce an iterable output.</span>
+<span class="sd">    Sinks are nuts that typically consume the entire input stream.</span>
 
-<span class="sd">    Sinks are typically at the end of a flow and typically aggregate the flow</span>
+<span class="sd">    Sinks are typically at the end of a flow and aggregate the flow</span>
 <span class="sd">    to a single output, e.g. the sum of its elements.</span>
 <span class="sd">    Need to override __rrshift__()!</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -320,7 +320,7 @@
     <p>
         &copy; Copyright 2017, IBM Research Australia
       <span class="lastupdated">
-        Last updated on Nov 13, 2020.
+        Last updated on Nov 18, 2020.
       </span>
 
     </p>

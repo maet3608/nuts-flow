@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nutsflow.common &mdash; nutsflow 1.0.38 documentation</title>
+  <title>nutsflow.common &mdash; nutsflow 1.0.39 documentation</title>
   
 
   
@@ -58,7 +58,7 @@
             
             
               <div class="version">
-                1.0.38
+                1.0.39
               </div>
             
           
@@ -218,6 +218,27 @@
 <span class="sd">    :rtype: set</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="nb">set</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">if</span> <span class="n">is_iterable</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">else</span> <span class="p">(</span><span class="n">x</span><span class="p">,)</span></div>
+
+
+<div class="viewcode-block" id="itemize"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.common.itemize">[docs]</a><span class="k">def</span> <span class="nf">itemize</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Extract item from a list/tuple with only one item.</span>
+
+<span class="sd">    &gt;&gt;&gt; itemize([3])</span>
+<span class="sd">    3</span>
+
+<span class="sd">    &gt;&gt;&gt; itemize([3, 2, 1])</span>
+<span class="sd">    [3, 2, 1]</span>
+
+<span class="sd">    &gt;&gt;&gt; itemize([])</span>
+<span class="sd">    []</span>
+
+<span class="sd">    :param list|tuple x: An indexable collection</span>
+<span class="sd">    :return: Return item in collection if there is only one, else</span>
+<span class="sd">             returns the collection.</span>
+<span class="sd">    :rtype: object|list|tuple</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="k">else</span> <span class="n">x</span></div>
 
 
 <div class="viewcode-block" id="sec_to_hms"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.common.sec_to_hms">[docs]</a><span class="k">def</span> <span class="nf">sec_to_hms</span><span class="p">(</span><span class="n">duration</span><span class="p">):</span>
@@ -469,7 +490,7 @@
     <p>
         &copy; Copyright 2017, IBM Research Australia
       <span class="lastupdated">
-        Last updated on Nov 13, 2020.
+        Last updated on Nov 18, 2020.
       </span>
 
     </p>
