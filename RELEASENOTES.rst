@@ -1,9 +1,12 @@
 Release notes
 =============
 
-1.0.37
+1.0.39
 ------
 
+
+1.0.38
+------
 - common.itemize added
 
 1.0.36
@@ -25,7 +28,6 @@ Release notes
 1.0.32
 ------
 - Minor refactorings
-
 
 1.0.31
 ------
