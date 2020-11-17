@@ -65,7 +65,25 @@ def as_set(x):
     return set(x) if is_iterable(x) else (x,)
 
 
+def itemize(x):
+    """
+    Extract item from a list/tuple with only one item.
 
+    >>> itemize([3])
+    3
+
+    >>> itemize([3, 2, 1])
+    [3, 2, 1]
+
+    >>> itemize([])
+    []
+
+    :param list|tuple x: An indexable collection
+    :return: Return item in collection if there is only one, else
+             returns the collection.
+    :rtype: object|list|tuple
+    """
+    return x[0] if len(x) == 1 else x
 
 
 def sec_to_hms(duration):
