@@ -12,7 +12,7 @@ from time import sleep
 from nutsflow import MeanStd
 from nutsflow.common import (sec_to_hms, timestr, Redirect, as_tuple, as_set,
                              as_list, is_iterable, colfunc, console,
-                             StableRandom)
+                             itemize, StableRandom)
 
 
 def test_is_iterable():
@@ -36,6 +36,12 @@ def test_as_set():
     assert as_set(1) == (1,)
     assert as_set((1, 2)) == {1, 2}
     assert as_set([1, 2]) == {1, 2}
+
+
+def test_itemize():
+    assert itemize([]) == []
+    assert itemize([3]) == 3
+    assert itemize([3, 2, 1]) == [3, 2, 1]
 
 
 def test_sec_to_hms():

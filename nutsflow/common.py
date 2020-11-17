@@ -65,6 +65,9 @@ def as_set(x):
     return set(x) if is_iterable(x) else (x,)
 
 
+
+
+
 def sec_to_hms(duration):
     """
     Return hours, minutes and seconds for given duration.

@@ -4,6 +4,7 @@ Release notes
 1.0.37
 ------
 
+- common.itemize added
 
 1.0.36
 ------
