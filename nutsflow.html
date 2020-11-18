@@ -214,7 +214,20 @@ data flow. See the following example using Python iterators versus Nuts:</p>
 <dl class="py method">
 <dt id="nutsflow.base.Nut.__call__">
 <code class="sig-name descname">__call__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">iterable</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/base.html#Nut.__call__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.base.Nut.__call__" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Nut (processor) can be called as a function and mapped on
+iterable elements within an iterable.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>iterable</strong> (<em>iterable</em>) – Iterable to process.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Iterable</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>iterable</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt id="nutsflow.base.Nut.__init__">
@@ -317,7 +330,19 @@ Need to override __rrshift__()!</p>
 <dl class="py method">
 <dt id="nutsflow.base.NutSink.__call__">
 <code class="sig-name descname">__call__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">iterable</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/base.html#NutSink.__call__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.base.NutSink.__call__" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Sinks can serve as functions applied to iterables within a flow.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>iterable</strong> – Sink takes iterable as input</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Output of sink</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>any</p>
+</dd>
+</dl>
+</dd></dl>
 
 </dd></dl>
 
@@ -958,17 +983,9 @@ Count only elements where func returns True.</p></li>
 
 <dl class="py class">
 <dt id="nutsflow.function.Format">
-<em class="property">class </em><code class="sig-name descname">Format</code><a class="reference internal" href="_modules/nutsflow/function.html#Format"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.function.Format" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">Format</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/function.html#Format"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.function.Format" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#nutsflow.base.NutFunction" title="nutsflow.base.NutFunction"><code class="xref py py-class docutils literal notranslate"><span class="pre">nutsflow.base.NutFunction</span></code></a></p>
-<dl class="py method">
-<dt id="nutsflow.function.Format.__call__">
-<code class="sig-name descname">__call__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">element</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.function.Format.__call__" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt id="nutsflow.function.Format.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">fmt</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.function.Format.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>iterable &gt;&gt; Format(fmt)</p>
+<p>iterable &gt;&gt; Format(fmt)</p>
 <p>Return input as formatted string. For format definition see:
 <a class="reference external" href="https://docs.python.org/2/library/string.html">https://docs.python.org/2/library/string.html</a></p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nutsflow</span> <span class="kn">import</span> <span class="n">Collect</span>
@@ -994,23 +1011,33 @@ Count only elements where func returns True.</p></li>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a></p>
 </dd>
 </dl>
+<dl class="py method">
+<dt id="nutsflow.function.Format.__call__">
+<code class="sig-name descname">__call__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">element</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.function.Format.__call__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Override this method to transform the elements of an iterable.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>element</strong> – Element the function is applied to.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A transformed element</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>any</p>
+</dd>
+<dt class="field-even">Raise</dt>
+<dd class="field-even"><p>NotImplementedError if not implemented.</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt id="nutsflow.function.Get">
-<em class="property">class </em><code class="sig-name descname">Get</code><a class="reference internal" href="_modules/nutsflow/function.html#Get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.function.Get" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">Get</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/function.html#Get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.function.Get" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#nutsflow.base.NutFunction" title="nutsflow.base.NutFunction"><code class="xref py py-class docutils literal notranslate"><span class="pre">nutsflow.base.NutFunction</span></code></a></p>
-<dl class="py method">
-<dt id="nutsflow.function.Get.__call__">
-<code class="sig-name descname">__call__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">element</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.function.Get.__call__" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt id="nutsflow.function.Get.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">start</span></em>, <em class="sig-param"><span class="n">end</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">step</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.function.Get.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>iterable &gt;&gt; Get(start, end, step)</p>
+<p>iterable &gt;&gt; Get(start, end, step)</p>
 <p>Extract elements from x. Equivalent to Python slicing [start:end:step]
 but per element of the iterable.</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nutsflow</span> <span class="kn">import</span> <span class="n">Collect</span>
@@ -1050,23 +1077,33 @@ If start = None, x is returned</p></li>
 <dd class="field-odd"><p>object|list</p>
 </dd>
 </dl>
+<dl class="py method">
+<dt id="nutsflow.function.Get.__call__">
+<code class="sig-name descname">__call__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">element</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.function.Get.__call__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Override this method to transform the elements of an iterable.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>element</strong> – Element the function is applied to.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A transformed element</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>any</p>
+</dd>
+<dt class="field-even">Raise</dt>
+<dd class="field-even"><p>NotImplementedError if not implemented.</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt id="nutsflow.function.GetCols">
-<em class="property">class </em><code class="sig-name descname">GetCols</code><a class="reference internal" href="_modules/nutsflow/function.html#GetCols"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.function.GetCols" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">GetCols</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/function.html#GetCols"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.function.GetCols" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#nutsflow.base.NutFunction" title="nutsflow.base.NutFunction"><code class="xref py py-class docutils literal notranslate"><span class="pre">nutsflow.base.NutFunction</span></code></a></p>
-<dl class="py method">
-<dt id="nutsflow.function.GetCols.__call__">
-<code class="sig-name descname">__call__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">element</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.function.GetCols.__call__" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt id="nutsflow.function.GetCols.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">columns</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.function.GetCols.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>iterable &gt;&gt; GetCols(<a href="#id1"><span class="problematic" id="id2">*</span></a>columns)</p>
+<p>iterable &gt;&gt; GetCols(<a href="#id1"><span class="problematic" id="id2">*</span></a>columns)</p>
 <p>Extract elements in given order from x. Also useful to change the order of
 or clone elements in x.</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nutsflow</span> <span class="kn">import</span> <span class="n">Collect</span>
@@ -1108,23 +1145,33 @@ or a tuple with these indices.</p></li>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.9)">tuple</a></p>
 </dd>
 </dl>
+<dl class="py method">
+<dt id="nutsflow.function.GetCols.__call__">
+<code class="sig-name descname">__call__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">element</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.function.GetCols.__call__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Override this method to transform the elements of an iterable.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>element</strong> – Element the function is applied to.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A transformed element</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>any</p>
+</dd>
+<dt class="field-even">Raise</dt>
+<dd class="field-even"><p>NotImplementedError if not implemented.</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt id="nutsflow.function.Identity">
-<em class="property">class </em><code class="sig-name descname">Identity</code><a class="reference internal" href="_modules/nutsflow/function.html#Identity"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.function.Identity" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">Identity</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/function.html#Identity"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.function.Identity" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#nutsflow.base.NutFunction" title="nutsflow.base.NutFunction"><code class="xref py py-class docutils literal notranslate"><span class="pre">nutsflow.base.NutFunction</span></code></a></p>
-<dl class="py method">
-<dt id="nutsflow.function.Identity.__call__">
-<code class="sig-name descname">__call__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">element</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.function.Identity.__call__" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt id="nutsflow.function.Identity.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.function.Identity.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>iterable &gt;&gt; Identity()</p>
+<p>iterable &gt;&gt; Identity()</p>
 <p>Pass iterable through. Output is identical to input.</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nutsflow</span> <span class="kn">import</span> <span class="n">Collect</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">Identity</span><span class="p">()</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
@@ -1145,23 +1192,33 @@ or a tuple with these indices.</p></li>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.9)">object</a></p>
 </dd>
 </dl>
+<dl class="py method">
+<dt id="nutsflow.function.Identity.__call__">
+<code class="sig-name descname">__call__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">element</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.function.Identity.__call__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Override this method to transform the elements of an iterable.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>element</strong> – Element the function is applied to.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A transformed element</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>any</p>
+</dd>
+<dt class="field-even">Raise</dt>
+<dd class="field-even"><p>NotImplementedError if not implemented.</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt id="nutsflow.function.NOP">
-<em class="property">class </em><code class="sig-name descname">NOP</code><a class="reference internal" href="_modules/nutsflow/function.html#NOP"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.function.NOP" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">NOP</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/function.html#NOP"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.function.NOP" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#nutsflow.base.NutFunction" title="nutsflow.base.NutFunction"><code class="xref py py-class docutils literal notranslate"><span class="pre">nutsflow.base.NutFunction</span></code></a></p>
-<dl class="py method">
-<dt id="nutsflow.function.NOP.__call__">
-<code class="sig-name descname">__call__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">element</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.function.NOP.__call__" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt id="nutsflow.function.NOP.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.function.NOP.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>iterable &gt;&gt; Nop(<a href="#id3"><span class="problematic" id="id4">*</span></a>args)</p>
+<p>iterable &gt;&gt; Nop(<a href="#id3"><span class="problematic" id="id4">*</span></a>args)</p>
 <p>No Operation. Useful to skip nuts. Same as commenting a nut out
 or removing it from a pipeline.</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nutsflow</span> <span class="kn">import</span> <span class="n">Collect</span>
@@ -1182,6 +1239,24 @@ or removing it from a pipeline.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>number</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt id="nutsflow.function.NOP.__call__">
+<code class="sig-name descname">__call__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">element</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.function.NOP.__call__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Override this method to transform the elements of an iterable.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>element</strong> – Element the function is applied to.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A transformed element</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>any</p>
+</dd>
+<dt class="field-even">Raise</dt>
+<dd class="field-even"><p>NotImplementedError if not implemented.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1276,17 +1351,9 @@ every 2.5 sec every_sec = 2.5</p></li>
 
 <dl class="py class">
 <dt id="nutsflow.function.Sleep">
-<em class="property">class </em><code class="sig-name descname">Sleep</code><a class="reference internal" href="_modules/nutsflow/function.html#Sleep"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.function.Sleep" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">Sleep</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/function.html#Sleep"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.function.Sleep" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#nutsflow.base.NutFunction" title="nutsflow.base.NutFunction"><code class="xref py py-class docutils literal notranslate"><span class="pre">nutsflow.base.NutFunction</span></code></a></p>
-<dl class="py method">
-<dt id="nutsflow.function.Sleep.__call__">
-<code class="sig-name descname">__call__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">element</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.function.Sleep.__call__" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt id="nutsflow.function.Sleep.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">duration</span><span class="o">=</span><span class="default_value">1</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.function.Sleep.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>iterable &gt;&gt; Sleep(duration)</p>
+<p>iterable &gt;&gt; Sleep(duration)</p>
 <p>Return same input as console but sleep for each element.</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nutsflow</span> <span class="kn">import</span> <span class="n">Collect</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">Sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
@@ -1308,23 +1375,33 @@ every 2.5 sec every_sec = 2.5</p></li>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.9)">object</a></p>
 </dd>
 </dl>
+<dl class="py method">
+<dt id="nutsflow.function.Sleep.__call__">
+<code class="sig-name descname">__call__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">element</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.function.Sleep.__call__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Override this method to transform the elements of an iterable.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>element</strong> – Element the function is applied to.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A transformed element</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>any</p>
+</dd>
+<dt class="field-even">Raise</dt>
+<dd class="field-even"><p>NotImplementedError if not implemented.</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt id="nutsflow.function.Square">
-<em class="property">class </em><code class="sig-name descname">Square</code><a class="reference internal" href="_modules/nutsflow/function.html#Square"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.function.Square" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">Square</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/function.html#Square"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.function.Square" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#nutsflow.base.NutFunction" title="nutsflow.base.NutFunction"><code class="xref py py-class docutils literal notranslate"><span class="pre">nutsflow.base.NutFunction</span></code></a></p>
-<dl class="py method">
-<dt id="nutsflow.function.Square.__call__">
-<code class="sig-name descname">__call__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">element</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.function.Square.__call__" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt id="nutsflow.function.Square.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.function.Square.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>iterable &gt;&gt; Square()</p>
+<p>iterable &gt;&gt; Square()</p>
 <p>Return squared input.</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nutsflow</span> <span class="kn">import</span> <span class="n">Collect</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">Square</span><span class="p">()</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
@@ -1343,6 +1420,24 @@ every 2.5 sec every_sec = 2.5</p></li>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>number</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt id="nutsflow.function.Square.__call__">
+<code class="sig-name descname">__call__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">element</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.function.Square.__call__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Override this method to transform the elements of an iterable.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>element</strong> – Element the function is applied to.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A transformed element</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>any</p>
+</dd>
+<dt class="field-even">Raise</dt>
+<dd class="field-even"><p>NotImplementedError if not implemented.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1663,12 +1758,9 @@ GPU to finish the batch.</p>
 <span id="nutsflow-processor-module"></span><h2>nutsflow.processor module<a class="headerlink" href="#module-nutsflow.processor" title="Permalink to this headline">¶</a></h2>
 <span class="target" id="module-processor"></span><dl class="py class">
 <dt id="nutsflow.processor.Append">
-<em class="property">class </em><code class="sig-name descname">Append</code><a class="reference internal" href="_modules/nutsflow/processor.html#Append"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.processor.Append" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">Append</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/processor.html#Append"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.processor.Append" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#nutsflow.base.Nut" title="nutsflow.base.Nut"><code class="xref py py-class docutils literal notranslate"><span class="pre">nutsflow.base.Nut</span></code></a></p>
-<dl class="py method">
-<dt id="nutsflow.processor.Append.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">items</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.processor.Append.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>iterable &gt;&gt; Append(items)</p>
+<p>iterable &gt;&gt; Append(items)</p>
 <p>Append item(s) to lists/tuples in iterable.</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)]</span> <span class="o">&gt;&gt;</span> <span class="n">Append</span><span class="p">(</span><span class="s1">&#39;X&#39;</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
 <span class="go">[(1, 2, &#39;X&#39;), (3, 4, &#39;X&#39;)]</span>
@@ -1703,12 +1795,27 @@ GPU to finish the batch.</p>
 <dd class="field-odd"><p>iterator over tuples</p>
 </dd>
 </dl>
-</dd></dl>
-
 <dl class="py method">
 <dt id="nutsflow.processor.Append.__rrshift__">
 <code class="sig-name descname">__rrshift__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">iterable</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.processor.Append.__rrshift__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Chaining operator (&gt;&gt;) for nuts</p>
+<dd><p>Chaining operator for Nuts. Needs to be overridden!</p>
+<p>Takes an input iterable and produces some output iterable.
+If the number of elements in the input and the output iterable
+does not change consider NutFunction instead.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>iterable</strong> (<em>iterable</em>) – Iterable to process.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Iterable</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>iterable</p>
+</dd>
+<dt class="field-even">Raise</dt>
+<dd class="field-even"><p>NotImplementedError if not implemented.</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -1791,12 +1898,9 @@ this folder is available in cache.path.</p></li>
 
 <dl class="py class">
 <dt id="nutsflow.processor.Chunk">
-<em class="property">class </em><code class="sig-name descname">Chunk</code><a class="reference internal" href="_modules/nutsflow/processor.html#Chunk"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.processor.Chunk" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">Chunk</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/processor.html#Chunk"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.processor.Chunk" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#nutsflow.base.Nut" title="nutsflow.base.Nut"><code class="xref py py-class docutils literal notranslate"><span class="pre">nutsflow.base.Nut</span></code></a></p>
-<dl class="py method">
-<dt id="nutsflow.processor.Chunk.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">n</span></em>, <em class="sig-param"><span class="n">container</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.processor.Chunk.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>iterable &gt;&gt; Chunk(n, container=None)</p>
+<p>iterable &gt;&gt; Chunk(n, container=None)</p>
 <p>Split iterable in chunks of size n, where each chunk is also an iterator
 if no container is provided.
 see also GroupBySorted(), ChunkWhen(), ChunkBy()</p>
@@ -1839,24 +1943,36 @@ that can be filled from an iterable</p></li>
 <dd class="field-odd"><p>Iterator over iterators or containers</p>
 </dd>
 </dl>
-</dd></dl>
-
 <dl class="py method">
 <dt id="nutsflow.processor.Chunk.__rrshift__">
 <code class="sig-name descname">__rrshift__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">iterable</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.processor.Chunk.__rrshift__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Chaining operator (&gt;&gt;) for nuts</p>
+<dd><p>Chaining operator for Nuts. Needs to be overridden!</p>
+<p>Takes an input iterable and produces some output iterable.
+If the number of elements in the input and the output iterable
+does not change consider NutFunction instead.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>iterable</strong> (<em>iterable</em>) – Iterable to process.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Iterable</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>iterable</p>
+</dd>
+<dt class="field-even">Raise</dt>
+<dd class="field-even"><p>NotImplementedError if not implemented.</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt id="nutsflow.processor.ChunkBy">
-<em class="property">class </em><code class="sig-name descname">ChunkBy</code><a class="reference internal" href="_modules/nutsflow/processor.html#ChunkBy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.processor.ChunkBy" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">ChunkBy</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/processor.html#ChunkBy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.processor.ChunkBy" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#nutsflow.base.Nut" title="nutsflow.base.Nut"><code class="xref py py-class docutils literal notranslate"><span class="pre">nutsflow.base.Nut</span></code></a></p>
-<dl class="py method">
-<dt id="nutsflow.processor.ChunkBy.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">func</span></em>, <em class="sig-param"><span class="n">container</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.processor.ChunkBy.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>iterable &gt;&gt; ChunkBy(func, container=None)</p>
+<p>iterable &gt;&gt; ChunkBy(func, container=None)</p>
 <p>Chunk iterable and create chunk every time func changes its return value.
 see also GroupBySorted(), Chunk(), ChunkWhen()</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">ChunkBy</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
@@ -1883,12 +1999,27 @@ that can be filled from an iterable</p></li>
 <dd class="field-odd"><p>Iterator over iterators or containers</p>
 </dd>
 </dl>
-</dd></dl>
-
 <dl class="py method">
 <dt id="nutsflow.processor.ChunkBy.__rrshift__">
 <code class="sig-name descname">__rrshift__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">iterable</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.processor.ChunkBy.__rrshift__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Chaining operator (&gt;&gt;) for nuts</p>
+<dd><p>Chaining operator for Nuts. Needs to be overridden!</p>
+<p>Takes an input iterable and produces some output iterable.
+If the number of elements in the input and the output iterable
+does not change consider NutFunction instead.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>iterable</strong> (<em>iterable</em>) – Iterable to process.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Iterable</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>iterable</p>
+</dd>
+<dt class="field-even">Raise</dt>
+<dd class="field-even"><p>NotImplementedError if not implemented.</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -1952,12 +2083,9 @@ if no container is provided</p>
 
 <dl class="py class">
 <dt id="nutsflow.processor.Clone">
-<em class="property">class </em><code class="sig-name descname">Clone</code><a class="reference internal" href="_modules/nutsflow/processor.html#Clone"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.processor.Clone" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">Clone</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/processor.html#Clone"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.processor.Clone" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#nutsflow.base.Nut" title="nutsflow.base.Nut"><code class="xref py py-class docutils literal notranslate"><span class="pre">nutsflow.base.Nut</span></code></a></p>
-<dl class="py method">
-<dt id="nutsflow.processor.Clone.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">n</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.processor.Clone.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>iterable &gt;&gt; Clone(n)</p>
+<p>iterable &gt;&gt; Clone(n)</p>
 <p>Clones elements in the iterable n times.</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nutsflow</span> <span class="kn">import</span> <span class="n">Range</span><span class="p">,</span> <span class="n">Collect</span><span class="p">,</span> <span class="n">Join</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Clone</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
@@ -1982,12 +2110,27 @@ if no container is provided</p>
 <dd class="field-odd"><p>generator</p>
 </dd>
 </dl>
-</dd></dl>
-
 <dl class="py method">
 <dt id="nutsflow.processor.Clone.__rrshift__">
 <code class="sig-name descname">__rrshift__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">iterable</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.processor.Clone.__rrshift__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Chaining operator (&gt;&gt;) for nuts</p>
+<dd><p>Chaining operator for Nuts. Needs to be overridden!</p>
+<p>Takes an input iterable and produces some output iterable.
+If the number of elements in the input and the output iterable
+does not change consider NutFunction instead.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>iterable</strong> (<em>iterable</em>) – Iterable to process.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Iterable</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>iterable</p>
+</dd>
+<dt class="field-even">Raise</dt>
+<dd class="field-even"><p>NotImplementedError if not implemented.</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -2000,12 +2143,9 @@ if no container is provided</p>
 
 <dl class="py class">
 <dt id="nutsflow.processor.Concat">
-<em class="property">class </em><code class="sig-name descname">Concat</code><a class="reference internal" href="_modules/nutsflow/processor.html#Concat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.processor.Concat" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">Concat</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/processor.html#Concat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.processor.Concat" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#nutsflow.base.Nut" title="nutsflow.base.Nut"><code class="xref py py-class docutils literal notranslate"><span class="pre">nutsflow.base.Nut</span></code></a></p>
-<dl class="py method">
-<dt id="nutsflow.processor.Concat.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">iterables</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.processor.Concat.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>iterable &gt;&gt; Concat(<a href="#id5"><span class="problematic" id="id6">*</span></a>iterables)</p>
+<p>iterable &gt;&gt; Concat(<a href="#id5"><span class="problematic" id="id6">*</span></a>iterables)</p>
 <p>Concatenate iterables.</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nutsflow</span> <span class="kn">import</span> <span class="n">Range</span><span class="p">,</span> <span class="n">Collect</span>
 </pre></div>
@@ -2032,12 +2172,27 @@ if no container is provided</p>
 <dd class="field-odd"><p>iterator</p>
 </dd>
 </dl>
-</dd></dl>
-
 <dl class="py method">
 <dt id="nutsflow.processor.Concat.__rrshift__">
 <code class="sig-name descname">__rrshift__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">iterable</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.processor.Concat.__rrshift__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Chaining operator (&gt;&gt;) for nuts</p>
+<dd><p>Chaining operator for Nuts. Needs to be overridden!</p>
+<p>Takes an input iterable and produces some output iterable.
+If the number of elements in the input and the output iterable
+does not change consider NutFunction instead.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>iterable</strong> (<em>iterable</em>) – Iterable to process.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Iterable</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>iterable</p>
+</dd>
+<dt class="field-even">Raise</dt>
+<dd class="field-even"><p>NotImplementedError if not implemented.</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -2056,12 +2211,9 @@ if no container is provided</p>
 
 <dl class="py class">
 <dt id="nutsflow.processor.Drop">
-<em class="property">class </em><code class="sig-name descname">Drop</code><a class="reference internal" href="_modules/nutsflow/processor.html#Drop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.processor.Drop" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">Drop</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/processor.html#Drop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.processor.Drop" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#nutsflow.base.Nut" title="nutsflow.base.Nut"><code class="xref py py-class docutils literal notranslate"><span class="pre">nutsflow.base.Nut</span></code></a></p>
-<dl class="py method">
-<dt id="nutsflow.processor.Drop.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">n</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.processor.Drop.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>iterable &gt;&gt; Drop(n)</p>
+<p>iterable &gt;&gt; Drop(n)</p>
 <p>Drop first n elements in iterable.</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">Drop</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
 <span class="go">[3, 4]</span>
@@ -2081,24 +2233,36 @@ if no container is provided</p>
 <dd class="field-odd"><p>iterator</p>
 </dd>
 </dl>
-</dd></dl>
-
 <dl class="py method">
 <dt id="nutsflow.processor.Drop.__rrshift__">
 <code class="sig-name descname">__rrshift__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">iterable</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.processor.Drop.__rrshift__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Chaining operator (&gt;&gt;) for nuts</p>
+<dd><p>Chaining operator for Nuts. Needs to be overridden!</p>
+<p>Takes an input iterable and produces some output iterable.
+If the number of elements in the input and the output iterable
+does not change consider NutFunction instead.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>iterable</strong> (<em>iterable</em>) – Iterable to process.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Iterable</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>iterable</p>
+</dd>
+<dt class="field-even">Raise</dt>
+<dd class="field-even"><p>NotImplementedError if not implemented.</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt id="nutsflow.processor.DropWhile">
-<em class="property">class </em><code class="sig-name descname">DropWhile</code><a class="reference internal" href="_modules/nutsflow/processor.html#DropWhile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.processor.DropWhile" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">DropWhile</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/processor.html#DropWhile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.processor.DropWhile" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#nutsflow.base.Nut" title="nutsflow.base.Nut"><code class="xref py py-class docutils literal notranslate"><span class="pre">nutsflow.base.Nut</span></code></a></p>
-<dl class="py method">
-<dt id="nutsflow.processor.DropWhile.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">func</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.processor.DropWhile.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>iterable &gt;&gt; DropWhile(func)</p>
+<p>iterable &gt;&gt; DropWhile(func)</p>
 <p>Skip elements in iterable while predicate function is True.</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nutsflow</span> <span class="kn">import</span> <span class="n">_</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">DropWhile</span><span class="p">(</span><span class="n">_</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
@@ -2119,12 +2283,27 @@ if no container is provided</p>
 <dd class="field-odd"><p>Iterator</p>
 </dd>
 </dl>
-</dd></dl>
-
 <dl class="py method">
 <dt id="nutsflow.processor.DropWhile.__rrshift__">
 <code class="sig-name descname">__rrshift__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">iterable</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.processor.DropWhile.__rrshift__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Chaining operator (&gt;&gt;) for nuts</p>
+<dd><p>Chaining operator for Nuts. Needs to be overridden!</p>
+<p>Takes an input iterable and produces some output iterable.
+If the number of elements in the input and the output iterable
+does not change consider NutFunction instead.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>iterable</strong> (<em>iterable</em>) – Iterable to process.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Iterable</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>iterable</p>
+</dd>
+<dt class="field-even">Raise</dt>
+<dd class="field-even"><p>NotImplementedError if not implemented.</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -2137,12 +2316,9 @@ if no container is provided</p>
 
 <dl class="py class">
 <dt id="nutsflow.processor.FilterCol">
-<em class="property">class </em><code class="sig-name descname">FilterCol</code><a class="reference internal" href="_modules/nutsflow/processor.html#FilterCol"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.processor.FilterCol" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">FilterCol</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/processor.html#FilterCol"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.processor.FilterCol" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#nutsflow.base.Nut" title="nutsflow.base.Nut"><code class="xref py py-class docutils literal notranslate"><span class="pre">nutsflow.base.Nut</span></code></a></p>
-<dl class="py method">
-<dt id="nutsflow.processor.FilterCol.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">columns</span></em>, <em class="sig-param"><span class="n">func</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.processor.FilterCol.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>iterable &gt;&gt; FilterCol(columns, func)</p>
+<p>iterable &gt;&gt; FilterCol(columns, func)</p>
 <p>Filter elements from iterable based on predicate function and
 specified column(s).</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">is_even</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">n</span><span class="p">:</span> <span class="n">n</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span>
@@ -2166,12 +2342,27 @@ element before passing it on to the predicate function.</p></li>
 <dd class="field-odd"><p>Iterator</p>
 </dd>
 </dl>
-</dd></dl>
-
 <dl class="py method">
 <dt id="nutsflow.processor.FilterCol.__rrshift__">
 <code class="sig-name descname">__rrshift__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">iterable</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.processor.FilterCol.__rrshift__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Chaining operator (&gt;&gt;) for nuts</p>
+<dd><p>Chaining operator for Nuts. Needs to be overridden!</p>
+<p>Takes an input iterable and produces some output iterable.
+If the number of elements in the input and the output iterable
+does not change consider NutFunction instead.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>iterable</strong> (<em>iterable</em>) – Iterable to process.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Iterable</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>iterable</p>
+</dd>
+<dt class="field-even">Raise</dt>
+<dd class="field-even"><p>NotImplementedError if not implemented.</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -2190,12 +2381,9 @@ element before passing it on to the predicate function.</p></li>
 
 <dl class="py class">
 <dt id="nutsflow.processor.Flatten">
-<em class="property">class </em><code class="sig-name descname">Flatten</code><a class="reference internal" href="_modules/nutsflow/processor.html#Flatten"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.processor.Flatten" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">Flatten</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/processor.html#Flatten"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.processor.Flatten" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#nutsflow.base.Nut" title="nutsflow.base.Nut"><code class="xref py py-class docutils literal notranslate"><span class="pre">nutsflow.base.Nut</span></code></a></p>
-<dl class="py method">
-<dt id="nutsflow.processor.Flatten.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.processor.Flatten.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>iterable &gt;&gt; Flatten()</p>
+<p>iterable &gt;&gt; Flatten()</p>
 <p>Flatten the iterables within the iterable and non-iterables are passed
 through. Only one level is flattened. Chain Flatten to flatten deeper
 structures.</p>
@@ -2219,24 +2407,36 @@ structures.</p>
 <dd class="field-odd"><p>Iterator</p>
 </dd>
 </dl>
-</dd></dl>
-
 <dl class="py method">
 <dt id="nutsflow.processor.Flatten.__rrshift__">
 <code class="sig-name descname">__rrshift__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">iterable</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.processor.Flatten.__rrshift__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Chaining operator (&gt;&gt;) for nuts</p>
+<dd><p>Chaining operator for Nuts. Needs to be overridden!</p>
+<p>Takes an input iterable and produces some output iterable.
+If the number of elements in the input and the output iterable
+does not change consider NutFunction instead.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>iterable</strong> (<em>iterable</em>) – Iterable to process.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Iterable</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>iterable</p>
+</dd>
+<dt class="field-even">Raise</dt>
+<dd class="field-even"><p>NotImplementedError if not implemented.</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt id="nutsflow.processor.FlattenCol">
-<em class="property">class </em><code class="sig-name descname">FlattenCol</code><a class="reference internal" href="_modules/nutsflow/processor.html#FlattenCol"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.processor.FlattenCol" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">FlattenCol</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/processor.html#FlattenCol"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.processor.FlattenCol" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#nutsflow.base.Nut" title="nutsflow.base.Nut"><code class="xref py py-class docutils literal notranslate"><span class="pre">nutsflow.base.Nut</span></code></a></p>
-<dl class="py method">
-<dt id="nutsflow.processor.FlattenCol.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">cols</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.processor.FlattenCol.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>iterable &gt;&gt; FlattenCol(cols)</p>
+<p>iterable &gt;&gt; FlattenCol(cols)</p>
 <p>Flattens the specified columns of the tuples/iterables within the iterable.
 Only one level is flattened.</p>
 <p>(1 3)  (5 7)
@@ -2283,24 +2483,36 @@ together with non-iterable columns, e.g.</p>
 <dd class="field-even"><p>generator</p>
 </dd>
 </dl>
-</dd></dl>
-
 <dl class="py method">
 <dt id="nutsflow.processor.FlattenCol.__rrshift__">
 <code class="sig-name descname">__rrshift__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">iterable</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.processor.FlattenCol.__rrshift__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Chaining operator (&gt;&gt;) for nuts</p>
+<dd><p>Chaining operator for Nuts. Needs to be overridden!</p>
+<p>Takes an input iterable and produces some output iterable.
+If the number of elements in the input and the output iterable
+does not change consider NutFunction instead.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>iterable</strong> (<em>iterable</em>) – Iterable to process.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Iterable</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>iterable</p>
+</dd>
+<dt class="field-even">Raise</dt>
+<dd class="field-even"><p>NotImplementedError if not implemented.</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt id="nutsflow.processor.GroupBy">
-<em class="property">class </em><code class="sig-name descname">GroupBy</code><a class="reference internal" href="_modules/nutsflow/processor.html#GroupBy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.processor.GroupBy" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">GroupBy</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/processor.html#GroupBy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.processor.GroupBy" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#nutsflow.base.Nut" title="nutsflow.base.Nut"><code class="xref py py-class docutils literal notranslate"><span class="pre">nutsflow.base.Nut</span></code></a></p>
-<dl class="py method">
-<dt id="nutsflow.processor.GroupBy.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param">keycol=&lt;function &lt;lambda&gt;&gt;</em>, <em class="sig-param">nokey=False</em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.processor.GroupBy.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>iterable &gt;&gt; GroupBy(keycol=lambda x: x, nokey=False)</p>
+<p>iterable &gt;&gt; GroupBy(keycol=lambda x: x, nokey=False)</p>
 <p>Group elements of iterable based on a column value of the element or
 the function value of keycol for the element.
 Note that elements of iterable do not need to be sorted.
@@ -2346,24 +2558,36 @@ the groups themselves.</p></li>
 <dd class="field-odd"><p>iterator</p>
 </dd>
 </dl>
-</dd></dl>
-
 <dl class="py method">
 <dt id="nutsflow.processor.GroupBy.__rrshift__">
 <code class="sig-name descname">__rrshift__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">iterable</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.processor.GroupBy.__rrshift__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Chaining operator (&gt;&gt;) for nuts</p>
+<dd><p>Chaining operator for Nuts. Needs to be overridden!</p>
+<p>Takes an input iterable and produces some output iterable.
+If the number of elements in the input and the output iterable
+does not change consider NutFunction instead.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>iterable</strong> (<em>iterable</em>) – Iterable to process.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Iterable</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>iterable</p>
+</dd>
+<dt class="field-even">Raise</dt>
+<dd class="field-even"><p>NotImplementedError if not implemented.</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt id="nutsflow.processor.GroupBySorted">
-<em class="property">class </em><code class="sig-name descname">GroupBySorted</code><a class="reference internal" href="_modules/nutsflow/processor.html#GroupBySorted"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.processor.GroupBySorted" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">GroupBySorted</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/processor.html#GroupBySorted"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.processor.GroupBySorted" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#nutsflow.base.Nut" title="nutsflow.base.Nut"><code class="xref py py-class docutils literal notranslate"><span class="pre">nutsflow.base.Nut</span></code></a></p>
-<dl class="py method">
-<dt id="nutsflow.processor.GroupBySorted.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param">keycol=&lt;function &lt;lambda&gt;&gt;</em>, <em class="sig-param">nokey=False</em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.processor.GroupBySorted.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>iterable &gt;&gt; GroupBySorted(prob, keycol=lambda x: x, nokey=False)</p>
+<p>iterable &gt;&gt; GroupBySorted(prob, keycol=lambda x: x, nokey=False)</p>
 <p>Group elements of iterable based on a column value of the element or
 the function value of key_or_col for the element.
 Iterable needs to be sorted according to keycol!
@@ -2407,24 +2631,36 @@ the groups themselves.</p></li>
 <dd class="field-odd"><p>iterator</p>
 </dd>
 </dl>
-</dd></dl>
-
 <dl class="py method">
 <dt id="nutsflow.processor.GroupBySorted.__rrshift__">
 <code class="sig-name descname">__rrshift__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">iterable</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.processor.GroupBySorted.__rrshift__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Chaining operator (&gt;&gt;) for nuts</p>
+<dd><p>Chaining operator for Nuts. Needs to be overridden!</p>
+<p>Takes an input iterable and produces some output iterable.
+If the number of elements in the input and the output iterable
+does not change consider NutFunction instead.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>iterable</strong> (<em>iterable</em>) – Iterable to process.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Iterable</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>iterable</p>
+</dd>
+<dt class="field-even">Raise</dt>
+<dd class="field-even"><p>NotImplementedError if not implemented.</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt id="nutsflow.processor.If">
-<em class="property">class </em><code class="sig-name descname">If</code><a class="reference internal" href="_modules/nutsflow/processor.html#If"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.processor.If" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">If</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/processor.html#If"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.processor.If" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#nutsflow.base.Nut" title="nutsflow.base.Nut"><code class="xref py py-class docutils literal notranslate"><span class="pre">nutsflow.base.Nut</span></code></a></p>
-<dl class="py method">
-<dt id="nutsflow.processor.If.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param">cond</em>, <em class="sig-param">if_nut</em>, <em class="sig-param">else_nut=&lt;nutsflow.function.nut_function.&lt;locals&gt;.Wrapper object&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.processor.If.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>iterable &gt;&gt; If(cond, if_nut, [,else_nut])</p>
+<p>iterable &gt;&gt; If(cond, if_nut, [,else_nut])</p>
 <p>Depending on condition cond execute if_nut or else_nut. Useful for
 conditional flows.</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nutsflow</span> <span class="kn">import</span> <span class="n">Square</span><span class="p">,</span> <span class="n">Collect</span>
@@ -2454,24 +2690,36 @@ conditional flows.</p>
 <dd class="field-odd"><p>Any</p>
 </dd>
 </dl>
-</dd></dl>
-
 <dl class="py method">
 <dt id="nutsflow.processor.If.__rrshift__">
 <code class="sig-name descname">__rrshift__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">iterable</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.processor.If.__rrshift__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Chaining operator (&gt;&gt;) for nuts</p>
+<dd><p>Chaining operator for Nuts. Needs to be overridden!</p>
+<p>Takes an input iterable and produces some output iterable.
+If the number of elements in the input and the output iterable
+does not change consider NutFunction instead.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>iterable</strong> (<em>iterable</em>) – Iterable to process.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Iterable</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>iterable</p>
+</dd>
+<dt class="field-even">Raise</dt>
+<dd class="field-even"><p>NotImplementedError if not implemented.</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt id="nutsflow.processor.Insert">
-<em class="property">class </em><code class="sig-name descname">Insert</code><a class="reference internal" href="_modules/nutsflow/processor.html#Insert"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.processor.Insert" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">Insert</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/processor.html#Insert"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.processor.Insert" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#nutsflow.base.Nut" title="nutsflow.base.Nut"><code class="xref py py-class docutils literal notranslate"><span class="pre">nutsflow.base.Nut</span></code></a></p>
-<dl class="py method">
-<dt id="nutsflow.processor.Insert.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">index</span></em>, <em class="sig-param"><span class="n">items</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.processor.Insert.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>iterable &gt;&gt; Insert(index, items)</p>
+<p>iterable &gt;&gt; Insert(index, items)</p>
 <p>Insert item(s) into lists/tuples in iterable.</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)]</span> <span class="o">&gt;&gt;</span> <span class="n">Insert</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;X&#39;</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
 <span class="go">[(1, &#39;X&#39;, 2), (3, &#39;X&#39;, 4)]</span>
@@ -2507,24 +2755,36 @@ conditional flows.</p>
 <dd class="field-odd"><p>iterator over tuples</p>
 </dd>
 </dl>
-</dd></dl>
-
 <dl class="py method">
 <dt id="nutsflow.processor.Insert.__rrshift__">
 <code class="sig-name descname">__rrshift__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">iterable</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.processor.Insert.__rrshift__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Chaining operator (&gt;&gt;) for nuts</p>
+<dd><p>Chaining operator for Nuts. Needs to be overridden!</p>
+<p>Takes an input iterable and produces some output iterable.
+If the number of elements in the input and the output iterable
+does not change consider NutFunction instead.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>iterable</strong> (<em>iterable</em>) – Iterable to process.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Iterable</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>iterable</p>
+</dd>
+<dt class="field-even">Raise</dt>
+<dd class="field-even"><p>NotImplementedError if not implemented.</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt id="nutsflow.processor.Interleave">
-<em class="property">class </em><code class="sig-name descname">Interleave</code><a class="reference internal" href="_modules/nutsflow/processor.html#Interleave"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.processor.Interleave" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">Interleave</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/processor.html#Interleave"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.processor.Interleave" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#nutsflow.base.Nut" title="nutsflow.base.Nut"><code class="xref py py-class docutils literal notranslate"><span class="pre">nutsflow.base.Nut</span></code></a></p>
-<dl class="py method">
-<dt id="nutsflow.processor.Interleave.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">iterables</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.processor.Interleave.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>iterable &gt;&gt; Interleave(<a href="#id7"><span class="problematic" id="id8">*</span></a>iterables)</p>
+<p>iterable &gt;&gt; Interleave(<a href="#id7"><span class="problematic" id="id8">*</span></a>iterables)</p>
 <p>Interleave elements of iterable with elements of given iterables.
 Similar to iterable &gt;&gt; Zip(<a href="#id9"><span class="problematic" id="id10">*</span></a>iterables) &gt;&gt; Flatten() but longest iterable
 determines length of interleaved iterator.</p>
@@ -2551,12 +2811,27 @@ determines length of interleaved iterator.</p>
 <dd class="field-odd"><p>iterator</p>
 </dd>
 </dl>
-</dd></dl>
-
 <dl class="py method">
 <dt id="nutsflow.processor.Interleave.__rrshift__">
 <code class="sig-name descname">__rrshift__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">iterable</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.processor.Interleave.__rrshift__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Chaining operator (&gt;&gt;) for nuts</p>
+<dd><p>Chaining operator for Nuts. Needs to be overridden!</p>
+<p>Takes an input iterable and produces some output iterable.
+If the number of elements in the input and the output iterable
+does not change consider NutFunction instead.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>iterable</strong> (<em>iterable</em>) – Iterable to process.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Iterable</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>iterable</p>
+</dd>
+<dt class="field-even">Raise</dt>
+<dd class="field-even"><p>NotImplementedError if not implemented.</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -2569,12 +2844,9 @@ determines length of interleaved iterator.</p>
 
 <dl class="py class">
 <dt id="nutsflow.processor.MapCol">
-<em class="property">class </em><code class="sig-name descname">MapCol</code><a class="reference internal" href="_modules/nutsflow/processor.html#MapCol"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.processor.MapCol" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">MapCol</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/processor.html#MapCol"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.processor.MapCol" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#nutsflow.base.Nut" title="nutsflow.base.Nut"><code class="xref py py-class docutils literal notranslate"><span class="pre">nutsflow.base.Nut</span></code></a></p>
-<dl class="py method">
-<dt id="nutsflow.processor.MapCol.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">columns</span></em>, <em class="sig-param"><span class="n">func</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.processor.MapCol.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>iterable &gt;&gt; MapCol(columns, func)</p>
+<p>iterable &gt;&gt; MapCol(columns, func)</p>
 <p>Apply given function to given columns of elements in iterable.</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">neg</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="o">-</span><span class="n">x</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="p">[(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)]</span> <span class="o">&gt;&gt;</span> <span class="n">MapCol</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">neg</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
@@ -2604,24 +2876,36 @@ determines length of interleaved iterator.</p>
 <dd class="field-odd"><p>iterator of list</p>
 </dd>
 </dl>
-</dd></dl>
-
 <dl class="py method">
 <dt id="nutsflow.processor.MapCol.__rrshift__">
 <code class="sig-name descname">__rrshift__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">iterable</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.processor.MapCol.__rrshift__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Chaining operator (&gt;&gt;) for nuts</p>
+<dd><p>Chaining operator for Nuts. Needs to be overridden!</p>
+<p>Takes an input iterable and produces some output iterable.
+If the number of elements in the input and the output iterable
+does not change consider NutFunction instead.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>iterable</strong> (<em>iterable</em>) – Iterable to process.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Iterable</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>iterable</p>
+</dd>
+<dt class="field-even">Raise</dt>
+<dd class="field-even"><p>NotImplementedError if not implemented.</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt id="nutsflow.processor.MapMulti">
-<em class="property">class </em><code class="sig-name descname">MapMulti</code><a class="reference internal" href="_modules/nutsflow/processor.html#MapMulti"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.processor.MapMulti" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">MapMulti</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/processor.html#MapMulti"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.processor.MapMulti" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#nutsflow.base.Nut" title="nutsflow.base.Nut"><code class="xref py py-class docutils literal notranslate"><span class="pre">nutsflow.base.Nut</span></code></a></p>
-<dl class="py method">
-<dt id="nutsflow.processor.MapMulti.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">funcs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.processor.MapMulti.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>iterable &gt;&gt; MapMulti(<a href="#id11"><span class="problematic" id="id12">*</span></a>funcs)</p>
+<p>iterable &gt;&gt; MapMulti(<a href="#id11"><span class="problematic" id="id12">*</span></a>funcs)</p>
 <p>Map multiple functions on iterable. For each function a separate iterable
 is returned. Can consume large amounts of memory when iterables are
 processed sequentially!</p>
@@ -2655,12 +2939,27 @@ processed sequentially!</p>
 <dd class="field-odd"><p>(iterator, ..)</p>
 </dd>
 </dl>
-</dd></dl>
-
 <dl class="py method">
 <dt id="nutsflow.processor.MapMulti.__rrshift__">
 <code class="sig-name descname">__rrshift__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">iterable</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.processor.MapMulti.__rrshift__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Chaining operator (&gt;&gt;) for nuts</p>
+<dd><p>Chaining operator for Nuts. Needs to be overridden!</p>
+<p>Takes an input iterable and produces some output iterable.
+If the number of elements in the input and the output iterable
+does not change consider NutFunction instead.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>iterable</strong> (<em>iterable</em>) – Iterable to process.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Iterable</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>iterable</p>
+</dd>
+<dt class="field-even">Raise</dt>
+<dd class="field-even"><p>NotImplementedError if not implemented.</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -2738,12 +3037,9 @@ does not change consider NutFunction instead.</p>
 
 <dl class="py class">
 <dt id="nutsflow.processor.Pick">
-<em class="property">class </em><code class="sig-name descname">Pick</code><a class="reference internal" href="_modules/nutsflow/processor.html#Pick"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.processor.Pick" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">Pick</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/processor.html#Pick"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.processor.Pick" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#nutsflow.base.Nut" title="nutsflow.base.Nut"><code class="xref py py-class docutils literal notranslate"><span class="pre">nutsflow.base.Nut</span></code></a></p>
-<dl class="py method">
-<dt id="nutsflow.processor.Pick.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">p_n</span></em>, <em class="sig-param"><span class="n">rand</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.processor.Pick.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>iterable &gt;&gt; Pick(p_n)</p>
+<p>iterable &gt;&gt; Pick(p_n)</p>
 <p>Pick every p_n-th element from the iterable if p_n is an integer,
 otherwise pick randomly with probability p_n.</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nutsflow</span> <span class="kn">import</span> <span class="n">Range</span><span class="p">,</span> <span class="n">Collect</span>
@@ -2784,24 +3080,36 @@ is used.</p></li>
 <dd class="field-odd"><p>iterator</p>
 </dd>
 </dl>
-</dd></dl>
-
 <dl class="py method">
 <dt id="nutsflow.processor.Pick.__rrshift__">
 <code class="sig-name descname">__rrshift__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">iterable</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.processor.Pick.__rrshift__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Chaining operator (&gt;&gt;) for nuts</p>
+<dd><p>Chaining operator for Nuts. Needs to be overridden!</p>
+<p>Takes an input iterable and produces some output iterable.
+If the number of elements in the input and the output iterable
+does not change consider NutFunction instead.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>iterable</strong> (<em>iterable</em>) – Iterable to process.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Iterable</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>iterable</p>
+</dd>
+<dt class="field-even">Raise</dt>
+<dd class="field-even"><p>NotImplementedError if not implemented.</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt id="nutsflow.processor.Prefetch">
-<em class="property">class </em><code class="sig-name descname">Prefetch</code><a class="reference internal" href="_modules/nutsflow/processor.html#Prefetch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.processor.Prefetch" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">Prefetch</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/processor.html#Prefetch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.processor.Prefetch" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#nutsflow.base.Nut" title="nutsflow.base.Nut"><code class="xref py py-class docutils literal notranslate"><span class="pre">nutsflow.base.Nut</span></code></a></p>
-<dl class="py method">
-<dt id="nutsflow.processor.Prefetch.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">num_prefetch</span><span class="o">=</span><span class="default_value">1</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.processor.Prefetch.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>iterable &gt;&gt; Prefetch(num_prefetch=1)</p>
+<p>iterable &gt;&gt; Prefetch(num_prefetch=1)</p>
 <p>Prefetch elements from iterable.
 Typically used to keep the CPU busy while the GPU is crunching.</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nutsflow</span> <span class="kn">import</span> <span class="n">Take</span><span class="p">,</span> <span class="n">Consume</span>
@@ -2825,12 +3133,27 @@ Typically used to keep the CPU busy while the GPU is crunching.</p>
 <dd class="field-odd"><p>iterator</p>
 </dd>
 </dl>
-</dd></dl>
-
 <dl class="py method">
 <dt id="nutsflow.processor.Prefetch.__rrshift__">
 <code class="sig-name descname">__rrshift__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">iterable</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.processor.Prefetch.__rrshift__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Chaining operator (&gt;&gt;) for nuts</p>
+<dd><p>Chaining operator for Nuts. Needs to be overridden!</p>
+<p>Takes an input iterable and produces some output iterable.
+If the number of elements in the input and the output iterable
+does not change consider NutFunction instead.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>iterable</strong> (<em>iterable</em>) – Iterable to process.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Iterable</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>iterable</p>
+</dd>
+<dt class="field-even">Raise</dt>
+<dd class="field-even"><p>NotImplementedError if not implemented.</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -2895,12 +3218,9 @@ does not change consider NutFunction instead.</p>
 
 <dl class="py class">
 <dt id="nutsflow.processor.Shuffle">
-<em class="property">class </em><code class="sig-name descname">Shuffle</code><a class="reference internal" href="_modules/nutsflow/processor.html#Shuffle"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.processor.Shuffle" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">Shuffle</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/processor.html#Shuffle"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.processor.Shuffle" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#nutsflow.base.Nut" title="nutsflow.base.Nut"><code class="xref py py-class docutils literal notranslate"><span class="pre">nutsflow.base.Nut</span></code></a></p>
-<dl class="py method">
-<dt id="nutsflow.processor.Shuffle.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">buffersize</span></em>, <em class="sig-param"><span class="n">rand</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.processor.Shuffle.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>iterable &gt;&gt; Shuffle(buffersize)</p>
+<p>iterable &gt;&gt; Shuffle(buffersize)</p>
 <p>Perform (partial) random shuffle of the elements in the iterable.
 Elements of the iterable are stored in a buffer of the given size
 and shuffled within. If buffersize is smaller than the length of
@@ -2939,24 +3259,36 @@ random.Random() is used.</p></li>
 <dd class="field-odd"><p>generator</p>
 </dd>
 </dl>
-</dd></dl>
-
 <dl class="py method">
 <dt id="nutsflow.processor.Shuffle.__rrshift__">
 <code class="sig-name descname">__rrshift__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">iterable</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.processor.Shuffle.__rrshift__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Chaining operator (&gt;&gt;) for nuts</p>
+<dd><p>Chaining operator for Nuts. Needs to be overridden!</p>
+<p>Takes an input iterable and produces some output iterable.
+If the number of elements in the input and the output iterable
+does not change consider NutFunction instead.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>iterable</strong> (<em>iterable</em>) – Iterable to process.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Iterable</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>iterable</p>
+</dd>
+<dt class="field-even">Raise</dt>
+<dd class="field-even"><p>NotImplementedError if not implemented.</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt id="nutsflow.processor.Slice">
-<em class="property">class </em><code class="sig-name descname">Slice</code><a class="reference internal" href="_modules/nutsflow/processor.html#Slice"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.processor.Slice" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">Slice</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/processor.html#Slice"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.processor.Slice" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#nutsflow.base.Nut" title="nutsflow.base.Nut"><code class="xref py py-class docutils literal notranslate"><span class="pre">nutsflow.base.Nut</span></code></a></p>
-<dl class="py method">
-<dt id="nutsflow.processor.Slice.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">start</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.processor.Slice.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>iterable &gt;&gt; Slice([start,] stop[, stride])</p>
+<p>iterable &gt;&gt; Slice([start,] stop[, stride])</p>
 <p>Return slice of elements from iterable.
 See <a class="reference external" href="https://docs.python.org/2/library/itertools.html#itertools.islice">https://docs.python.org/2/library/itertools.html#itertools.islice</a></p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nutsflow</span> <span class="kn">import</span> <span class="n">Collect</span>
@@ -2990,24 +3322,36 @@ See <a class="reference external" href="https://docs.python.org/2/library/iterto
 <dd class="field-odd"><p>iterator</p>
 </dd>
 </dl>
-</dd></dl>
-
 <dl class="py method">
 <dt id="nutsflow.processor.Slice.__rrshift__">
 <code class="sig-name descname">__rrshift__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">iterable</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.processor.Slice.__rrshift__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Chaining operator (&gt;&gt;) for nuts</p>
+<dd><p>Chaining operator for Nuts. Needs to be overridden!</p>
+<p>Takes an input iterable and produces some output iterable.
+If the number of elements in the input and the output iterable
+does not change consider NutFunction instead.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>iterable</strong> (<em>iterable</em>) – Iterable to process.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Iterable</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>iterable</p>
+</dd>
+<dt class="field-even">Raise</dt>
+<dd class="field-even"><p>NotImplementedError if not implemented.</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt id="nutsflow.processor.Take">
-<em class="property">class </em><code class="sig-name descname">Take</code><a class="reference internal" href="_modules/nutsflow/processor.html#Take"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.processor.Take" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">Take</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/processor.html#Take"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.processor.Take" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#nutsflow.base.Nut" title="nutsflow.base.Nut"><code class="xref py py-class docutils literal notranslate"><span class="pre">nutsflow.base.Nut</span></code></a></p>
-<dl class="py method">
-<dt id="nutsflow.processor.Take.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">n</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.processor.Take.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>iterable &gt;&gt; Take(n)</p>
+<p>iterable &gt;&gt; Take(n)</p>
 <p>Return first n elements of iterable</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nutsflow</span> <span class="kn">import</span> <span class="n">Collect</span>
 </pre></div>
@@ -3030,12 +3374,27 @@ See <a class="reference external" href="https://docs.python.org/2/library/iterto
 <dd class="field-odd"><p>iterator</p>
 </dd>
 </dl>
-</dd></dl>
-
 <dl class="py method">
 <dt id="nutsflow.processor.Take.__rrshift__">
 <code class="sig-name descname">__rrshift__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">iterable</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.processor.Take.__rrshift__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Chaining operator (&gt;&gt;) for nuts</p>
+<dd><p>Chaining operator for Nuts. Needs to be overridden!</p>
+<p>Takes an input iterable and produces some output iterable.
+If the number of elements in the input and the output iterable
+does not change consider NutFunction instead.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>iterable</strong> (<em>iterable</em>) – Iterable to process.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Iterable</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>iterable</p>
+</dd>
+<dt class="field-even">Raise</dt>
+<dd class="field-even"><p>NotImplementedError if not implemented.</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -3054,12 +3413,9 @@ See <a class="reference external" href="https://docs.python.org/2/library/iterto
 
 <dl class="py class">
 <dt id="nutsflow.processor.Try">
-<em class="property">class </em><code class="sig-name descname">Try</code><a class="reference internal" href="_modules/nutsflow/processor.html#Try"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.processor.Try" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">Try</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/processor.html#Try"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.processor.Try" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#nutsflow.base.Nut" title="nutsflow.base.Nut"><code class="xref py py-class docutils literal notranslate"><span class="pre">nutsflow.base.Nut</span></code></a></p>
-<dl class="py method">
-<dt id="nutsflow.processor.Try.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">func</span></em>, <em class="sig-param"><span class="n">default</span><span class="o">=</span><span class="default_value">'STDERR'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.processor.Try.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>iterable &gt;&gt; Try(nut)</p>
+<p>iterable &gt;&gt; Try(nut)</p>
 <p>Exception handling for (nut) functions. If the wrapped nut or function 
 raises an exception it is caught and handled with the provided handler.
 Per default the exception and the value causing it are printed.
@@ -3121,24 +3477,36 @@ Otherwise the default value is returned and no error is printed.</p></li>
 <dd class="field-odd"><p>iterator</p>
 </dd>
 </dl>
-</dd></dl>
-
 <dl class="py method">
 <dt id="nutsflow.processor.Try.__rrshift__">
 <code class="sig-name descname">__rrshift__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">iterable</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.processor.Try.__rrshift__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Chaining operator (&gt;&gt;) for nuts</p>
+<dd><p>Chaining operator for Nuts. Needs to be overridden!</p>
+<p>Takes an input iterable and produces some output iterable.
+If the number of elements in the input and the output iterable
+does not change consider NutFunction instead.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>iterable</strong> (<em>iterable</em>) – Iterable to process.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Iterable</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>iterable</p>
+</dd>
+<dt class="field-even">Raise</dt>
+<dd class="field-even"><p>NotImplementedError if not implemented.</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt id="nutsflow.processor.Window">
-<em class="property">class </em><code class="sig-name descname">Window</code><a class="reference internal" href="_modules/nutsflow/processor.html#Window"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.processor.Window" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">Window</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/processor.html#Window"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.processor.Window" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#nutsflow.base.Nut" title="nutsflow.base.Nut"><code class="xref py py-class docutils literal notranslate"><span class="pre">nutsflow.base.Nut</span></code></a></p>
-<dl class="py method">
-<dt id="nutsflow.processor.Window.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">n</span><span class="o">=</span><span class="default_value">2</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.processor.Window.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>iterable &gt;&gt; Window(n)</p>
+<p>iterable &gt;&gt; Window(n)</p>
 <p>Sliding window of size n over elements in iterable.</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">Window</span><span class="p">()</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
 <span class="go">[(1, 2), (2, 3), (3, 4)]</span>
@@ -3166,24 +3534,36 @@ Otherwise the default value is returned and no error is printed.</p></li>
 <dd class="field-odd"><p>iterator over tuples</p>
 </dd>
 </dl>
-</dd></dl>
-
 <dl class="py method">
 <dt id="nutsflow.processor.Window.__rrshift__">
 <code class="sig-name descname">__rrshift__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">iterable</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.processor.Window.__rrshift__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Chaining operator (&gt;&gt;) for nuts</p>
+<dd><p>Chaining operator for Nuts. Needs to be overridden!</p>
+<p>Takes an input iterable and produces some output iterable.
+If the number of elements in the input and the output iterable
+does not change consider NutFunction instead.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>iterable</strong> (<em>iterable</em>) – Iterable to process.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Iterable</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>iterable</p>
+</dd>
+<dt class="field-even">Raise</dt>
+<dd class="field-even"><p>NotImplementedError if not implemented.</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt id="nutsflow.processor.Zip">
-<em class="property">class </em><code class="sig-name descname">Zip</code><a class="reference internal" href="_modules/nutsflow/processor.html#Zip"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.processor.Zip" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">Zip</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/processor.html#Zip"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.processor.Zip" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#nutsflow.base.Nut" title="nutsflow.base.Nut"><code class="xref py py-class docutils literal notranslate"><span class="pre">nutsflow.base.Nut</span></code></a></p>
-<dl class="py method">
-<dt id="nutsflow.processor.Zip.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">iterable2</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">iterables</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.processor.Zip.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>iterable &gt;&gt; Zip(<a href="#id13"><span class="problematic" id="id14">*</span></a>iterables)</p>
+<p>iterable &gt;&gt; Zip(<a href="#id13"><span class="problematic" id="id14">*</span></a>iterables)</p>
 <p>Zip elements of iterable with elements of given iterables.
 Zip finishes when shortest iterable is exhausted.
 See <a class="reference external" href="https://docs.python.org/2/library/itertools.html#itertools.izip">https://docs.python.org/2/library/itertools.html#itertools.izip</a>
@@ -3213,24 +3593,36 @@ And <a class="reference external" href="https://docs.python.org/2/library/iterto
 <dd class="field-odd"><p>iterator over tuples</p>
 </dd>
 </dl>
-</dd></dl>
-
 <dl class="py method">
 <dt id="nutsflow.processor.Zip.__rrshift__">
 <code class="sig-name descname">__rrshift__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">iterable</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.processor.Zip.__rrshift__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Chaining operator (&gt;&gt;) for nuts</p>
+<dd><p>Chaining operator for Nuts. Needs to be overridden!</p>
+<p>Takes an input iterable and produces some output iterable.
+If the number of elements in the input and the output iterable
+does not change consider NutFunction instead.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>iterable</strong> (<em>iterable</em>) – Iterable to process.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Iterable</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>iterable</p>
+</dd>
+<dt class="field-even">Raise</dt>
+<dd class="field-even"><p>NotImplementedError if not implemented.</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt id="nutsflow.processor.ZipWith">
-<em class="property">class </em><code class="sig-name descname">ZipWith</code><a class="reference internal" href="_modules/nutsflow/processor.html#ZipWith"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.processor.ZipWith" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">ZipWith</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/processor.html#ZipWith"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.processor.ZipWith" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#nutsflow.base.Nut" title="nutsflow.base.Nut"><code class="xref py py-class docutils literal notranslate"><span class="pre">nutsflow.base.Nut</span></code></a></p>
-<dl class="py method">
-<dt id="nutsflow.processor.ZipWith.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">f</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">iterables</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.processor.ZipWith.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>iterable &gt;&gt; ZipWith(f, <a href="#id15"><span class="problematic" id="id16">*</span></a>iterables)</p>
+<p>iterable &gt;&gt; ZipWith(f, <a href="#id15"><span class="problematic" id="id16">*</span></a>iterables)</p>
 <p>Zips the given iterables, unpacks them and applies the given function.</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">add</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">ZipWith</span><span class="p">(</span><span class="n">add</span><span class="p">,</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
@@ -3252,12 +3644,27 @@ And <a class="reference external" href="https://docs.python.org/2/library/iterto
 <dd class="field-odd"><p>iterator</p>
 </dd>
 </dl>
-</dd></dl>
-
 <dl class="py method">
 <dt id="nutsflow.processor.ZipWith.__rrshift__">
 <code class="sig-name descname">__rrshift__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">iterable</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.processor.ZipWith.__rrshift__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Chaining operator (&gt;&gt;) for nuts</p>
+<dd><p>Chaining operator for Nuts. Needs to be overridden!</p>
+<p>Takes an input iterable and produces some output iterable.
+If the number of elements in the input and the output iterable
+does not change consider NutFunction instead.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>iterable</strong> (<em>iterable</em>) – Iterable to process.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Iterable</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>iterable</p>
+</dd>
+<dt class="field-even">Raise</dt>
+<dd class="field-even"><p>NotImplementedError if not implemented.</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -3267,12 +3674,9 @@ And <a class="reference external" href="https://docs.python.org/2/library/iterto
 <span id="nutsflow-sink-module"></span><h2>nutsflow.sink module<a class="headerlink" href="#module-nutsflow.sink" title="Permalink to this headline">¶</a></h2>
 <span class="target" id="module-sink"></span><dl class="py class">
 <dt id="nutsflow.sink.ArgMax">
-<em class="property">class </em><code class="sig-name descname">ArgMax</code><a class="reference internal" href="_modules/nutsflow/sink.html#ArgMax"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.sink.ArgMax" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">ArgMax</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/sink.html#ArgMax"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.sink.ArgMax" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#nutsflow.base.NutSink" title="nutsflow.base.NutSink"><code class="xref py py-class docutils literal notranslate"><span class="pre">nutsflow.base.NutSink</span></code></a></p>
-<dl class="py method">
-<dt id="nutsflow.sink.ArgMax.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">key</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">default</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">retvalue</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.sink.ArgMax.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>iterable &gt;&gt; ArgMax(key=None, default=None, retvalue=False)</p>
+<p>iterable &gt;&gt; ArgMax(key=None, default=None, retvalue=False)</p>
 <p>Return index of first maximum element (and maximum) in input
 (transformed or extracted by key function).</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">ArgMax</span><span class="p">()</span>
@@ -3321,24 +3725,36 @@ and the largest element itself if retvalue==True</p>
 <dd class="field-odd"><p>object | tuple</p>
 </dd>
 </dl>
-</dd></dl>
-
 <dl class="py method">
 <dt id="nutsflow.sink.ArgMax.__rrshift__">
 <code class="sig-name descname">__rrshift__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">iterable</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.sink.ArgMax.__rrshift__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Chaining operator (&gt;&gt;) for nuts</p>
+<dd><p>Chaining operator for Nuts. Needs to be overridden!</p>
+<p>Takes an input iterable and produces some output iterable.
+If the number of elements in the input and the output iterable
+does not change consider NutFunction instead.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>iterable</strong> (<em>iterable</em>) – Iterable to process.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Iterable</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>iterable</p>
+</dd>
+<dt class="field-even">Raise</dt>
+<dd class="field-even"><p>NotImplementedError if not implemented.</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt id="nutsflow.sink.ArgMin">
-<em class="property">class </em><code class="sig-name descname">ArgMin</code><a class="reference internal" href="_modules/nutsflow/sink.html#ArgMin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.sink.ArgMin" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">ArgMin</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/sink.html#ArgMin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.sink.ArgMin" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#nutsflow.base.NutSink" title="nutsflow.base.NutSink"><code class="xref py py-class docutils literal notranslate"><span class="pre">nutsflow.base.NutSink</span></code></a></p>
-<dl class="py method">
-<dt id="nutsflow.sink.ArgMin.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">key</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">default</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">retvalue</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.sink.ArgMin.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>iterable &gt;&gt; ArgMin(key=None, default=None, retvalue=True)</p>
+<p>iterable &gt;&gt; ArgMin(key=None, default=None, retvalue=True)</p>
 <p>Return index of first minimum element (and minimum) in input
 (transformed or extracted by key function).</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">ArgMin</span><span class="p">()</span>
@@ -3387,24 +3803,36 @@ and the smallest element itself if retvalue==True.</p>
 <dd class="field-odd"><p>object | tuple</p>
 </dd>
 </dl>
-</dd></dl>
-
 <dl class="py method">
 <dt id="nutsflow.sink.ArgMin.__rrshift__">
 <code class="sig-name descname">__rrshift__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">iterable</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.sink.ArgMin.__rrshift__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Chaining operator (&gt;&gt;) for nuts</p>
+<dd><p>Chaining operator for Nuts. Needs to be overridden!</p>
+<p>Takes an input iterable and produces some output iterable.
+If the number of elements in the input and the output iterable
+does not change consider NutFunction instead.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>iterable</strong> (<em>iterable</em>) – Iterable to process.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Iterable</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>iterable</p>
+</dd>
+<dt class="field-even">Raise</dt>
+<dd class="field-even"><p>NotImplementedError if not implemented.</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt id="nutsflow.sink.Collect">
-<em class="property">class </em><code class="sig-name descname">Collect</code><a class="reference internal" href="_modules/nutsflow/sink.html#Collect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.sink.Collect" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">Collect</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/sink.html#Collect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.sink.Collect" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#nutsflow.base.NutSink" title="nutsflow.base.NutSink"><code class="xref py py-class docutils literal notranslate"><span class="pre">nutsflow.base.NutSink</span></code></a></p>
-<dl class="py method">
-<dt id="nutsflow.sink.Collect.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param">container=&lt;class 'list'&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.sink.Collect.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>iterable &gt;&gt; Collect(container)</p>
+<p>iterable &gt;&gt; Collect(container)</p>
 <p>Collects all elements of the iterable input in the given container.</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
 <span class="go">[0, 1, 2, 3, 4]</span>
@@ -3433,12 +3861,27 @@ that can be filled from an iterable</p></li>
 <dd class="field-odd"><p>container</p>
 </dd>
 </dl>
-</dd></dl>
-
 <dl class="py method">
 <dt id="nutsflow.sink.Collect.__rrshift__">
 <code class="sig-name descname">__rrshift__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">iterable</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.sink.Collect.__rrshift__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Chaining operator (&gt;&gt;) for nuts</p>
+<dd><p>Chaining operator for Nuts. Needs to be overridden!</p>
+<p>Takes an input iterable and produces some output iterable.
+If the number of elements in the input and the output iterable
+does not change consider NutFunction instead.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>iterable</strong> (<em>iterable</em>) – Iterable to process.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Iterable</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>iterable</p>
+</dd>
+<dt class="field-even">Raise</dt>
+<dd class="field-even"><p>NotImplementedError if not implemented.</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -3457,12 +3900,9 @@ that can be filled from an iterable</p></li>
 
 <dl class="py class">
 <dt id="nutsflow.sink.CountValues">
-<em class="property">class </em><code class="sig-name descname">CountValues</code><a class="reference internal" href="_modules/nutsflow/sink.html#CountValues"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.sink.CountValues" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">CountValues</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/sink.html#CountValues"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.sink.CountValues" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#nutsflow.base.NutSink" title="nutsflow.base.NutSink"><code class="xref py py-class docutils literal notranslate"><span class="pre">nutsflow.base.NutSink</span></code></a></p>
-<dl class="py method">
-<dt id="nutsflow.sink.CountValues.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">column</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">relative</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.sink.CountValues.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>iterable &gt;&gt; CountValues(relative=False)</p>
+<p>iterable &gt;&gt; CountValues(relative=False)</p>
 <p>Return dictionary with (relative) counts of the values
 in the input iterable.</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="s1">&#39;abaacc&#39;</span> <span class="o">&gt;&gt;</span> <span class="n">CountValues</span><span class="p">()</span>  
@@ -3496,24 +3936,36 @@ If colum=None the values in the iterable themselves will be counted.</p></li>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.9)">dict</a></p>
 </dd>
 </dl>
-</dd></dl>
-
 <dl class="py method">
 <dt id="nutsflow.sink.CountValues.__rrshift__">
 <code class="sig-name descname">__rrshift__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">iterable</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.sink.CountValues.__rrshift__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Chaining operator (&gt;&gt;) for nuts</p>
+<dd><p>Chaining operator for Nuts. Needs to be overridden!</p>
+<p>Takes an input iterable and produces some output iterable.
+If the number of elements in the input and the output iterable
+does not change consider NutFunction instead.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>iterable</strong> (<em>iterable</em>) – Iterable to process.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Iterable</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>iterable</p>
+</dd>
+<dt class="field-even">Raise</dt>
+<dd class="field-even"><p>NotImplementedError if not implemented.</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt id="nutsflow.sink.Head">
-<em class="property">class </em><code class="sig-name descname">Head</code><a class="reference internal" href="_modules/nutsflow/sink.html#Head"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.sink.Head" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">Head</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/sink.html#Head"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.sink.Head" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#nutsflow.base.NutSink" title="nutsflow.base.NutSink"><code class="xref py py-class docutils literal notranslate"><span class="pre">nutsflow.base.NutSink</span></code></a></p>
-<dl class="py method">
-<dt id="nutsflow.sink.Head.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param">n</em>, <em class="sig-param">container=&lt;class 'list'&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.sink.Head.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>iterable &gt;&gt; Head(n, container=list)</p>
+<p>iterable &gt;&gt; Head(n, container=list)</p>
 <p>Collect first n elements of iterable in specified container.</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">Head</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
 <span class="go">[1, 2]</span>
@@ -3534,24 +3986,36 @@ If colum=None the values in the iterable themselves will be counted.</p></li>
 <dd class="field-odd"><p>container</p>
 </dd>
 </dl>
-</dd></dl>
-
 <dl class="py method">
 <dt id="nutsflow.sink.Head.__rrshift__">
 <code class="sig-name descname">__rrshift__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">iterable</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.sink.Head.__rrshift__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Chaining operator (&gt;&gt;) for nuts</p>
+<dd><p>Chaining operator for Nuts. Needs to be overridden!</p>
+<p>Takes an input iterable and produces some output iterable.
+If the number of elements in the input and the output iterable
+does not change consider NutFunction instead.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>iterable</strong> (<em>iterable</em>) – Iterable to process.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Iterable</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>iterable</p>
+</dd>
+<dt class="field-even">Raise</dt>
+<dd class="field-even"><p>NotImplementedError if not implemented.</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt id="nutsflow.sink.Join">
-<em class="property">class </em><code class="sig-name descname">Join</code><a class="reference internal" href="_modules/nutsflow/sink.html#Join"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.sink.Join" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">Join</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/sink.html#Join"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.sink.Join" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#nutsflow.base.NutSink" title="nutsflow.base.NutSink"><code class="xref py py-class docutils literal notranslate"><span class="pre">nutsflow.base.NutSink</span></code></a></p>
-<dl class="py method">
-<dt id="nutsflow.sink.Join.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">separator</span><span class="o">=</span><span class="default_value">''</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.sink.Join.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>iterable &gt;&gt; Join(separator=’’)</p>
+<p>iterable &gt;&gt; Join(separator=’’)</p>
 <p>Same as Python’s sep.join(iterable). Concatenates the elements in
 the iterable to a string using the given separator. In addition to
 Python’s sep.join(iterable) it also automatically converts elements
@@ -3570,24 +4034,36 @@ to strings.</p>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a></p>
 </dd>
 </dl>
-</dd></dl>
-
 <dl class="py method">
 <dt id="nutsflow.sink.Join.__rrshift__">
 <code class="sig-name descname">__rrshift__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">iterable</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.sink.Join.__rrshift__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Chaining operator (&gt;&gt;) for nuts</p>
+<dd><p>Chaining operator for Nuts. Needs to be overridden!</p>
+<p>Takes an input iterable and produces some output iterable.
+If the number of elements in the input and the output iterable
+does not change consider NutFunction instead.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>iterable</strong> (<em>iterable</em>) – Iterable to process.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Iterable</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>iterable</p>
+</dd>
+<dt class="field-even">Raise</dt>
+<dd class="field-even"><p>NotImplementedError if not implemented.</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt id="nutsflow.sink.Max">
-<em class="property">class </em><code class="sig-name descname">Max</code><a class="reference internal" href="_modules/nutsflow/sink.html#Max"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.sink.Max" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">Max</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/sink.html#Max"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.sink.Max" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#nutsflow.base.NutSink" title="nutsflow.base.NutSink"><code class="xref py py-class docutils literal notranslate"><span class="pre">nutsflow.base.NutSink</span></code></a></p>
-<dl class="py method">
-<dt id="nutsflow.sink.Max.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">key</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">default</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.sink.Max.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>iterable &gt;&gt; Max(key=None, default=None)</p>
+<p>iterable &gt;&gt; Max(key=None, default=None)</p>
 <p>Return maximum of inputs (transformed or extracted by key function).</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">Max</span><span class="p">()</span>
 <span class="go">3</span>
@@ -3626,24 +4102,36 @@ transform elements. None = identity function.</p></li>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.9)">object</a></p>
 </dd>
 </dl>
-</dd></dl>
-
 <dl class="py method">
 <dt id="nutsflow.sink.Max.__rrshift__">
 <code class="sig-name descname">__rrshift__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">iterable</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.sink.Max.__rrshift__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Chaining operator (&gt;&gt;) for nuts</p>
+<dd><p>Chaining operator for Nuts. Needs to be overridden!</p>
+<p>Takes an input iterable and produces some output iterable.
+If the number of elements in the input and the output iterable
+does not change consider NutFunction instead.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>iterable</strong> (<em>iterable</em>) – Iterable to process.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Iterable</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>iterable</p>
+</dd>
+<dt class="field-even">Raise</dt>
+<dd class="field-even"><p>NotImplementedError if not implemented.</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt id="nutsflow.sink.Mean">
-<em class="property">class </em><code class="sig-name descname">Mean</code><a class="reference internal" href="_modules/nutsflow/sink.html#Mean"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.sink.Mean" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">Mean</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/sink.html#Mean"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.sink.Mean" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#nutsflow.base.NutSink" title="nutsflow.base.NutSink"><code class="xref py py-class docutils literal notranslate"><span class="pre">nutsflow.base.NutSink</span></code></a></p>
-<dl class="py method">
-<dt id="nutsflow.sink.Mean.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">key</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">default</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.sink.Mean.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>iterable &gt;&gt; Mean(key=None, default=None)</p>
+<p>iterable &gt;&gt; Mean(key=None, default=None)</p>
 <p>Return mean value of inputs (transformed or extracted by key function).</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">Mean</span><span class="p">()</span>
 <span class="go">2.0</span>
@@ -3675,24 +4163,36 @@ transform elements. None = identity function.</p></li>
 <dd class="field-odd"><p>number</p>
 </dd>
 </dl>
-</dd></dl>
-
 <dl class="py method">
 <dt id="nutsflow.sink.Mean.__rrshift__">
 <code class="sig-name descname">__rrshift__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">iterable</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.sink.Mean.__rrshift__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Chaining operator (&gt;&gt;) for nuts</p>
+<dd><p>Chaining operator for Nuts. Needs to be overridden!</p>
+<p>Takes an input iterable and produces some output iterable.
+If the number of elements in the input and the output iterable
+does not change consider NutFunction instead.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>iterable</strong> (<em>iterable</em>) – Iterable to process.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Iterable</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>iterable</p>
+</dd>
+<dt class="field-even">Raise</dt>
+<dd class="field-even"><p>NotImplementedError if not implemented.</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt id="nutsflow.sink.MeanStd">
-<em class="property">class </em><code class="sig-name descname">MeanStd</code><a class="reference internal" href="_modules/nutsflow/sink.html#MeanStd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.sink.MeanStd" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">MeanStd</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/sink.html#MeanStd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.sink.MeanStd" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#nutsflow.base.NutSink" title="nutsflow.base.NutSink"><code class="xref py py-class docutils literal notranslate"><span class="pre">nutsflow.base.NutSink</span></code></a></p>
-<dl class="py method">
-<dt id="nutsflow.sink.MeanStd.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">key</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">default</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">ddof</span><span class="o">=</span><span class="default_value">1</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.sink.MeanStd.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>iterable &gt;&gt; MeanStd(key=None, default=None, ddof=1)</p>
+<p>iterable &gt;&gt; MeanStd(key=None, default=None, ddof=1)</p>
 <p>Return mean and standard deviation of inputs (transformed or extracted
 by key function).
 Standard deviation is with degrees of freedom = 1</p>
@@ -3723,24 +4223,36 @@ Standard deviation is with degrees of freedom = 1</p>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.9)">tuple</a> (mean, std)</p>
 </dd>
 </dl>
-</dd></dl>
-
 <dl class="py method">
 <dt id="nutsflow.sink.MeanStd.__rrshift__">
 <code class="sig-name descname">__rrshift__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">iterable</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.sink.MeanStd.__rrshift__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Chaining operator (&gt;&gt;) for nuts</p>
+<dd><p>Chaining operator for Nuts. Needs to be overridden!</p>
+<p>Takes an input iterable and produces some output iterable.
+If the number of elements in the input and the output iterable
+does not change consider NutFunction instead.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>iterable</strong> (<em>iterable</em>) – Iterable to process.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Iterable</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>iterable</p>
+</dd>
+<dt class="field-even">Raise</dt>
+<dd class="field-even"><p>NotImplementedError if not implemented.</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt id="nutsflow.sink.Min">
-<em class="property">class </em><code class="sig-name descname">Min</code><a class="reference internal" href="_modules/nutsflow/sink.html#Min"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.sink.Min" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">Min</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/sink.html#Min"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.sink.Min" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#nutsflow.base.NutSink" title="nutsflow.base.NutSink"><code class="xref py py-class docutils literal notranslate"><span class="pre">nutsflow.base.NutSink</span></code></a></p>
-<dl class="py method">
-<dt id="nutsflow.sink.Min.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">key</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">default</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.sink.Min.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>iterable &gt;&gt; Min(key=None, default=None)</p>
+<p>iterable &gt;&gt; Min(key=None, default=None)</p>
 <p>Return minimum of inputs (transformed or extracted by key function).</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">Min</span><span class="p">()</span>
 <span class="go">1</span>
@@ -3779,12 +4291,27 @@ transform elements. None = identity function.</p></li>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.9)">object</a></p>
 </dd>
 </dl>
-</dd></dl>
-
 <dl class="py method">
 <dt id="nutsflow.sink.Min.__rrshift__">
 <code class="sig-name descname">__rrshift__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">iterable</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.sink.Min.__rrshift__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Chaining operator (&gt;&gt;) for nuts</p>
+<dd><p>Chaining operator for Nuts. Needs to be overridden!</p>
+<p>Takes an input iterable and produces some output iterable.
+If the number of elements in the input and the output iterable
+does not change consider NutFunction instead.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>iterable</strong> (<em>iterable</em>) – Iterable to process.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Iterable</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>iterable</p>
+</dd>
+<dt class="field-even">Raise</dt>
+<dd class="field-even"><p>NotImplementedError if not implemented.</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -3809,12 +4336,9 @@ transform elements. None = identity function.</p></li>
 
 <dl class="py class">
 <dt id="nutsflow.sink.Sort">
-<em class="property">class </em><code class="sig-name descname">Sort</code><a class="reference internal" href="_modules/nutsflow/sink.html#Sort"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.sink.Sort" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">Sort</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/sink.html#Sort"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.sink.Sort" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#nutsflow.base.NutSink" title="nutsflow.base.NutSink"><code class="xref py py-class docutils literal notranslate"><span class="pre">nutsflow.base.NutSink</span></code></a></p>
-<dl class="py method">
-<dt id="nutsflow.sink.Sort.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">key</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">reverse</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.sink.Sort.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>iterable &gt;&gt; Sort(key=None, reverse=False)</p>
+<p>iterable &gt;&gt; Sort(key=None, reverse=False)</p>
 <p>Sorts iterable with respect to key function or column index(es).</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">Sort</span><span class="p">()</span>
 <span class="go">[1, 2, 3]</span>
@@ -3860,24 +4384,36 @@ column index(es) tuples/vectors/strings are sorted by.</p></li>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)">list</a></p>
 </dd>
 </dl>
-</dd></dl>
-
 <dl class="py method">
 <dt id="nutsflow.sink.Sort.__rrshift__">
 <code class="sig-name descname">__rrshift__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">iterable</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.sink.Sort.__rrshift__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Chaining operator (&gt;&gt;) for nuts</p>
+<dd><p>Chaining operator for Nuts. Needs to be overridden!</p>
+<p>Takes an input iterable and produces some output iterable.
+If the number of elements in the input and the output iterable
+does not change consider NutFunction instead.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>iterable</strong> (<em>iterable</em>) – Iterable to process.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Iterable</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>iterable</p>
+</dd>
+<dt class="field-even">Raise</dt>
+<dd class="field-even"><p>NotImplementedError if not implemented.</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt id="nutsflow.sink.Sum">
-<em class="property">class </em><code class="sig-name descname">Sum</code><a class="reference internal" href="_modules/nutsflow/sink.html#Sum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.sink.Sum" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">Sum</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/sink.html#Sum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.sink.Sum" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#nutsflow.base.NutSink" title="nutsflow.base.NutSink"><code class="xref py py-class docutils literal notranslate"><span class="pre">nutsflow.base.NutSink</span></code></a></p>
-<dl class="py method">
-<dt id="nutsflow.sink.Sum.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">key</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.sink.Sum.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>iterable &gt;&gt; Sum(key=None)</p>
+<p>iterable &gt;&gt; Sum(key=None)</p>
 <p>Return sum over inputs (transformed or extracted by key function)</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">Sum</span><span class="p">()</span>
 <span class="go">6</span>
@@ -3908,24 +4444,36 @@ column index(es) tuples/vectors/strings are sorted by.</p></li>
 <dd class="field-odd"><p>number</p>
 </dd>
 </dl>
-</dd></dl>
-
 <dl class="py method">
 <dt id="nutsflow.sink.Sum.__rrshift__">
 <code class="sig-name descname">__rrshift__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">iterable</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.sink.Sum.__rrshift__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Chaining operator (&gt;&gt;) for nuts</p>
+<dd><p>Chaining operator for Nuts. Needs to be overridden!</p>
+<p>Takes an input iterable and produces some output iterable.
+If the number of elements in the input and the output iterable
+does not change consider NutFunction instead.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>iterable</strong> (<em>iterable</em>) – Iterable to process.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Iterable</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>iterable</p>
+</dd>
+<dt class="field-even">Raise</dt>
+<dd class="field-even"><p>NotImplementedError if not implemented.</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt id="nutsflow.sink.Tail">
-<em class="property">class </em><code class="sig-name descname">Tail</code><a class="reference internal" href="_modules/nutsflow/sink.html#Tail"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.sink.Tail" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">Tail</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/sink.html#Tail"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.sink.Tail" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#nutsflow.base.NutSink" title="nutsflow.base.NutSink"><code class="xref py py-class docutils literal notranslate"><span class="pre">nutsflow.base.NutSink</span></code></a></p>
-<dl class="py method">
-<dt id="nutsflow.sink.Tail.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param">n</em>, <em class="sig-param">container=&lt;class 'list'&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.sink.Tail.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>iterable &gt;&gt; Tail(n, container=list)</p>
+<p>iterable &gt;&gt; Tail(n, container=list)</p>
 <p>Collect last n elements of iterable in specified container. This consumes
 the iterable completely!</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">Tail</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
@@ -3947,24 +4495,36 @@ the iterable completely!</p>
 <dd class="field-odd"><p>container</p>
 </dd>
 </dl>
-</dd></dl>
-
 <dl class="py method">
 <dt id="nutsflow.sink.Tail.__rrshift__">
 <code class="sig-name descname">__rrshift__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">iterable</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.sink.Tail.__rrshift__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Chaining operator (&gt;&gt;) for nuts</p>
+<dd><p>Chaining operator for Nuts. Needs to be overridden!</p>
+<p>Takes an input iterable and produces some output iterable.
+If the number of elements in the input and the output iterable
+does not change consider NutFunction instead.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>iterable</strong> (<em>iterable</em>) – Iterable to process.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Iterable</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>iterable</p>
+</dd>
+<dt class="field-even">Raise</dt>
+<dd class="field-even"><p>NotImplementedError if not implemented.</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt id="nutsflow.sink.Unzip">
-<em class="property">class </em><code class="sig-name descname">Unzip</code><a class="reference internal" href="_modules/nutsflow/sink.html#Unzip"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.sink.Unzip" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">Unzip</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/sink.html#Unzip"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.sink.Unzip" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#nutsflow.base.NutSink" title="nutsflow.base.NutSink"><code class="xref py py-class docutils literal notranslate"><span class="pre">nutsflow.base.NutSink</span></code></a></p>
-<dl class="py method">
-<dt id="nutsflow.sink.Unzip.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">container</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.sink.Unzip.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>iterable &gt;&gt; Unzip(container=None)</p>
+<p>iterable &gt;&gt; Unzip(container=None)</p>
 <p>Same as izip(<a href="#id17"><span class="problematic" id="id18">*</span></a>iterable) but returns iterators for container=None</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">)]</span> <span class="o">&gt;&gt;</span> <span class="n">Unzip</span><span class="p">(</span><span class="nb">tuple</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
 <span class="go">[(1, 4), (2, 5), (3, 6)]</span>
@@ -3985,12 +4545,27 @@ in the provided container, eg. list, tuple, set</p></li>
 <dd class="field-odd"><p>iterator over iterators</p>
 </dd>
 </dl>
-</dd></dl>
-
 <dl class="py method">
 <dt id="nutsflow.sink.Unzip.__rrshift__">
 <code class="sig-name descname">__rrshift__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">iterable</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.sink.Unzip.__rrshift__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Chaining operator (&gt;&gt;) for nuts</p>
+<dd><p>Chaining operator for Nuts. Needs to be overridden!</p>
+<p>Takes an input iterable and produces some output iterable.
+If the number of elements in the input and the output iterable
+does not change consider NutFunction instead.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>iterable</strong> (<em>iterable</em>) – Iterable to process.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Iterable</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>iterable</p>
+</dd>
+<dt class="field-even">Raise</dt>
+<dd class="field-even"><p>NotImplementedError if not implemented.</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -4068,10 +4643,6 @@ See <a class="reference external" href="https://docs.python.org/2/library/csv.ht
 <dt id="nutsflow.source.Empty">
 <em class="property">class </em><code class="sig-name descname">Empty</code><a class="reference internal" href="_modules/nutsflow/source.html#Empty"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.source.Empty" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#nutsflow.base.NutSource" title="nutsflow.base.NutSource"><code class="xref py py-class docutils literal notranslate"><span class="pre">nutsflow.base.NutSource</span></code></a></p>
-<dl class="py method">
-<dt id="nutsflow.source.Empty.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.source.Empty.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Empty()</p>
 <p>Return empty iterable.</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nutsflow</span> <span class="kn">import</span> <span class="n">Collect</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">Empty</span><span class="p">()</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
@@ -4088,16 +4659,10 @@ See <a class="reference external" href="https://docs.python.org/2/library/csv.ht
 </dl>
 </dd></dl>
 
-</dd></dl>
-
 <dl class="py class">
 <dt id="nutsflow.source.Enumerate">
-<em class="property">class </em><code class="sig-name descname">Enumerate</code><a class="reference internal" href="_modules/nutsflow/source.html#Enumerate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.source.Enumerate" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">Enumerate</code><span class="sig-paren">(</span><em class="sig-param">start=0</em><span class="optional">[</span>, <em class="sig-param">step</em><span class="optional">]</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/source.html#Enumerate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.source.Enumerate" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#nutsflow.base.NutSource" title="nutsflow.base.NutSource"><code class="xref py py-class docutils literal notranslate"><span class="pre">nutsflow.base.NutSource</span></code></a></p>
-<dl class="py method">
-<dt id="nutsflow.source.Enumerate.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">step</span><span class="o">=</span><span class="default_value">1</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.source.Enumerate.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Enumerate(start=0 [, step])</p>
 <p>Return increasing integers. See itertools.count</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nutsflow</span> <span class="kn">import</span> <span class="n">Take</span><span class="p">,</span> <span class="n">Collect</span>
 </pre></div>
@@ -4126,16 +4691,10 @@ See <a class="reference external" href="https://docs.python.org/2/library/csv.ht
 </dl>
 </dd></dl>
 
-</dd></dl>
-
 <dl class="py class">
 <dt id="nutsflow.source.Product">
-<em class="property">class </em><code class="sig-name descname">Product</code><a class="reference internal" href="_modules/nutsflow/source.html#Product"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.source.Product" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">Product</code><span class="sig-paren">(</span><em class="sig-param">*iterables</em><span class="optional">[</span>, <em class="sig-param">repeat</em><span class="optional">]</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/source.html#Product"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.source.Product" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#nutsflow.base.NutSource" title="nutsflow.base.NutSource"><code class="xref py py-class docutils literal notranslate"><span class="pre">nutsflow.base.NutSource</span></code></a></p>
-<dl class="py method">
-<dt id="nutsflow.source.Product.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwds</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.source.Product.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Product(<a href="#id21"><span class="problematic" id="id22">*</span></a>iterables [, repeat])</p>
 <p>Return cartesian product of input iterables.</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nutsflow</span> <span class="kn">import</span> <span class="n">Collect</span>
 </pre></div>
@@ -4168,8 +4727,6 @@ Procuct([1,2], [1,2]) is equal to Product([1,2], repeat=2)</p></li>
 <dd class="field-odd"><p>iterator over tuples</p>
 </dd>
 </dl>
-</dd></dl>
-
 </dd></dl>
 
 <dl class="py class">
@@ -4219,7 +4776,7 @@ See: <a class="reference external" href="https://docs.python.org/2/library/csv.h
 <dl class="py method">
 <dt id="nutsflow.source.ReadCSV.__init__">
 <code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">filepath</span></em>, <em class="sig-param"><span class="n">columns</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">skipheader</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">fmtfunc</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/source.html#ReadCSV.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.source.ReadCSV.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>ReadCSV(filepath, columns, skipheader, fmtfunc, <a href="#id23"><span class="problematic" id="id24">**</span></a>kwargs)</p>
+<dd><p>ReadCSV(filepath, columns, skipheader, fmtfunc, <a href="#id21"><span class="problematic" id="id22">**</span></a>kwargs)</p>
 <p>Read data in Comma Separated Format (CSV) from file.
 See also CSVWriter.
 Can also read Tab Separated Format (TSV) be providing the
@@ -4292,12 +4849,8 @@ See <a class="reference external" href="https://docs.python.org/2/library/csv.ht
 
 <dl class="py class">
 <dt id="nutsflow.source.Repeat">
-<em class="property">class </em><code class="sig-name descname">Repeat</code><a class="reference internal" href="_modules/nutsflow/source.html#Repeat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.source.Repeat" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">Repeat</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">obj</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/source.html#Repeat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.source.Repeat" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#nutsflow.base.NutSource" title="nutsflow.base.NutSource"><code class="xref py py-class docutils literal notranslate"><span class="pre">nutsflow.base.NutSource</span></code></a></p>
-<dl class="py method">
-<dt id="nutsflow.source.Repeat.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.source.Repeat.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Repeat(obj)</p>
 <p>Return given obj indefinitely.</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nutsflow</span> <span class="kn">import</span> <span class="n">Head</span><span class="p">,</span> <span class="n">Collect</span>
 </pre></div>
@@ -4333,8 +4886,6 @@ that is repeatedly called.</p></li>
 <dd class="field-odd"><p>iterable over object</p>
 </dd>
 </dl>
-</dd></dl>
-
 </dd></dl>
 
 </div>

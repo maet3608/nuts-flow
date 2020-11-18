@@ -188,173 +188,175 @@
 <span id="nutsflow-examples-examples-module"></span><h2>nutsflow.examples.examples module<a class="headerlink" href="#module-nutsflow.examples.examples" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
 <dt id="nutsflow.examples.examples.MyClone">
-<em class="property">class </em><code class="sig-name descname">MyClone</code><a class="reference internal" href="_modules/nutsflow/examples/examples.html#MyClone"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.examples.examples.MyClone" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">MyClone</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/examples/examples.html#MyClone"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.examples.examples.MyClone" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="nutsflow.html#nutsflow.base.Nut" title="nutsflow.base.Nut"><code class="xref py py-class docutils literal notranslate"><span class="pre">nutsflow.base.Nut</span></code></a></p>
-<dl class="py method">
-<dt id="nutsflow.examples.examples.MyClone.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">n</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.examples.examples.MyClone.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Constructor. Nuts (and derived classes) can have arbitrary arguments.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>args</strong> (<em>args</em>) – Positional arguments.</p></li>
-<li><p><strong>kwargs</strong> (<em>kwargs</em>) – Keyword arguments.</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
 <dl class="py method">
 <dt id="nutsflow.examples.examples.MyClone.__rrshift__">
 <code class="sig-name descname">__rrshift__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">iterable</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.examples.examples.MyClone.__rrshift__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Chaining operator (&gt;&gt;) for nuts</p>
+<dd><p>Chaining operator for Nuts. Needs to be overridden!</p>
+<p>Takes an input iterable and produces some output iterable.
+If the number of elements in the input and the output iterable
+does not change consider NutFunction instead.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>iterable</strong> (<em>iterable</em>) – Iterable to process.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Iterable</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>iterable</p>
+</dd>
+<dt class="field-even">Raise</dt>
+<dd class="field-even"><p>NotImplementedError if not implemented.</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt id="nutsflow.examples.examples.MyCollect">
-<em class="property">class </em><code class="sig-name descname">MyCollect</code><a class="reference internal" href="_modules/nutsflow/examples/examples.html#MyCollect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.examples.examples.MyCollect" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">MyCollect</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/examples/examples.html#MyCollect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.examples.examples.MyCollect" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="nutsflow.html#nutsflow.base.NutSink" title="nutsflow.base.NutSink"><code class="xref py py-class docutils literal notranslate"><span class="pre">nutsflow.base.NutSink</span></code></a></p>
-<dl class="py method">
-<dt id="nutsflow.examples.examples.MyCollect.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.examples.examples.MyCollect.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Constructor. Nuts (and derived classes) can have arbitrary arguments.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>args</strong> (<em>args</em>) – Positional arguments.</p></li>
-<li><p><strong>kwargs</strong> (<em>kwargs</em>) – Keyword arguments.</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
 <dl class="py method">
 <dt id="nutsflow.examples.examples.MyCollect.__rrshift__">
 <code class="sig-name descname">__rrshift__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">iterable</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.examples.examples.MyCollect.__rrshift__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Chaining operator (&gt;&gt;) for nuts</p>
+<dd><p>Chaining operator for Nuts. Needs to be overridden!</p>
+<p>Takes an input iterable and produces some output iterable.
+If the number of elements in the input and the output iterable
+does not change consider NutFunction instead.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>iterable</strong> (<em>iterable</em>) – Iterable to process.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Iterable</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>iterable</p>
+</dd>
+<dt class="field-even">Raise</dt>
+<dd class="field-even"><p>NotImplementedError if not implemented.</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt id="nutsflow.examples.examples.MyGreaterThan">
-<em class="property">class </em><code class="sig-name descname">MyGreaterThan</code><a class="reference internal" href="_modules/nutsflow/examples/examples.html#MyGreaterThan"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.examples.examples.MyGreaterThan" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">MyGreaterThan</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/examples/examples.html#MyGreaterThan"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.examples.examples.MyGreaterThan" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="nutsflow.html#nutsflow.base.Nut" title="nutsflow.base.Nut"><code class="xref py py-class docutils literal notranslate"><span class="pre">nutsflow.base.Nut</span></code></a></p>
-<dl class="py method">
-<dt id="nutsflow.examples.examples.MyGreaterThan.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">threshold</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.examples.examples.MyGreaterThan.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Constructor. Nuts (and derived classes) can have arbitrary arguments.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>args</strong> (<em>args</em>) – Positional arguments.</p></li>
-<li><p><strong>kwargs</strong> (<em>kwargs</em>) – Keyword arguments.</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
 <dl class="py method">
 <dt id="nutsflow.examples.examples.MyGreaterThan.__rrshift__">
 <code class="sig-name descname">__rrshift__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">iterable</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.examples.examples.MyGreaterThan.__rrshift__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Chaining operator (&gt;&gt;) for nuts</p>
+<dd><p>Chaining operator for Nuts. Needs to be overridden!</p>
+<p>Takes an input iterable and produces some output iterable.
+If the number of elements in the input and the output iterable
+does not change consider NutFunction instead.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>iterable</strong> (<em>iterable</em>) – Iterable to process.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Iterable</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>iterable</p>
+</dd>
+<dt class="field-even">Raise</dt>
+<dd class="field-even"><p>NotImplementedError if not implemented.</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt id="nutsflow.examples.examples.MyPipeline">
-<em class="property">class </em><code class="sig-name descname">MyPipeline</code><a class="reference internal" href="_modules/nutsflow/examples/examples.html#MyPipeline"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.examples.examples.MyPipeline" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">MyPipeline</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/examples/examples.html#MyPipeline"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.examples.examples.MyPipeline" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="nutsflow.html#nutsflow.base.Nut" title="nutsflow.base.Nut"><code class="xref py py-class docutils literal notranslate"><span class="pre">nutsflow.base.Nut</span></code></a></p>
-<dl class="py method">
-<dt id="nutsflow.examples.examples.MyPipeline.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">func</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.examples.examples.MyPipeline.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Constructor. Nuts (and derived classes) can have arbitrary arguments.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>args</strong> (<em>args</em>) – Positional arguments.</p></li>
-<li><p><strong>kwargs</strong> (<em>kwargs</em>) – Keyword arguments.</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
 <dl class="py method">
 <dt id="nutsflow.examples.examples.MyPipeline.__rrshift__">
 <code class="sig-name descname">__rrshift__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">iterable</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.examples.examples.MyPipeline.__rrshift__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Chaining operator (&gt;&gt;) for nuts</p>
+<dd><p>Chaining operator for Nuts. Needs to be overridden!</p>
+<p>Takes an input iterable and produces some output iterable.
+If the number of elements in the input and the output iterable
+does not change consider NutFunction instead.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>iterable</strong> (<em>iterable</em>) – Iterable to process.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Iterable</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>iterable</p>
+</dd>
+<dt class="field-even">Raise</dt>
+<dd class="field-even"><p>NotImplementedError if not implemented.</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt id="nutsflow.examples.examples.MyRange">
-<em class="property">class </em><code class="sig-name descname">MyRange</code><a class="reference internal" href="_modules/nutsflow/examples/examples.html#MyRange"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.examples.examples.MyRange" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">MyRange</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/examples/examples.html#MyRange"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.examples.examples.MyRange" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="nutsflow.html#nutsflow.base.NutSource" title="nutsflow.base.NutSource"><code class="xref py py-class docutils literal notranslate"><span class="pre">nutsflow.base.NutSource</span></code></a></p>
-<dl class="py method">
-<dt id="nutsflow.examples.examples.MyRange.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">end</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.examples.examples.MyRange.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Constructor. Nuts (and derived classes) can have arbitrary arguments.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>args</strong> (<em>args</em>) – Positional arguments.</p></li>
-<li><p><strong>kwargs</strong> (<em>kwargs</em>) – Keyword arguments.</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
 </dd></dl>
 
 <dl class="py class">
 <dt id="nutsflow.examples.examples.MySmallerOrEqualThan">
-<em class="property">class </em><code class="sig-name descname">MySmallerOrEqualThan</code><a class="reference internal" href="_modules/nutsflow/examples/examples.html#MySmallerOrEqualThan"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.examples.examples.MySmallerOrEqualThan" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">MySmallerOrEqualThan</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/examples/examples.html#MySmallerOrEqualThan"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.examples.examples.MySmallerOrEqualThan" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="nutsflow.html#nutsflow.base.Nut" title="nutsflow.base.Nut"><code class="xref py py-class docutils literal notranslate"><span class="pre">nutsflow.base.Nut</span></code></a></p>
-<dl class="py method">
-<dt id="nutsflow.examples.examples.MySmallerOrEqualThan.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">threshold</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.examples.examples.MySmallerOrEqualThan.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Constructor. Nuts (and derived classes) can have arbitrary arguments.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>args</strong> (<em>args</em>) – Positional arguments.</p></li>
-<li><p><strong>kwargs</strong> (<em>kwargs</em>) – Keyword arguments.</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
 <dl class="py method">
 <dt id="nutsflow.examples.examples.MySmallerOrEqualThan.__rrshift__">
 <code class="sig-name descname">__rrshift__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">iterable</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.examples.examples.MySmallerOrEqualThan.__rrshift__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Chaining operator (&gt;&gt;) for nuts</p>
+<dd><p>Chaining operator for Nuts. Needs to be overridden!</p>
+<p>Takes an input iterable and produces some output iterable.
+If the number of elements in the input and the output iterable
+does not change consider NutFunction instead.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>iterable</strong> (<em>iterable</em>) – Iterable to process.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Iterable</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>iterable</p>
+</dd>
+<dt class="field-even">Raise</dt>
+<dd class="field-even"><p>NotImplementedError if not implemented.</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt id="nutsflow.examples.examples.MyTimes">
-<em class="property">class </em><code class="sig-name descname">MyTimes</code><a class="reference internal" href="_modules/nutsflow/examples/examples.html#MyTimes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.examples.examples.MyTimes" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">MyTimes</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/examples/examples.html#MyTimes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.examples.examples.MyTimes" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="nutsflow.html#nutsflow.base.NutFunction" title="nutsflow.base.NutFunction"><code class="xref py py-class docutils literal notranslate"><span class="pre">nutsflow.base.NutFunction</span></code></a></p>
 <dl class="py method">
 <dt id="nutsflow.examples.examples.MyTimes.__call__">
 <code class="sig-name descname">__call__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">element</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.examples.examples.MyTimes.__call__" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt id="nutsflow.examples.examples.MyTimes.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">c</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.examples.examples.MyTimes.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Constructor. Nuts (and derived classes) can have arbitrary arguments.</p>
+<dd><p>Override this method to transform the elements of an iterable.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>args</strong> (<em>args</em>) – Positional arguments.</p></li>
-<li><p><strong>kwargs</strong> (<em>kwargs</em>) – Keyword arguments.</p></li>
-</ul>
+<dd class="field-odd"><p><strong>element</strong> – Element the function is applied to.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A transformed element</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>any</p>
+</dd>
+<dt class="field-even">Raise</dt>
+<dd class="field-even"><p>NotImplementedError if not implemented.</p>
 </dd>
 </dl>
 </dd></dl>
