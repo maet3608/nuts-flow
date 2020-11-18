@@ -17,7 +17,7 @@ def Identity(x):
     """
     iterable >> Identity()
 
-    Return same input as console.
+    Pass iterable through. Output is identical to input.
 
     >>> from nutsflow import Collect
     >>> [1, 2, 3] >> Identity() >> Collect()
