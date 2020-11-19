@@ -6,6 +6,7 @@ python:
   - "3.5"
   - "3.6"
   - "3.7"
+  - "3.8"  
 before_install:
   - pip install pytest coveralls pytest-cov==2.5.0
   - pip install six

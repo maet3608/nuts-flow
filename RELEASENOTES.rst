@@ -4,6 +4,7 @@ Release notes
 1.0.39
 ------
 
+- support for Python 3.8
 
 1.0.38
 ------
