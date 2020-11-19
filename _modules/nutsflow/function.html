@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,12 +11,18 @@
   
 
   
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+
+  
   
   
   
 
   
-  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
@@ -29,10 +34,6 @@
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
 </head>
@@ -48,7 +49,7 @@
           
 
           
-            <a href="../../index.html" class="icon icon-home"> nutsflow
+            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> nutsflow
           
 
           
@@ -75,6 +76,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -95,6 +97,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -133,7 +136,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../../index.html">Docs</a> &raquo;</li>
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
         
           <li><a href="../index.html">Module code</a> &raquo;</li>
         
@@ -163,8 +166,8 @@
 <span class="kn">import</span> <span class="nn">time</span>
 <span class="kn">import</span> <span class="nn">threading</span>
 
-<span class="kn">from</span> <span class="nn">.common</span> <span class="kn">import</span> <span class="n">console</span><span class="p">,</span> <span class="n">is_iterable</span>
-<span class="kn">from</span> <span class="nn">.factory</span> <span class="kn">import</span> <span class="n">nut_function</span><span class="p">,</span> <span class="n">NutFunction</span>
+<span class="kn">from</span> <span class="nn">nutsflow.common</span> <span class="kn">import</span> <span class="n">console</span><span class="p">,</span> <span class="n">is_iterable</span>
+<span class="kn">from</span> <span class="nn">nutsflow.factory</span> <span class="kn">import</span> <span class="n">nut_function</span><span class="p">,</span> <span class="n">NutFunction</span>
 
 
 <div class="viewcode-block" id="Identity"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.function.Identity">[docs]</a><span class="nd">@nut_function</span>
@@ -231,7 +234,7 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    iterable &gt;&gt; Get(start, end, step)</span>
 
-<span class="sd">    Extract elements from x. Equivalent to Python slicing [start:end:step]</span>
+<span class="sd">    Extract elements from iterable. Equivalent to slicing [start:end:step]</span>
 <span class="sd">    but per element of the iterable.</span>
 
 <span class="sd">    &gt;&gt;&gt; from nutsflow import Collect</span>
@@ -317,8 +320,8 @@
 
 <span class="sd">        :param str name: Name of the counter</span>
 <span class="sd">        :param func filterfunc: Filter function.</span>
-<span class="sd">        :param int value: Initial value</span>
-<span class="sd">           Count only elements where func returns True.</span>
+<span class="sd">          Count only elements where func returns True.</span>
+<span class="sd">        :param int value: Initial counter value</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span>
@@ -337,6 +340,7 @@
     <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return counter value as string.</span>
+
 <span class="sd">        :return: Counter value</span>
 <span class="sd">        :rtype: str</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -525,9 +529,10 @@
 
   <div role="contentinfo">
     <p>
+        
         &copy; Copyright 2017, IBM Research Australia
       <span class="lastupdated">
-        Last updated on Nov 18, 2020.
+        Last updated on Nov 20, 2020.
       </span>
 
     </p>
@@ -542,7 +547,6 @@
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {
