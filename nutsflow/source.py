@@ -10,9 +10,9 @@ import itertools as itt
 import nutsflow.iterfunction as itf
 
 from six.moves import range, zip_longest
-from .base import NutSource
-from .factory import nut_source
-from .common import as_tuple, is_iterable
+from nutsflow.base import NutSource
+from nutsflow.factory import nut_source
+from nutsflow.common import as_tuple, is_iterable
 
 
 @nut_source

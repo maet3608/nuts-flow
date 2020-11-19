@@ -12,10 +12,10 @@ import six
 import collections as cl
 
 from six.moves import reduce, zip, range
-from .base import NutSink
-from .factory import nut_sink
-from .common import as_tuple, is_iterable, colfunc
-from .iterfunction import nth, consume, length, take
+from nutsflow.base import NutSink
+from nutsflow.factory import nut_sink
+from nutsflow.common import as_tuple, is_iterable, colfunc
+from nutsflow.iterfunction import nth, consume, length, take
 
 
 @nut_sink

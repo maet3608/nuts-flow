@@ -6,7 +6,7 @@ from __future__ import absolute_import
 
 import functools
 
-from .base import Nut, NutSink, NutSource, NutFunction
+from nutsflow.base import Nut, NutSink, NutSource, NutFunction
 
 
 def _arg_insert(args, arg, pos=0):

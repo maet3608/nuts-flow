@@ -8,8 +8,8 @@ from __future__ import absolute_import
 import time
 import threading
 
-from .common import console, is_iterable
-from .factory import nut_function, NutFunction
+from nutsflow.common import console, is_iterable
+from nutsflow.factory import nut_function, NutFunction
 
 
 @nut_function

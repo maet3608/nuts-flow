@@ -20,12 +20,12 @@ import collections as cl
 from inspect import isfunction, ismethod, isbuiltin
 from six.moves import cPickle as pickle
 from six.moves import map, filter, filterfalse, zip, range
-from . import iterfunction as itf
-from .base import Nut, NutFunction
-from .common import as_tuple, as_list, as_set, console, timestr, is_iterable
-from .factory import nut_processor
-from .function import Identity
-from .sink import Consume, Collect, Head
+from nutsflow import iterfunction as itf
+from nutsflow.base import Nut, NutFunction
+from nutsflow.common import as_tuple, as_list, as_set, console, timestr, is_iterable
+from nutsflow.factory import nut_processor
+from nutsflow.function import Identity
+from nutsflow.sink import Consume, Collect, Head
 
 
 @nut_processor
