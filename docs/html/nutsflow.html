@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,12 +11,18 @@
   
 
   
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
   
   
   
 
   
-  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -29,10 +34,6 @@
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="nutsflow.examples package" href="nutsflow.examples.html" />
@@ -50,7 +51,7 @@
           
 
           
-            <a href="index.html" class="icon icon-home"> nutsflow
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> nutsflow
           
 
           
@@ -77,6 +78,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -114,6 +116,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -152,7 +155,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="index.html">Docs</a> &raquo;</li>
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
         
       <li>nutsflow package</li>
     
@@ -960,9 +963,9 @@ iterable &gt;&gt; counter</p>
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – Name of the counter</p></li>
-<li><p><strong>filterfunc</strong> (<em>func</em>) – Filter function.</p></li>
-<li><p><strong>value</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – Initial value
+<li><p><strong>filterfunc</strong> (<em>func</em>) – Filter function.
 Count only elements where func returns True.</p></li>
+<li><p><strong>value</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – Initial counter value</p></li>
 </ul>
 </dd>
 </dl>
@@ -1014,22 +1017,7 @@ Count only elements where func returns True.</p></li>
 <dl class="py method">
 <dt id="nutsflow.function.Format.__call__">
 <code class="sig-name descname">__call__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">element</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.function.Format.__call__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Override this method to transform the elements of an iterable.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>element</strong> – Element the function is applied to.</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>A transformed element</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>any</p>
-</dd>
-<dt class="field-even">Raise</dt>
-<dd class="field-even"><p>NotImplementedError if not implemented.</p>
-</dd>
-</dl>
-</dd></dl>
+<dd></dd></dl>
 
 </dd></dl>
 
@@ -1038,7 +1026,7 @@ Count only elements where func returns True.</p></li>
 <em class="property">class </em><code class="sig-name descname">Get</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nutsflow/function.html#Get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nutsflow.function.Get" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#nutsflow.base.NutFunction" title="nutsflow.base.NutFunction"><code class="xref py py-class docutils literal notranslate"><span class="pre">nutsflow.base.NutFunction</span></code></a></p>
 <p>iterable &gt;&gt; Get(start, end, step)</p>
-<p>Extract elements from x. Equivalent to Python slicing [start:end:step]
+<p>Extract elements from iterable. Equivalent to slicing [start:end:step]
 but per element of the iterable.</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nutsflow</span> <span class="kn">import</span> <span class="n">Collect</span>
 </pre></div>
@@ -1080,22 +1068,7 @@ If start = None, x is returned</p></li>
 <dl class="py method">
 <dt id="nutsflow.function.Get.__call__">
 <code class="sig-name descname">__call__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">element</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.function.Get.__call__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Override this method to transform the elements of an iterable.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>element</strong> – Element the function is applied to.</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>A transformed element</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>any</p>
-</dd>
-<dt class="field-even">Raise</dt>
-<dd class="field-even"><p>NotImplementedError if not implemented.</p>
-</dd>
-</dl>
-</dd></dl>
+<dd></dd></dl>
 
 </dd></dl>
 
@@ -1148,22 +1121,7 @@ or a tuple with these indices.</p></li>
 <dl class="py method">
 <dt id="nutsflow.function.GetCols.__call__">
 <code class="sig-name descname">__call__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">element</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.function.GetCols.__call__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Override this method to transform the elements of an iterable.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>element</strong> – Element the function is applied to.</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>A transformed element</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>any</p>
-</dd>
-<dt class="field-even">Raise</dt>
-<dd class="field-even"><p>NotImplementedError if not implemented.</p>
-</dd>
-</dl>
-</dd></dl>
+<dd></dd></dl>
 
 </dd></dl>
 
@@ -1195,22 +1153,7 @@ or a tuple with these indices.</p></li>
 <dl class="py method">
 <dt id="nutsflow.function.Identity.__call__">
 <code class="sig-name descname">__call__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">element</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.function.Identity.__call__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Override this method to transform the elements of an iterable.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>element</strong> – Element the function is applied to.</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>A transformed element</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>any</p>
-</dd>
-<dt class="field-even">Raise</dt>
-<dd class="field-even"><p>NotImplementedError if not implemented.</p>
-</dd>
-</dl>
-</dd></dl>
+<dd></dd></dl>
 
 </dd></dl>
 
@@ -1244,22 +1187,7 @@ or removing it from a pipeline.</p>
 <dl class="py method">
 <dt id="nutsflow.function.NOP.__call__">
 <code class="sig-name descname">__call__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">element</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.function.NOP.__call__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Override this method to transform the elements of an iterable.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>element</strong> – Element the function is applied to.</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>A transformed element</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>any</p>
-</dd>
-<dt class="field-even">Raise</dt>
-<dd class="field-even"><p>NotImplementedError if not implemented.</p>
-</dd>
-</dl>
-</dd></dl>
+<dd></dd></dl>
 
 </dd></dl>
 
@@ -1378,22 +1306,7 @@ every 2.5 sec every_sec = 2.5</p></li>
 <dl class="py method">
 <dt id="nutsflow.function.Sleep.__call__">
 <code class="sig-name descname">__call__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">element</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.function.Sleep.__call__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Override this method to transform the elements of an iterable.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>element</strong> – Element the function is applied to.</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>A transformed element</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>any</p>
-</dd>
-<dt class="field-even">Raise</dt>
-<dd class="field-even"><p>NotImplementedError if not implemented.</p>
-</dd>
-</dl>
-</dd></dl>
+<dd></dd></dl>
 
 </dd></dl>
 
@@ -1425,22 +1338,7 @@ every 2.5 sec every_sec = 2.5</p></li>
 <dl class="py method">
 <dt id="nutsflow.function.Square.__call__">
 <code class="sig-name descname">__call__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">element</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.function.Square.__call__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Override this method to transform the elements of an iterable.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>element</strong> – Element the function is applied to.</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>A transformed element</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>any</p>
-</dd>
-<dt class="field-even">Raise</dt>
-<dd class="field-even"><p>NotImplementedError if not implemented.</p>
-</dd>
-</dl>
-</dd></dl>
+<dd></dd></dl>
 
 </dd></dl>
 
@@ -1798,25 +1696,7 @@ GPU to finish the batch.</p>
 <dl class="py method">
 <dt id="nutsflow.processor.Append.__rrshift__">
 <code class="sig-name descname">__rrshift__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">iterable</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.processor.Append.__rrshift__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Chaining operator for Nuts. Needs to be overridden!</p>
-<p>Takes an input iterable and produces some output iterable.
-If the number of elements in the input and the output iterable
-does not change consider NutFunction instead.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>iterable</strong> (<em>iterable</em>) – Iterable to process.</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Iterable</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>iterable</p>
-</dd>
-<dt class="field-even">Raise</dt>
-<dd class="field-even"><p>NotImplementedError if not implemented.</p>
-</dd>
-</dl>
-</dd></dl>
+<dd></dd></dl>
 
 </dd></dl>
 
@@ -1946,25 +1826,7 @@ that can be filled from an iterable</p></li>
 <dl class="py method">
 <dt id="nutsflow.processor.Chunk.__rrshift__">
 <code class="sig-name descname">__rrshift__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">iterable</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.processor.Chunk.__rrshift__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Chaining operator for Nuts. Needs to be overridden!</p>
-<p>Takes an input iterable and produces some output iterable.
-If the number of elements in the input and the output iterable
-does not change consider NutFunction instead.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>iterable</strong> (<em>iterable</em>) – Iterable to process.</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Iterable</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>iterable</p>
-</dd>
-<dt class="field-even">Raise</dt>
-<dd class="field-even"><p>NotImplementedError if not implemented.</p>
-</dd>
-</dl>
-</dd></dl>
+<dd></dd></dl>
 
 </dd></dl>
 
@@ -2002,25 +1864,7 @@ that can be filled from an iterable</p></li>
 <dl class="py method">
 <dt id="nutsflow.processor.ChunkBy.__rrshift__">
 <code class="sig-name descname">__rrshift__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">iterable</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.processor.ChunkBy.__rrshift__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Chaining operator for Nuts. Needs to be overridden!</p>
-<p>Takes an input iterable and produces some output iterable.
-If the number of elements in the input and the output iterable
-does not change consider NutFunction instead.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>iterable</strong> (<em>iterable</em>) – Iterable to process.</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Iterable</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>iterable</p>
-</dd>
-<dt class="field-even">Raise</dt>
-<dd class="field-even"><p>NotImplementedError if not implemented.</p>
-</dd>
-</dl>
-</dd></dl>
+<dd></dd></dl>
 
 </dd></dl>
 
@@ -2113,25 +1957,7 @@ if no container is provided</p>
 <dl class="py method">
 <dt id="nutsflow.processor.Clone.__rrshift__">
 <code class="sig-name descname">__rrshift__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">iterable</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.processor.Clone.__rrshift__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Chaining operator for Nuts. Needs to be overridden!</p>
-<p>Takes an input iterable and produces some output iterable.
-If the number of elements in the input and the output iterable
-does not change consider NutFunction instead.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>iterable</strong> (<em>iterable</em>) – Iterable to process.</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Iterable</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>iterable</p>
-</dd>
-<dt class="field-even">Raise</dt>
-<dd class="field-even"><p>NotImplementedError if not implemented.</p>
-</dd>
-</dl>
-</dd></dl>
+<dd></dd></dl>
 
 </dd></dl>
 
@@ -2175,25 +2001,7 @@ does not change consider NutFunction instead.</p>
 <dl class="py method">
 <dt id="nutsflow.processor.Concat.__rrshift__">
 <code class="sig-name descname">__rrshift__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">iterable</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.processor.Concat.__rrshift__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Chaining operator for Nuts. Needs to be overridden!</p>
-<p>Takes an input iterable and produces some output iterable.
-If the number of elements in the input and the output iterable
-does not change consider NutFunction instead.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>iterable</strong> (<em>iterable</em>) – Iterable to process.</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Iterable</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>iterable</p>
-</dd>
-<dt class="field-even">Raise</dt>
-<dd class="field-even"><p>NotImplementedError if not implemented.</p>
-</dd>
-</dl>
-</dd></dl>
+<dd></dd></dl>
 
 </dd></dl>
 
@@ -2236,25 +2044,7 @@ does not change consider NutFunction instead.</p>
 <dl class="py method">
 <dt id="nutsflow.processor.Drop.__rrshift__">
 <code class="sig-name descname">__rrshift__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">iterable</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.processor.Drop.__rrshift__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Chaining operator for Nuts. Needs to be overridden!</p>
-<p>Takes an input iterable and produces some output iterable.
-If the number of elements in the input and the output iterable
-does not change consider NutFunction instead.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>iterable</strong> (<em>iterable</em>) – Iterable to process.</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Iterable</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>iterable</p>
-</dd>
-<dt class="field-even">Raise</dt>
-<dd class="field-even"><p>NotImplementedError if not implemented.</p>
-</dd>
-</dl>
-</dd></dl>
+<dd></dd></dl>
 
 </dd></dl>
 
@@ -2286,25 +2076,7 @@ does not change consider NutFunction instead.</p>
 <dl class="py method">
 <dt id="nutsflow.processor.DropWhile.__rrshift__">
 <code class="sig-name descname">__rrshift__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">iterable</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.processor.DropWhile.__rrshift__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Chaining operator for Nuts. Needs to be overridden!</p>
-<p>Takes an input iterable and produces some output iterable.
-If the number of elements in the input and the output iterable
-does not change consider NutFunction instead.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>iterable</strong> (<em>iterable</em>) – Iterable to process.</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Iterable</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>iterable</p>
-</dd>
-<dt class="field-even">Raise</dt>
-<dd class="field-even"><p>NotImplementedError if not implemented.</p>
-</dd>
-</dl>
-</dd></dl>
+<dd></dd></dl>
 
 </dd></dl>
 
@@ -2345,25 +2117,7 @@ element before passing it on to the predicate function.</p></li>
 <dl class="py method">
 <dt id="nutsflow.processor.FilterCol.__rrshift__">
 <code class="sig-name descname">__rrshift__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">iterable</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.processor.FilterCol.__rrshift__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Chaining operator for Nuts. Needs to be overridden!</p>
-<p>Takes an input iterable and produces some output iterable.
-If the number of elements in the input and the output iterable
-does not change consider NutFunction instead.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>iterable</strong> (<em>iterable</em>) – Iterable to process.</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Iterable</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>iterable</p>
-</dd>
-<dt class="field-even">Raise</dt>
-<dd class="field-even"><p>NotImplementedError if not implemented.</p>
-</dd>
-</dl>
-</dd></dl>
+<dd></dd></dl>
 
 </dd></dl>
 
@@ -2410,25 +2164,7 @@ structures.</p>
 <dl class="py method">
 <dt id="nutsflow.processor.Flatten.__rrshift__">
 <code class="sig-name descname">__rrshift__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">iterable</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.processor.Flatten.__rrshift__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Chaining operator for Nuts. Needs to be overridden!</p>
-<p>Takes an input iterable and produces some output iterable.
-If the number of elements in the input and the output iterable
-does not change consider NutFunction instead.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>iterable</strong> (<em>iterable</em>) – Iterable to process.</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Iterable</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>iterable</p>
-</dd>
-<dt class="field-even">Raise</dt>
-<dd class="field-even"><p>NotImplementedError if not implemented.</p>
-</dd>
-</dl>
-</dd></dl>
+<dd></dd></dl>
 
 </dd></dl>
 
@@ -2486,25 +2222,7 @@ together with non-iterable columns, e.g.</p>
 <dl class="py method">
 <dt id="nutsflow.processor.FlattenCol.__rrshift__">
 <code class="sig-name descname">__rrshift__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">iterable</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.processor.FlattenCol.__rrshift__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Chaining operator for Nuts. Needs to be overridden!</p>
-<p>Takes an input iterable and produces some output iterable.
-If the number of elements in the input and the output iterable
-does not change consider NutFunction instead.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>iterable</strong> (<em>iterable</em>) – Iterable to process.</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Iterable</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>iterable</p>
-</dd>
-<dt class="field-even">Raise</dt>
-<dd class="field-even"><p>NotImplementedError if not implemented.</p>
-</dd>
-</dl>
-</dd></dl>
+<dd></dd></dl>
 
 </dd></dl>
 
@@ -2561,25 +2279,7 @@ the groups themselves.</p></li>
 <dl class="py method">
 <dt id="nutsflow.processor.GroupBy.__rrshift__">
 <code class="sig-name descname">__rrshift__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">iterable</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.processor.GroupBy.__rrshift__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Chaining operator for Nuts. Needs to be overridden!</p>
-<p>Takes an input iterable and produces some output iterable.
-If the number of elements in the input and the output iterable
-does not change consider NutFunction instead.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>iterable</strong> (<em>iterable</em>) – Iterable to process.</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Iterable</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>iterable</p>
-</dd>
-<dt class="field-even">Raise</dt>
-<dd class="field-even"><p>NotImplementedError if not implemented.</p>
-</dd>
-</dl>
-</dd></dl>
+<dd></dd></dl>
 
 </dd></dl>
 
@@ -2634,25 +2334,7 @@ the groups themselves.</p></li>
 <dl class="py method">
 <dt id="nutsflow.processor.GroupBySorted.__rrshift__">
 <code class="sig-name descname">__rrshift__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">iterable</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.processor.GroupBySorted.__rrshift__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Chaining operator for Nuts. Needs to be overridden!</p>
-<p>Takes an input iterable and produces some output iterable.
-If the number of elements in the input and the output iterable
-does not change consider NutFunction instead.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>iterable</strong> (<em>iterable</em>) – Iterable to process.</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Iterable</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>iterable</p>
-</dd>
-<dt class="field-even">Raise</dt>
-<dd class="field-even"><p>NotImplementedError if not implemented.</p>
-</dd>
-</dl>
-</dd></dl>
+<dd></dd></dl>
 
 </dd></dl>
 
@@ -2693,25 +2375,7 @@ conditional flows.</p>
 <dl class="py method">
 <dt id="nutsflow.processor.If.__rrshift__">
 <code class="sig-name descname">__rrshift__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">iterable</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.processor.If.__rrshift__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Chaining operator for Nuts. Needs to be overridden!</p>
-<p>Takes an input iterable and produces some output iterable.
-If the number of elements in the input and the output iterable
-does not change consider NutFunction instead.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>iterable</strong> (<em>iterable</em>) – Iterable to process.</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Iterable</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>iterable</p>
-</dd>
-<dt class="field-even">Raise</dt>
-<dd class="field-even"><p>NotImplementedError if not implemented.</p>
-</dd>
-</dl>
-</dd></dl>
+<dd></dd></dl>
 
 </dd></dl>
 
@@ -2758,25 +2422,7 @@ does not change consider NutFunction instead.</p>
 <dl class="py method">
 <dt id="nutsflow.processor.Insert.__rrshift__">
 <code class="sig-name descname">__rrshift__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">iterable</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.processor.Insert.__rrshift__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Chaining operator for Nuts. Needs to be overridden!</p>
-<p>Takes an input iterable and produces some output iterable.
-If the number of elements in the input and the output iterable
-does not change consider NutFunction instead.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>iterable</strong> (<em>iterable</em>) – Iterable to process.</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Iterable</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>iterable</p>
-</dd>
-<dt class="field-even">Raise</dt>
-<dd class="field-even"><p>NotImplementedError if not implemented.</p>
-</dd>
-</dl>
-</dd></dl>
+<dd></dd></dl>
 
 </dd></dl>
 
@@ -2814,25 +2460,7 @@ determines length of interleaved iterator.</p>
 <dl class="py method">
 <dt id="nutsflow.processor.Interleave.__rrshift__">
 <code class="sig-name descname">__rrshift__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">iterable</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.processor.Interleave.__rrshift__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Chaining operator for Nuts. Needs to be overridden!</p>
-<p>Takes an input iterable and produces some output iterable.
-If the number of elements in the input and the output iterable
-does not change consider NutFunction instead.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>iterable</strong> (<em>iterable</em>) – Iterable to process.</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Iterable</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>iterable</p>
-</dd>
-<dt class="field-even">Raise</dt>
-<dd class="field-even"><p>NotImplementedError if not implemented.</p>
-</dd>
-</dl>
-</dd></dl>
+<dd></dd></dl>
 
 </dd></dl>
 
@@ -2879,25 +2507,7 @@ does not change consider NutFunction instead.</p>
 <dl class="py method">
 <dt id="nutsflow.processor.MapCol.__rrshift__">
 <code class="sig-name descname">__rrshift__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">iterable</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.processor.MapCol.__rrshift__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Chaining operator for Nuts. Needs to be overridden!</p>
-<p>Takes an input iterable and produces some output iterable.
-If the number of elements in the input and the output iterable
-does not change consider NutFunction instead.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>iterable</strong> (<em>iterable</em>) – Iterable to process.</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Iterable</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>iterable</p>
-</dd>
-<dt class="field-even">Raise</dt>
-<dd class="field-even"><p>NotImplementedError if not implemented.</p>
-</dd>
-</dl>
-</dd></dl>
+<dd></dd></dl>
 
 </dd></dl>
 
@@ -2942,25 +2552,7 @@ processed sequentially!</p>
 <dl class="py method">
 <dt id="nutsflow.processor.MapMulti.__rrshift__">
 <code class="sig-name descname">__rrshift__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">iterable</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.processor.MapMulti.__rrshift__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Chaining operator for Nuts. Needs to be overridden!</p>
-<p>Takes an input iterable and produces some output iterable.
-If the number of elements in the input and the output iterable
-does not change consider NutFunction instead.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>iterable</strong> (<em>iterable</em>) – Iterable to process.</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Iterable</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>iterable</p>
-</dd>
-<dt class="field-even">Raise</dt>
-<dd class="field-even"><p>NotImplementedError if not implemented.</p>
-</dd>
-</dl>
-</dd></dl>
+<dd></dd></dl>
 
 </dd></dl>
 
@@ -3083,25 +2675,7 @@ is used.</p></li>
 <dl class="py method">
 <dt id="nutsflow.processor.Pick.__rrshift__">
 <code class="sig-name descname">__rrshift__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">iterable</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.processor.Pick.__rrshift__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Chaining operator for Nuts. Needs to be overridden!</p>
-<p>Takes an input iterable and produces some output iterable.
-If the number of elements in the input and the output iterable
-does not change consider NutFunction instead.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>iterable</strong> (<em>iterable</em>) – Iterable to process.</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Iterable</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>iterable</p>
-</dd>
-<dt class="field-even">Raise</dt>
-<dd class="field-even"><p>NotImplementedError if not implemented.</p>
-</dd>
-</dl>
-</dd></dl>
+<dd></dd></dl>
 
 </dd></dl>
 
@@ -3136,25 +2710,7 @@ Typically used to keep the CPU busy while the GPU is crunching.</p>
 <dl class="py method">
 <dt id="nutsflow.processor.Prefetch.__rrshift__">
 <code class="sig-name descname">__rrshift__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">iterable</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.processor.Prefetch.__rrshift__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Chaining operator for Nuts. Needs to be overridden!</p>
-<p>Takes an input iterable and produces some output iterable.
-If the number of elements in the input and the output iterable
-does not change consider NutFunction instead.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>iterable</strong> (<em>iterable</em>) – Iterable to process.</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Iterable</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>iterable</p>
-</dd>
-<dt class="field-even">Raise</dt>
-<dd class="field-even"><p>NotImplementedError if not implemented.</p>
-</dd>
-</dl>
-</dd></dl>
+<dd></dd></dl>
 
 </dd></dl>
 
@@ -3262,25 +2818,7 @@ random.Random() is used.</p></li>
 <dl class="py method">
 <dt id="nutsflow.processor.Shuffle.__rrshift__">
 <code class="sig-name descname">__rrshift__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">iterable</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.processor.Shuffle.__rrshift__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Chaining operator for Nuts. Needs to be overridden!</p>
-<p>Takes an input iterable and produces some output iterable.
-If the number of elements in the input and the output iterable
-does not change consider NutFunction instead.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>iterable</strong> (<em>iterable</em>) – Iterable to process.</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Iterable</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>iterable</p>
-</dd>
-<dt class="field-even">Raise</dt>
-<dd class="field-even"><p>NotImplementedError if not implemented.</p>
-</dd>
-</dl>
-</dd></dl>
+<dd></dd></dl>
 
 </dd></dl>
 
@@ -3325,25 +2863,7 @@ See <a class="reference external" href="https://docs.python.org/2/library/iterto
 <dl class="py method">
 <dt id="nutsflow.processor.Slice.__rrshift__">
 <code class="sig-name descname">__rrshift__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">iterable</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.processor.Slice.__rrshift__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Chaining operator for Nuts. Needs to be overridden!</p>
-<p>Takes an input iterable and produces some output iterable.
-If the number of elements in the input and the output iterable
-does not change consider NutFunction instead.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>iterable</strong> (<em>iterable</em>) – Iterable to process.</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Iterable</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>iterable</p>
-</dd>
-<dt class="field-even">Raise</dt>
-<dd class="field-even"><p>NotImplementedError if not implemented.</p>
-</dd>
-</dl>
-</dd></dl>
+<dd></dd></dl>
 
 </dd></dl>
 
@@ -3377,25 +2897,7 @@ does not change consider NutFunction instead.</p>
 <dl class="py method">
 <dt id="nutsflow.processor.Take.__rrshift__">
 <code class="sig-name descname">__rrshift__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">iterable</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.processor.Take.__rrshift__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Chaining operator for Nuts. Needs to be overridden!</p>
-<p>Takes an input iterable and produces some output iterable.
-If the number of elements in the input and the output iterable
-does not change consider NutFunction instead.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>iterable</strong> (<em>iterable</em>) – Iterable to process.</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Iterable</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>iterable</p>
-</dd>
-<dt class="field-even">Raise</dt>
-<dd class="field-even"><p>NotImplementedError if not implemented.</p>
-</dd>
-</dl>
-</dd></dl>
+<dd></dd></dl>
 
 </dd></dl>
 
@@ -3480,25 +2982,7 @@ Otherwise the default value is returned and no error is printed.</p></li>
 <dl class="py method">
 <dt id="nutsflow.processor.Try.__rrshift__">
 <code class="sig-name descname">__rrshift__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">iterable</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.processor.Try.__rrshift__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Chaining operator for Nuts. Needs to be overridden!</p>
-<p>Takes an input iterable and produces some output iterable.
-If the number of elements in the input and the output iterable
-does not change consider NutFunction instead.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>iterable</strong> (<em>iterable</em>) – Iterable to process.</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Iterable</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>iterable</p>
-</dd>
-<dt class="field-even">Raise</dt>
-<dd class="field-even"><p>NotImplementedError if not implemented.</p>
-</dd>
-</dl>
-</dd></dl>
+<dd></dd></dl>
 
 </dd></dl>
 
@@ -3537,25 +3021,7 @@ does not change consider NutFunction instead.</p>
 <dl class="py method">
 <dt id="nutsflow.processor.Window.__rrshift__">
 <code class="sig-name descname">__rrshift__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">iterable</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.processor.Window.__rrshift__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Chaining operator for Nuts. Needs to be overridden!</p>
-<p>Takes an input iterable and produces some output iterable.
-If the number of elements in the input and the output iterable
-does not change consider NutFunction instead.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>iterable</strong> (<em>iterable</em>) – Iterable to process.</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Iterable</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>iterable</p>
-</dd>
-<dt class="field-even">Raise</dt>
-<dd class="field-even"><p>NotImplementedError if not implemented.</p>
-</dd>
-</dl>
-</dd></dl>
+<dd></dd></dl>
 
 </dd></dl>
 
@@ -3596,25 +3062,7 @@ And <a class="reference external" href="https://docs.python.org/2/library/iterto
 <dl class="py method">
 <dt id="nutsflow.processor.Zip.__rrshift__">
 <code class="sig-name descname">__rrshift__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">iterable</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.processor.Zip.__rrshift__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Chaining operator for Nuts. Needs to be overridden!</p>
-<p>Takes an input iterable and produces some output iterable.
-If the number of elements in the input and the output iterable
-does not change consider NutFunction instead.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>iterable</strong> (<em>iterable</em>) – Iterable to process.</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Iterable</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>iterable</p>
-</dd>
-<dt class="field-even">Raise</dt>
-<dd class="field-even"><p>NotImplementedError if not implemented.</p>
-</dd>
-</dl>
-</dd></dl>
+<dd></dd></dl>
 
 </dd></dl>
 
@@ -3647,25 +3095,7 @@ does not change consider NutFunction instead.</p>
 <dl class="py method">
 <dt id="nutsflow.processor.ZipWith.__rrshift__">
 <code class="sig-name descname">__rrshift__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">iterable</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.processor.ZipWith.__rrshift__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Chaining operator for Nuts. Needs to be overridden!</p>
-<p>Takes an input iterable and produces some output iterable.
-If the number of elements in the input and the output iterable
-does not change consider NutFunction instead.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>iterable</strong> (<em>iterable</em>) – Iterable to process.</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Iterable</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>iterable</p>
-</dd>
-<dt class="field-even">Raise</dt>
-<dd class="field-even"><p>NotImplementedError if not implemented.</p>
-</dd>
-</dl>
-</dd></dl>
+<dd></dd></dl>
 
 </dd></dl>
 
@@ -3728,25 +3158,7 @@ and the largest element itself if retvalue==True</p>
 <dl class="py method">
 <dt id="nutsflow.sink.ArgMax.__rrshift__">
 <code class="sig-name descname">__rrshift__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">iterable</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.sink.ArgMax.__rrshift__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Chaining operator for Nuts. Needs to be overridden!</p>
-<p>Takes an input iterable and produces some output iterable.
-If the number of elements in the input and the output iterable
-does not change consider NutFunction instead.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>iterable</strong> (<em>iterable</em>) – Iterable to process.</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Iterable</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>iterable</p>
-</dd>
-<dt class="field-even">Raise</dt>
-<dd class="field-even"><p>NotImplementedError if not implemented.</p>
-</dd>
-</dl>
-</dd></dl>
+<dd></dd></dl>
 
 </dd></dl>
 
@@ -3806,25 +3218,7 @@ and the smallest element itself if retvalue==True.</p>
 <dl class="py method">
 <dt id="nutsflow.sink.ArgMin.__rrshift__">
 <code class="sig-name descname">__rrshift__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">iterable</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.sink.ArgMin.__rrshift__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Chaining operator for Nuts. Needs to be overridden!</p>
-<p>Takes an input iterable and produces some output iterable.
-If the number of elements in the input and the output iterable
-does not change consider NutFunction instead.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>iterable</strong> (<em>iterable</em>) – Iterable to process.</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Iterable</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>iterable</p>
-</dd>
-<dt class="field-even">Raise</dt>
-<dd class="field-even"><p>NotImplementedError if not implemented.</p>
-</dd>
-</dl>
-</dd></dl>
+<dd></dd></dl>
 
 </dd></dl>
 
@@ -3864,25 +3258,7 @@ that can be filled from an iterable</p></li>
 <dl class="py method">
 <dt id="nutsflow.sink.Collect.__rrshift__">
 <code class="sig-name descname">__rrshift__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">iterable</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.sink.Collect.__rrshift__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Chaining operator for Nuts. Needs to be overridden!</p>
-<p>Takes an input iterable and produces some output iterable.
-If the number of elements in the input and the output iterable
-does not change consider NutFunction instead.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>iterable</strong> (<em>iterable</em>) – Iterable to process.</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Iterable</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>iterable</p>
-</dd>
-<dt class="field-even">Raise</dt>
-<dd class="field-even"><p>NotImplementedError if not implemented.</p>
-</dd>
-</dl>
-</dd></dl>
+<dd></dd></dl>
 
 </dd></dl>
 
@@ -3939,25 +3315,7 @@ If colum=None the values in the iterable themselves will be counted.</p></li>
 <dl class="py method">
 <dt id="nutsflow.sink.CountValues.__rrshift__">
 <code class="sig-name descname">__rrshift__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">iterable</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.sink.CountValues.__rrshift__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Chaining operator for Nuts. Needs to be overridden!</p>
-<p>Takes an input iterable and produces some output iterable.
-If the number of elements in the input and the output iterable
-does not change consider NutFunction instead.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>iterable</strong> (<em>iterable</em>) – Iterable to process.</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Iterable</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>iterable</p>
-</dd>
-<dt class="field-even">Raise</dt>
-<dd class="field-even"><p>NotImplementedError if not implemented.</p>
-</dd>
-</dl>
-</dd></dl>
+<dd></dd></dl>
 
 </dd></dl>
 
@@ -3989,25 +3347,7 @@ does not change consider NutFunction instead.</p>
 <dl class="py method">
 <dt id="nutsflow.sink.Head.__rrshift__">
 <code class="sig-name descname">__rrshift__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">iterable</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.sink.Head.__rrshift__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Chaining operator for Nuts. Needs to be overridden!</p>
-<p>Takes an input iterable and produces some output iterable.
-If the number of elements in the input and the output iterable
-does not change consider NutFunction instead.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>iterable</strong> (<em>iterable</em>) – Iterable to process.</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Iterable</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>iterable</p>
-</dd>
-<dt class="field-even">Raise</dt>
-<dd class="field-even"><p>NotImplementedError if not implemented.</p>
-</dd>
-</dl>
-</dd></dl>
+<dd></dd></dl>
 
 </dd></dl>
 
@@ -4037,25 +3377,7 @@ to strings.</p>
 <dl class="py method">
 <dt id="nutsflow.sink.Join.__rrshift__">
 <code class="sig-name descname">__rrshift__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">iterable</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.sink.Join.__rrshift__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Chaining operator for Nuts. Needs to be overridden!</p>
-<p>Takes an input iterable and produces some output iterable.
-If the number of elements in the input and the output iterable
-does not change consider NutFunction instead.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>iterable</strong> (<em>iterable</em>) – Iterable to process.</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Iterable</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>iterable</p>
-</dd>
-<dt class="field-even">Raise</dt>
-<dd class="field-even"><p>NotImplementedError if not implemented.</p>
-</dd>
-</dl>
-</dd></dl>
+<dd></dd></dl>
 
 </dd></dl>
 
@@ -4105,25 +3427,7 @@ transform elements. None = identity function.</p></li>
 <dl class="py method">
 <dt id="nutsflow.sink.Max.__rrshift__">
 <code class="sig-name descname">__rrshift__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">iterable</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.sink.Max.__rrshift__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Chaining operator for Nuts. Needs to be overridden!</p>
-<p>Takes an input iterable and produces some output iterable.
-If the number of elements in the input and the output iterable
-does not change consider NutFunction instead.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>iterable</strong> (<em>iterable</em>) – Iterable to process.</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Iterable</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>iterable</p>
-</dd>
-<dt class="field-even">Raise</dt>
-<dd class="field-even"><p>NotImplementedError if not implemented.</p>
-</dd>
-</dl>
-</dd></dl>
+<dd></dd></dl>
 
 </dd></dl>
 
@@ -4166,25 +3470,7 @@ does not change consider NutFunction instead.</p>
 <dl class="py method">
 <dt id="nutsflow.sink.Mean.__rrshift__">
 <code class="sig-name descname">__rrshift__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">iterable</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.sink.Mean.__rrshift__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Chaining operator for Nuts. Needs to be overridden!</p>
-<p>Takes an input iterable and produces some output iterable.
-If the number of elements in the input and the output iterable
-does not change consider NutFunction instead.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>iterable</strong> (<em>iterable</em>) – Iterable to process.</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Iterable</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>iterable</p>
-</dd>
-<dt class="field-even">Raise</dt>
-<dd class="field-even"><p>NotImplementedError if not implemented.</p>
-</dd>
-</dl>
-</dd></dl>
+<dd></dd></dl>
 
 </dd></dl>
 
@@ -4226,25 +3512,7 @@ Standard deviation is with degrees of freedom = 1</p>
 <dl class="py method">
 <dt id="nutsflow.sink.MeanStd.__rrshift__">
 <code class="sig-name descname">__rrshift__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">iterable</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.sink.MeanStd.__rrshift__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Chaining operator for Nuts. Needs to be overridden!</p>
-<p>Takes an input iterable and produces some output iterable.
-If the number of elements in the input and the output iterable
-does not change consider NutFunction instead.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>iterable</strong> (<em>iterable</em>) – Iterable to process.</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Iterable</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>iterable</p>
-</dd>
-<dt class="field-even">Raise</dt>
-<dd class="field-even"><p>NotImplementedError if not implemented.</p>
-</dd>
-</dl>
-</dd></dl>
+<dd></dd></dl>
 
 </dd></dl>
 
@@ -4294,25 +3562,7 @@ transform elements. None = identity function.</p></li>
 <dl class="py method">
 <dt id="nutsflow.sink.Min.__rrshift__">
 <code class="sig-name descname">__rrshift__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">iterable</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.sink.Min.__rrshift__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Chaining operator for Nuts. Needs to be overridden!</p>
-<p>Takes an input iterable and produces some output iterable.
-If the number of elements in the input and the output iterable
-does not change consider NutFunction instead.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>iterable</strong> (<em>iterable</em>) – Iterable to process.</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Iterable</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>iterable</p>
-</dd>
-<dt class="field-even">Raise</dt>
-<dd class="field-even"><p>NotImplementedError if not implemented.</p>
-</dd>
-</dl>
-</dd></dl>
+<dd></dd></dl>
 
 </dd></dl>
 
@@ -4387,25 +3637,7 @@ column index(es) tuples/vectors/strings are sorted by.</p></li>
 <dl class="py method">
 <dt id="nutsflow.sink.Sort.__rrshift__">
 <code class="sig-name descname">__rrshift__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">iterable</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.sink.Sort.__rrshift__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Chaining operator for Nuts. Needs to be overridden!</p>
-<p>Takes an input iterable and produces some output iterable.
-If the number of elements in the input and the output iterable
-does not change consider NutFunction instead.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>iterable</strong> (<em>iterable</em>) – Iterable to process.</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Iterable</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>iterable</p>
-</dd>
-<dt class="field-even">Raise</dt>
-<dd class="field-even"><p>NotImplementedError if not implemented.</p>
-</dd>
-</dl>
-</dd></dl>
+<dd></dd></dl>
 
 </dd></dl>
 
@@ -4447,25 +3679,7 @@ does not change consider NutFunction instead.</p>
 <dl class="py method">
 <dt id="nutsflow.sink.Sum.__rrshift__">
 <code class="sig-name descname">__rrshift__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">iterable</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.sink.Sum.__rrshift__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Chaining operator for Nuts. Needs to be overridden!</p>
-<p>Takes an input iterable and produces some output iterable.
-If the number of elements in the input and the output iterable
-does not change consider NutFunction instead.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>iterable</strong> (<em>iterable</em>) – Iterable to process.</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Iterable</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>iterable</p>
-</dd>
-<dt class="field-even">Raise</dt>
-<dd class="field-even"><p>NotImplementedError if not implemented.</p>
-</dd>
-</dl>
-</dd></dl>
+<dd></dd></dl>
 
 </dd></dl>
 
@@ -4498,25 +3712,7 @@ the iterable completely!</p>
 <dl class="py method">
 <dt id="nutsflow.sink.Tail.__rrshift__">
 <code class="sig-name descname">__rrshift__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">iterable</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.sink.Tail.__rrshift__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Chaining operator for Nuts. Needs to be overridden!</p>
-<p>Takes an input iterable and produces some output iterable.
-If the number of elements in the input and the output iterable
-does not change consider NutFunction instead.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>iterable</strong> (<em>iterable</em>) – Iterable to process.</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Iterable</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>iterable</p>
-</dd>
-<dt class="field-even">Raise</dt>
-<dd class="field-even"><p>NotImplementedError if not implemented.</p>
-</dd>
-</dl>
-</dd></dl>
+<dd></dd></dl>
 
 </dd></dl>
 
@@ -4548,25 +3744,7 @@ in the provided container, eg. list, tuple, set</p></li>
 <dl class="py method">
 <dt id="nutsflow.sink.Unzip.__rrshift__">
 <code class="sig-name descname">__rrshift__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">iterable</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nutsflow.sink.Unzip.__rrshift__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Chaining operator for Nuts. Needs to be overridden!</p>
-<p>Takes an input iterable and produces some output iterable.
-If the number of elements in the input and the output iterable
-does not change consider NutFunction instead.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>iterable</strong> (<em>iterable</em>) – Iterable to process.</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Iterable</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>iterable</p>
-</dd>
-<dt class="field-even">Raise</dt>
-<dd class="field-even"><p>NotImplementedError if not implemented.</p>
-</dd>
-</dl>
-</dd></dl>
+<dd></dd></dl>
 
 </dd></dl>
 
@@ -4917,9 +4095,10 @@ that is repeatedly called.</p></li>
 
   <div role="contentinfo">
     <p>
+        
         &copy; Copyright 2017, IBM Research Australia
       <span class="lastupdated">
-        Last updated on Nov 18, 2020.
+        Last updated on Nov 20, 2020.
       </span>
 
     </p>
@@ -4934,7 +4113,6 @@ that is repeatedly called.</p></li>
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {

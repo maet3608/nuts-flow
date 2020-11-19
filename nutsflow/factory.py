@@ -4,8 +4,6 @@
 """
 from __future__ import absolute_import
 
-import functools
-
 from nutsflow.base import Nut, NutSink, NutSource, NutFunction
 
 
@@ -39,14 +37,14 @@ def _create_nut_wrapper(base_class, func, iterpos):
     """
 
     class Wrapper(base_class):
-        __doc__ = func.__doc__
-
         def __rrshift__(self, iterable):
             args = _arg_insert(self.args, iterable, iterpos)
             return func(*args, **self.kwargs)
 
     Wrapper.__name__ = func.__name__
     Wrapper.__module__ = func.__module__
+    Wrapper.__doc__ = func.__doc__
+    Wrapper.__rrshift__.__doc__ = ""
     return Wrapper
 
 
@@ -61,8 +59,6 @@ def _create_filter_wrapper(func, invert=False):
     """
 
     class Wrapper(Nut):
-        __doc__ = func.__doc__
-
         def __rrshift__(self, iterable):
             for e in iterable:
                 args = _arg_insert(self.args, e)
@@ -71,6 +67,78 @@ def _create_filter_wrapper(func, invert=False):
 
     Wrapper.__name__ = func.__name__
     Wrapper.__module__ = func.__module__
+    Wrapper.__doc__ = func.__doc__
+    Wrapper.__rrshift__.__doc__ = ""
+    return Wrapper
+
+
+def nut_function(func):
+    """
+    Decorator for Nut functions.
+
+    Example on how to define a custom function nut:
+
+    .. code::
+
+      @nut_function
+      def TimesN(x, n):
+          return x * n
+
+      [1, 2, 3] >> TimesN(2) >> Collect()  -->  [2, 4, 6]
+
+    :param function func: Function to decorate
+    :return: Nut function for given function
+    :rtype: NutFunction
+    """
+
+    class Wrapper(NutFunction):
+        def __call__(self, element):
+            return func(element, *self.args, **self.kwargs)
+
+    Wrapper.__name__ = func.__name__
+    Wrapper.__module__ = func.__module__
+    Wrapper.__doc__ = func.__doc__
+    Wrapper.__call__.__doc__ = ""
+    return Wrapper
+
+
+def nut_source(func):
+    """
+    Decorator for Nut sources.
+
+    Example on how to define a custom source nut. Note that a source
+    must return an iterable/generator and does not read any input.
+
+    .. code::
+
+      @nut_source
+      def MyRange(start, end):
+          return range(start, end)
+
+      MyRange(0, 5) >> Collect()  --> [0, 1, 2, 3, 4]
+
+
+    .. code::
+
+      @nut_source
+      def MyRange2(start, end):
+          for i in range(start, end):
+              yield i * 2
+
+      MyRange2(0, 5) >> Collect()  --> [0, 2, 4, 6, 8]
+
+    :param function func: Function to decorate
+    :return: Nut source for given function
+    :rtype: NutSource
+    """
+
+    class Wrapper(NutSource):
+        def __iter__(self):
+            return func(*self.args, **self.kwargs)
+
+    Wrapper.__name__ = func.__name__
+    Wrapper.__module__ = func.__module__
+    Wrapper.__doc__ = func.__doc__
     return Wrapper
 
 
@@ -162,77 +230,6 @@ def nut_sink(func, iterpos=0):
     :rtype: NutSink
     """
     return _create_nut_wrapper(NutSink, func, iterpos)
-
-
-def nut_function(func):
-    """
-    Decorator for Nut functions.
-
-    Example on how to define a custom function nut:
-
-    .. code::
-
-      @nut_function
-      def TimesN(x, n):
-          return x * n
-
-      [1, 2, 3] >> TimesN(2) >> Collect()  -->  [2, 4, 6]
-
-    :param function func: Function to decorate
-    :return: Nut function for given function
-    :rtype: NutFunction
-    """
-
-    class Wrapper(NutFunction):
-        __doc__ = func.__doc__
-
-        def __call__(self, element):
-            return func(element, *self.args, **self.kwargs)
-
-    Wrapper.__name__ = func.__name__
-    Wrapper.__module__ = func.__module__
-    return Wrapper
-
-
-def nut_source(func):
-    """
-    Decorator for Nut sources.
-
-    Example on how to define a custom source nut. Note that a source
-    must return an iterable/generator and does not read any input.
-
-    .. code::
-
-      @nut_source
-      def MyRange(start, end):
-          return range(start, end)
-
-      MyRange(0, 5) >> Collect()  --> [0, 1, 2, 3, 4]
-
-
-    .. code::
-
-      @nut_source
-      def MyRange2(start, end):
-          for i in range(start, end):
-              yield i * 2
-
-      MyRange2(0, 5) >> Collect()  --> [0, 2, 4, 6, 8]
-
-    :param function func: Function to decorate
-    :return: Nut source for given function
-    :rtype: NutSource
-    """
-
-    class Wrapper(NutSource):
-        __doc__ = func.__doc__
-
-        def __iter__(self):
-            return func(*self.args, **self.kwargs)
-
-    Wrapper.__name__ = func.__name__
-    Wrapper.__module__ = func.__module__
-    return Wrapper
 
 
 def nut_filter(func):

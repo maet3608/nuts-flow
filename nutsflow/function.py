@@ -76,7 +76,7 @@ def Get(x, start, end=None, step=None):
     """
     iterable >> Get(start, end, step)
 
-    Extract elements from x. Equivalent to Python slicing [start:end:step]
+    Extract elements from iterable. Equivalent to slicing [start:end:step]
     but per element of the iterable.
 
     >>> from nutsflow import Collect
@@ -162,8 +162,8 @@ class Counter(NutFunction):
 
         :param str name: Name of the counter
         :param func filterfunc: Filter function.
-        :param int value: Initial value
-           Count only elements where func returns True.
+          Count only elements where func returns True.
+        :param int value: Initial counter value
         """
         self.name = name
         self.value = value
@@ -182,6 +182,7 @@ class Counter(NutFunction):
     def __repr__(self):
         """
         Return counter value as string.
+
         :return: Counter value
         :rtype: str
         """
