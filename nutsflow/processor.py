@@ -1144,8 +1144,8 @@ class Cache(Nut):
         :rtype: list of strings
         """
         path = self._cachepath if self._cachepath else self.path
-        fpaths = (osp.join(path, n) for n in os.listdir(path))
-        return fpaths >> Pick(self.pick) >> Sort()
+        fpaths = sorted(osp.join(path, n) for n in os.listdir(path))
+        return fpaths >> Pick(self.pick) >> Collect()
 
     def _create_cache(self):
         """
