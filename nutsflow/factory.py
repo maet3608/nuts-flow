@@ -45,7 +45,7 @@ def _create_nut_wrapper(base_class, func, iterpos):
 
     Wrapper.__name__ = func.__name__
     Wrapper.__module__ = func.__module__
-    Wrapper.__rrshift__.__doc__ = ""
+    #Wrapper.__rrshift__.__doc__ = ""   # Py 2.7 doesn't permit this
     return Wrapper
 
 
@@ -70,7 +70,7 @@ def _create_filter_wrapper(func, invert=False):
 
     Wrapper.__name__ = func.__name__
     Wrapper.__module__ = func.__module__
-    Wrapper.__rrshift__.__doc__ = ""
+    #Wrapper.__rrshift__.__doc__ = ""  # Py 2.7 doesn't permit this
     return Wrapper
 
 
@@ -101,7 +101,7 @@ def nut_function(func):
 
     Wrapper.__name__ = func.__name__
     Wrapper.__module__ = func.__module__
-    Wrapper.__call__.__doc__ = ""
+    #Wrapper.__call__.__doc__ = ""  # Py 2.7 doesn't permit this
     return Wrapper
 
 

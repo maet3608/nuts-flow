@@ -209,6 +209,7 @@ def test_FilterCol():
     assert data >> FilterCol(0, is_even) >> Collect() == expected
 
     def same(s): return s[0] == s[1]
+
     data = ['a_a', 'a_b', 'b_b']
     expected = ['a_a', 'b_b']
     assert data >> FilterCol((0, 2), same) >> Collect() == expected
@@ -435,6 +436,12 @@ def test_Cache():
         assert it >> cache >> Collect() == data
         assert it >> cache >> Collect() == data
         assert cache >> Collect() == data
+
+    data = [1, 2, 3, 4, 5, 6]
+    with Cache(pick=2) as cache:
+        it = iter(data)
+        assert it >> cache >> Collect() == [1, 3, 5]
+        assert it >> cache >> Collect() == [1, 3, 5]
 
     cache = Cache('tests/data/cache')
     it = iter(data)

@@ -25,7 +25,7 @@ from nutsflow.base import Nut, NutFunction
 from nutsflow.common import as_tuple, as_list, as_set, console, timestr, is_iterable
 from nutsflow.factory import nut_processor
 from nutsflow.function import Identity
-from nutsflow.sink import Consume, Collect, Head
+from nutsflow.sink import Consume, Collect, Sort
 
 
 @nut_processor
@@ -1059,13 +1059,19 @@ class Cache(Nut):
     to file system and loads them the next time instead of recomputing.
     """
 
-    def __init__(self, cachepath=None, clearcache=True):
+    def __init__(self, cachepath=None, clearcache=True, pick=1):
         """
         iterable >> Cache()
 
         Cache elements of iterable to disk. Only worth it if elements of
         iterable are time-consuming to produce and can be loaded faster
         from disk.
+
+        The pick parameter allows to efficiently retrieve a subset
+        of elements from the cache, e.g. every second element (pick=2)
+        or a random subset, e.g. 30% (pick=0.3). Note that the cache is
+        completely filled with the iterable but only subset is retrieved.
+        This is more efficient than `iterable >> Cache() >> Pick()`.
 
         .. code:: python
 
@@ -1089,6 +1095,12 @@ class Cache(Nut):
                 for _ in range(100)
                     data >> expensive_op >> cache >> Collect()
 
+        .. code:: python
+
+            with Cache(pick=2) as cache:
+                for _ in range(100)
+                    data >> expensive_op >> cache >> Collect()
+
         :param iterable iterable: Any iterable
         :param string cachepath: Path to a folder that stores the cached
            objects. If the path does not exist it will be created. The path
@@ -1096,10 +1108,14 @@ class Cache(Nut):
            For cachepath=None a temporary folder will be created. Path to
            this folder is available in cache.path.
         :param bool clearcache: Clear left-over cache if it exists.
+        :param int|float pick: Return elements from the cache with
+          probability pick if pick is float, otherwise return evvery pitck'th
+          element (see Pick() nut for details).
         :return: Iterator over elements
         :rtype: iterator
         """
         self.path = None
+        self.pick = pick
         self._cachepath = cachepath
         self._clearcache = clearcache
         if clearcache and cachepath and os.path.exists(cachepath):
@@ -1122,13 +1138,14 @@ class Cache(Nut):
 
     def _cache_fpaths(self):
         """
-        Return sorted list of filepaths of cached objects.
+        Return sorted list of filepaths of cached objects, honoring pick param.
 
         :return: Filepaths to pickle files.
         :rtype: list of strings
         """
         path = self._cachepath if self._cachepath else self.path
-        return sorted(osp.join(path, n) for n in os.listdir(path))
+        fpaths = (osp.join(path, n) for n in os.listdir(path))
+        return fpaths >> Pick(self.pick) >> Sort()
 
     def _create_cache(self):
         """
@@ -1156,7 +1173,7 @@ class Cache(Nut):
 
     def __iter__(self):
         """
-        Return iterator over cached elements.
+        Return iterator over cached elements, honoring pick param.
 
         :return: Generator over cached elements
         :rtype: Generator
@@ -1165,23 +1182,31 @@ class Cache(Nut):
             with open(fpath, 'rb') as f:
                 yield pickle.load(f)
 
+    def _fill_cache(self, iterable):
+        """
+        Return generator over input iterable and cache elements.
+        :param iterable iterable: Any iterable
+        :return: Generator over input iterable.
+        :rtype: Generator
+        """
+        self._create_cache()
+        for i, e in enumerate(iterable):
+            with open(self._fpath(i), 'wb') as f:
+                pickle.dump(e, f, pickle.HIGHEST_PROTOCOL)
+            yield e
+
     def __rrshift__(self, iterable):
         """
-        Return elements in iterable.
+        Return elements in iterable considering pick.
 
         :param iterable iterable: Any iterable
-        :return: Generator over same elements as input iterable.
+        :return: Generator over input iterable.
         :rtype: Generator
         """
         if self.path or (self._cachepath and not self._clearcache):
-            for e in self.__iter__():
-                yield e
-        else:
-            self._create_cache()
-            for i, e in enumerate(iterable):
-                with open(self._fpath(i), 'wb') as f:
-                    pickle.dump(e, f, pickle.HIGHEST_PROTOCOL)
-                yield e
+            return (e for e in self.__iter__())
+        return self._fill_cache(iterable) >> Pick(self.pick)
+
 
 
 @nut_processor

@@ -6,13 +6,14 @@
 from __future__ import print_function
 
 import sys
+import time
 
 from pytest import approx
 from time import sleep
 from nutsflow import MeanStd
 from nutsflow.common import (sec_to_hms, timestr, Redirect, as_tuple, as_set,
                              as_list, is_iterable, colfunc, console,
-                             itemize, StableRandom)
+                             itemize, StableRandom, Timer)
 
 
 def test_is_iterable():
@@ -126,3 +127,21 @@ def test_StableRandom():
     my, std = numbers >> MeanStd()
     assert 0.0 == approx(my, abs=0.1)
     assert 1.0 == approx(std, abs=0.1)
+
+
+def test_timer():
+    t = Timer()
+    time.sleep(1.3)
+    assert str(t) == '00:01'
+
+    with Timer() as t:
+        time.sleep(1.3)
+    assert str(t) == '00:01'
+
+    t = Timer()
+    time.sleep(0.5)
+    t.start()
+    time.sleep(1.3)
+    t.stop()
+    time.sleep(0.5)
+    assert str(t) == '00:01'

@@ -8,6 +8,7 @@ import sys
 import time
 import random
 
+from timeit import default_timer
 from math import sqrt, log, cos, pi
 from six.moves import cStringIO as StringIO
 
@@ -321,3 +322,76 @@ class StableRandom(random.Random):
         """
         self.index += n
         self.random()
+
+
+class Timer(object):
+    """
+    A simple timer with a resolution of a second.
+
+    .. code::
+
+      t = Timer(fmt="Duration: %M:%S")
+      time.sleep(2)  # something that takes some time, here 2 seconds
+      print(t)  --> "Duration: 00:02"
+
+
+    .. code::
+
+      with Timer() as t:
+          time.sleep(2)
+      print(t)  --> "00:02"
+
+    """
+
+    def __init__(self, fmt="%M:%S"):
+        """
+        Creates a timer with the given time string format.
+
+        :param str fmt: Format for time string, see `time.strftime` for details.
+        """
+        self.fmt = fmt
+        self.start()
+
+    def __enter__(self):
+        """Enters context manager"""
+        self.start()
+        return self
+
+    def __exit__(self, type, value, traceback):
+        """Exits context manager"""
+        return self.stop()
+
+    def start(self):
+        """
+        Starts the timer.
+
+        Note that the construction of Timer() already starts the timer.
+
+        :return: None
+        """
+        self.stime = default_timer()
+        self.etime = None
+
+    def stop(self):
+        """
+        Stops the timer.
+
+        :return: None
+        """
+        self.etime = default_timer()
+
+    def _gmtime(self):
+        """Return current duration of timer in seconds"""
+        if self.etime is None:
+            self.etime = default_timer()
+        delta = self.etime - self.stime
+        return time.gmtime(delta)
+
+    def __str__(self):
+        """
+        Returns the current timer duration as a string.
+
+        :return: Timer duration formatted as specified by `fmt`.
+        "rtype: str
+        """
+        return time.strftime(self.fmt, self._gmtime())
