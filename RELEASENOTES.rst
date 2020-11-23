@@ -1,8 +1,12 @@
 Release notes
 =============
 
+1.1.1
+-----
+
+
 1.1.0
-------
+-----
 - support for Python 3.8
 - pick parameter for Cache added
 - Timer() added
