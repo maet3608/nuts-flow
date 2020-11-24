@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nutsflow.processor &mdash; nutsflow 1.0.39 documentation</title>
+  <title>nutsflow.processor &mdash; nutsflow 1.1.1 documentation</title>
   
 
   
@@ -59,7 +59,7 @@
             
             
               <div class="version">
-                1.0.39
+                1.1.1
               </div>
             
           
@@ -183,7 +183,7 @@
 <span class="kn">from</span> <span class="nn">nutsflow.common</span> <span class="kn">import</span> <span class="n">as_tuple</span><span class="p">,</span> <span class="n">as_list</span><span class="p">,</span> <span class="n">as_set</span><span class="p">,</span> <span class="n">console</span><span class="p">,</span> <span class="n">timestr</span><span class="p">,</span> <span class="n">is_iterable</span>
 <span class="kn">from</span> <span class="nn">nutsflow.factory</span> <span class="kn">import</span> <span class="n">nut_processor</span>
 <span class="kn">from</span> <span class="nn">nutsflow.function</span> <span class="kn">import</span> <span class="n">Identity</span>
-<span class="kn">from</span> <span class="nn">nutsflow.sink</span> <span class="kn">import</span> <span class="n">Consume</span><span class="p">,</span> <span class="n">Collect</span><span class="p">,</span> <span class="n">Head</span>
+<span class="kn">from</span> <span class="nn">nutsflow.sink</span> <span class="kn">import</span> <span class="n">Consume</span><span class="p">,</span> <span class="n">Collect</span><span class="p">,</span> <span class="n">Sort</span>
 
 
 <div class="viewcode-block" id="Take"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.processor.Take">[docs]</a><span class="nd">@nut_processor</span>
@@ -1217,13 +1217,19 @@
 <span class="sd">    to file system and loads them the next time instead of recomputing.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="Cache.__init__"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.processor.Cache.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cachepath</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">clearcache</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<div class="viewcode-block" id="Cache.__init__"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.processor.Cache.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cachepath</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">clearcache</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">pick</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        iterable &gt;&gt; Cache()</span>
 
 <span class="sd">        Cache elements of iterable to disk. Only worth it if elements of</span>
 <span class="sd">        iterable are time-consuming to produce and can be loaded faster</span>
 <span class="sd">        from disk.</span>
+
+<span class="sd">        The pick parameter allows to efficiently retrieve a subset</span>
+<span class="sd">        of elements from the cache, e.g. every second element (pick=2)</span>
+<span class="sd">        or a random subset, e.g. 30% (pick=0.3). Note that the cache is</span>
+<span class="sd">        completely filled with the iterable but only subset is retrieved.</span>
+<span class="sd">        This is more efficient than `iterable &gt;&gt; Cache() &gt;&gt; Pick()`.</span>
 
 <span class="sd">        .. code:: python</span>
 
@@ -1247,6 +1253,12 @@
 <span class="sd">                for _ in range(100)</span>
 <span class="sd">                    data &gt;&gt; expensive_op &gt;&gt; cache &gt;&gt; Collect()</span>
 
+<span class="sd">        .. code:: python</span>
+
+<span class="sd">            with Cache(pick=2) as cache:</span>
+<span class="sd">                for _ in range(100)</span>
+<span class="sd">                    data &gt;&gt; expensive_op &gt;&gt; cache &gt;&gt; Collect()</span>
+
 <span class="sd">        :param iterable iterable: Any iterable</span>
 <span class="sd">        :param string cachepath: Path to a folder that stores the cached</span>
 <span class="sd">           objects. If the path does not exist it will be created. The path</span>
@@ -1254,10 +1266,14 @@
 <span class="sd">           For cachepath=None a temporary folder will be created. Path to</span>
 <span class="sd">           this folder is available in cache.path.</span>
 <span class="sd">        :param bool clearcache: Clear left-over cache if it exists.</span>
+<span class="sd">        :param int|float pick: Return elements from the cache with</span>
+<span class="sd">          probability pick if pick is float, otherwise return evvery pitck&#39;th</span>
+<span class="sd">          element (see Pick() nut for details).</span>
 <span class="sd">        :return: Iterator over elements</span>
 <span class="sd">        :rtype: iterator</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pick</span> <span class="o">=</span> <span class="n">pick</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_cachepath</span> <span class="o">=</span> <span class="n">cachepath</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_clearcache</span> <span class="o">=</span> <span class="n">clearcache</span>
         <span class="k">if</span> <span class="n">clearcache</span> <span class="ow">and</span> <span class="n">cachepath</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">cachepath</span><span class="p">):</span>
@@ -1280,13 +1296,14 @@
 
     <span class="k">def</span> <span class="nf">_cache_fpaths</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Return sorted list of filepaths of cached objects.</span>
+<span class="sd">        Return sorted list of filepaths of cached objects, honoring pick param.</span>
 
 <span class="sd">        :return: Filepaths to pickle files.</span>
 <span class="sd">        :rtype: list of strings</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cachepath</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cachepath</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">path</span>
-        <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">osp</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">path</span><span class="p">))</span>
+        <span class="n">fpaths</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">osp</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">path</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">fpaths</span> <span class="o">&gt;&gt;</span> <span class="n">Pick</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pick</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">_create_cache</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -1314,7 +1331,7 @@
 
     <span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Return iterator over cached elements.</span>
+<span class="sd">        Return iterator over cached elements, honoring pick param.</span>
 
 <span class="sd">        :return: Generator over cached elements</span>
 <span class="sd">        :rtype: Generator</span>
@@ -1323,23 +1340,31 @@
             <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">fpath</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
                 <span class="k">yield</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
 
+    <span class="k">def</span> <span class="nf">_fill_cache</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">iterable</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return generator over input iterable and cache elements.</span>
+<span class="sd">        :param iterable iterable: Any iterable</span>
+<span class="sd">        :return: Generator over input iterable.</span>
+<span class="sd">        :rtype: Generator</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_create_cache</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">e</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">iterable</span><span class="p">):</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_fpath</span><span class="p">(</span><span class="n">i</span><span class="p">),</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">pickle</span><span class="o">.</span><span class="n">HIGHEST_PROTOCOL</span><span class="p">)</span>
+            <span class="k">yield</span> <span class="n">e</span>
+
 <div class="viewcode-block" id="Cache.__rrshift__"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.processor.Cache.__rrshift__">[docs]</a>    <span class="k">def</span> <span class="fm">__rrshift__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">iterable</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Return elements in iterable.</span>
+<span class="sd">        Return elements in iterable considering pick.</span>
 
 <span class="sd">        :param iterable iterable: Any iterable</span>
-<span class="sd">        :return: Generator over same elements as input iterable.</span>
+<span class="sd">        :return: Generator over input iterable.</span>
 <span class="sd">        :rtype: Generator</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">path</span> <span class="ow">or</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_cachepath</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_clearcache</span><span class="p">):</span>
-            <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="fm">__iter__</span><span class="p">():</span>
-                <span class="k">yield</span> <span class="n">e</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_create_cache</span><span class="p">()</span>
-            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">e</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">iterable</span><span class="p">):</span>
-                <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_fpath</span><span class="p">(</span><span class="n">i</span><span class="p">),</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-                    <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">pickle</span><span class="o">.</span><span class="n">HIGHEST_PROTOCOL</span><span class="p">)</span>
-                <span class="k">yield</span> <span class="n">e</span></div></div>
+            <span class="k">return</span> <span class="p">(</span><span class="n">e</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="fm">__iter__</span><span class="p">())</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fill_cache</span><span class="p">(</span><span class="n">iterable</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Pick</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pick</span><span class="p">)</span></div></div>
+
 
 
 <div class="viewcode-block" id="Prefetch"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.processor.Prefetch">[docs]</a><span class="nd">@nut_processor</span>
@@ -1496,7 +1521,7 @@
         
         &copy; Copyright 2017, IBM Research Australia
       <span class="lastupdated">
-        Last updated on Nov 20, 2020.
+        Last updated on Nov 24, 2020.
       </span>
 
     </p>

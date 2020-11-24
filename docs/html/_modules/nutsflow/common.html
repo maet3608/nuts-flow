@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nutsflow.common &mdash; nutsflow 1.0.39 documentation</title>
+  <title>nutsflow.common &mdash; nutsflow 1.1.1 documentation</title>
   
 
   
@@ -59,7 +59,7 @@
             
             
               <div class="version">
-                1.0.39
+                1.1.1
               </div>
             
           
@@ -166,6 +166,7 @@
 <span class="kn">import</span> <span class="nn">time</span>
 <span class="kn">import</span> <span class="nn">random</span>
 
+<span class="kn">from</span> <span class="nn">timeit</span> <span class="kn">import</span> <span class="n">default_timer</span>
 <span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">sqrt</span><span class="p">,</span> <span class="n">log</span><span class="p">,</span> <span class="n">cos</span><span class="p">,</span> <span class="n">pi</span>
 <span class="kn">from</span> <span class="nn">six.moves</span> <span class="kn">import</span> <span class="n">cStringIO</span> <span class="k">as</span> <span class="n">StringIO</span>
 
@@ -479,6 +480,79 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">+=</span> <span class="n">n</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">random</span><span class="p">()</span></div></div>
+
+
+<div class="viewcode-block" id="Timer"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.common.Timer">[docs]</a><span class="k">class</span> <span class="nc">Timer</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A simple timer with a resolution of a second.</span>
+
+<span class="sd">    .. code::</span>
+
+<span class="sd">      t = Timer(fmt=&quot;Duration: %M:%S&quot;)</span>
+<span class="sd">      time.sleep(2)  # something that takes some time, here 2 seconds</span>
+<span class="sd">      print(t)  --&gt; &quot;Duration: 00:02&quot;</span>
+
+
+<span class="sd">    .. code::</span>
+
+<span class="sd">      with Timer() as t:</span>
+<span class="sd">          time.sleep(2)</span>
+<span class="sd">      print(t)  --&gt; &quot;00:02&quot;</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Timer.__init__"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.common.Timer.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s2">&quot;%M:%S&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creates a timer with the given time string format.</span>
+
+<span class="sd">        :param str fmt: Format for time string, see `time.strftime` for details.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fmt</span> <span class="o">=</span> <span class="n">fmt</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">start</span><span class="p">()</span></div>
+
+    <span class="k">def</span> <span class="fm">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Enters context manager&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span>
+
+    <span class="k">def</span> <span class="fm">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">type</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">traceback</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Exits context manager&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+
+<div class="viewcode-block" id="Timer.start"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.common.Timer.start">[docs]</a>    <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Starts the timer.</span>
+
+<span class="sd">        Note that the construction of Timer() already starts the timer.</span>
+
+<span class="sd">        :return: None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stime</span> <span class="o">=</span> <span class="n">default_timer</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">etime</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="Timer.stop"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.common.Timer.stop">[docs]</a>    <span class="k">def</span> <span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Stops the timer.</span>
+
+<span class="sd">        :return: None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">etime</span> <span class="o">=</span> <span class="n">default_timer</span><span class="p">()</span></div>
+
+    <span class="k">def</span> <span class="nf">_gmtime</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return current duration of timer in seconds&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">etime</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">etime</span> <span class="o">=</span> <span class="n">default_timer</span><span class="p">()</span>
+        <span class="n">delta</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">etime</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">stime</span>
+        <span class="k">return</span> <span class="n">time</span><span class="o">.</span><span class="n">gmtime</span><span class="p">(</span><span class="n">delta</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the current timer duration as a string.</span>
+
+<span class="sd">        :return: Timer duration formatted as specified by `fmt`.</span>
+<span class="sd">        &quot;rtype: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fmt</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gmtime</span><span class="p">())</span></div>
 </pre></div>
 
            </div>
@@ -494,7 +568,7 @@
         
         &copy; Copyright 2017, IBM Research Australia
       <span class="lastupdated">
-        Last updated on Nov 20, 2020.
+        Last updated on Nov 24, 2020.
       </span>
 
     </p>

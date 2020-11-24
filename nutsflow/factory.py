@@ -4,12 +4,14 @@
 """
 from __future__ import absolute_import
 
+import functools
+
 from nutsflow.base import Nut, NutSink, NutSource, NutFunction
 
 
 def _arg_insert(args, arg, pos=0):
     """
-    Insert arg in args a given position.
+    Insert arg in args at given position.
 
     :param tuple args: Some function arguments
     :param any arg: Some function argument
@@ -25,6 +27,24 @@ def _arg_insert(args, arg, pos=0):
     return args
 
 
+def _wrap(wrappercls, func):
+    """
+    Return wrapped function.
+
+    Used to ensure that decorated nut function has the correct docstring.
+
+    :param class wrappercls: Nut wrapper class
+    :param function func: Function to wrap
+    :return: Wrapped function
+    :rtype: function
+    """
+    @functools.wraps(func)
+    def wrapper(*args, **kwds):
+        return wrappercls(*args, **kwds)
+
+    return wrapper
+
+
 def _create_nut_wrapper(base_class, func, iterpos):
     """
     Return Nut for given function.
@@ -37,16 +57,12 @@ def _create_nut_wrapper(base_class, func, iterpos):
     """
 
     class Wrapper(base_class):
-        __doc__ = func.__doc__
 
         def __rrshift__(self, iterable):
             args = _arg_insert(self.args, iterable, iterpos)
             return func(*args, **self.kwargs)
 
-    Wrapper.__name__ = func.__name__
-    Wrapper.__module__ = func.__module__
-    #Wrapper.__rrshift__.__doc__ = ""   # Py 2.7 doesn't permit this
-    return Wrapper
+    return _wrap(Wrapper, func)
 
 
 def _create_filter_wrapper(func, invert=False):
@@ -60,7 +76,6 @@ def _create_filter_wrapper(func, invert=False):
     """
 
     class Wrapper(Nut):
-        __doc__ = func.__doc__
 
         def __rrshift__(self, iterable):
             for e in iterable:
@@ -68,10 +83,7 @@ def _create_filter_wrapper(func, invert=False):
                 if bool(func(*args, **self.kwargs)) != invert:
                     yield e
 
-    Wrapper.__name__ = func.__name__
-    Wrapper.__module__ = func.__module__
-    #Wrapper.__rrshift__.__doc__ = ""  # Py 2.7 doesn't permit this
-    return Wrapper
+    return _wrap(Wrapper, func)
 
 
 def nut_function(func):
@@ -94,15 +106,11 @@ def nut_function(func):
     """
 
     class Wrapper(NutFunction):
-        __doc__ = func.__doc__
 
         def __call__(self, element):
             return func(element, *self.args, **self.kwargs)
 
-    Wrapper.__name__ = func.__name__
-    Wrapper.__module__ = func.__module__
-    #Wrapper.__call__.__doc__ = ""  # Py 2.7 doesn't permit this
-    return Wrapper
+    return _wrap(Wrapper, func)
 
 
 def nut_source(func):
@@ -136,14 +144,11 @@ def nut_source(func):
     """
 
     class Wrapper(NutSource):
-        __doc__ = func.__doc__
 
         def __iter__(self):
             return func(*self.args, **self.kwargs)
 
-    Wrapper.__name__ = func.__name__
-    Wrapper.__module__ = func.__module__
-    return Wrapper
+    return _wrap(Wrapper, func)
 
 
 def nut_processor(func, iterpos=0):

@@ -3,7 +3,7 @@ Release notes
 
 1.1.1
 -----
-
+- wrapping for nut functions fixed
 
 1.1.0
 -----

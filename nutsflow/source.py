@@ -5,6 +5,7 @@
 from __future__ import absolute_import
 
 import csv
+import functools
 
 import itertools as itt
 import nutsflow.iterfunction as itf

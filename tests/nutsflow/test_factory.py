@@ -3,10 +3,10 @@
    :synopsis: Unit tests for factory module
 """
 
-from six.moves import range 
+from six.moves import range
 from nutsflow.base import Nut
 from nutsflow.sink import Collect
-from nutsflow.factory import (_arg_insert, _create_nut_wrapper,
+from nutsflow.factory import (_arg_insert, _create_nut_wrapper, _wrap,
                               _create_filter_wrapper, nut_processor, nut_sink,
                               nut_function, nut_source, nut_filter,
                               nut_filterfalse)
@@ -18,6 +18,16 @@ def test_arg_insert():
     assert _arg_insert(args, 'a', 1) == [1, 'a', 2]
     assert _arg_insert(args, 'a', 3) == [1, 2, 'a']
     assert _arg_insert(args, 'a', None) == [1, 2, 'a']
+
+
+def test_wrap():
+    class Wrapper(Nut):
+        pass
+
+    def func(a, b): pass
+
+    wrapped = _wrap(Wrapper, func)
+    assert wrapped.__doc__ == func.__doc__
 
 
 def test_create_nut_wrapper():

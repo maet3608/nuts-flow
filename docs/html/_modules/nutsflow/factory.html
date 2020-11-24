@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nutsflow.factory &mdash; nutsflow 1.0.39 documentation</title>
+  <title>nutsflow.factory &mdash; nutsflow 1.1.1 documentation</title>
   
 
   
@@ -59,7 +59,7 @@
             
             
               <div class="version">
-                1.0.39
+                1.1.1
               </div>
             
           
@@ -162,12 +162,14 @@
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">absolute_import</span>
 
+<span class="kn">import</span> <span class="nn">functools</span>
+
 <span class="kn">from</span> <span class="nn">nutsflow.base</span> <span class="kn">import</span> <span class="n">Nut</span><span class="p">,</span> <span class="n">NutSink</span><span class="p">,</span> <span class="n">NutSource</span><span class="p">,</span> <span class="n">NutFunction</span>
 
 
 <span class="k">def</span> <span class="nf">_arg_insert</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">arg</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Insert arg in args a given position.</span>
+<span class="sd">    Insert arg in args at given position.</span>
 
 <span class="sd">    :param tuple args: Some function arguments</span>
 <span class="sd">    :param any arg: Some function argument</span>
@@ -183,6 +185,24 @@
     <span class="k">return</span> <span class="n">args</span>
 
 
+<span class="k">def</span> <span class="nf">_wrap</span><span class="p">(</span><span class="n">wrappercls</span><span class="p">,</span> <span class="n">func</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return wrapped function.</span>
+
+<span class="sd">    Used to ensure that decorated nut function has the correct docstring.</span>
+
+<span class="sd">    :param class wrappercls: Nut wrapper class</span>
+<span class="sd">    :param function func: Function to wrap</span>
+<span class="sd">    :return: Wrapped function</span>
+<span class="sd">    :rtype: function</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nd">@functools</span><span class="o">.</span><span class="n">wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">wrappercls</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">wrapper</span>
+
+
 <span class="k">def</span> <span class="nf">_create_nut_wrapper</span><span class="p">(</span><span class="n">base_class</span><span class="p">,</span> <span class="n">func</span><span class="p">,</span> <span class="n">iterpos</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Return Nut for given function.</span>
@@ -195,15 +215,12 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">class</span> <span class="nc">Wrapper</span><span class="p">(</span><span class="n">base_class</span><span class="p">):</span>
+
         <span class="k">def</span> <span class="fm">__rrshift__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">iterable</span><span class="p">):</span>
             <span class="n">args</span> <span class="o">=</span> <span class="n">_arg_insert</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">,</span> <span class="n">iterable</span><span class="p">,</span> <span class="n">iterpos</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span><span class="p">)</span>
 
-    <span class="n">Wrapper</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">=</span> <span class="n">func</span><span class="o">.</span><span class="vm">__name__</span>
-    <span class="n">Wrapper</span><span class="o">.</span><span class="vm">__module__</span> <span class="o">=</span> <span class="n">func</span><span class="o">.</span><span class="vm">__module__</span>
-    <span class="n">Wrapper</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">=</span> <span class="n">func</span><span class="o">.</span><span class="vm">__doc__</span>
-    <span class="n">Wrapper</span><span class="o">.</span><span class="fm">__rrshift__</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">Wrapper</span>
+    <span class="k">return</span> <span class="n">_wrap</span><span class="p">(</span><span class="n">Wrapper</span><span class="p">,</span> <span class="n">func</span><span class="p">)</span>
 
 
 <span class="k">def</span> <span class="nf">_create_filter_wrapper</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">invert</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
@@ -217,17 +234,14 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">class</span> <span class="nc">Wrapper</span><span class="p">(</span><span class="n">Nut</span><span class="p">):</span>
+
         <span class="k">def</span> <span class="fm">__rrshift__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">iterable</span><span class="p">):</span>
             <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">iterable</span><span class="p">:</span>
                 <span class="n">args</span> <span class="o">=</span> <span class="n">_arg_insert</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
                 <span class="k">if</span> <span class="nb">bool</span><span class="p">(</span><span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span><span class="p">))</span> <span class="o">!=</span> <span class="n">invert</span><span class="p">:</span>
                     <span class="k">yield</span> <span class="n">e</span>
 
-    <span class="n">Wrapper</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">=</span> <span class="n">func</span><span class="o">.</span><span class="vm">__name__</span>
-    <span class="n">Wrapper</span><span class="o">.</span><span class="vm">__module__</span> <span class="o">=</span> <span class="n">func</span><span class="o">.</span><span class="vm">__module__</span>
-    <span class="n">Wrapper</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">=</span> <span class="n">func</span><span class="o">.</span><span class="vm">__doc__</span>
-    <span class="n">Wrapper</span><span class="o">.</span><span class="fm">__rrshift__</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">Wrapper</span>
+    <span class="k">return</span> <span class="n">_wrap</span><span class="p">(</span><span class="n">Wrapper</span><span class="p">,</span> <span class="n">func</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="nut_function"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.factory.nut_function">[docs]</a><span class="k">def</span> <span class="nf">nut_function</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
@@ -250,14 +264,11 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">class</span> <span class="nc">Wrapper</span><span class="p">(</span><span class="n">NutFunction</span><span class="p">):</span>
+
         <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">):</span>
             <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span><span class="p">)</span>
 
-    <span class="n">Wrapper</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">=</span> <span class="n">func</span><span class="o">.</span><span class="vm">__name__</span>
-    <span class="n">Wrapper</span><span class="o">.</span><span class="vm">__module__</span> <span class="o">=</span> <span class="n">func</span><span class="o">.</span><span class="vm">__module__</span>
-    <span class="n">Wrapper</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">=</span> <span class="n">func</span><span class="o">.</span><span class="vm">__doc__</span>
-    <span class="n">Wrapper</span><span class="o">.</span><span class="fm">__call__</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">Wrapper</span></div>
+    <span class="k">return</span> <span class="n">_wrap</span><span class="p">(</span><span class="n">Wrapper</span><span class="p">,</span> <span class="n">func</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="nut_source"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.factory.nut_source">[docs]</a><span class="k">def</span> <span class="nf">nut_source</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
@@ -291,13 +302,11 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">class</span> <span class="nc">Wrapper</span><span class="p">(</span><span class="n">NutSource</span><span class="p">):</span>
+
         <span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
             <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span><span class="p">)</span>
 
-    <span class="n">Wrapper</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">=</span> <span class="n">func</span><span class="o">.</span><span class="vm">__name__</span>
-    <span class="n">Wrapper</span><span class="o">.</span><span class="vm">__module__</span> <span class="o">=</span> <span class="n">func</span><span class="o">.</span><span class="vm">__module__</span>
-    <span class="n">Wrapper</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">=</span> <span class="n">func</span><span class="o">.</span><span class="vm">__doc__</span>
-    <span class="k">return</span> <span class="n">Wrapper</span></div>
+    <span class="k">return</span> <span class="n">_wrap</span><span class="p">(</span><span class="n">Wrapper</span><span class="p">,</span> <span class="n">func</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="nut_processor"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.factory.nut_processor">[docs]</a><span class="k">def</span> <span class="nf">nut_processor</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">iterpos</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
@@ -457,7 +466,7 @@
         
         &copy; Copyright 2017, IBM Research Australia
       <span class="lastupdated">
-        Last updated on Nov 20, 2020.
+        Last updated on Nov 24, 2020.
       </span>
 
     </p>
