@@ -2,6 +2,7 @@
 .. module:: common
    :synopsis: Common utility functions
 """
+
 from __future__ import print_function
 
 import sys
