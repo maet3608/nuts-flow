@@ -301,7 +301,6 @@ class Print(NutFunction):
 
 
         :param object x: Any input
-
         :param string|function fmtfunc: Format string or function.
                 fmtfunc is a standard Python str.format() string,
                 see https://docs.python.org/2/library/string.html
