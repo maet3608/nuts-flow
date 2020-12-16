@@ -54,7 +54,7 @@ setup(
     long_description=load_readme(),
     long_description_content_type='text/x-rst',
     install_requires=['six >= 1.10.0'],
-    tests_require=['pytest-cov', 'pytest >= 3.0.3', 'numpy >= 1.19.2'],
+    tests_require=['pytest-cov', 'pytest >= 3.0.3', 'numpy >= 1.14'],
     packages=find_packages(exclude=['setup']),
     include_package_data=True,
     platforms='any',
