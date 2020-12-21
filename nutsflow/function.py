@@ -8,7 +8,8 @@ from __future__ import absolute_import
 import time
 import threading
 
-from nutsflow.common import console, is_iterable
+from nutsflow.common import (shapestr, as_tuple, is_iterable, istensor,
+                             print_type, console)
 from nutsflow.factory import nut_function, NutFunction
 
 
@@ -358,3 +359,126 @@ class Print(NutFunction):
         console(text, end=self.end)
 
         return x
+
+
+class PrintColType(NutFunction):
+    def __init__(self, cols=None):
+        """
+        iterable >> PrintColType()
+
+        Print type and other information for columns in data.
+
+        >>> import numpy as np
+        >>> from nutsflow import Consume
+
+        >>> data = [(np.zeros((10, 20, 3)), 1), ('text', 2), 3]
+        >>> data >> PrintColType() >> Consume()
+        item 0: <tuple>
+          0: <ndarray> shape:10x20x3 dtype:float64 range:0.0..0.0
+          1: <int> 1
+        item 1: <tuple>
+          0: <str> text
+          1: <int> 2
+        item 2: <int>
+          0: <int> 3
+
+        >>> [(1, 2), (3, 4)] >> PrintColType(1) >> Consume()
+        item 0: <tuple>
+          1: <int> 2
+        item 1: <tuple>
+          1: <int> 4
+
+        >>> from collections import namedtuple
+        >>> Sample = namedtuple('Sample', 'x,y')
+        >>> a = np.zeros((3, 4), dtype='uint8')
+        >>> b = np.ones((1, 2), dtype='float32')
+        >>> data = [Sample(a, 1), Sample(b, 2)]
+        >>> data >> PrintColType() >> Consume()
+        item 0: <Sample>
+          x: <ndarray> shape:3x4 dtype:uint8 range:0..0
+          y: <int> 1
+        item 1: <Sample>
+          x: <ndarray> shape:1x2 dtype:float32 range:1.0..1.0
+          y: <int> 2
+
+        :param int|tuple|None cols: Indices of columnbs to show info for.
+            None means all columns. Can be a single index or a tuple of indices.
+        :return: input data unchanged
+        :rtype: same as data
+        """
+        self.cols = cols
+        self.cnt = -1
+
+    def __call__(self, data):
+        """
+        Print data info.
+
+        :param any data: Any type of iterable
+        :return: data unchanged
+        :rtype: same as data
+        """
+        items = [(i, e) for i, e in enumerate(as_tuple(data))]
+        cols = None if self.cols is None else as_tuple(self.cols)
+        has_fields = hasattr(data, '_fields')
+        colnames = data._fields if has_fields else [str(i) for i, _ in items]
+
+        self.cnt += 1
+        print('item {}: <{}>'.format(self.cnt, type(data).__name__))
+        for i, e in items:
+            if cols is None or i in cols:
+                typename = type(e).__name__
+                print('  {}: <{}>'.format(colnames[i], typename), end=' ')
+                if istensor(e):
+                    msg = 'shape:{} dtype:{} range:{}..{}'
+                    print(msg.format(shapestr(e), e.dtype, e.min(), e.max()))
+                else:
+                    print('{}'.format(str(e)))
+        return data
+
+
+class PrintType(NutFunction):
+    def __init__(self, prefix=''):
+        """
+        iterable >> PrintType()
+
+        Print type and shape information for structured data.
+
+        >>> import numpy as np
+        >>> from nutsflow import Consume, Take
+
+        >>> a = np.zeros((3, 4), dtype='uint8')
+        >>> b = np.zeros((1, 2), dtype='float32')
+        >>> data = [(a, b), 1.1, [[a], 2]]
+        >>> data >> PrintType() >> Consume()
+        (<ndarray> 3x4:uint8, <ndarray> 1x2:float32)
+        <float> 1.1
+        [[<ndarray> 3x4:uint8], <int> 2]
+
+        >>> data >> Take(1) >> PrintType('dtype:') >> Consume()
+        dtype: (<ndarray> 3x4:uint8, <ndarray> 1x2:float32)
+
+        >>> from collections import namedtuple
+        >>> Sample = namedtuple('Sample', 'x,y')
+        >>> data = [Sample(a, 1), Sample(b, 2)]
+        >>> data >> PrintType() >> Consume()
+        Sample(x=<ndarray> 3x4:uint8, y=<int> 1)
+        Sample(x=<ndarray> 1x2:float32, y=<int> 2)
+
+        :param str prefix: Prefix text printed before type
+        :return: input data unchanged
+        :rtype: same as data
+        """
+        self.prefix = prefix
+
+    def __call__(self, data):
+        """
+        Print data info.
+
+        :param object data: Any object.
+        :return: data unchanged
+        :rtype: same as object
+        """
+        if self.prefix:
+            print(self.prefix, end=' ')
+        print_type(data)
+        return data

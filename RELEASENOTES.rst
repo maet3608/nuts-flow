@@ -3,7 +3,7 @@ Release notes
 
 1.2.0
 -----
--
+- PrintType and PrintColType moved from nuts-ml to nuts-flow
 
 1.1.2
 -----
