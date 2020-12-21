@@ -1,8 +1,17 @@
 Release notes
 =============
 
+1.2.0
+-----
+-
+
+1.1.2
+-----
+- print_type added
+
 1.1.1
 -----
+- shapestr and dependent functions moved from nuts-ml to nuts-flow
 - wrapping for nut functions fixed
 
 1.1.0
