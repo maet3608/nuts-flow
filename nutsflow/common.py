@@ -14,6 +14,23 @@ from math import sqrt, log, cos, pi
 from six.moves import cStringIO as StringIO
 
 
+def isnan(x):
+    """
+    Check if something is NaN.
+
+    >>> import numpy as np
+    >>> isnan(np.NaN)
+    True
+
+    >>> isnan(0)
+    False
+
+    :param object x: Any object
+    :return: True if x is NaN
+    :rtype: bool
+    """
+    return x != x
+
 def is_iterable(obj):
     """
     Return true if object has iterator but is not a string

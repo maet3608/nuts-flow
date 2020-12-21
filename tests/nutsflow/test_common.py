@@ -16,7 +16,14 @@ from collections import namedtuple
 from nutsflow import MeanStd
 from nutsflow.common import (sec_to_hms, timestr, Redirect, as_tuple, as_set,
                              as_list, is_iterable, istensor, stype, shapestr,
-                             colfunc, console, itemize, StableRandom, Timer)
+                             isnan, colfunc, console, itemize, StableRandom,
+                             Timer)
+
+
+def test_isnan():
+    assert not isnan(1)
+    assert not isnan(0)
+    assert isnan(np.NaN)
 
 
 def test_is_iterable():
