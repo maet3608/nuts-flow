@@ -31,6 +31,7 @@ def isnan(x):
     """
     return x != x
 
+
 def is_iterable(obj):
     """
     Return true if object has iterator but is not a string
@@ -245,6 +246,34 @@ def stype(obj):
         return '{' + mkdict(obj) + '}'
 
     return typestr(obj) + str(obj)
+
+
+def print_type(data):
+    """
+    Print type of (structured) data
+
+    Useful when printing structured data types that contain (large)
+    NumPy matrices or PyTorch/Tensorflow tensors.
+
+    >>> import numpy as np
+    >>> from nutsflow import Consume, Take
+
+    >>> a = np.zeros((3, 4), dtype='uint8')
+    >>> data = [[a], (1.1, 2)]
+    >>> print_type(data)
+    [[<ndarray> 3x4:uint8], (<float> 1.1, <int> 2)]
+
+    >>> from collections import namedtuple
+    >>> Sample = namedtuple('Sample', 'x,y')
+    >>> data = Sample(a, 1)
+    >>> print_type(data)
+    Sample(x=<ndarray> 3x4:uint8, y=<int> 1)
+
+    :param object data: Any data type.
+    :return: Structured representation of the data,type.
+    :rtype: str
+    """
+    print(stype(data))
 
 
 def colfunc(key):

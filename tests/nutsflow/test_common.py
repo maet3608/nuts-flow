@@ -17,7 +17,7 @@ from nutsflow import MeanStd
 from nutsflow.common import (sec_to_hms, timestr, Redirect, as_tuple, as_set,
                              as_list, is_iterable, istensor, stype, shapestr,
                              isnan, colfunc, console, itemize, StableRandom,
-                             Timer)
+                             print_type, Timer)
 
 
 def test_isnan():
@@ -95,6 +95,15 @@ def test_stype():
     Sample = namedtuple('Sample', 'x,y')
     expect = 'Sample(x=<ndarray> 3x4:uint8, y=<int> 1)'
     assert stype(Sample(a, 1)) == expect
+
+
+def test_print_type():
+    with Redirect() as out:
+        a = np.zeros((3, 4), dtype='uint8')
+        data = [[a], (1.1, 2)]
+        print_type(data)
+    expected = '[[<ndarray> 3x4:uint8], (<float> 1.1, <int> 2)]\n'
+    assert out.getvalue() == expected
 
 
 def test_colfunc():

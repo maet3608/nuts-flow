@@ -1,4 +1,4 @@
-__version__ = '1.1.1'
+__version__ = '1.2.0'
 
 from nutsflow.source import Enumerate, Repeat, Product, Empty, Range, ReadCSV
 from nutsflow.processor import (Take, Slice, Concat, Interleave, Zip, ZipWith,
@@ -18,5 +18,5 @@ from nutsflow.sink import (Sort, Sum, Mean, MeanStd, Max, Min, ArgMax, ArgMin,
 from nutsflow.factory import (nut_processor, nut_sink, nut_function, nut_source,
                               nut_filter, nut_filterfalse)
 from nutsflow.base import Nut, NutFunction, NutSink, NutSource
-from nutsflow.common import Timer
+from nutsflow.common import Timer, print_type
 from nutsflow.underscore import _
