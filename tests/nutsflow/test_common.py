@@ -8,17 +8,25 @@ from __future__ import print_function
 import sys
 import time
 
+import numpy as np
+
 from pytest import approx
 from time import sleep
+from collections import namedtuple
 from nutsflow import MeanStd
 from nutsflow.common import (sec_to_hms, timestr, Redirect, as_tuple, as_set,
-                             as_list, is_iterable, colfunc, console,
-                             itemize, StableRandom, Timer)
+                             as_list, is_iterable, istensor, stype, shapestr,
+                             colfunc, console, itemize, StableRandom, Timer)
 
 
 def test_is_iterable():
     assert is_iterable([1, 2])
     assert not is_iterable('12')
+
+
+def test_istensor():
+    assert istensor(np.zeros((2, 3)))
+    assert not istensor([1, 2])
 
 
 def test_as_tuple():
@@ -53,6 +61,33 @@ def test_sec_to_hms():
 def test_timestr():
     assert timestr('') == ''
     assert timestr('80') == '0:01:20'
+
+
+def test_shapestr():
+    assert shapestr(np.array([1, 2])) == '2'
+    assert shapestr(np.zeros((3, 4))) == '3x4'
+    assert shapestr(np.zeros((3, 4), dtype='uint8'), True) == '3x4:uint8'
+
+
+def test_stype():
+    a = np.zeros((3, 4), dtype='uint8')
+    b = np.zeros((1, 2), dtype='float32')
+    assert stype(1.1) == '<float> 1.1'
+    assert stype([1, 2]) == '[<int> 1, <int> 2]'
+    assert stype((1, 2)) == '(<int> 1, <int> 2)'
+    assert stype({1, 2}) == '{<int> 1, <int> 2}'
+    assert stype([1, (2, 3.1)]) == '[<int> 1, (<int> 2, <float> 3.1)]'
+    assert stype(a) == '<ndarray> 3x4:uint8'
+    assert stype(b) == '<ndarray> 1x2:float32'
+    expect = '[<ndarray> 3x4:uint8, [<ndarray> 1x2:float32]]'
+    assert stype([a, [b]]) == expect
+    expect = '[[<ndarray> 3x4:uint8], [<ndarray> 1x2:float32]]'
+    assert stype([[a], [b]]) == expect
+    expect = '{a:<ndarray> 3x4:uint8, b:<ndarray> 1x2:float32}'
+    assert stype({'a': a, 'b': b}) == expect
+    Sample = namedtuple('Sample', 'x,y')
+    expect = 'Sample(x=<ndarray> 3x4:uint8, y=<int> 1)'
+    assert stype(Sample(a, 1)) == expect
 
 
 def test_colfunc():

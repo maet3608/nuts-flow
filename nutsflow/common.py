@@ -25,6 +25,27 @@ def is_iterable(obj):
     return hasattr(obj, '__iter__') and not isinstance(obj, str)
 
 
+def istensor(x, attrs=['shape', 'dtype', 'min', 'max']):
+    """
+    Return true if x has shape, dtype, min and max.
+
+    Will be true for Numpy and PyTorch tensors.
+
+    >>> import numpy as np
+    >>> M = np.zeros((2,3))
+    >>> istensor(M)
+    True
+
+    >>> istensor([1,2,3])
+    False
+
+    :param object x: Any object
+    :param list[str] attrs: Object attributes that 'define' a tensor.
+    :return: True if x is some tensor object.
+    """
+    return all(hasattr(x, a) for a in attrs)
+
+
 def as_tuple(x):
     """
     Return x as tuple.
@@ -124,6 +145,89 @@ def timestr(duration, fmt='{:d}:{:02d}:{:02d}'):
         return ''
     h, m, s = sec_to_hms(duration)
     return fmt.format(h, m, s)
+
+
+def shapestr(array, with_dtype=False):
+    """
+    Return string representation of array shape.
+
+    >>> import numpy as np
+    >>> a = np.zeros((3,4))
+    >>> shapestr(a)
+    '3x4'
+
+    >>> a = np.zeros((3,4), dtype='uint8')
+    >>> shapestr(a, True)
+    '3x4:uint8'
+
+    :param ndarray array: Numpy array
+    :param bool with_dtype: Append dtype of array to shape string
+    :return: Shape as string, e.g shape (3,4) becomes 3x4
+    :rtype: str
+    """
+    sstr = 'x'.join(str(int(d)) for d in array.shape)
+    if with_dtype:
+        sstr += ':' + str(array.dtype)
+    return sstr
+
+
+def stype(obj):
+    """
+    Return string representation of structured objects.
+
+    >>> import numpy as np
+    >>> a = np.zeros((3,4), dtype='uint8')
+    >>> b = np.zeros((1,2), dtype='float32')
+
+    >>> stype(a)
+    '<ndarray> 3x4:uint8'
+
+    >>> stype(b)
+    '<ndarray> 1x2:float32'
+
+    >>> stype([a, (b, b)])
+    '[<ndarray> 3x4:uint8, (<ndarray> 1x2:float32, <ndarray> 1x2:float32)]'
+
+    >>> stype([1, 2.0, [a], [b]])
+    '[<int> 1, <float> 2.0, [<ndarray> 3x4:uint8], [<ndarray> 1x2:float32]]'
+
+    >>> stype({'a':a, 'b':b, 'c':True})
+    '{a:<ndarray> 3x4:uint8, b:<ndarray> 1x2:float32, c:<bool> True}'
+
+    >>> from collections import namedtuple
+    >>> Sample = namedtuple('Sample', 'x,y')
+    >>> sample = Sample(a, 1)
+    >>> stype(sample)
+    'Sample(x=<ndarray> 3x4:uint8, y=<int> 1)'
+
+    :param object obj: Any object
+    :return: String representation of object where arrays are replace by their
+             shape and dtype descriptions
+    :rtype: str
+    """
+    typename = lambda obj: type(obj).__name__
+    typestr = lambda obj: '<' + typename(obj) + '> '
+    expr = lambda kv, s: str(kv[0]) + s + stype(kv[1])
+    alist = lambda x: ', '.join(x)
+    mklist = lambda obj: alist(stype(o) for o in obj)
+    mkset = lambda obj: alist(stype(o) for o in sorted(obj))
+    mkdict = lambda obj: alist(expr(kv, ':') for kv in sorted(obj.items()))
+    mkfields = lambda obj: alist(expr(kv, '=') for kv in zip(obj._fields, obj))
+
+    if istensor(obj, ['shape', 'dtype']):
+        return typestr(obj) + shapestr(obj, True)
+    if isinstance(obj, list):
+        return '[' + mklist(obj) + ']'
+    if isinstance(obj, tuple):
+        if hasattr(obj, '_fields'):  # namedtuple
+            return typename(obj) + '(' + mkfields(obj) + ')'
+        return '(' + mklist(obj) + ')'
+    if isinstance(obj, set):
+        return '{' + mkset(obj) + '}'
+    if isinstance(obj, dict):
+        return '{' + mkdict(obj) + '}'
+
+    return typestr(obj) + str(obj)
 
 
 def colfunc(key):
