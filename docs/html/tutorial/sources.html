@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Reading from Sources &mdash; nutsflow 1.1.1 documentation</title>
+  <title>Reading from Sources &mdash; nutsflow 1.2.1 documentation</title>
   
 
   
@@ -61,7 +61,7 @@
             
             
               <div class="version">
-                1.1.1
+                1.2.1
               </div>
             
           
@@ -105,6 +105,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#enumerate">Enumerate</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#product">Product</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#repeat">Repeat</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#readnamedcsv">ReadNamedCSV</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#readcsv">ReadCSV</a></li>
 </ul>
 </li>
@@ -201,7 +202,7 @@ of the <code class="docutils literal notranslate"><span class="pre">&gt;&gt;</sp
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nutsflow</span> <span class="kn">import</span> <span class="o">*</span>
 </pre></div>
 </div>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">xrange</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
 <span class="go">[0, 1, 2, 3, 4]</span>
 </pre></div>
 </div>
@@ -217,7 +218,7 @@ of the <code class="docutils literal notranslate"><span class="pre">&gt;&gt;</sp
 <span class="go">[1, 2]</span>
 </pre></div>
 </div>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">{</span><span class="mi">1</span><span class="p">:</span><span class="s1">&#39;one&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span><span class="s1">&#39;two&#39;</span><span class="p">}</span><span class="o">.</span><span class="n">iteritems</span><span class="p">()</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">{</span><span class="mi">1</span><span class="p">:</span><span class="s1">&#39;one&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span><span class="s1">&#39;two&#39;</span><span class="p">}</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
 <span class="go">[(1, &#39;one&#39;), (2, &#39;two&#39;)]</span>
 </pre></div>
 </div>
@@ -231,7 +232,7 @@ of the <code class="docutils literal notranslate"><span class="pre">&gt;&gt;</sp
 <p><strong>nuts-flow</strong> has a few special source nuts.</p>
 <div class="section" id="range">
 <h3>Range<a class="headerlink" href="#range" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal notranslate"><span class="pre">Range(start</span> <span class="pre">[,end</span> <span class="pre">[,</span> <span class="pre">step]])</span></code> essential operates the same as <code class="docutils literal notranslate"><span class="pre">xrange</span></code>
+<p><code class="docutils literal notranslate"><span class="pre">Range(start</span> <span class="pre">[,end</span> <span class="pre">[,</span> <span class="pre">step]])</span></code> essential operates the same as <code class="docutils literal notranslate"><span class="pre">range</span></code>
 but depletes. The following examples demonstrates the difference:</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">numbers</span> <span class="o">=</span> <span class="n">Range</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">numbers</span> <span class="o">&gt;&gt;</span> <span class="n">Head</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
@@ -243,8 +244,8 @@ but depletes. The following examples demonstrates the difference:</p>
 </pre></div>
 </div>
 <p>Subsequent calls deplete the numbers iterator created with <code class="docutils literal notranslate"><span class="pre">Range</span></code>, while
-<code class="docutils literal notranslate"><span class="pre">xrange</span></code> returns a new iterator every time when called and does not deplete:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">numbers</span> <span class="o">=</span> <span class="n">xrange</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<code class="docutils literal notranslate"><span class="pre">range</span></code> returns a new iterator every time when called and does not deplete:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">numbers</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">numbers</span> <span class="o">&gt;&gt;</span> <span class="n">Head</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
 <span class="go">[0, 1, 2]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">numbers</span> <span class="o">&gt;&gt;</span> <span class="n">Head</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
@@ -278,7 +279,7 @@ returns the coordinates of a 2x3 grid:</p>
 <span class="go">[(0, 0), (0, 1), (0, 2), (1, 0), (1, 1), (1, 2)]</span>
 </pre></div>
 </div>
-<p>Each element of each an input iterable is combined with each element of the
+<p>Each element of each input iterable is combined with each element of the
 other input iterables.</p>
 </div>
 <div class="section" id="repeat">
@@ -294,35 +295,60 @@ number of times or indefinitely if not specified:</p>
 </pre></div>
 </div>
 </div>
-<div class="section" id="readcsv">
-<h3>ReadCSV<a class="headerlink" href="#readcsv" title="Permalink to this headline">¶</a></h3>
-<p><strong>nuts-flow</strong> supports reading from Comma Separated Format (CSV) files via the
-<code class="docutils literal notranslate"><span class="pre">ReadCSV(filepath,</span> <span class="pre">columns,</span> <span class="pre">skipheader,</span> <span class="pre">fmtfunc,</span> <span class="pre">**kwargs)</span></code> nut. Given the
-correct delimiter also files in Tab Separated Format (TSV) or other column
+<div class="section" id="readnamedcsv">
+<h3>ReadNamedCSV<a class="headerlink" href="#readnamedcsv" title="Permalink to this headline">¶</a></h3>
+<p><strong>nuts-flow</strong> supports reading from Comma Separated Format (CSV) files with
+header names via the <code class="docutils literal notranslate"><span class="pre">ReadNamedCSV(filepath,</span> <span class="pre">colnames,</span> <span class="pre">fmtfunc,</span> <span class="pre">rowname,</span> <span class="pre">**kwargs)</span></code> nut.
+Given the correct delimiter also files in Tab Separated Format (TSV) or other column
 formats can be read. Given a CSV file with the following content</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">a</span><span class="p">,</span> <span class="p">,</span><span class="n">c</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">A</span><span class="p">,</span><span class="n">B</span><span class="p">,</span><span class="n">C</span>
 <span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span>
 <span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span>
 </pre></div>
 </div>
-<p>the code below reads the rows, skips the first (header) line and converts
+<p>the code below reads the rows as named tuples, and converts
 the elements of the row into integers (fmtfunc=int):</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">filepath</span> <span class="o">=</span> <span class="s1">&#39;tests/data/data.csv&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">ReadNamedCSV</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="n">fmtfunc</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span> <span class="k">as</span> <span class="n">reader</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">reader</span> <span class="o">&gt;&gt;</span> <span class="n">Print</span><span class="p">()</span> <span class="o">&gt;&gt;</span> <span class="n">Consume</span><span class="p">()</span>
+<span class="go">Row(A=1, B=2, C=3)</span>
+<span class="go">Row(A=4, B=5, C=6)</span>
+</pre></div>
+</div>
+<p>Different convert functions for columns are suppported:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">fmtfuncs</span> <span class="o">=</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">ReadNamedCSV</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="n">fmtfunc</span><span class="o">=</span><span class="n">fmtfuncs</span><span class="p">)</span> <span class="k">as</span> <span class="n">reader</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">reader</span> <span class="o">&gt;&gt;</span> <span class="n">Print</span><span class="p">()</span> <span class="o">&gt;&gt;</span> <span class="n">Consume</span><span class="p">()</span>
+<span class="go">Row(A=1, B=&#39;2&#39;, C=3.0)</span>
+<span class="go">Row(A=4, B=&#39;5&#39;, C=6.0)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">ReadNamedCSV</span></code> allows to read specific columns in a given/different order.
+Here we read columns ‘B’ and ‘C’ only in swapped order:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">ReadCSV</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="p">(</span><span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">))</span> <span class="k">as</span> <span class="n">reader</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">reader</span> <span class="o">&gt;&gt;</span> <span class="n">Print</span><span class="p">()</span> <span class="o">&gt;&gt;</span> <span class="n">Consume</span><span class="p">()</span>
+<span class="go">Row(C=&#39;3&#39;, B=&#39;2&#39;)</span>
+<span class="go">Row(C=&#39;6&#39;, B=&#39;5&#39;)</span>
+</pre></div>
+</div>
+<p>Finally, if ‘Row’ is not a good tuple name, it can be changed:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">ReadNamedCSV</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="n">rowname</span><span class="o">=</span><span class="s1">&#39;Sample&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">reader</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">reader</span> <span class="o">&gt;&gt;</span> <span class="n">Print</span><span class="p">()</span> <span class="o">&gt;&gt;</span> <span class="n">Consume</span><span class="p">()</span>
+<span class="go">Sample(A=&#39;1&#39;, B=&#39;2&#39;, C=&#39;3&#39;)</span>
+<span class="go">Sample(A=&#39;4&#39;, B=&#39;5&#39;, C=&#39;6&#39;)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="readcsv">
+<h3>ReadCSV<a class="headerlink" href="#readcsv" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">ReadCSV()</span></code> is very similar to <code class="docutils literal notranslate"><span class="pre">ReadNamedCSV</span></code> but can read CSV files
+without header information and returns (unnamed) tuples.</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">filepath</span> <span class="o">=</span> <span class="s1">&#39;tests/data/data.csv&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">ReadCSV</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="n">skipheader</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">fmtfunc</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span> <span class="k">as</span> <span class="n">reader</span><span class="p">:</span>
 <span class="gp">... </span>    <span class="n">reader</span> <span class="o">&gt;&gt;</span> <span class="n">Print</span><span class="p">()</span> <span class="o">&gt;&gt;</span> <span class="n">Consume</span><span class="p">()</span>
 <span class="gp">...</span>
 <span class="go">(1, 2, 3)</span>
 <span class="go">(4, 5, 6)</span>
-</pre></div>
-</div>
-<p><code class="docutils literal notranslate"><span class="pre">ReadCSV</span></code> allows to read specific columns in a given order. Here we read
-columns 2 and 1 only, don’t skip the header and don’t convert to integers:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">ReadCSV</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span> <span class="k">as</span> <span class="n">reader</span><span class="p">:</span>
-<span class="gp">... </span>    <span class="n">reader</span> <span class="o">&gt;&gt;</span> <span class="n">Print</span><span class="p">()</span> <span class="o">&gt;&gt;</span> <span class="n">Consume</span><span class="p">()</span>
-<span class="gp">...</span>
-<span class="go">(&#39;c&#39;, &#39; &#39;)</span>
-<span class="go">(&#39;3&#39;, &#39;2&#39;)</span>
-<span class="go">(&#39;6&#39;, &#39;5&#39;)</span>
 </pre></div>
 </div>
 </div>
@@ -352,7 +378,7 @@ columns 2 and 1 only, don’t skip the header and don’t convert to integers:</
         
         &copy; Copyright 2017, IBM Research Australia
       <span class="lastupdated">
-        Last updated on Nov 24, 2020.
+        Last updated on Dec 22, 2020.
       </span>
 
     </p>

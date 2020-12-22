@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Practice problems &mdash; nutsflow 1.1.1 documentation</title>
+  <title>Practice problems &mdash; nutsflow 1.2.1 documentation</title>
   
 
   
@@ -61,7 +61,7 @@
             
             
               <div class="version">
-                1.1.1
+                1.2.1
               </div>
             
           
@@ -223,21 +223,20 @@ using <strong>nuts-flow</strong>:</p>
 </pre></div>
 </div>
 <p><strong>P14</strong> : Duplicate the elements of a list.</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="p">))</span> <span class="o">&gt;&gt;</span> <span class="n">Flatten</span><span class="p">()</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Clone</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
 <span class="go">[0, 0, 1, 1, 2, 2, 3, 3, 4, 4]</span>
 </pre></div>
 </div>
 <p><strong>P15</strong> : Duplicate the elements of a list a given number of times.</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">n</span> <span class="o">=</span> <span class="mi">3</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">([</span><span class="n">x</span><span class="p">]</span> <span class="o">*</span> <span class="n">n</span><span class="p">))</span> <span class="o">&gt;&gt;</span> <span class="n">Flatten</span><span class="p">()</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
-<span class="go">[0, 0, 0, 1, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4]</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Clone</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
+<span class="go">[0, 0, 1, 1, 2, 2, 3, 3, 4, 4]</span>
 </pre></div>
 </div>
 <p><strong>P16</strong> :  Drop every Nth element from a list.</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">n</span> <span class="o">=</span> <span class="mi">3</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">drop_last</span> <span class="o">=</span> <span class="n">Map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">c</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="n">c</span><span class="p">)[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Chunk</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">drop_last</span> <span class="o">&gt;&gt;</span> <span class="n">Flatten</span><span class="p">()</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
-<span class="go">[0, 1, 3, 4, 6, 7]</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">n</span><span class="o">==</span><span class="mi">3</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lst</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="s1">&#39;e&#39;</span><span class="p">,</span> <span class="s1">&#39;f&#39;</span><span class="p">,</span> <span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="s1">&#39;h&#39;</span><span class="p">,</span> <span class="s1">&#39;i&#39;</span><span class="p">,</span> <span class="s1">&#39;j&#39;</span><span class="p">,</span> <span class="s1">&#39;k&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lst</span> <span class="o">&gt;&gt;</span> <span class="n">Chunk</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Map</span><span class="p">(</span><span class="n">Take</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span> <span class="o">&gt;&gt;</span> <span class="n">Flatten</span><span class="p">()</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
+<span class="go">[&#39;a&#39;, &#39;b&#39;, &#39;d&#39;, &#39;e&#39;, &#39;g&#39;, &#39;h&#39;, &#39;j&#39;, &#39;k&#39;]</span>
 </pre></div>
 </div>
 </div>
@@ -330,7 +329,7 @@ one hundred natural numbers and the square of the sum.</p>
         
         &copy; Copyright 2017, IBM Research Australia
       <span class="lastupdated">
-        Last updated on Nov 24, 2020.
+        Last updated on Dec 22, 2020.
       </span>
 
     </p>

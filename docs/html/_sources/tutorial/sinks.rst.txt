@@ -22,7 +22,7 @@ called as functions. Here some examples
 >>> list(Range(10) >> Filter(_ < 4) >> Square())
 [0, 1, 4, 9]
 >>> set([1, 2, 1, 3] >> Square())
-set([1, 4, 9])
+{1, 4, 9}
 >>> dict([('one', 1), ('four', 2)] >> MapCol(1, Square()))
 {'four': 4, 'one': 1}
 
@@ -50,7 +50,7 @@ the data in. Any Python function that accept iterators or iterables
 is a valid container, e.g.
 
 >>> [1, 2, 1, 3] >> Square() >> Collect(set)
-set([1, 4, 9])
+{1, 4, 9}
 
 >>> [('one', 1), ('four', 2)] >> MapCol(1, Square()) >> Collect(dict)
 {'four': 4, 'one': 1}
@@ -83,7 +83,7 @@ Similar to :ref:`Collect`,  ``Head``  and ``Tail`` allow to
 specify a container to store the result in
 
 >>> [1, 2, 1, 3, 2] >> Head(3, set)
-set([1, 2])
+{1, 2}
 
 >>> Range(10) >> Tail(3, sum)
 24
@@ -106,10 +106,16 @@ one can simply write
 45
 
 ``Join`` is the nuts equivalent of Python's ``join`` method
-but automatically converts numbers to strings
+but automatically converts numbers to strings, e.g.
 
 >>> Range(5) >> Join(':')
 '0:1:2:3:4'
+
+in contrast to:
+
+>>> Range(5) >> Map(str) >> Collect(':'.join)
+'0:1:2:3:4'
+
 
 ``Min`` and ``Max`` return the minimum or the maximum element
 of a data flow and allow to specify a key function and a 
@@ -219,7 +225,7 @@ object but does not process any data
 >>> Range(3) >> Square() >> Print()
 <itertools.imap object at ...>
 
-The former because there is no side effect and the later
+The former because there is no side effect and the latter
 because there is no sink that drives the flow.
 
 

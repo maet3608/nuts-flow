@@ -74,7 +74,7 @@ even numbers up to a given maximum
 ...     def __iter__(self):
 ...         return self
 ...
-...     def next(self):
+...     def __next__(self):
 ...         self.counter += 2
 ...         if self.counter > self.maximum:
 ...             raise StopIteration

@@ -46,23 +46,22 @@ using **nuts-flow**:
   
 **P14** : Duplicate the elements of a list.
 
->>> Range(5) >> Map(lambda x: (x, x)) >> Flatten() >> Collect()
+>>> Range(5) >> Clone(2) >> Collect()
 [0, 0, 1, 1, 2, 2, 3, 3, 4, 4]
   
   
 **P15** : Duplicate the elements of a list a given number of times.
 
->>> n = 3
->>> Range(5) >> Map(lambda x: ([x] * n)) >> Flatten() >> Collect()
-[0, 0, 0, 1, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4]
+>>> Range(5) >> Clone(n) >> Collect()
+[0, 0, 1, 1, 2, 2, 3, 3, 4, 4]
 
   
 **P16** :  Drop every Nth element from a list.
 
->>> n = 3
->>> drop_last = Map(lambda c: list(c)[:-1])
->>> Range(10) >> Chunk(n) >> drop_last >> Flatten() >> Collect()
-[0, 1, 3, 4, 6, 7]
+>>> n==3
+>>> lst = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k']
+>>> lst >> Chunk(n, list) >> Map(Take(n-1)) >> Flatten() >> Collect()
+['a', 'b', 'd', 'e', 'g', 'h', 'j', 'k']
 
 
 Euler

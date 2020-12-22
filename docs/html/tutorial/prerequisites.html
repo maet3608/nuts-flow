@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Prerequisites &mdash; nutsflow 1.1.1 documentation</title>
+  <title>Prerequisites &mdash; nutsflow 1.2.1 documentation</title>
   
 
   
@@ -61,7 +61,7 @@
             
             
               <div class="version">
-                1.1.1
+                1.2.1
               </div>
             
           
@@ -247,7 +247,7 @@ even numbers up to a given maximum</p>
 <span class="gp">... </span>    <span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="gp">... </span>        <span class="k">return</span> <span class="bp">self</span>
 <span class="gp">...</span>
-<span class="gp">... </span>    <span class="k">def</span> <span class="nf">next</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">def</span> <span class="fm">__next__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="gp">... </span>        <span class="bp">self</span><span class="o">.</span><span class="n">counter</span> <span class="o">+=</span> <span class="mi">2</span>
 <span class="gp">... </span>        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">counter</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">maximum</span><span class="p">:</span>
 <span class="gp">... </span>            <span class="k">raise</span> <span class="ne">StopIteration</span>
@@ -335,7 +335,7 @@ the  <code class="docutils literal notranslate"><span class="pre">&gt;&gt;</span
         
         &copy; Copyright 2017, IBM Research Australia
       <span class="lastupdated">
-        Last updated on Nov 24, 2020.
+        Last updated on Dec 22, 2020.
       </span>
 
     </p>

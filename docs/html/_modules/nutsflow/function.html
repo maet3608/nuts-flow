@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nutsflow.function &mdash; nutsflow 1.1.1 documentation</title>
+  <title>nutsflow.function &mdash; nutsflow 1.2.1 documentation</title>
   
 
   
@@ -59,7 +59,7 @@
             
             
               <div class="version">
-                1.1.1
+                1.2.1
               </div>
             
           
@@ -166,7 +166,8 @@
 <span class="kn">import</span> <span class="nn">time</span>
 <span class="kn">import</span> <span class="nn">threading</span>
 
-<span class="kn">from</span> <span class="nn">nutsflow.common</span> <span class="kn">import</span> <span class="n">console</span><span class="p">,</span> <span class="n">is_iterable</span>
+<span class="kn">from</span> <span class="nn">nutsflow.common</span> <span class="kn">import</span> <span class="p">(</span><span class="n">shapestr</span><span class="p">,</span> <span class="n">as_tuple</span><span class="p">,</span> <span class="n">is_iterable</span><span class="p">,</span> <span class="n">istensor</span><span class="p">,</span>
+                             <span class="n">print_type</span><span class="p">,</span> <span class="n">console</span><span class="p">)</span>
 <span class="kn">from</span> <span class="nn">nutsflow.factory</span> <span class="kn">import</span> <span class="n">nut_function</span><span class="p">,</span> <span class="n">NutFunction</span>
 
 
@@ -459,7 +460,6 @@
 
 
 <span class="sd">        :param object x: Any input</span>
-
 <span class="sd">        :param string|function fmtfunc: Format string or function.</span>
 <span class="sd">                fmtfunc is a standard Python str.format() string,</span>
 <span class="sd">                see https://docs.python.org/2/library/string.html</span>
@@ -517,6 +517,138 @@
         <span class="n">console</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">end</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">x</span></div></div>
+
+
+<div class="viewcode-block" id="PrintColType"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.function.PrintColType">[docs]</a><span class="k">class</span> <span class="nc">PrintColType</span><span class="p">(</span><span class="n">NutFunction</span><span class="p">):</span>
+<div class="viewcode-block" id="PrintColType.__init__"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.function.PrintColType.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cols</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        iterable &gt;&gt; PrintColType()</span>
+
+<span class="sd">        Print type and other information for column data (tuples).</span>
+
+<span class="sd">        &gt;&gt;&gt; import numpy as np</span>
+<span class="sd">        &gt;&gt;&gt; from nutsflow import Consume</span>
+
+<span class="sd">        &gt;&gt;&gt; data = [(np.zeros((10, 20, 3)), 1), (&#39;text&#39;, 2), 3]</span>
+<span class="sd">        &gt;&gt;&gt; data &gt;&gt; PrintColType() &gt;&gt; Consume()</span>
+<span class="sd">        item 0: &lt;tuple&gt;</span>
+<span class="sd">          0: &lt;ndarray&gt; shape:10x20x3 dtype:float64 range:0.0..0.0</span>
+<span class="sd">          1: &lt;int&gt; 1</span>
+<span class="sd">        item 1: &lt;tuple&gt;</span>
+<span class="sd">          0: &lt;str&gt; text</span>
+<span class="sd">          1: &lt;int&gt; 2</span>
+<span class="sd">        item 2: &lt;int&gt;</span>
+<span class="sd">          0: &lt;int&gt; 3</span>
+
+<span class="sd">        &gt;&gt;&gt; [(1, 2), (3, 4)] &gt;&gt; PrintColType(1) &gt;&gt; Consume()</span>
+<span class="sd">        item 0: &lt;tuple&gt;</span>
+<span class="sd">          1: &lt;int&gt; 2</span>
+<span class="sd">        item 1: &lt;tuple&gt;</span>
+<span class="sd">          1: &lt;int&gt; 4</span>
+
+<span class="sd">        &gt;&gt;&gt; from collections import namedtuple</span>
+<span class="sd">        &gt;&gt;&gt; Sample = namedtuple(&#39;Sample&#39;, &#39;x,y&#39;)</span>
+<span class="sd">        &gt;&gt;&gt; a = np.zeros((3, 4), dtype=&#39;uint8&#39;)</span>
+<span class="sd">        &gt;&gt;&gt; b = np.ones((1, 2), dtype=&#39;float32&#39;)</span>
+<span class="sd">        &gt;&gt;&gt; data = [Sample(a, 1), Sample(b, 2)]</span>
+<span class="sd">        &gt;&gt;&gt; data &gt;&gt; PrintColType() &gt;&gt; Consume()</span>
+<span class="sd">        item 0: &lt;Sample&gt;</span>
+<span class="sd">          x: &lt;ndarray&gt; shape:3x4 dtype:uint8 range:0..0</span>
+<span class="sd">          y: &lt;int&gt; 1</span>
+<span class="sd">        item 1: &lt;Sample&gt;</span>
+<span class="sd">          x: &lt;ndarray&gt; shape:1x2 dtype:float32 range:1.0..1.0</span>
+<span class="sd">          y: &lt;int&gt; 2</span>
+
+<span class="sd">        :param int|tuple|None cols: Indices of columnbs to show info for.</span>
+<span class="sd">            None means all columns. Can be a single index or a tuple of indices.</span>
+<span class="sd">        :return: input data unchanged</span>
+<span class="sd">        :rtype: same as input data</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cols</span> <span class="o">=</span> <span class="n">cols</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cnt</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span></div>
+
+<div class="viewcode-block" id="PrintColType.__call__"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.function.PrintColType.__call__">[docs]</a>    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Print data info.</span>
+
+<span class="sd">        :param any data: Any type of iterable</span>
+<span class="sd">        :return: data unchanged</span>
+<span class="sd">        :rtype: same as data</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">items</span> <span class="o">=</span> <span class="p">[(</span><span class="n">i</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">e</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">as_tuple</span><span class="p">(</span><span class="n">data</span><span class="p">))]</span>
+        <span class="n">cols</span> <span class="o">=</span> <span class="kc">None</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cols</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">as_tuple</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cols</span><span class="p">)</span>
+        <span class="n">has_fields</span> <span class="o">=</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="s1">&#39;_fields&#39;</span><span class="p">)</span>
+        <span class="n">colnames</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">_fields</span> <span class="k">if</span> <span class="n">has_fields</span> <span class="k">else</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">items</span><span class="p">]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">cnt</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;item </span><span class="si">{}</span><span class="s1">: &lt;</span><span class="si">{}</span><span class="s1">&gt;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cnt</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">items</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">cols</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">cols</span><span class="p">:</span>
+                <span class="n">typename</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;  </span><span class="si">{}</span><span class="s1">: &lt;</span><span class="si">{}</span><span class="s1">&gt;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">colnames</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">typename</span><span class="p">),</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">istensor</span><span class="p">(</span><span class="n">e</span><span class="p">):</span>
+                    <span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;shape:</span><span class="si">{}</span><span class="s1"> dtype:</span><span class="si">{}</span><span class="s1"> range:</span><span class="si">{}</span><span class="s1">..</span><span class="si">{}</span><span class="s1">&#39;</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">shapestr</span><span class="p">(</span><span class="n">e</span><span class="p">),</span> <span class="n">e</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">e</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">e</span><span class="o">.</span><span class="n">max</span><span class="p">()))</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)))</span>
+        <span class="k">return</span> <span class="n">data</span></div></div>
+
+
+<div class="viewcode-block" id="PrintType"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.function.PrintType">[docs]</a><span class="k">class</span> <span class="nc">PrintType</span><span class="p">(</span><span class="n">NutFunction</span><span class="p">):</span>
+<div class="viewcode-block" id="PrintType.__init__"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.function.PrintType.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        iterable &gt;&gt; PrintType()</span>
+
+<span class="sd">        Print type and shape information for structured data. This is</span>
+<span class="sd">        especially useful for data containing (large) Numpy arrays or</span>
+<span class="sd">        Pytorch/Tensorflow tensors.</span>
+
+<span class="sd">        &gt;&gt;&gt; import numpy as np</span>
+<span class="sd">        &gt;&gt;&gt; from nutsflow import Consume, Take</span>
+
+<span class="sd">        &gt;&gt;&gt; a = np.zeros((3, 4), dtype=&#39;uint8&#39;)</span>
+<span class="sd">        &gt;&gt;&gt; b = np.zeros((1, 2), dtype=&#39;float32&#39;)</span>
+<span class="sd">        &gt;&gt;&gt; data = [(a, b), 1.1, [[a], 2]]</span>
+<span class="sd">        &gt;&gt;&gt; data &gt;&gt; PrintType() &gt;&gt; Consume()</span>
+<span class="sd">        (&lt;ndarray&gt; 3x4:uint8, &lt;ndarray&gt; 1x2:float32)</span>
+<span class="sd">        &lt;float&gt; 1.1</span>
+<span class="sd">        [[&lt;ndarray&gt; 3x4:uint8], &lt;int&gt; 2]</span>
+
+<span class="sd">        &gt;&gt;&gt; data &gt;&gt; Take(1) &gt;&gt; PrintType(&#39;dtype:&#39;) &gt;&gt; Consume()</span>
+<span class="sd">        dtype: (&lt;ndarray&gt; 3x4:uint8, &lt;ndarray&gt; 1x2:float32)</span>
+
+<span class="sd">        &gt;&gt;&gt; from collections import namedtuple</span>
+<span class="sd">        &gt;&gt;&gt; Sample = namedtuple(&#39;Sample&#39;, &#39;x,y&#39;)</span>
+<span class="sd">        &gt;&gt;&gt; data = [Sample(a, 1), Sample(b, 2)]</span>
+<span class="sd">        &gt;&gt;&gt; data &gt;&gt; PrintType() &gt;&gt; Consume()</span>
+<span class="sd">        Sample(x=&lt;ndarray&gt; 3x4:uint8, y=&lt;int&gt; 1)</span>
+<span class="sd">        Sample(x=&lt;ndarray&gt; 1x2:float32, y=&lt;int&gt; 2)</span>
+
+<span class="sd">        Note that there is also a function print_type() that allows to print</span>
+<span class="sd">        individual data elements instead of data streams.</span>
+
+<span class="sd">        &gt;&gt;&gt; data = [{&#39;mat&#39;:a}, 2]</span>
+<span class="sd">        &gt;&gt;&gt; print_type(data)</span>
+<span class="sd">        [{mat:&lt;ndarray&gt; 3x4:uint8}, &lt;int&gt; 2]</span>
+
+<span class="sd">        :param str prefix: Prefix text printed before type</span>
+<span class="sd">        :return: input data unchanged</span>
+<span class="sd">        :rtype: same as input data</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">prefix</span> <span class="o">=</span> <span class="n">prefix</span></div>
+
+<div class="viewcode-block" id="PrintType.__call__"><a class="viewcode-back" href="../../nutsflow.html#nutsflow.function.PrintType.__call__">[docs]</a>    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Print data info.</span>
+
+<span class="sd">        :param object data: Any object.</span>
+<span class="sd">        :return: data unchanged</span>
+<span class="sd">        :rtype: same as object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">prefix</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">prefix</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+        <span class="n">print_type</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">data</span></div></div>
 </pre></div>
 
            </div>
@@ -532,7 +664,7 @@
         
         &copy; Copyright 2017, IBM Research Australia
       <span class="lastupdated">
-        Last updated on Nov 24, 2020.
+        Last updated on Dec 22, 2020.
       </span>
 
     </p>

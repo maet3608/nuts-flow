@@ -8,8 +8,9 @@ Click on a nut name for more details.
 
 .. code:: Python
 
-  GreaterThan2 = nut_filter(lambda x: x > 2)
-  [1, 2, 3, 4] >> GreaterThan2() >> Collect()   --> [3, 4]
+  >>> GreaterThan2 = nut_filter(lambda x: x > 2)
+  >>> [1, 2, 3, 4] >> GreaterThan2() >> Collect()   
+  [3, 4]
 
 - :func:`nut_filter <nutsflow.factory.nut_filter>` :
   wrapper to create nut filters.
@@ -30,12 +31,34 @@ Click on a nut name for more details.
   wrapper for nut sources that generate data.     
 
 
+**Printing** : printing of data
+
+.. code:: Python
+
+  >>> [1, 2.3, 'text'] >> PrintType() >> Consume()
+  <int> 1
+  <float> 2.3
+  <str> text
+
+- :class:`Print <nutsflow.function.Print>` :
+  print data to console. 
+  
+- :class:`PrintType <nutsflow.function.PrintType>` :
+  print data type
+
+- :class:`PrintColType <nutsflow.function.PrintColType>` :
+  print column data, eg. tuples    
+ 
+- :class:`PrintProgress <nutsflow.processor.PrintProgress>` :
+  print progress on iterable.
+  
 
 **Sources** : generate iterable data
 
 .. code:: Python
 
-  Range(5) >> Collect()   --> [0, 1, 2, 3, 4]
+  >>> Range(5) >> Collect()
+  [0, 1, 2, 3, 4]
 
 - :class:`Empty <nutsflow.source.Empty>` :
   empty source that does not generate anything.
@@ -60,7 +83,8 @@ Click on a nut name for more details.
 
 .. code:: Python
 
-  [1, 2, 3] >> Count()   --> 3
+  >>> [1, 2, 3] >> Count()   
+  3
 
 - :class:`ArgMax <nutsflow.sink.ArgMax>` :
   return index of largest element.
@@ -127,7 +151,8 @@ Click on a nut name for more details.
 
 .. code:: Python
 
-  [1, 2, 3] >> Square() >> Collect()   --> [1, 4, 9]
+  >>> [1, 2, 3] >> Square() >> Collect()
+  [1, 4, 9]
 
 - :class:`Counter <nutsflow.function.Counter>` :
   counts elements in an external variable - use for debugging only.
@@ -147,9 +172,6 @@ Click on a nut name for more details.
 - :class:`NOP <nutsflow.function.NOP>` :
   no operation. disable individual nuts temporarily - use for debugging only. 
 
-- :class:`Print <nutsflow.function.Print>` :
-  print element to console. 
-
 - :class:`Sleep <nutsflow.function.Sleep>` :
   pause processing thread for a given time. 
 
@@ -161,7 +183,8 @@ Click on a nut name for more details.
 
 .. code:: Python
 
-  [1, 2, 3, 4] >> Take(2) >> Collect()   --> [1, 2]
+  >>> [1, 2, 3, 4] >> Take(2) >> Collect()
+  [1, 2]
 
 - :class:`Append <nutsflow.processor.Append>` :
   append to the elements of the iterable.  
@@ -255,9 +278,6 @@ Click on a nut name for more details.
 
 - :class:`Prefetch <nutsflow.processor.Prefetch>` :
   pre-fetch elements in separate thread.
-
-- :class:`PrintProgress <nutsflow.processor.PrintProgress>` :
-  print progress on iterable.
 
 - :class:`Shuffle <nutsflow.processor.Shuffle>` :
   shuffle elements (partially).

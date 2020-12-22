@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Overview &mdash; nutsflow 1.1.1 documentation</title>
+  <title>Overview &mdash; nutsflow 1.2.1 documentation</title>
   
 
   
@@ -61,7 +61,7 @@
             
             
               <div class="version">
-                1.1.1
+                1.2.1
               </div>
             
           
@@ -163,8 +163,9 @@
 <h1>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h1>
 <p>Click on a nut name for more details.</p>
 <p><strong>Decorators &amp; Wrappers</strong> : convert plain Python functions to nuts</p>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">GreaterThan2</span> <span class="o">=</span> <span class="n">nut_filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">)</span>
-<span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">GreaterThan2</span><span class="p">()</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>   <span class="o">--&gt;</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="n">GreaterThan2</span> <span class="o">=</span> <span class="n">nut_filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">GreaterThan2</span><span class="p">()</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
+<span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
 </pre></div>
 </div>
 <ul class="simple">
@@ -181,8 +182,26 @@ wrapper for nut sinks that aggregate data flows.</p></li>
 <li><p><a class="reference internal" href="nutsflow.html#nutsflow.factory.nut_source" title="nutsflow.factory.nut_source"><code class="xref py py-func docutils literal notranslate"><span class="pre">nut_source</span></code></a> :
 wrapper for nut sources that generate data.</p></li>
 </ul>
+<p><strong>Printing</strong> : printing of data</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mf">2.3</span><span class="p">,</span> <span class="s1">&#39;text&#39;</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">PrintType</span><span class="p">()</span> <span class="o">&gt;&gt;</span> <span class="n">Consume</span><span class="p">()</span>
+<span class="o">&lt;</span><span class="nb">int</span><span class="o">&gt;</span> <span class="mi">1</span>
+<span class="o">&lt;</span><span class="nb">float</span><span class="o">&gt;</span> <span class="mf">2.3</span>
+<span class="o">&lt;</span><span class="nb">str</span><span class="o">&gt;</span> <span class="n">text</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><a class="reference internal" href="nutsflow.html#nutsflow.function.Print" title="nutsflow.function.Print"><code class="xref py py-class docutils literal notranslate"><span class="pre">Print</span></code></a> :
+print data to console.</p></li>
+<li><p><a class="reference internal" href="nutsflow.html#nutsflow.function.PrintType" title="nutsflow.function.PrintType"><code class="xref py py-class docutils literal notranslate"><span class="pre">PrintType</span></code></a> :
+print data type</p></li>
+<li><p><a class="reference internal" href="nutsflow.html#nutsflow.function.PrintColType" title="nutsflow.function.PrintColType"><code class="xref py py-class docutils literal notranslate"><span class="pre">PrintColType</span></code></a> :
+print column data, eg. tuples</p></li>
+<li><p><a class="reference internal" href="nutsflow.html#nutsflow.processor.PrintProgress" title="nutsflow.processor.PrintProgress"><code class="xref py py-class docutils literal notranslate"><span class="pre">PrintProgress</span></code></a> :
+print progress on iterable.</p></li>
+</ul>
 <p><strong>Sources</strong> : generate iterable data</p>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">Range</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>   <span class="o">--&gt;</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="n">Range</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
+<span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
 </pre></div>
 </div>
 <ul class="simple">
@@ -200,7 +219,8 @@ read elements from file in CSV (or TSV) format.</p></li>
 repeats a value n times or infinitely.</p></li>
 </ul>
 <p><strong>Sinks</strong> : aggregate iterable data</p>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">Count</span><span class="p">()</span>   <span class="o">--&gt;</span> <span class="mi">3</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">Count</span><span class="p">()</span>
+<span class="mi">3</span>
 </pre></div>
 </div>
 <ul class="simple">
@@ -246,7 +266,8 @@ reverses Zip() and unzips tuple elements.</p></li>
 write elements to file in CSV (or TSV) format.</p></li>
 </ul>
 <p><strong>Functions</strong> : operate on individual elements and return elements</p>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">Square</span><span class="p">()</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>   <span class="o">--&gt;</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">9</span><span class="p">]</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">Square</span><span class="p">()</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">9</span><span class="p">]</span>
 </pre></div>
 </div>
 <ul class="simple">
@@ -262,15 +283,14 @@ extract columns from (indexable) element.</p></li>
 returns the unchanged element.</p></li>
 <li><p><a class="reference internal" href="nutsflow.html#nutsflow.function.NOP" title="nutsflow.function.NOP"><code class="xref py py-class docutils literal notranslate"><span class="pre">NOP</span></code></a> :
 no operation. disable individual nuts temporarily - use for debugging only.</p></li>
-<li><p><a class="reference internal" href="nutsflow.html#nutsflow.function.Print" title="nutsflow.function.Print"><code class="xref py py-class docutils literal notranslate"><span class="pre">Print</span></code></a> :
-print element to console.</p></li>
 <li><p><a class="reference internal" href="nutsflow.html#nutsflow.function.Sleep" title="nutsflow.function.Sleep"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sleep</span></code></a> :
 pause processing thread for a given time.</p></li>
 <li><p><a class="reference internal" href="nutsflow.html#nutsflow.function.Square" title="nutsflow.function.Square"><code class="xref py py-class docutils literal notranslate"><span class="pre">Square</span></code></a> :
 return square of element.</p></li>
 </ul>
 <p><strong>Processors</strong> : operate on iterables and return iterables</p>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">Take</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>   <span class="o">--&gt;</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">Take</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
 </pre></div>
 </div>
 <ul class="simple">
@@ -336,8 +356,6 @@ return successive r length permutations of elements.</p></li>
 pick every n-th element or sample with given probability from iterable.</p></li>
 <li><p><a class="reference internal" href="nutsflow.html#nutsflow.processor.Prefetch" title="nutsflow.processor.Prefetch"><code class="xref py py-class docutils literal notranslate"><span class="pre">Prefetch</span></code></a> :
 pre-fetch elements in separate thread.</p></li>
-<li><p><a class="reference internal" href="nutsflow.html#nutsflow.processor.PrintProgress" title="nutsflow.processor.PrintProgress"><code class="xref py py-class docutils literal notranslate"><span class="pre">PrintProgress</span></code></a> :
-print progress on iterable.</p></li>
 <li><p><a class="reference internal" href="nutsflow.html#nutsflow.processor.Shuffle" title="nutsflow.processor.Shuffle"><code class="xref py py-class docutils literal notranslate"><span class="pre">Shuffle</span></code></a> :
 shuffle elements (partially).</p></li>
 <li><p><a class="reference internal" href="nutsflow.html#nutsflow.processor.Slice" title="nutsflow.processor.Slice"><code class="xref py py-class docutils literal notranslate"><span class="pre">Slice</span></code></a> :
@@ -382,7 +400,7 @@ zips elements from multiple iterables with a given function.</p></li>
         
         &copy; Copyright 2017, IBM Research Australia
       <span class="lastupdated">
-        Last updated on Nov 24, 2020.
+        Last updated on Dec 22, 2020.
       </span>
 
     </p>

@@ -5,12 +5,12 @@
 from __future__ import absolute_import
 
 import csv
-import functools
 
 import itertools as itt
 import nutsflow.iterfunction as itf
 
-from six.moves import range, zip_longest
+from six.moves import range
+from collections import namedtuple
 from nutsflow.base import NutSource
 from nutsflow.factory import nut_source
 from nutsflow.common import as_tuple, is_iterable
@@ -164,7 +164,7 @@ class ReadCSV(NutSource):
         See also CSVWriter.
         Can also read Tab Separated Format (TSV) be providing the
         corresponding delimiter. Note that in the docstring below
-        delimiter is '\\t' but in code it should be '\t'. See unit tests.
+        delimiter is '\\t' but in code it should be '\t'.
 
         >>> from nutsflow import Collect
         >>> filepath = 'tests/data/data.csv'
@@ -177,7 +177,8 @@ class ReadCSV(NutSource):
         ...     reader >> Collect()
         [(1, 2, 3), (4, 5, 6)]
 
-        >>> with ReadCSV(filepath, skipheader=1, fmtfunc=(int,str,float)) as reader:
+        >>> fmtfuncs=(int, str, float)
+        >>> with ReadCSV(filepath, skipheader=1, fmtfunc=fmtfuncs) as reader:
         ...     reader >> Collect()
         [(1, '2', 3.0), (4, '5', 6.0)]
 
@@ -248,3 +249,98 @@ class ReadCSV(NutSource):
             row = [row[i] for i in cols] if cols else row
             row = self.__fmt(row)
             yield tuple(row) if len(row) > 1 else row[0]
+
+
+class ReadNamedCSV(NutSource):
+    """
+    ReadNamedCSV(filepath, colnames, fmtfunc, rowname, **kwargs)
+
+    Read data in Comma Separated Format (CSV) from a CSV file with header names
+    and returns named tuples.
+    Can also read Tab Separated Format (TSV) and other formats.
+    See ReadCSV and CSVWriter.
+
+
+    >>> from nutsflow import Collect, Consume, Print
+    >>> filepath = 'tests/data/data.csv'
+
+    >>> with ReadNamedCSV(filepath) as reader:
+    ...     reader >> Print() >> Consume()
+    Row(A='1', B='2', C='3')
+    Row(A='4', B='5', C='6')
+
+    >>> with ReadNamedCSV(filepath, rowname='Sample') as reader:
+    ...     reader >> Print() >> Consume()
+    Sample(A='1', B='2', C='3')
+    Sample(A='4', B='5', C='6')
+
+    >>> with ReadNamedCSV(filepath, fmtfunc=int) as reader:
+    ...     reader >> Collect()
+    [Row(A=1, B=2, C=3), Row(A=4, B=5, C=6)]
+
+    >>> fmtfuncs = (int, str, float)
+    >>> with ReadNamedCSV(filepath, fmtfunc=fmtfuncs) as reader:
+    ...     reader >> Print() >> Consume()
+    Row(A=1, B='2', C=3.0)
+    Row(A=4, B='5', C=6.0)
+
+    >>> with ReadNamedCSV(filepath, colnames=('C', 'A'), fmtfunc=int) as reader:
+    ...     reader >> Collect()
+    [Row(C=3, A=1), Row(C=6, A=4)
+
+    >>> with ReadNamedCSV(filepath, ('A', 'C'), int, 'Sample') as reader:
+    ...     reader >> Print() >> Consume()
+    Sample(A=1, C=3)
+    Sample(A=4, C=6)
+
+    :param string filepath: Path to file in CSV format.
+    :param tuple colnames: Names of columns to read.
+                          If None all columns are read.
+    :param tuple|function fmtfunc: Function or functions to apply to the
+                          column elements of each row.
+    :param str rowname: Name of named tuples.
+    :param kwargs kwargs: Keyword arguments for Python's CSV reader.
+                          See https://docs.python.org/2/library/csv.html
+    """
+
+    def __init__(self, filepath, colnames=None, fmtfunc=None,
+                 rowname='Row', **kwargs):
+        self.fmtfunc = (lambda x: x) if fmtfunc is None else fmtfunc
+        self.is_functions = is_iterable(self.fmtfunc)
+        self.csvfile = open(filepath, 'r')
+        stripped = (r.strip() for r in self.csvfile)
+        self.reader = csv.reader(stripped, **kwargs)
+        header = next(self.reader)
+        colnames = header if colnames is None else colnames
+        self.cols = [header.index(n) for n in colnames]
+        self.Row = namedtuple(rowname, colnames)
+
+    def close(self):
+        """Close reader"""
+        self.csvfile.close()
+        self.reader = None
+
+    def __fmt(self, row):
+        """Format column values in row with format function(s)"""
+        fmtfunc = self.fmtfunc
+        if self.is_functions:
+            assert len(fmtfunc) == len(row), \
+                "Number of format functions and data columns don't match"
+            return [f(r) for f, r in zip(fmtfunc, row)]
+        else:
+            return [fmtfunc(r) for r in row]
+
+    def __enter__(self):
+        """Implementation of context manager API"""
+        return self
+
+    def __exit__(self, *args):
+        """Implementation of context manager API"""
+        self.close()
+
+    def __iter__(self):
+        """Return iterator over rows in CSV file."""
+        for row in self.reader:
+            row = [row[i] for i in self.cols]
+            row = self.__fmt(row)
+            yield self.Row(*row)

@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Data transformation &mdash; nutsflow 1.1.1 documentation</title>
+  <title>Data transformation &mdash; nutsflow 1.2.1 documentation</title>
   
 
   
@@ -61,7 +61,7 @@
             
             
               <div class="version">
-                1.1.1
+                1.2.1
               </div>
             
           
@@ -305,10 +305,12 @@ table above the following code adds an <cite>x</cite> to each row:</p>
 </pre></div>
 </div>
 <p>Appending (or merging) a column or table is equally easy:</p>
-<p>&gt;&gt; new_col = [‘a’, ‘b’]
-&gt;&gt; table &gt;&gt; Append(new_col) &gt;&gt; Print() &gt;&gt; Consume()
-(1, 2, ‘a’)
-(3, 4, ‘b’)</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">new_col</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">table</span> <span class="o">&gt;&gt;</span> <span class="n">Append</span><span class="p">(</span><span class="n">new_col</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Print</span><span class="p">()</span> <span class="o">&gt;&gt;</span> <span class="n">Consume</span><span class="p">()</span>
+<span class="go">(1, 2, &#39;a&#39;)</span>
+<span class="go">(3, 4, &#39;b&#39;)</span>
+</pre></div>
+</div>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">table2</span> <span class="o">=</span> <span class="p">[</span> <span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">),</span>
 <span class="gp">... </span>           <span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">)</span> <span class="p">]</span>
 </pre></div>
@@ -379,7 +381,7 @@ list of numbers and not a list of tuples anymore.</p>
 <div class="section" id="getcols">
 <h3>GetCols<a class="headerlink" href="#getcols" title="Permalink to this headline">¶</a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">Get</span></code> nut described above can extract only consecutive
-table columns in order. `` GetCols(<a href="#id1"><span class="problematic" id="id2">*</span></a>columns)`` allows to extract
+table columns in order. <code class="docutils literal notranslate"><span class="pre">GetCols(*columns)</span></code> allows to extract
 arbitray columns in arbitrary order. Given the following table</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">table</span> <span class="o">=</span> <span class="p">[</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
 <span class="gp">... </span>          <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span> <span class="p">]</span>
@@ -480,7 +482,7 @@ examples to dublicate all numbers in a list of numbers:</p>
         
         &copy; Copyright 2017, IBM Research Australia
       <span class="lastupdated">
-        Last updated on Nov 24, 2020.
+        Last updated on Dec 22, 2020.
       </span>
 
     </p>

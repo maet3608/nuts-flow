@@ -366,7 +366,7 @@ class PrintColType(NutFunction):
         """
         iterable >> PrintColType()
 
-        Print type and other information for columns in data.
+        Print type and other information for column data (tuples).
 
         >>> import numpy as np
         >>> from nutsflow import Consume
@@ -404,7 +404,7 @@ class PrintColType(NutFunction):
         :param int|tuple|None cols: Indices of columnbs to show info for.
             None means all columns. Can be a single index or a tuple of indices.
         :return: input data unchanged
-        :rtype: same as data
+        :rtype: same as input data
         """
         self.cols = cols
         self.cnt = -1
@@ -441,7 +441,9 @@ class PrintType(NutFunction):
         """
         iterable >> PrintType()
 
-        Print type and shape information for structured data.
+        Print type and shape information for structured data. This is
+        especially useful for data containing (large) Numpy arrays or
+        Pytorch/Tensorflow tensors.
 
         >>> import numpy as np
         >>> from nutsflow import Consume, Take
@@ -464,9 +466,16 @@ class PrintType(NutFunction):
         Sample(x=<ndarray> 3x4:uint8, y=<int> 1)
         Sample(x=<ndarray> 1x2:float32, y=<int> 2)
 
+        Note that there is also a function print_type() that allows to print
+        individual data elements instead of data streams.
+
+        >>> data = [{'mat':a}, 2]
+        >>> print_type(data)
+        [{mat:<ndarray> 3x4:uint8}, <int> 2]
+
         :param str prefix: Prefix text printed before type
         :return: input data unchanged
-        :rtype: same as data
+        :rtype: same as input data
         """
         self.prefix = prefix
 

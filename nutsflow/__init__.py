@@ -1,6 +1,7 @@
 __version__ = '1.2.1'
 
-from nutsflow.source import Enumerate, Repeat, Product, Empty, Range, ReadCSV
+from nutsflow.source import (Enumerate, Repeat, Product, Empty, Range, ReadCSV,
+                             ReadNamedCSV)
 from nutsflow.processor import (Take, Slice, Concat, Interleave, Zip, ZipWith,
                                 Dedupe, Chunk, Cache, ChunkWhen, ChunkBy, Cycle,
                                 Flatten, FlattenCol, FlatMap, Map, Window,

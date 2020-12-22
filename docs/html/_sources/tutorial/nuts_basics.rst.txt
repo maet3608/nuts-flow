@@ -38,9 +38,22 @@ plain Python data structures (string, lists, sets, dictionaries, ...):
 >>> "Macadamia" >> Take(4) >> Collect()
 ['M', 'a', 'c', 'a']
 
+>>> range(5) >> Collect()
+[0, 1, 3, 4, 4]
+
+In addition to the usual Python data sources, **nuts-flow** has its own
+sources, e.g. 
+
+>>> Range(5) >> Collect()   # Range() == range()
+[0, 1, 3, 4, 4]
+
+>>> Repeat(1) >> Take(3) >> Collect()
+[1, 1, 1]
+
+
 Apart from a source, every data flow needs a *sink* at the end that 
 *pulls* the data. Without a sink the data flow does not process any data 
-(nuts flows are lazy). For example
+(most nuts are lazy). For example
 
 >>> Range(5) >> Square()
 <itertools.imap object at ...>
@@ -56,6 +69,8 @@ result of any type or even nothing
 10
 
 >>> Range(5) >> Consume()  # returns nothing
+
+Here the sinks are ``Collect()``, ``Sum()`` and ``Consume()``.
 
 
 Functions and Processors
@@ -110,7 +125,8 @@ New nuts
 >>> Range(5) >> Tripple() >> Collect()
 [0, 3, 6, 9, 12]
   
-or integrated with plain Python functions
+or combined with plain Python functions as any
+other iterator:
   
 >>> def Squares(n): return Range(n) >> Square()
 >>> Squares(3) >> Collect()
@@ -121,7 +137,7 @@ or integrated with plain Python functions
    
 When implementing new nuts, or Python functions/classes that
 behave like nuts, the name of the nut should start with an uppercase letter. 
-This makes it easy to distibuish standard functions from nuts:
+This makes it easy to distiguish standard functions from nuts:
 
 >>> from nutsflow import Range, Sum
 >>> Range(5) >> Sum()

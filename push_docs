@@ -4,7 +4,7 @@
 # Run this script in the project root
 
 # Windows:
-# use make tool from gnuwin32 and add tu system path
+# use make tool from gnuwin32 and add to system path
 # http://gnuwin32.sourceforge.net/packages/make.htm
 # and use Windows git shell (https://gitforwindows.org/) to run script as
 # ./push_docs

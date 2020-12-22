@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Installation &mdash; nutsflow 1.1.1 documentation</title>
+  <title>Installation &mdash; nutsflow 1.2.1 documentation</title>
   
 
   
@@ -61,7 +61,7 @@
             
             
               <div class="version">
-                1.1.1
+                1.2.1
               </div>
             
           
@@ -172,7 +172,20 @@
 <h2>Standard<a class="headerlink" href="#standard" title="Permalink to this headline">¶</a></h2>
 <p>Installation via <code class="docutils literal notranslate"><span class="pre">pip</span></code> from <a class="reference external" href="https://pypi.python.org/pypi">PyPi</a></p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">nutsflow</span>
-<span class="n">cd</span> <span class="n">my_python_path</span><span class="o">/</span><span class="n">site</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">nutflow</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="verification">
+<h2>Verification<a class="headerlink" href="#verification" title="Permalink to this headline">¶</a></h2>
+<p>Quick check that it works</p>
+<div class="highlight-pycon3 notranslate"><div class="highlight"><pre><span></span><span class="go">python</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nutsflow</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Square</span><span class="p">()</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
+<span class="go">[0, 1, 4, 9, 16]</span>
+</pre></div>
+</div>
+<p>You can also run the entire unit test suite using <code class="docutils literal notranslate"><span class="pre">pytest</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="n">my_python_path</span><span class="o">/</span><span class="n">site</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">nutflow</span>
 <span class="n">pytest</span>
 </pre></div>
 </div>
@@ -183,16 +196,6 @@
 <span class="p">[</span><span class="s1">&#39;C:</span><span class="se">\\</span><span class="s1">Maet</span><span class="se">\\</span><span class="s1">Software</span><span class="se">\\</span><span class="s1">Anaconda&#39;</span><span class="p">,</span> <span class="s1">&#39;C:</span><span class="se">\\</span><span class="s1">Maet</span><span class="se">\\</span><span class="s1">Software</span><span class="se">\\</span><span class="s1">Anaconda</span><span class="se">\\</span><span class="s1">lib</span><span class="se">\\</span><span class="s1">site-packages&#39;</span><span class="p">]</span>
 </pre></div>
 </div>
-</div>
-</div>
-<div class="section" id="verification">
-<h2>Verification<a class="headerlink" href="#verification" title="Permalink to this headline">¶</a></h2>
-<p>Verify that it works</p>
-<div class="highlight-pycon3 notranslate"><div class="highlight"><pre><span></span><span class="go">python</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nutsflow</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Square</span><span class="p">()</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
-<span class="go">[0, 1, 4, 9, 16]</span>
-</pre></div>
 </div>
 </div>
 <div class="section" id="bleeding-edge">
@@ -209,7 +212,7 @@
 <div class="section" id="upgrade">
 <h2>Upgrade<a class="headerlink" href="#upgrade" title="Permalink to this headline">¶</a></h2>
 <p>For upgrading an existing installation</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">nutsflow</span>  <span class="o">--</span><span class="n">upgrade</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">nutsflow</span> <span class="o">--</span><span class="n">upgrade</span>
 </pre></div>
 </div>
 <p>or if installed via <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">clone</span></code> and <code class="docutils literal notranslate"><span class="pre">setup.py</span></code></p>
@@ -268,7 +271,7 @@ $ deactivate
         
         &copy; Copyright 2017, IBM Research Australia
       <span class="lastupdated">
-        Last updated on Nov 24, 2020.
+        Last updated on Dec 22, 2020.
       </span>
 
     </p>

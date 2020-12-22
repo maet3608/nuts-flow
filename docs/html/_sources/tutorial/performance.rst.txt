@@ -37,13 +37,14 @@ example in pseudo code
           data >> expensive_op >> cache >> ... >> Collect()
 
 Note that *caching* is only useful if 1) the elements to cache are
-time-consuming to compute (can be loaded faster than recreated)
-and 2) the same data flow is executed multiple time.
+time-consuming to compute, 2) can be loaded faster than recreated,
+and 3) the same data flow is executed multiple times,
+where in the first run the cache is filled and then is used in all
+subsequent runs.
 
 A common use case is *machine learning for vision*, where images
 are preprocessed and a classifier is trained by repeatedly executing 
-a data flow  
-
+a data flow:
 
 .. code:: python
 
@@ -52,8 +53,7 @@ a data flow
           images >> preprocess >> cache >> network.train() >> Consume()
 
 Cached elements are pickled to a temporary folder which is deleted
-when the ``with`` block is exited. The cache can be cleared in between
-as follows
+when the ``with`` block is exited. The cache can be cleared as follows:
 
 .. code:: python
 
@@ -68,7 +68,7 @@ Prefetch
 *Prefetching* is another common method employed in (GPU-based) machine learning
 to speed up a data flow. Here data is pre-fetched (and pre-processed) 
 on a separate CPU thread while the GPU is performing machine learning 
-on another chunk of data
+on another chunk of data:
 
 .. code:: python
    

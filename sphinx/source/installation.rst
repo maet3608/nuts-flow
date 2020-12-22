@@ -10,6 +10,25 @@ Installation via ``pip`` from `PyPi <https://pypi.python.org/pypi>`_
 .. code::
   
   pip install nutsflow
+  
+
+Verification
+------------
+  
+Quick check that it works
+
+.. doctest::
+
+  python
+  >>> from nutsflow import *
+  >>> Range(5) >> Square() >> Collect()
+  [0, 1, 4, 9, 16]
+    
+    
+You can also run the entire unit test suite using ``pytest``:
+
+.. code::
+  
   cd my_python_path/site-packages/nutflow
   pytest
 
@@ -21,21 +40,8 @@ Installation via ``pip`` from `PyPi <https://pypi.python.org/pypi>`_
   .. code::
 
     python -c "import site; print(site.getsitepackages())"
-    ['C:\\Maet\\Software\\Anaconda', 'C:\\Maet\\Software\\Anaconda\\lib\\site-packages']  
-  
+    ['C:\\Maet\\Software\\Anaconda', 'C:\\Maet\\Software\\Anaconda\\lib\\site-packages']      
 
-Verification
-------------
-  
-Verify that it works
-
-.. doctest::
-
-  python
-  >>> from nutsflow import *
-  >>> Range(5) >> Square() >> Collect()
-  [0, 1, 4, 9, 16]
-    
 
 Bleeding-edge
 -------------
@@ -58,7 +64,7 @@ For upgrading an existing installation
 
 .. code::
   
-  pip install nutsflow  --upgrade
+  pip install nutsflow --upgrade
 
 or if installed via ``git clone`` and ``setup.py``
 

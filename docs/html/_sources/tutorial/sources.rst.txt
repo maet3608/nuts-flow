@@ -15,7 +15,7 @@ Some examples of Python iterables and iterators that can be used as sources:
 
 >>> from nutsflow import *
 
->>> xrange(5) >> Collect()
+>>> range(5) >> Collect()
 [0, 1, 2, 3, 4]
 
 >>> ['a', 'ab', 'abc'] >> Map(len) >> Collect()
@@ -27,7 +27,7 @@ Some examples of Python iterables and iterators that can be used as sources:
 >>> {1:'one', 2:'two'} >> Collect()
 [1, 2]
 
->>> {1:'one', 2:'two'}.iteritems() >> Collect()
+>>> {1:'one', 2:'two'}.items() >> Collect()
 [(1, 'one'), (2, 'two')]
 
 .. code::
@@ -44,7 +44,7 @@ Source nuts
 Range
 ^^^^^
 
-``Range(start [,end [, step]])`` essential operates the same as ``xrange``
+``Range(start [,end [, step]])`` essential operates the same as ``range``
 but depletes. The following examples demonstrates the difference:
 
 >>> numbers = Range(5)
@@ -56,9 +56,9 @@ but depletes. The following examples demonstrates the difference:
 []
 
 Subsequent calls deplete the numbers iterator created with ``Range``, while
-``xrange`` returns a new iterator every time when called and does not deplete:
+``range`` returns a new iterator every time when called and does not deplete:
 
->>> numbers = xrange(5)
+>>> numbers = range(5)
 >>> numbers >> Head(3)
 [0, 1, 2]
 >>> numbers >> Head(3)
@@ -95,7 +95,7 @@ returns the coordinates of a 2x3 grid:
 >>> Product(Range(2), Range(3)) >> Collect()
 [(0, 0), (0, 1), (0, 2), (1, 0), (1, 1), (1, 2)]
 
-Each element of each an input iterable is combined with each element of the
+Each element of each input iterable is combined with each element of the
 other input iterables.
 
 
@@ -112,22 +112,61 @@ number of times or indefinitely if not specified:
 [1, 1, 1, 1]
 
 
-ReadCSV
-^^^^^^^
+ReadNamedCSV
+^^^^^^^^^^^^
 
-**nuts-flow** supports reading from Comma Separated Format (CSV) files via the
-``ReadCSV(filepath, columns, skipheader, fmtfunc, **kwargs)`` nut. Given the
-correct delimiter also files in Tab Separated Format (TSV) or other column
+**nuts-flow** supports reading from Comma Separated Format (CSV) files with
+header names via the ``ReadNamedCSV(filepath, colnames, fmtfunc, rowname, **kwargs)`` nut. 
+Given the correct delimiter also files in Tab Separated Format (TSV) or other column
 formats can be read. Given a CSV file with the following content
 
 .. code::
 
-  a, ,c
+  A,B,C
   1,2,3
   4,5,6
 
-the code below reads the rows, skips the first (header) line and converts
-the elements of the row into integers (fmtfunc=int):
+the code below reads the rows as named tuples, and converts
+the elements of the row into integers (fmtfunc=int):    
+
+>>> filepath = 'tests/data/data.csv'
+>>> with ReadNamedCSV(filepath, fmtfunc=int) as reader:
+...     reader >> Print() >> Consume()
+Row(A=1, B=2, C=3)
+Row(A=4, B=5, C=6)
+    
+Different convert functions for columns are suppported:
+
+
+>>> fmtfuncs = (int, str, float)
+>>> with ReadNamedCSV(filepath, fmtfunc=fmtfuncs) as reader:
+...     reader >> Print() >> Consume()
+Row(A=1, B='2', C=3.0)
+Row(A=4, B='5', C=6.0)
+        
+``ReadNamedCSV`` allows to read specific columns in a given/different order. 
+Here we read columns 'B' and 'C' only in swapped order:
+
+
+>>> with ReadCSV(filepath, ('C', 'B')) as reader:
+...     reader >> Print() >> Consume()
+Row(C='3', B='2')
+Row(C='6', B='5')
+  
+Finally, if 'Row' is not a good tuple name, it can be changed:
+  
+
+>>> with ReadNamedCSV(filepath, rowname='Sample') as reader:
+...     reader >> Print() >> Consume()
+Sample(A='1', B='2', C='3')
+Sample(A='4', B='5', C='6')
+
+
+ReadCSV
+^^^^^^^
+
+``ReadCSV()`` is very similar to ``ReadNamedCSV`` but can read CSV files 
+without header information and returns (unnamed) tuples.
 
 >>> filepath = 'tests/data/data.csv'
 >>> with ReadCSV(filepath, skipheader=1, fmtfunc=int) as reader:
@@ -136,12 +175,3 @@ the elements of the row into integers (fmtfunc=int):
 (1, 2, 3)
 (4, 5, 6)
 
-``ReadCSV`` allows to read specific columns in a given order. Here we read
-columns 2 and 1 only, don't skip the header and don't convert to integers:
-
->>> with ReadCSV(filepath, (2, 1)) as reader:
-...     reader >> Print() >> Consume()
-...
-('c', ' ')
-('3', '2')
-('6', '5')

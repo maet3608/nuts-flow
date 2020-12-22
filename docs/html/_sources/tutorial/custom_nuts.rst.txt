@@ -1,6 +1,126 @@
 Custom nuts
 ===========
 
+>>> from nutsflow import *
+
+
+Cheat sheet
+-----------
+
+A quick overview on how to create custom nuts.
+
+nut_function
+^^^^^^^^^^^^
+
+- **input**: single element
+- **output**: single element
+- **note**: number of elements in the data flow does not change
+
+.. code::
+
+  @nut_function
+  def Inc(element, by):
+      return element + by
+      
+  >>> Range(3) >> Inc(2) >> Collect()
+  [2, 3, 4]  
+
+
+nut_processor
+^^^^^^^^^^^^^
+
+- **input**: iterable
+- **output**: iterable (preferably a generator)
+- **note**: number of elements in the data flow may change
+
+.. code::
+
+  @nut_processor
+  def MyClone(iterable, n):  # more outputs than inputs
+      for e in iterable:
+          for _ in range(n):
+              yield e        # generator!
+      
+  >>> Range(3) >> MyClone(3) >> Collect()
+  [0, 0, 0, 1, 1, 1, 2, 2, 2] 
+
+.. code::
+
+  @nut_processor
+  def MyPick(iterable, n):  # less outputs than inputs
+      for i, e in enumerate(iterable):
+          if i % n == 0:
+              yield e
+      
+  >>> Range(9) >> MyPick(3) >> Collect()
+  [0, 3, 6]
+  
+.. code::
+  
+  @nut_processor
+  def Odd(iterable):
+     return (e for e in iterable if e % 2)   # return <generator>!
+
+  >>> Range(9) >> Odd() >> Collect()
+  [1, 3, 5, 7]
+
+
+nut_filter
+^^^^^^^^^^
+
+- **input**: single element
+- **output**: single element
+- **note**: number of elements in the data flow may change
+
+.. code::
+
+  @nut_filter
+  def InInterval(element, a, b):
+      return a <= element <= b
+      
+  >>> Range(10) >> InInterval(3, 6) >> Collect()
+  [3, 4, 5, 6]  
+  
+
+nut_source
+^^^^^^^^^^
+
+- **input**: None
+- **output**: iterable
+- **note**: no input, must be at start of data flow
+
+.. code::
+
+  @nut_source
+  def MyRange(n):
+      return range(1, n+1)
+      
+  >>> MyRange(3) >> Collect()
+  [1, 2, 3]  
+
+
+nut_sink
+^^^^^^^^
+
+- **input**: iterable
+- **output**: any
+- **note**: processes/collects all data, should be at end of flow
+
+.. code::
+
+  @nut_sink
+  def ToFmtList(iterable, fmt):
+      return [fmt % e for e in iterable]
+      
+  >>> Range(3) >> ToFmtList('%02d')
+  ['01', '02', '03']  
+  
+
+
+Basics & Examples
+-----------------
+
+
 **nuts-flow** can easily be extended with custom nuts using wrappers, 
 decorators or derived classes. To clarify the differences between the
 approaches let us start with a simple filter. First, import **nutsflow**
@@ -18,7 +138,7 @@ predicate
 >>> Range(10) >> Filter(greater_than_5) >> Collect()
 [6, 7, 8, 9]
 
-By wrapping the lambda function via ``nut_filter`` a custom
+By wrapping the lambda function via ``nut_filter``, alternatively a custom
 filter nut can be created
 
 >>> GreaterThan5 = nut_filter(lambda x: x > 5)
@@ -71,6 +191,11 @@ In this case `decorators` are a better solution
       return x > threshold
 
   Range(10) >> GreaterThan(5) >> Collect()
+  
+  
+  
+Invokation vs definition
+^^^^^^^^^^^^^^^^^^^^^^^^ 
 
 Note that for wrappers and decorators there is a difference in the 
 arguments depending on whether the nut is *defined* or *invoked*
@@ -112,7 +237,7 @@ Here an example implementation of the ``GreaterThan`` nut as a class
               if x > self.threshold:
                   yield x
 
-Decorators and wrappers are shortcuts to create nut classes 
+However, decorators and wrappers are shortcuts to create nut classes 
 and the preferred method to implement custom nuts.      		      
 
 
@@ -137,15 +262,15 @@ in specific formats or wrappers around databases. Here
 two toy examples for a wrapper and a decorator around a nut
 that generates ``n`` even numbers. First the wrapper approach
 
->>> EvenNumbers = nut_source(lambda n: (2*x for x in xrange(n)))
+>>> EvenNumbers = nut_source(lambda n: (2*x for x in range(n)))
 
-and here the decorator
+and here the decorator version
 
 .. code::
 
   @nut_source
   def EvenNumbers(n):
-      return (2*x for x in xrange(n))
+      return (2*x for x in range(n))
 
 Both can be used as follows
 
@@ -180,7 +305,7 @@ and can therefore serve as input to other nuts
 9
 
 The general rule is, if a nut collects/aggregates data in memory or
-does not return an iterable result is should be implemented as a *sink*
+does not return an iterable result, it should be implemented as a *sink*
 (despite being able to be input to other nuts). On the other hand,
 if a nut processes data *on-the-fly* and returns an iterator it should
 **not** be a *sink*.
@@ -243,7 +368,7 @@ or more generic, a processor that clones each element ``n`` times
   @nut_processor
   def Clone(iterable, n):
       for e in iterable:
-          for _ in xrange(n):
+          for _ in range(n):
               yield e
   
   Range(5) >> Clone(2) >> Collect()

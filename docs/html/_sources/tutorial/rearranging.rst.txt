@@ -102,7 +102,7 @@ palindroms for a given string:
 
 If no permutation size ``r`` is specified then all possible full-length
 permutations are generated (r!) and the computation will not finish in
-any reasonable time for non-small ``r``'s!
+any reasonable time for non-small values of ``r`` !
 
 
 Combine

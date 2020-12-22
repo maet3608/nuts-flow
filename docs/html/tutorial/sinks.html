@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Writing to Sinks &mdash; nutsflow 1.1.1 documentation</title>
+  <title>Writing to Sinks &mdash; nutsflow 1.2.1 documentation</title>
   
 
   
@@ -61,7 +61,7 @@
             
             
               <div class="version">
-                1.1.1
+                1.2.1
               </div>
             
           
@@ -208,7 +208,7 @@ called as functions. Here some examples</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">Range</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Filter</span><span class="p">(</span><span class="n">_</span> <span class="o">&lt;</span> <span class="mi">4</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Square</span><span class="p">())</span>
 <span class="go">[0, 1, 4, 9]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">set</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">Square</span><span class="p">())</span>
-<span class="go">set([1, 4, 9])</span>
+<span class="go">{1, 4, 9}</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">dict</span><span class="p">([(</span><span class="s1">&#39;one&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;four&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)]</span> <span class="o">&gt;&gt;</span> <span class="n">MapCol</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">Square</span><span class="p">()))</span>
 <span class="go">{&#39;four&#39;: 4, &#39;one&#39;: 1}</span>
 </pre></div>
@@ -232,7 +232,7 @@ which collects all elements of the input iterable in a list.</p>
 the data in. Any Python function that accept iterators or iterables
 is a valid container, e.g.</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">Square</span><span class="p">()</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">(</span><span class="nb">set</span><span class="p">)</span>
-<span class="go">set([1, 4, 9])</span>
+<span class="go">{1, 4, 9}</span>
 </pre></div>
 </div>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[(</span><span class="s1">&#39;one&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;four&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)]</span> <span class="o">&gt;&gt;</span> <span class="n">MapCol</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">Square</span><span class="p">())</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">(</span><span class="nb">dict</span><span class="p">)</span>
@@ -267,7 +267,7 @@ the first <em>n</em> elements and <code class="docutils literal notranslate"><sp
 <p>Similar to <a class="reference internal" href="#collect"><span class="std std-ref">Collect</span></a>,  <code class="docutils literal notranslate"><span class="pre">Head</span></code>  and <code class="docutils literal notranslate"><span class="pre">Tail</span></code> allow to
 specify a container to store the result in</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="n">Head</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="nb">set</span><span class="p">)</span>
-<span class="go">set([1, 2])</span>
+<span class="go">{1, 2}</span>
 </pre></div>
 </div>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Tail</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="nb">sum</span><span class="p">)</span>
@@ -290,8 +290,13 @@ and <code class="docutils literal notranslate"><span class="pre">Join</span></co
 </pre></div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">Join</span></code> is the nuts equivalent of Python’s <code class="docutils literal notranslate"><span class="pre">join</span></code> method
-but automatically converts numbers to strings</p>
+but automatically converts numbers to strings, e.g.</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Join</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)</span>
+<span class="go">&#39;0:1:2:3:4&#39;</span>
+</pre></div>
+</div>
+<p>in contrast to:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Map</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">)</span>
 <span class="go">&#39;0:1:2:3:4&#39;</span>
 </pre></div>
 </div>
@@ -399,7 +404,7 @@ object but does not process any data</p>
 <span class="go">&lt;itertools.imap object at ...&gt;</span>
 </pre></div>
 </div>
-<p>The former because there is no side effect and the later
+<p>The former because there is no side effect and the latter
 because there is no sink that drives the flow.</p>
 </div>
 <div class="section" id="writecsv">
@@ -495,7 +500,7 @@ See <a class="reference external" href="https://docs.python.org/2/library/csv.ht
         
         &copy; Copyright 2017, IBM Research Australia
       <span class="lastupdated">
-        Last updated on Nov 24, 2020.
+        Last updated on Dec 22, 2020.
       </span>
 
     </p>
