@@ -286,7 +286,7 @@ class ReadNamedCSV(NutSource):
 
     >>> with ReadNamedCSV(filepath, colnames=('C', 'A'), fmtfunc=int) as reader:
     ...     reader >> Collect()
-    [Row(C=3, A=1), Row(C=6, A=4)
+    [Row(C=3, A=1), Row(C=6, A=4)]
 
     >>> with ReadNamedCSV(filepath, ('A', 'C'), int, 'Sample') as reader:
     ...     reader >> Print() >> Consume()
