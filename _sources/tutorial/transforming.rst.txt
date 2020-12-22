@@ -119,8 +119,8 @@ table above the following code adds an `x` to each row:
 
 Appending (or merging) a column or table is equally easy:
 
->> new_col = ['a', 'b']
->> table >> Append(new_col) >> Print() >> Consume()
+>>> new_col = ['a', 'b']
+>>> table >> Append(new_col) >> Print() >> Consume()
 (1, 2, 'a')
 (3, 4, 'b')
 
@@ -197,7 +197,7 @@ GetCols
 ^^^^^^^
 
 The ``Get`` nut described above can extract only consecutive
-table columns in order. `` GetCols(*columns)`` allows to extract
+table columns in order. ``GetCols(*columns)`` allows to extract
 arbitray columns in arbitrary order. Given the following table
 
 >>> table = [ (1, 2, 3), 

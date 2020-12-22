@@ -49,9 +49,71 @@ certain time intervals, or filter for the elements to be displayed:
  3
  4
  5
-   
-``Sleep()`` waits for the given time in seconds and allows to slow
-down the processing.
+ 
+ 
+PrintType
+---------
+
+When working with Numpy arrays or Pytorch/Tensorflow tensors, ``Print()`` is
+not a good choice, since it prints the (potentially large) array/tensor data.
+``PrintType()`` on the other hand, prints only the shape and data type of
+of array/tensor and the value and type for other data.
+
+>>> import numpy as np
+>>> mat = np.ones((1024,512), dtype=np.uint8)
+>>> data = [(mat, 0), (mat, 1), (mat, 2)]
+>>> data >> PrintType() >> Consume()
+(<ndarray> 1024x512:uint8, <int> 0)
+(<ndarray> 1024x512:uint8, <int> 1)
+(<ndarray> 1024x512:uint8, <int> 2)
+
+``PrintType()`` is especially useful to print complex, nested data structures that
+contain array/tensor data.
+
+>>> batch = [[mat, mat], mat]
+>>> batches = [(batch, batch]
+>>> batches >> PrintType() >> Consume()
+[[<ndarray> 1024x512:uint8, <ndarray> 1024x512:uint8], <ndarray> 1024x512:uint8]
+[[<ndarray> 1024x512:uint8, <ndarray> 1024x512:uint8], <ndarray> 1024x512:uint8] 
+ 
+ 
+PrintColType
+------------
+
+If the data is organized in columns (e.g. tuples) as shown above, ``PrintColType()``
+can be used to print additonal information such as the range of array/tensor data:
+
+
+>>> image = np.ones((1024,512), dtype=np.uint8)
+>>> images = [(image*1, 1), (image*10, 2), (image*100, 3)]
+>>> images >> PrintColType() >> Consume()
+item 0: <tuple>
+  0: <ndarray> shape:1024x512 dtype:uint8 range:1..1
+  1: <int> 1
+item 1: <tuple>
+  0: <ndarray> shape:1024x512 dtype:uint8 range:10..10
+  1: <int> 2
+item 2: <tuple>
+  0: <ndarray> shape:1024x512 dtype:uint8 range:100..100
+  1: <int> 3
+  
+  
+This is especially nice, when working with named tuples:
+
+>>> from collections import namedtuple
+>>> Sample = namedtuple('Sample', 'image,label')
+>>> samples = [Sample(image, 'good'), Sample(image, 'bad')]
+>>> samples >> PrintColType() >> Consume()
+item 0: <Sample>
+  image: <ndarray> shape:1024x512 dtype:uint8 range:1..1
+  label: <str> good
+item 1: <Sample>
+  image: <ndarray> shape:1024x512 dtype:uint8 range:1..1
+  label: <str> bad
+
+
+PrintProgress
+-------------
 
 For long running flows printing progress information can be displayed
 by inserting a ``PrintProgress`` nut. It, however, requires that the
@@ -61,12 +123,13 @@ number of elements to be processed is known beforehand.
 >>> Range(n) >> Sleep(0.1) >> PrintProgress(n, update=0.1) >> Consume() # doctest: +SKIP
 progress: 100%
 
+
   
 Limit data
 ----------
 
-Instead of printing intermediate results the size of data flow
-can be limited by processing only a portion of the data. The
+Instead of printing all the data the size of data processed
+can be limited, which is much more efficient. For instance, the
 ``Take(n)`` nut takes the first *n* elements only:
 
 >>> Range(1000) >> Take(3) >> Collect()
@@ -89,12 +152,15 @@ Finally, ``Pick(n)`` allows to pick every *n-th* element:
 >>> Range(1000) >> Pick(100) >> Collect()
 [0, 100, 200, 300, 400, 500, 600, 700, 800, 900]
 
+For ``n < 1``, ``Pick(n)`` picks element with the given probabiltity,
+e.g. to pick 10% of the data use ``Pick(0.1)``.
+
   
 No Operation
 ------------
 
-**nuts-flow** provides a ``NOP(nut)`` nut that can be used to quickly
-and temporarily disable the evaluation of a nut in a flow.
+**nuts-flow** provides a ``NOP(nut)`` nut that can be used to
+temporarily disable the evaluation of a nut in a flow.
 
 >>> Range(5) >> Square() >> Collect()  # compute squares
 [0, 1, 4, 9, 16]
@@ -146,7 +212,7 @@ has a filter function to count only certain elements:
 gt5 = 7
   
 Note that the actual value of the counter is stored in ``value`` and can 
-be printed but for conveniency ``print greater5`` prints the name of the 
+be printed but for conveniency ``print(greater5)`` prints the name of the 
 counter and its value as well.
    
 

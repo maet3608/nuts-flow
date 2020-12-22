@@ -6,7 +6,7 @@ Introduction
 
 **nuts** are thin wrappers around itertool functions and
 provide a ``>>`` operator to chain iterators in pipelines
-to construct data flows. The result is a more explict flow of data.
+to construct data flows. The result is an easier to read flow of data.
 
 The following two examples show the same data flow. The first is
 using Python's itertools and the second is using **nuts-flow**:
@@ -26,4 +26,4 @@ easier to read than the nested calls of itertool functions.
 
 **nuts-flow** is the base library for 
 `nuts-ml <https://github.com/maet3608/nuts-ml>`_, a
-data pre-processing pipeline for (GPU-based) machine learning.
+data pre-processing pipeline for deep learning.

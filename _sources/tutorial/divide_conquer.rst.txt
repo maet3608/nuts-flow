@@ -23,7 +23,7 @@ grouped elements. Here an example
 >>> numbers >> Zip(letters) >> Collect()
 [(0, 'a'), (1, 'b'), (2, 'c')]
 
-``Zip`` finishes when shortest iterable is exhausted. See
+``Zip`` finishes when the shortest iterable is exhausted. See
 
 >>> Range(100) >> Zip('abc') >> Collect()
 [(0, 'a'), (1, 'b'), (2, 'c')]
@@ -39,6 +39,13 @@ If the output of ``Zip`` is required to be flat ``Flatten`` can be called
 [0, 'a', 1, 'b', 2, 'c']
 
 but using :ref:`Interleave` is simpler in this case.
+
+Instead of nuts-flow's ``Zip``, Python's ``zip`` could be used alternatively:
+
+>>> zip(numbers, letters) >> Print() >> Consume()
+(0, 'a')
+(1, 'b')
+(2, 'c')
 
 
 Unzip
@@ -56,7 +63,7 @@ Per default ``Unzip`` returns iterators but often the results are required
 as lists or other collections (see above). ``Unzip`` allows to provide a
 container to collect the results:
 
->>> [0, 1, 2] >> Zip('abc') >> Unzip(list) >> Collect()
+>>> zip([0, 1, 2], 'abc') >> Unzip(list) >> Collect()
 [[0, 1, 2], ['a', 'b', 'c']]
 
 This equivalent to ``Unzip() >> Map(list) >> Collect()`` but shorter.
@@ -67,7 +74,7 @@ Interleave
 ^^^^^^^^^^
 
 ``Interleave`` works like :ref:`Zip` but does not group zipped results in
-tuples. Instead an iterator over a flat sequence of interleaved elements
+tuples. Instead an iterator over a flattened sequence of interleaved elements
 is returned:
 
 >>> numbers = [0, 1, 2]
@@ -95,7 +102,7 @@ using ``Concat``:
 >>> '12' >> Concat('abcd', [3, 4, 5]) >> Collect()
 ['1', '2', 'a', 'b', 'c', 'd', 3, 4, 5]
 
-Note that ``Concat`` is memory efficient and does not materialze any of the
+Note that ``Concat`` is memory efficient and does not materialize any of the
 input iterables or the concatenated result in memory; e.g. in contrast to the
 following code:
 
@@ -125,8 +132,9 @@ materializing the input iterable and referencing it, e.g.
 A simple example where ``Tee`` is useful would be to add each number in the
 input iterable to its predecessor:
 
+>>> add = lambda a, b: a + b
 >>> numbers1, numbers2  = Range(5) >> Tee(2)
->>> numbers1 >> Drop(1) >> Map(lambda a,b: a+b, numbers2) >> Collect()
+>>> numbers1 >> Drop(1) >> Map(add, numbers2) >> Collect()
 [1, 3, 5, 7]
 
 Iterators, in contrast to streams, do not allow to go back and ``Tee`` provides

@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Printing and Debugging &mdash; nutsflow 1.1.1 documentation</title>
+  <title>Printing and Debugging &mdash; nutsflow 1.2.1 documentation</title>
   
 
   
@@ -61,7 +61,7 @@
             
             
               <div class="version">
-                1.1.1
+                1.2.1
               </div>
             
           
@@ -95,6 +95,9 @@
 <li class="toctree-l2"><a class="reference internal" href="nuts_basics.html">Nuts basics</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Printing and Debugging</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#print">Print</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#printtype">PrintType</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#printcoltype">PrintColType</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#printprogress">PrintProgress</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#limit-data">Limit data</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#no-operation">No Operation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#conditional">Conditional</a></li>
@@ -237,8 +240,66 @@ certain time intervals, or filter for the elements to be displayed:</p>
 <span class="go">5</span>
 </pre></div>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">Sleep()</span></code> waits for the given time in seconds and allows to slow
-down the processing.</p>
+</div>
+<div class="section" id="printtype">
+<h2>PrintType<a class="headerlink" href="#printtype" title="Permalink to this headline">¶</a></h2>
+<p>When working with Numpy arrays or Pytorch/Tensorflow tensors, <code class="docutils literal notranslate"><span class="pre">Print()</span></code> is
+not a good choice, since it prints the (potentially large) array/tensor data.
+<code class="docutils literal notranslate"><span class="pre">PrintType()</span></code> on the other hand, prints only the shape and data type of
+of array/tensor and the value and type for other data.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">1024</span><span class="p">,</span><span class="mi">512</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">[(</span><span class="n">mat</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="n">mat</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="n">mat</span><span class="p">,</span> <span class="mi">2</span><span class="p">)]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">&gt;&gt;</span> <span class="n">PrintType</span><span class="p">()</span> <span class="o">&gt;&gt;</span> <span class="n">Consume</span><span class="p">()</span>
+<span class="go">(&lt;ndarray&gt; 1024x512:uint8, &lt;int&gt; 0)</span>
+<span class="go">(&lt;ndarray&gt; 1024x512:uint8, &lt;int&gt; 1)</span>
+<span class="go">(&lt;ndarray&gt; 1024x512:uint8, &lt;int&gt; 2)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">PrintType()</span></code> is especially useful to print complex, nested data structures that
+contain array/tensor data.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">batch</span> <span class="o">=</span> <span class="p">[[</span><span class="n">mat</span><span class="p">,</span> <span class="n">mat</span><span class="p">],</span> <span class="n">mat</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">batches</span> <span class="o">=</span> <span class="p">[(</span><span class="n">batch</span><span class="p">,</span> <span class="n">batch</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">batches</span> <span class="o">&gt;&gt;</span> <span class="n">PrintType</span><span class="p">()</span> <span class="o">&gt;&gt;</span> <span class="n">Consume</span><span class="p">()</span>
+<span class="go">[[&lt;ndarray&gt; 1024x512:uint8, &lt;ndarray&gt; 1024x512:uint8], &lt;ndarray&gt; 1024x512:uint8]</span>
+<span class="go">[[&lt;ndarray&gt; 1024x512:uint8, &lt;ndarray&gt; 1024x512:uint8], &lt;ndarray&gt; 1024x512:uint8]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="printcoltype">
+<h2>PrintColType<a class="headerlink" href="#printcoltype" title="Permalink to this headline">¶</a></h2>
+<p>If the data is organized in columns (e.g. tuples) as shown above, <code class="docutils literal notranslate"><span class="pre">PrintColType()</span></code>
+can be used to print additonal information such as the range of array/tensor data:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">image</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">1024</span><span class="p">,</span><span class="mi">512</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">images</span> <span class="o">=</span> <span class="p">[(</span><span class="n">image</span><span class="o">*</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="n">image</span><span class="o">*</span><span class="mi">10</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="n">image</span><span class="o">*</span><span class="mi">100</span><span class="p">,</span> <span class="mi">3</span><span class="p">)]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">images</span> <span class="o">&gt;&gt;</span> <span class="n">PrintColType</span><span class="p">()</span> <span class="o">&gt;&gt;</span> <span class="n">Consume</span><span class="p">()</span>
+<span class="go">item 0: &lt;tuple&gt;</span>
+<span class="go">  0: &lt;ndarray&gt; shape:1024x512 dtype:uint8 range:1..1</span>
+<span class="go">  1: &lt;int&gt; 1</span>
+<span class="go">item 1: &lt;tuple&gt;</span>
+<span class="go">  0: &lt;ndarray&gt; shape:1024x512 dtype:uint8 range:10..10</span>
+<span class="go">  1: &lt;int&gt; 2</span>
+<span class="go">item 2: &lt;tuple&gt;</span>
+<span class="go">  0: &lt;ndarray&gt; shape:1024x512 dtype:uint8 range:100..100</span>
+<span class="go">  1: &lt;int&gt; 3</span>
+</pre></div>
+</div>
+<p>This is especially nice, when working with named tuples:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">namedtuple</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Sample</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s1">&#39;Sample&#39;</span><span class="p">,</span> <span class="s1">&#39;image,label&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">samples</span> <span class="o">=</span> <span class="p">[</span><span class="n">Sample</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="s1">&#39;good&#39;</span><span class="p">),</span> <span class="n">Sample</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="s1">&#39;bad&#39;</span><span class="p">)]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">samples</span> <span class="o">&gt;&gt;</span> <span class="n">PrintColType</span><span class="p">()</span> <span class="o">&gt;&gt;</span> <span class="n">Consume</span><span class="p">()</span>
+<span class="go">item 0: &lt;Sample&gt;</span>
+<span class="go">  image: &lt;ndarray&gt; shape:1024x512 dtype:uint8 range:1..1</span>
+<span class="go">  label: &lt;str&gt; good</span>
+<span class="go">item 1: &lt;Sample&gt;</span>
+<span class="go">  image: &lt;ndarray&gt; shape:1024x512 dtype:uint8 range:1..1</span>
+<span class="go">  label: &lt;str&gt; bad</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="printprogress">
+<h2>PrintProgress<a class="headerlink" href="#printprogress" title="Permalink to this headline">¶</a></h2>
 <p>For long running flows printing progress information can be displayed
 by inserting a <code class="docutils literal notranslate"><span class="pre">PrintProgress</span></code> nut. It, however, requires that the
 number of elements to be processed is known beforehand.</p>
@@ -250,8 +311,8 @@ number of elements to be processed is known beforehand.</p>
 </div>
 <div class="section" id="limit-data">
 <h2>Limit data<a class="headerlink" href="#limit-data" title="Permalink to this headline">¶</a></h2>
-<p>Instead of printing intermediate results the size of data flow
-can be limited by processing only a portion of the data. The
+<p>Instead of printing all the data the size of data processed
+can be limited, which is much more efficient. For instance, the
 <code class="docutils literal notranslate"><span class="pre">Take(n)</span></code> nut takes the first <em>n</em> elements only:</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Take</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>
 <span class="go">[0, 1, 2]</span>
@@ -274,11 +335,13 @@ that the entire flow is consumed:</p>
 <span class="go">[0, 100, 200, 300, 400, 500, 600, 700, 800, 900]</span>
 </pre></div>
 </div>
+<p>For <code class="docutils literal notranslate"><span class="pre">n</span> <span class="pre">&lt;</span> <span class="pre">1</span></code>, <code class="docutils literal notranslate"><span class="pre">Pick(n)</span></code> picks element with the given probabiltity,
+e.g. to pick 10% of the data use <code class="docutils literal notranslate"><span class="pre">Pick(0.1)</span></code>.</p>
 </div>
 <div class="section" id="no-operation">
 <h2>No Operation<a class="headerlink" href="#no-operation" title="Permalink to this headline">¶</a></h2>
-<p><strong>nuts-flow</strong> provides a <code class="docutils literal notranslate"><span class="pre">NOP(nut)</span></code> nut that can be used to quickly
-and temporarily disable the evaluation of a nut in a flow.</p>
+<p><strong>nuts-flow</strong> provides a <code class="docutils literal notranslate"><span class="pre">NOP(nut)</span></code> nut that can be used to
+temporarily disable the evaluation of a nut in a flow.</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">Square</span><span class="p">()</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>  <span class="c1"># compute squares</span>
 <span class="go">[0, 1, 4, 9, 16]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">Range</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">NOP</span><span class="p">(</span><span class="n">Square</span><span class="p">())</span> <span class="o">&gt;&gt;</span> <span class="n">Collect</span><span class="p">()</span>  <span class="c1"># Square disabled</span>
@@ -327,7 +390,7 @@ has a filter function to count only certain elements:</p>
 </pre></div>
 </div>
 <p>Note that the actual value of the counter is stored in <code class="docutils literal notranslate"><span class="pre">value</span></code> and can
-be printed but for conveniency <code class="docutils literal notranslate"><span class="pre">print</span> <span class="pre">greater5</span></code> prints the name of the
+be printed but for conveniency <code class="docutils literal notranslate"><span class="pre">print(greater5)</span></code> prints the name of the
 counter and its value as well.</p>
 </div>
 </div>
@@ -355,7 +418,7 @@ counter and its value as well.</p>
         
         &copy; Copyright 2017, IBM Research Australia
       <span class="lastupdated">
-        Last updated on Nov 24, 2020.
+        Last updated on Dec 22, 2020.
       </span>
 
     </p>
