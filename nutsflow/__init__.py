@@ -1,4 +1,4 @@
-__version__ = '1.2.1'
+__version__ = '1.2.2'
 
 from nutsflow.source import (Enumerate, Repeat, Product, Empty, Range, ReadCSV,
                              ReadNamedCSV)
