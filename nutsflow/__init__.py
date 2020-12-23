@@ -20,4 +20,5 @@ from nutsflow.factory import (nut_processor, nut_sink, nut_function, nut_source,
                               nut_filter, nut_filterfalse)
 from nutsflow.base import Nut, NutFunction, NutSink, NutSource
 from nutsflow.common import Timer, print_type
+from nutsflow.config import Config
 from nutsflow.underscore import _
