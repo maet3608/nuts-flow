@@ -44,9 +44,9 @@ def test_save_load():
     assert newcfg == cfg
     assert loaded_cfg == cfg
 
-    cfg.save('tests/data/configuration.JSON')
+    cfg.save('tests/data/configuration.json')
     newcfg = nc.Config()
-    newcfg.load('tests/data/configuration.JSON')
+    newcfg.load('tests/data/configuration.json')
     assert newcfg.number == 13
     assert newcfg == cfg
 

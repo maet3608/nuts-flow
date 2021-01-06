@@ -43,7 +43,7 @@ def load_readme():
 
 
 setup(
-    name='nutsflow',
+    name=nutsflow.__name__,
     version=nutsflow.__version__,
     url='https://maet3608.github.io/nuts-flow',
     download_url='https://github.com/maet3608/nuts-flow',

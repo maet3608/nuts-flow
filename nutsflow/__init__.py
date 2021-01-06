@@ -1,4 +1,4 @@
-__version__ = '1.2.2'
+__version__ = '1.2.3'
 
 from nutsflow.source import (Enumerate, Repeat, Product, Empty, Range, ReadCSV,
                              ReadNamedCSV)
@@ -20,5 +20,5 @@ from nutsflow.factory import (nut_processor, nut_sink, nut_function, nut_source,
                               nut_filter, nut_filterfalse)
 from nutsflow.base import Nut, NutFunction, NutSink, NutSource
 from nutsflow.common import Timer, print_type
-from nutsflow.config import Config
+from nutsflow.config import Config, load_config
 from nutsflow.underscore import _

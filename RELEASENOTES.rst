@@ -1,10 +1,13 @@
 Release notes
 =============
 
+1.2.3
+-----
+- support for Python 3.4 removed
+
 1.2.2
 -----
 - Config moved from nuts-ml to nuts-flow
-- support for Python 3.4 removed
 
 1.2.1
 -----

@@ -10,7 +10,7 @@
 - `Documentation <https://maet3608.github.io/nuts-flow/>`_
 - `Github <https://github.com/maet3608/nuts-flow>`_
 
-**nuts-flow** is largely a thin wrapper around Python’s *itertools* that allows
+**nuts-flow** is largely a thin wrapper around Python's *itertools* that allows
 the chaining of iterators using the ``>>`` operator. This leads to more
 readable code that highlights the flow of data. The following example shows
 two implementations of a simple data processing pipeline; the first based on
