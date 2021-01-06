@@ -11,7 +11,7 @@ python:
 before_install:
   - pip install pytest coveralls pytest-cov==2.5.0
   - pip install six
-  - pip install pyyaml
+  - pip install pyyaml  # should not be needed
 install: 
   - pip install nutsflow
 script: 
