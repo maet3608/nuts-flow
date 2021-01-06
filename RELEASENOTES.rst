@@ -1,6 +1,7 @@
 Release notes
 =============
 
+
 1.2.2
 -----
 - Config moved from nuts-ml to nuts-flow
