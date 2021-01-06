@@ -53,7 +53,7 @@ setup(
     description='A simple data-flow framework based on iterator chaining',
     long_description=load_readme(),
     long_description_content_type='text/x-rst',
-    install_requires=['six >= 1.10.0'],
+    install_requires=['six >= 1.10.0', 'pyyaml >= 3.12'],
     tests_require=['pytest-cov', 'pytest >= 3.0.3', 'numpy >= 1.14'],
     packages=find_packages(exclude=['setup']),
     include_package_data=True,
